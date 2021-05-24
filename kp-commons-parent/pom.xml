@@ -77,12 +77,7 @@
         <system>GitHub Issues</system>
     </issueManagement>
 
-    <scm>
-        <url>https://github.com/Paladins-Inn/kp-commons</url>
-        <connection>scm:git:git://github.com/Paladins-Inn/kp-commons.git</connection>
-        <developerConnection>scm:git:git@github.com:Paladins-Inn/kp-commons.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+
 
     <distributionManagement>
         <repository>
