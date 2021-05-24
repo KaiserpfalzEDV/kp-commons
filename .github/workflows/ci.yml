@@ -22,4 +22,6 @@ jobs:
 
       - name: Build
         id: build-java
-        run: mvn package -B -Pproduction -DskipTests=true
+        run: mvn --batch-mode deploy -Pproduction,release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
