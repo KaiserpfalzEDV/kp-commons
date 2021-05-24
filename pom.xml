@@ -44,6 +44,10 @@
 
     <profiles>
         <profile>
+            <id>production</id>
+        </profile>
+
+        <profile>
             <id>release</id>
 
             <distributionManagement>
