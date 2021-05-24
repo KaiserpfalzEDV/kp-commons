@@ -1,0 +1,31 @@
+## This is basic continuous integration build for your Quarkus application.
+
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  java-build:
+    runs-on: [ java ]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout sources
+        id: checkout-sources
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        id: setup-java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+          distribution: 'adopt'
+
+      - name: Publish package
+        id: build-java
+        run: mvn --batck-mode deploy -Pproduction,release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
