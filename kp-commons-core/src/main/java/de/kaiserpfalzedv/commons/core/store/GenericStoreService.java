@@ -33,7 +33,7 @@ import java.util.UUID;
  *
  * @param <T> The resource to be stored inside the data store.
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-01-31
+ * @since 2.0.0  2021-05-24
  */
 @ToString
 @EqualsAndHashCode

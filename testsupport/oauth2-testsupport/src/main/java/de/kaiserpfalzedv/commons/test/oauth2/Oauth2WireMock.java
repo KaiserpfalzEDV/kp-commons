@@ -30,7 +30,7 @@ import java.util.Map;
  * This is the wiremock for oauth2 services for test and dev.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.1.0 2021-01-22
+ * @since 2.0.0  2021-05-24
  */
 public class Oauth2WireMock implements QuarkusTestResourceLifecycleManager {
     private static final Logger LOG = LoggerFactory.getLogger(Oauth2WireMock.class);

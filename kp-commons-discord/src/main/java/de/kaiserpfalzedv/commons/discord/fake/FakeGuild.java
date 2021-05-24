@@ -46,7 +46,7 @@ import java.util.function.Consumer;
  * A fake discord guild for tests.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-04
+ * @since 2.0.0  2021-05-24
  */
 public class FakeGuild implements Guild {
     private final long id;

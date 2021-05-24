@@ -39,7 +39,7 @@ import java.util.Optional;
  * Default values for the lombok builder are set in {@link MetadataBuilder}.
  *
  * @author klenkes74 {@literal <rlichit@kaiserpfalz-edv.de>}
- * @since 1.0.0
+ * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "FieldMayBeFinal"})
 @Builder(setterPrefix = "with", toBuilder = true)

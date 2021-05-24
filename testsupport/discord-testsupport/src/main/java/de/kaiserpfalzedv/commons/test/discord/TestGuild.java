@@ -46,7 +46,7 @@ import java.util.function.Consumer;
  * A fake Guild implementation for test support.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-05
+ * @since 2.0.0  2021-05-24
  */
 public class TestGuild implements Guild {
     private final String name;

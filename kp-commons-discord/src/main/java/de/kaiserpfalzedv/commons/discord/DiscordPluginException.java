@@ -25,7 +25,7 @@ import de.kaiserpfalzedv.commons.discord.text.DiscordPluginWrappedException;
  * least wrapped in {@link DiscordPluginWrappedException}.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-06
+ * @since 2.0.0  2021-05-24
  */
 public abstract class DiscordPluginException extends Exception {
     private final DiscordPlugin plugin;

@@ -29,7 +29,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * The context for plugin commands.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-04
+ * @since 2.0.0  2021-05-24
  */
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor

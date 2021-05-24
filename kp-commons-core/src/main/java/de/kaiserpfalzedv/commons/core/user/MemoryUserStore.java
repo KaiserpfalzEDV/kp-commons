@@ -26,7 +26,7 @@ import javax.enterprise.context.ApplicationScoped;
  * MemoryUserStore --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.3.0  2021-05-09
+ * @since 2.0.0  2021-05-24
  */
 @ApplicationScoped
 @AlternativePriority(100)

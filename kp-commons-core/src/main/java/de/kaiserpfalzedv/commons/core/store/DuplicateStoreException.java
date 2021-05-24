@@ -24,7 +24,7 @@ import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
  * DuplicateStoreException -- There is already an object with this metadata.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-01-31
+ * @since 2.0.0  2021-05-24
  */
 public class DuplicateStoreException extends BaseSystemException {
     private final ResourcePointer stored;
@@ -33,7 +33,7 @@ public class DuplicateStoreException extends BaseSystemException {
     /**
      * @param stored    the already stored resource metadata.
      * @param duplicate the new resource metadata.
-     * @since 1.2.0
+     * @since 2.0.0  2021-05-24
      */
     public DuplicateStoreException(final ResourcePointer stored, final ResourcePointer duplicate) {
         super(String.format("Duplicate element found. resource='%s', nameSpace='%s', name='%s'",

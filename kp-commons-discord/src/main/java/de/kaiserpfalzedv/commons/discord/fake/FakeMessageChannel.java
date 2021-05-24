@@ -30,7 +30,7 @@ import java.util.StringJoiner;
  * A fake message channel for tests.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-04
+ * @since 2.0.0  2021-05-24
  */
 public class FakeMessageChannel implements MessageChannel {
     private final long id;

@@ -38,7 +38,7 @@ import java.util.function.Consumer;
  * A fake discord user for tests.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-04
+ * @since 2.0.0  2021-05-24
  */
 public class FakeUser implements User {
     private final long id;

@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  * A fake message received event for testing purposes.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-05
+ * @since 2.0.0  2021-05-24
  */
 public class TestMessageEvent extends MessageReceivedEvent {
     public TestMessageEvent(long responseNumber, @NotNull Message message) {

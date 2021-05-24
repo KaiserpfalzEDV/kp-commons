@@ -23,12 +23,12 @@ import de.kaiserpfalzedv.commons.core.api.BaseSystemException;
  * StoreException -- The base exception for data stores.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-01-31
+ * @since 2.0.0  2021-05-24
  */
 public abstract class StoreException extends BaseSystemException {
     /**
-     * @param  message the detail message.
-     * @since 1.2.0
+     * @param message the detail message.
+     * @since 2.0.0  2021-05-24
      */
     public StoreException(final String message) {
         super(message);
@@ -46,7 +46,7 @@ public abstract class StoreException extends BaseSystemException {
     /**
      * @param cause the cause.  (A {@code null} value is permitted,
      * and indicates that the cause is nonexistent or unknown.)
-     * @since 1.2.0
+     * @since 2.0.0  2021-05-24
      */
     public StoreException(final Throwable cause) {
         super(cause);
@@ -60,7 +60,7 @@ public abstract class StoreException extends BaseSystemException {
      *                          or disabled
      * @param writableStackTrace whether or not the stack trace should
      *                           be writable
-     * @since 1.2.0
+     * @since 2.0.0  2021-05-24
      */
     public StoreException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);

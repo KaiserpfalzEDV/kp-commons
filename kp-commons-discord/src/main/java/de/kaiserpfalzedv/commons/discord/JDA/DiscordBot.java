@@ -40,7 +40,7 @@ import static net.dv8tion.jda.api.requests.GatewayIntent.*;
 /**
  * DiscordBot -- The discord connection bot.
  *
- * @since 1.0.0
+ * @since 2.0.0  2021-05-24
  */
 @ApplicationScoped
 public class DiscordBot {

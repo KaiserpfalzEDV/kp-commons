@@ -31,7 +31,7 @@ import java.util.Map;
  * Produces a mongodb that can be used in {@link io.quarkus.test.junit.QuarkusTest}.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-09
+ * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings({"unused", "rawtypes"})
 public class MongoDBResource implements QuarkusTestResourceLifecycleManager {

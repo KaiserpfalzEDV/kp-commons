@@ -31,7 +31,7 @@ import java.time.ZoneOffset;
  * A single history entry. Basic data is the timestamp, the status and the message.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0
+ * @since 2.0.0  2021-05-24
  */
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor

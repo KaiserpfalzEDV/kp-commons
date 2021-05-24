@@ -28,7 +28,7 @@ import java.time.OffsetDateTime;
  * OffsetDateTimeCodecProvider --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-05-23
+ * @since 2.0.0  2021-05-24
  */
 public class OffsetDateTimeCodecProvider implements CodecProvider {
     @Override

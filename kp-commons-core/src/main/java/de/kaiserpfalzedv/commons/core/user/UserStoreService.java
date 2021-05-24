@@ -23,6 +23,6 @@ import de.kaiserpfalzedv.commons.core.store.StoreService;
  * UserStoreService -- The datastore interface for user configuration data.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0 2021-01-30
+ * @since 2.0.0  2021-05-24
  */
 public interface UserStoreService extends StoreService<User> {}

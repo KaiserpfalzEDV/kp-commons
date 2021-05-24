@@ -30,7 +30,7 @@ import java.io.IOException;
  * SpreadSheet --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.3.0  2021-05-23
+ * @since 2.0.0  2021-05-24
  */
 @Slf4j
 @Builder(setterPrefix = "with", toBuilder = true)

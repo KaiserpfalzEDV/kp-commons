@@ -20,12 +20,12 @@ package de.kaiserpfalzedv.commons.discord.JDA;
 
 import de.kaiserpfalzedv.commons.core.discord.DiscordMessageHandler;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
-import de.kaiserpfalzedv.commons.discord.IgnoreBotsException;
-import de.kaiserpfalzedv.commons.discord.text.DiscordMessageChannelPlugin;
 import de.kaiserpfalzedv.commons.discord.DiscordPluginNotAllowedException;
 import de.kaiserpfalzedv.commons.discord.DontWorkOnDiscordEventException;
+import de.kaiserpfalzedv.commons.discord.IgnoreBotsException;
 import de.kaiserpfalzedv.commons.discord.guilds.Guild;
 import de.kaiserpfalzedv.commons.discord.guilds.GuildStoreService;
+import de.kaiserpfalzedv.commons.discord.text.DiscordMessageChannelPlugin;
 import io.quarkus.runtime.StartupEvent;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * DiscordDispatcher -- The plugin based dispatcher for Discord bots.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0
+ * @since 2.0.0  2021-05-24
  */
 @Singleton // since ListenerAdapter contains a final method, we need a proxy-less implementation.
 @Slf4j

@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests the markdown converter.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-11
+ * @since 2.0.0  2021-05-24
  */
 public class TestMarkdownConverter {
     /** The markdown converter to be tested. */

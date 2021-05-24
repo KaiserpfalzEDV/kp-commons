@@ -25,7 +25,7 @@ import java.io.Serializable;
  * ResourcePointer --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-05-09
+ * @since 2.0.0  2021-05-24
  */
 public interface ResourcePointer extends Serializable {
     @Schema(name = "kind", description = "The type of the resource")

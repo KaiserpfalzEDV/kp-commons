@@ -27,7 +27,7 @@ import java.io.PrintWriter;
  * This exception wraps another exception for using in {@link DiscordMessageChannelPlugin}.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-06
+ * @since 2.0.0  2021-05-24
  */
 public class DiscordPluginWrappedException extends DiscordPluginException {
     final Throwable wrapped;

@@ -40,7 +40,7 @@ import java.util.List;
  * This is a "fire and forget" interface.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-06
+ * @since 2.0.0  2021-05-24
  */
 public interface DiscordMessageChannelPlugin extends DiscordPlugin {
     Logger LOG = LoggerFactory.getLogger(DiscordMessageChannelPlugin.class);

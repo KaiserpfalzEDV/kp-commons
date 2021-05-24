@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * TestMemoryUserStore -- checks if the memory store behaves correctly.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-01-31
+ * @since 2.0.0  2021-05-24
  */
 @Slf4j
 public class TestMemoryUserStore {

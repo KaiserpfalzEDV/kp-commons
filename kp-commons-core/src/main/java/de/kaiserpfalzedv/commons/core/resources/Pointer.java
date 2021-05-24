@@ -30,7 +30,7 @@ import java.util.UUID;
  * ResourcePointer -- A single resource definition pointing to a unique resource on the server.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-07
+ * @since 2.0.0  2021-05-24
  */
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor

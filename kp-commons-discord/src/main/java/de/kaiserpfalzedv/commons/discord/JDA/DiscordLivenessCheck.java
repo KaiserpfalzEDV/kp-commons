@@ -26,11 +26,11 @@ import javax.inject.Inject;
 
 /**
  * The liveness check for the discord bot.
- *
+ * <p>
  * If the liveness check using {@link DiscordBot#discordOK()} fails, the liveness is reported as down.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-08
+ * @since 2.0.0  2021-05-24
  */
 @Liveness
 @ApplicationScoped

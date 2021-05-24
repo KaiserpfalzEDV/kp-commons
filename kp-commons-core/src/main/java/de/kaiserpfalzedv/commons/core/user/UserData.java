@@ -36,7 +36,7 @@ import java.util.Optional;
  * The basic data for every user.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-06
+ * @since 2.0.0  2021-05-24
  */
 @SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor

@@ -26,7 +26,7 @@ import java.util.UUID;
  * The base class for all checked exceptions of the KP RPG Services.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-08
+ * @since 2.0.0  2021-05-24
  */
 @Getter
 @ToString
@@ -41,9 +41,9 @@ public abstract class BaseException extends Exception {
      * cause is not initialized, and may subsequently be initialized by
      * a call to {@link #initCause}.
      *
-     * @param   message   the detail message. The detail message is saved for
-     *          later retrieval by the {@link #getMessage()} method.
-     * @since 1.0.0
+     * @param message the detail message. The detail message is saved for
+     *                later retrieval by the {@link #getMessage()} method.
+     * @since 2.0.0  2021-05-24
      */
     @SuppressWarnings("CdiInjectionPointsInspection")
     public BaseException(final String message) {
@@ -62,7 +62,7 @@ public abstract class BaseException extends Exception {
      *         {@link #getCause()} method).  (A {@code null} value is
      *         permitted, and indicates that the cause is nonexistent or
      *         unknown.)
-     * @since  1.0.0
+     * @since 2.0.0  2021-05-24
      */
     public BaseException(final String message, final Throwable cause) {
         super(message, cause);
@@ -80,7 +80,7 @@ public abstract class BaseException extends Exception {
      *         {@link #getCause()} method).  (A {@code null} value is
      *         permitted, and indicates that the cause is nonexistent or
      *         unknown.)
-     * @since  1.0.0
+     * @since 2.0.0  2021-05-24
      */
     public BaseException(final Throwable cause) {
         super(cause);
@@ -97,7 +97,7 @@ public abstract class BaseException extends Exception {
      *                          or disabled
      * @param writableStackTrace whether or not the stack trace should
      *                           be writable
-     * @since 1.0.0
+     * @since 2.0.0  2021-05-24
      */
     public BaseException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);

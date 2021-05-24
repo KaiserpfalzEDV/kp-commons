@@ -30,7 +30,7 @@ import java.util.UUID;
  * BaseMongoRepository -- The base methods for all stores.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-05-23
+ * @since 2.0.0  2021-05-24
  */
 @Slf4j
 public class BaseMongoRepository<T extends Resource<D>, D extends Serializable> implements PanacheMongoRepositoryBase<T, UUID> {

@@ -26,7 +26,7 @@ import java.util.List;
  * The methods defined here are the most basic methods of every plugin.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0 2021-01-30
+ * @since 2.0.0  2021-05-24
  */
 public interface DiscordPlugin {
     /** The default prefix if not reset by the guild admin. */

@@ -30,7 +30,7 @@ import java.util.Optional;
  * DiscordMessageHandlerMock -- a mocked message sender.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-06
+ * @since 2.0.0  2021-05-24
  */
 @Dependent
 @AlternativePriority(100)

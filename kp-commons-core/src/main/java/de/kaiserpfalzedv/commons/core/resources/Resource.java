@@ -35,9 +35,8 @@ import java.util.UUID;
  * A generic resource.
  *
  * @param <D> The data provided by this resource.
- *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0
+ * @since 2.0.0  2021-05-24
  */
 @SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor

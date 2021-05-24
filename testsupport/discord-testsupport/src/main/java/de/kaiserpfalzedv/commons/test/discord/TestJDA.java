@@ -46,7 +46,7 @@ import java.util.concurrent.ScheduledExecutorService;
  * A fake JDA implementation for test support.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-05
+ * @since 2.0.0  2021-05-24
  */
 public class TestJDA implements JDA {
     public static final JDA JDA = new TestJDA();

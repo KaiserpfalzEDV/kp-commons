@@ -31,7 +31,7 @@ import static de.kaiserpfalzedv.commons.discord.guilds.Guild.DISCORD_NAMESPACE;
  * classes into your plugin.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-04
+ * @since 2.0.0  2021-05-24
  */
 public interface DiscordPluginCommand {
     /**

@@ -23,12 +23,12 @@ import javax.enterprise.context.ApplicationScoped;
 
 /**
  * MarkDownConverter -- A converter for Markdown to HTML.
- *
+ * <p>
  * This is an anti-corruption layer for converting <a href="https://daringfireball.net/projects/markdown/">Markdown</a>
  * to HTML.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-11
+ * @since 2.0.0  2021-05-24
  */
 @ApplicationScoped
 public class MarkdownConverter {

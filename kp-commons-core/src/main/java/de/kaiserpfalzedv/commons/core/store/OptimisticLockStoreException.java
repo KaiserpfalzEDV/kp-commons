@@ -21,11 +21,11 @@ import de.kaiserpfalzedv.commons.core.api.BaseSystemException;
 
 /**
  * OptimisticLockStoreException -- The data has been changed.
- *
+ * <p>
  * If the generation does not match (a newer generation is already in data store) then this exception is thrown.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-01-31
+ * @since 2.0.0  2021-05-24
  */
 public class OptimisticLockStoreException extends BaseSystemException {
     private final long storedGeneration;
@@ -34,7 +34,7 @@ public class OptimisticLockStoreException extends BaseSystemException {
     /**
      * @param storedGeneration the generation already in store.
      * @param saveGeneration the generation to save.
-     * @since 1.2.0
+     * @since 2.0.0  2021-05-24
      */
     public OptimisticLockStoreException(final long storedGeneration, final long saveGeneration) {
         super(String.format("Tried to save generation '%d'. But generation '%d' already in store.",

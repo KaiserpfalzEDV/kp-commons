@@ -32,7 +32,7 @@ import java.util.Map;
  * The basic data for every guild.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-06
+ * @since 2.0.0  2021-05-24
  */
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor

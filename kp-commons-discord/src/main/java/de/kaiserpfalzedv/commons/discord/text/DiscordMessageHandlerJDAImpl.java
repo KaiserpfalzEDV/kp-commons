@@ -33,7 +33,7 @@ import java.util.UUID;
  * DiscordMessageSender -- Sends the message to discord.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0 2021-01-11
+ * @since 2.0.0  2021-05-24
  */
 @ApplicationScoped
 @AlternativePriority(500)

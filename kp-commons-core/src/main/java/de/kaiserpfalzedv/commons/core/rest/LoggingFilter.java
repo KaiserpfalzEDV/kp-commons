@@ -37,7 +37,7 @@ import java.nio.charset.StandardCharsets;
  * LoggingFilter --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.3.0  2021-05-13
+ * @since 2.0.0  2021-05-24
  */
 @Slf4j
 public class LoggingFilter implements ContainerRequestFilter, ClientResponseFilter, WriterInterceptor {

@@ -21,7 +21,7 @@ package de.kaiserpfalzedv.commons.discord;
  * DontWorkOnDiscordEventException -- This event will be ignored.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0
+ * @since 2.0.0  2021-05-24
  */
 public class DontWorkOnDiscordEventException extends DiscordPluginException {
     public DontWorkOnDiscordEventException(final DiscordPlugin plugin) {

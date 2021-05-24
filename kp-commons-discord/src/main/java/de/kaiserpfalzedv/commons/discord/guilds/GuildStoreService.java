@@ -23,6 +23,6 @@ import de.kaiserpfalzedv.commons.core.store.StoreService;
  * GuildStoreService -- The datastore interface for guild setup information.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0 2021-01-30
+ * @since 2.0.0  2021-05-24
  */
 public interface GuildStoreService extends StoreService<Guild> {}

@@ -32,7 +32,7 @@ import java.util.List;
  * A fake text channel for testing purposes.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-05
+ * @since 2.0.0  2021-05-24
  */
 public class TestTextChannel implements TextChannel {
     private final long id;

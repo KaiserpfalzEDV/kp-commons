@@ -23,7 +23,7 @@ import de.kaiserpfalzedv.commons.core.api.BaseException;
  * InvalidUserException -- The user has no data set.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-02-04
+ * @since 2.0.0  2021-05-24
  */
 public class InvalidUserException extends BaseException {
     /**
