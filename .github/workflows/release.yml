@@ -26,6 +26,6 @@ jobs:
 
       - name: Publish package
         id: build-java
-        run: mvn --batck-mode deploy -Pproduction,release
+        run: mvn --batch-mode deploy -Pproduction,release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
