@@ -220,6 +220,12 @@ public class TestTextChannel implements TextChannel {
 
     @NotNull
     @Override
+    public RestAction<Webhook.WebhookReference> follow(@NotNull String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public RestAction<Void> deleteMessages(@NotNull Collection<Message> messages) {
         return null;
     }

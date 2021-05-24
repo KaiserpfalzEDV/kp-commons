@@ -125,6 +125,12 @@ public class TestGuild implements Guild {
         return null;
     }
 
+    @NotNull
+    @Override
+    public RestAction<VanityInvite> retrieveVanityInvite() {
+        return null;
+    }
+
     @Nullable
     @Override
     public String getDescription() {
@@ -185,6 +191,18 @@ public class TestGuild implements Guild {
     @Nullable
     @Override
     public TextChannel getSystemChannel() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public TextChannel getRulesChannel() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public TextChannel getCommunityUpdatesChannel() {
         return null;
     }
 
