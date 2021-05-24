@@ -5,7 +5,7 @@
 > -- Balian, Kingdom of Heaven
 
 ![Dependabot](https://flat.badgen.net/dependabot/Paladins-Inn/kp-commons/?icon=dependabot)
-![Maven](https://github.com/Paladins-Inn/kp-commons/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Maven](https://github.com/Paladins-Inn/kp-commons/workflows/CI/badge.svg)
 
 ## Abstract
 This is a library of software artifacts I found useful in a number of projects. So I assembled them in this library.
