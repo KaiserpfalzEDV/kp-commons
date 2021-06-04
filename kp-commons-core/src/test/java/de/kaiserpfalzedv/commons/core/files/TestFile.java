@@ -40,7 +40,7 @@ public class TestFile {
     private static final String DATA_NAME = "testName";
     private static final OffsetDateTime DATA_CREATED = OffsetDateTime.now(Clock.systemUTC());
     private static final String DATA_API_KEY = "test-api-key";
-    private static final String DATA_URL = "https://irgendwo/irgendwas.jpg";
+    private static final String BASE64_DATA = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK";
 
     private static final File DATA = File.builder()
             .withKind(File.KIND)
@@ -55,7 +55,7 @@ public class TestFile {
             .withSpec(
                     FileData.builder()
                             .withDescription(DATA_API_KEY)
-                            .withUrl(DATA_URL)
+                            .withData(BASE64_DATA)
                             .build()
             )
             .build();

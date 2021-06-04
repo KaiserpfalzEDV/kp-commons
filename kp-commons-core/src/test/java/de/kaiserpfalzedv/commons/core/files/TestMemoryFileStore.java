@@ -44,7 +44,7 @@ public class TestMemoryFileStore {
     private static final String DATA_NAME = "testName";
     private static final OffsetDateTime DATA_CREATED = OffsetDateTime.now(Clock.systemUTC());
     private static final String DATA_API_KEY = "test-api-key";
-    private static final String DATA_URI = "https://irgendwo/irgendwas.jpg";
+    private static final String BASE64_DATA = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK";
 
     private static final UUID OTHER_UID = UUID.randomUUID();
     private static final String OTHER_NAMESPACE = "otherNS";
@@ -65,7 +65,7 @@ public class TestMemoryFileStore {
             .withSpec(
                     FileData.builder()
                             .withDescription(DATA_API_KEY)
-                            .withUrl(DATA_URI)
+                            .withData(BASE64_DATA)
                             .build()
             )
             .build();
@@ -84,7 +84,7 @@ public class TestMemoryFileStore {
                     )
                     .withSpec(
                             FileData.builder()
-                                    .withUrl(DATA_URI)
+                                    .withData(BASE64_DATA)
                                     .build()
                     )
                     .build();

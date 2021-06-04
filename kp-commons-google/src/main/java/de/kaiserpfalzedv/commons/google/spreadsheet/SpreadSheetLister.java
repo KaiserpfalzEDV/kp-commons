@@ -26,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * SpreadSheet --
@@ -39,7 +41,15 @@ import java.io.IOException;
 @Getter
 @ToString
 @Slf4j
-public class SpreadSheet {
+public class SpreadSheetLister {
+    private static URL SPREADSHEET_FEED_URL;
+    static {
+        try {
+            SPREADSHEET_FEED_URL =  new URL("https://spreadsheets.google.com/feeds/spreadsheets/private/full");
+        } catch (MalformedURLException e) {
+            // should never happen ...
+        }
+    }
     private NetHttpTransport transport;
     private JsonFactory factory;
     private Credential credential;
@@ -51,12 +61,11 @@ public class SpreadSheet {
                 .build();
     }
 
-    public Sheets.Spreadsheets sheetCollection() {
+    public Sheets.Spreadsheets allSheets() {
         return open().spreadsheets();
     }
 
     public Sheets.Spreadsheets.Get sheet(final String sheet) throws IOException {
-        return sheetCollection().get(sheet);
+        return open().spreadsheets().get(sheet);
     }
-
 }

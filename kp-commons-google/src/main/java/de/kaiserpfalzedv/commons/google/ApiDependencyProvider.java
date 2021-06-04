@@ -15,48 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.google.spreadsheet;
+package de.kaiserpfalzedv.commons.google;
 
-import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.services.sheets.v4.Sheets;
-import lombok.*;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.inject.Inject;
-import java.io.IOException;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Produces;
 
 /**
- * SpreadSheet --
+ * JsonFactoryProducer -- Produces a jackson2 based JsonFactory for the Google API.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2.0.0  2021-05-24
+ * @since 2.0.0  2021-06-03
  */
-@Builder(setterPrefix = "with", toBuilder = true)
-@AllArgsConstructor(onConstructor = @__(@Inject))
-@NoArgsConstructor
-@Getter
-@ToString
 @Slf4j
-public class SpreadSheet {
-    private NetHttpTransport transport;
-    private JsonFactory factory;
-    private Credential credential;
-    private String name;
-
-    public Sheets open() {
-        return new Sheets.Builder(transport, factory, credential)
-                .setApplicationName(name)
-                .build();
+@Dependent
+public class ApiDependencyProvider {
+    @Produces
+    public JsonFactory factory() {
+        return JacksonFactory.getDefaultInstance();
     }
 
-    public Sheets.Spreadsheets sheetCollection() {
-        return open().spreadsheets();
+    @Produces
+    public NetHttpTransport netHttpTransport() {
+        return new NetHttpTransport();
     }
-
-    public Sheets.Spreadsheets.Get sheet(final String sheet) throws IOException {
-        return sheetCollection().get(sheet);
-    }
-
 }

@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.google.auth;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.testing.auth.oauth2.MockGoogleCredential;
+import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.ws.rs.Produces;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -44,21 +48,32 @@ import java.util.List;
 @Slf4j
 @ToString
 public class Authorization {
-    private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
-
     @Builder.Default
     private final String keyFile = "/deployment/config/application-key.json";
 
+    @Builder.Default
+    private final List<String> scopes = List.of(DriveScopes.DRIVE_METADATA_READONLY, SheetsScopes.SPREADSHEETS);
 
-    public Credential getGoogleCredentials() throws IOException {
+
+
+    public Credential getGoogleCredentials() throws IOException, AuthorizationCreationFailedException {
         return getGoogleCredentials(keyFile);
     }
 
-    public Credential getGoogleCredentials(
-            @NotNull final String keyFile
-    ) throws IOException {
-        try (InputStream in = getClass().getResourceAsStream(keyFile)) {
-            return MockGoogleCredential.fromStream(in).createScoped(SCOPES);
+    public Credential getGoogleCredentials(@NotNull final String keyFile) throws AuthorizationCreationFailedException, IOException {
+        File fp = new File(keyFile);
+        if (!fp.exists()) {
+            throw new IllegalStateException(String.format("File '%s' does not exist.", keyFile));
+        }
+
+        try (InputStream in = new FileInputStream(keyFile)) {
+            try {
+                return MockGoogleCredential.fromStream(in).createScoped(scopes);
+            } catch (IOException e) {
+                throw new AuthorizationCreationFailedException(keyFile, e);
+            }
+        } catch (IOException e) {
+            throw e;
         }
     }
 }

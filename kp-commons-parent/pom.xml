@@ -505,7 +505,7 @@
             <id>quarkus</id>
             <activation>
                 <file>
-                    <exists>src/main/resources/application.properties</exists>
+                    <exists>src/test/resources/application.properties</exists>
                 </file>
             </activation>
 

@@ -1,8 +1,8 @@
 # KP-COMMONS - A library for handling common problems Kaiserpfalz EDV-Service encounters
 
-> What man is a man who does not make the world better.
+> You don't need to be crazy to be my friend ... ok, maybe you do. It's just more fun that way.
 >
-> -- Balian, Kingdom of Heaven
+> -- @blue_eyed_darkness on TikTok
 
 ![Dependabot](https://flat.badgen.net/dependabot/Paladins-Inn/kp-commons/?icon=dependabot)
 ![Maven](https://github.com/Paladins-Inn/kp-commons/workflows/CI/badge.svg)
@@ -26,6 +26,16 @@ tl;dr (ok, only the bullshit bingo words):
 
 Code test coverage for human generated code should be 100%, machinge generated code is considered bugfree until proven
 wrong. Every line that needs not be written is a bug free line without need to test it. So aim for not writing code.
+
+
+## Included libraries
+
+* kp-commons-core
+* kp-commons-discord
+* kp-commons-google
+* discord-testsupport
+* mongodb-testsupport
+* oauth2-testsupport
 
 
 ## Distribution

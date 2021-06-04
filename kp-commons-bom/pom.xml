@@ -27,13 +27,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-bom</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
-
     <name>KP Commons :: Bill of Materials</name>
 
     <properties>
+        <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
+        <kp-commons.version>2.0.2-SNAPSHOT</kp-commons.version>
         <vaadin.version>14.5.3</vaadin.version>
         <discord.version>3.5.0_329</discord.version>
 
@@ -55,54 +54,54 @@
 
             <!-- KP RPG modules -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-root</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-parent</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-bom</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-core</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-discord</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-google</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>${project.groupId}.test-support</groupId>
+                <groupId>${kp-commons.groupId}.test-support</groupId>
                 <artifactId>mongodb-testsupport</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
-                <groupId>${project.groupId}.test-support</groupId>
+                <groupId>${kp-commons.groupId}.test-support</groupId>
                 <artifactId>oauth2-testsupport</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
-                <groupId>${project.groupId}.test-support</groupId>
+                <groupId>${kp-commons.groupId}.test-support</groupId>
                 <artifactId>discord-testsupport</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
                 <scope>test</scope>
             </dependency>
 

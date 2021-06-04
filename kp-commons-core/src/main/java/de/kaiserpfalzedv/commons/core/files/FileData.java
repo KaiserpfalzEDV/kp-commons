@@ -40,14 +40,17 @@ import javax.ws.rs.core.MediaType;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FileData.FileDataBuilder.class)
-@Schema(name = "fileData", description = "Managed file.")
+@Schema(description = "Managed file.")
 public class FileData extends DefaultResourceSpec {
     @Builder.Default
+    @Schema(description = "A description of the file.", nullable = true, example = "File with accounting data for the month.")
     private final String description = null;
 
     @Builder.Default
-    private final String url = null;
+    @Schema(description = "Mediatype of the file.", example = MediaType.APPLICATION_OCTET_STREAM)
+    private final String mediatype = null;
 
     @Builder.Default
-    private final String mediatype = MediaType.APPLICATION_OCTET_STREAM;
+    @Schema(description = "Base64 encoded content of the file.", minLength = 1, example = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK")
+    private final String data = "";
 }
