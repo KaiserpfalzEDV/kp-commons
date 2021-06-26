@@ -64,12 +64,12 @@
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-sheets</artifactId>
-            <version>v4-rev20210527-1.31.0</version>
+            <version>v4-rev20210527-1.31.5</version>
         </dependency>
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-drive</artifactId>
-            <version>v3-rev20210524-1.31.0</version>
+            <version>v3-rev20210612-1.31.5</version>
         </dependency>
     </dependencies>
 </project>
