@@ -23,7 +23,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * ThreeWordAddressTest --
@@ -47,8 +49,8 @@ public class ThreeWordAddressTest {
         assertEquals("geteilt", result.getWord1());
         assertEquals("flexibler", result.getWord2());
         assertEquals("entfernt", result.getWord3());
-        assertTrue(result.equals(result));
-        assertEquals(0, result.hashCode());
+        assertEquals(result, result);
+        assertEquals(115297568, result.hashCode());
     }
 
     @Test
