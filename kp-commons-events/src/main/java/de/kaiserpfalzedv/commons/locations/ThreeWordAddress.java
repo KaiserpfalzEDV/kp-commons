@@ -18,7 +18,11 @@
 package de.kaiserpfalzedv.commons.locations;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
@@ -28,17 +32,17 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * @since 2.1.0  2021-06-13
  */
 @Builder(setterPrefix = "with", toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @EqualsAndHashCode
 @Schema(description = "A 3word address (see https://what3words.com/)")
 public class ThreeWordAddress {
     @Schema(description = "First word.", required = true, example = "geteilt")
-    String word1;
+    private final String word1;
     @Schema(description = "Second word.", required = true, example = "flexibler")
-    String word2;
+    private final String word2;
     @Schema(description = "Third word.", required = true, example = "entfernt")
-    String word3;
+    private final String word3;
 
     public String toString() {
         return String.format("///%s.%s.%s", word1, word2, word3);
