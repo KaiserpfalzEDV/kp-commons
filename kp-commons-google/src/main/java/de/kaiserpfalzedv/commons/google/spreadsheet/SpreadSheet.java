@@ -34,29 +34,60 @@ import java.io.IOException;
  * @since 2.0.0  2021-05-24
  */
 @Builder(setterPrefix = "with", toBuilder = true)
-@AllArgsConstructor(onConstructor = @__(@Inject))
-@NoArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
+@AllArgsConstructor
 @Getter
 @ToString
 @Slf4j
 public class SpreadSheet {
-    private NetHttpTransport transport;
-    private JsonFactory factory;
-    private Credential credential;
+    @ToString.Exclude
+    private final NetHttpTransport transport;
+    @ToString.Exclude
+    private final JsonFactory factory;
+    @ToString.Exclude
+    private final Credential credential;
+    @Setter
     private String name;
 
-    public Sheets open() {
-        return new Sheets.Builder(transport, factory, credential)
-                .setApplicationName(name)
-                .build();
+    @ToString.Exclude
+    private Sheets sheets;
+
+    public synchronized Sheets open() {
+        if (sheets == null) {
+            log.debug("Creating new sheets connection: {}", this);
+            sheets = new Sheets.Builder(transport, factory, credential)
+                    .setApplicationName(name)
+                    .build();
+        }
+
+        log.info("Opened sheets: {}", this);
+        return sheets;
     }
 
     public Sheets.Spreadsheets sheetCollection() {
+        log.trace("Selecting spreadsheets: {}", this);
+
         return open().spreadsheets();
     }
 
     public Sheets.Spreadsheets.Get sheet(final String sheet) throws IOException {
+        log.debug("Selecting sheet: name='{}'", sheet);
+
         return sheetCollection().get(sheet);
     }
 
+    public Sheets.Spreadsheets.Get tab(final String sheet, final String tab, final String... titles) throws IOException {
+        log.debug("Selecting sheet: name='{}', tab='{}', titles={}", sheet, tab, titles);
+
+        Sheets.Spreadsheets.Get result = sheet(sheet);
+
+        if (result == null) {
+            log.debug("Tab does not exist. Creating a new tab")
+        }
+
+        return result;
+    }
+
+    public Sheets.Spreadsheets.Get newSheet(final String sheet, final String[] titles) throws IOException {
+    }
 }
