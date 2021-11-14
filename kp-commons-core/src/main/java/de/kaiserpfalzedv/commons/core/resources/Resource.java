@@ -40,7 +40,7 @@ import java.util.UUID;
  */
 @SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -52,7 +52,7 @@ public class Resource<D extends Serializable> implements Serializable, ResourceP
     @ToString.Include
     @Schema(name = "Uid", description = "The unique id.")
     @Builder.Default
-    private final UUID uid = UUID.randomUUID();
+    private UUID uid = UUID.randomUUID();
 
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -63,7 +63,7 @@ public class Resource<D extends Serializable> implements Serializable, ResourceP
     @ToString.Include
     @Schema(name = "ApiVersion", description = "The version of the resource entry.", required = true)
     @Builder.Default
-    private final String apiVersion = "v1";
+    private String apiVersion = "v1";
 
     @EqualsAndHashCode.Include
     @ToString.Include

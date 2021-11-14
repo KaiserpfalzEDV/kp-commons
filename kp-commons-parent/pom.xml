@@ -99,7 +99,7 @@
             <dependency>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>${quarkus.platform.artifact-id}</artifactId>
-                <version>${quarkus.platform.version}</version>
+                <version>${quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -115,7 +115,8 @@
         <skip.site>false</skip.site>
 
         <war.output.directory>undefined</war.output.directory>
-        <delombok.output>${project.build.directory}/delombok</delombok.output>
+        <delombok.output>${project.build.directory}/delombok/main</delombok.output>
+        <delombok.test-output>${project.build.directory}/delombok/test</delombok.test-output>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>11</maven.compiler.source>
@@ -125,11 +126,10 @@
 
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>2.4.1.Final</quarkus.platform.version>
+        <quarkus.version>2.4.2.Final</quarkus.version>
 
 
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
-        <quarkus-plugin.version>2.2.3.Final</quarkus-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -175,10 +175,9 @@
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
-                        <annotationProcessors>
-                            <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor
-                            </annotationProcessor>
-                        </annotationProcessors>
+                        <compileSourceRoots>
+                            <compileSourceRoot>${delombok.output}</compileSourceRoot>
+                        </compileSourceRoots>
                     </configuration>
                     <executions>
                         <execution>
@@ -189,6 +188,9 @@
                             <phase>test-compile</phase>
                             <configuration>
                                 <skip>${skipTests}</skip>
+                                <compileSourceRoots>
+                                    <compileSourceRoot>${delombok.test-output}</compileSourceRoot>
+                                </compileSourceRoots>
                             </configuration>
                         </execution>
                     </executions>
@@ -213,20 +215,34 @@
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>
                     <version>${lombok-maven-plugin.version}</version>
-                    <configuration>
-                        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-                        <outputDirectory>${delombok.output}</outputDirectory>
-                        <addOutputDirectory>false</addOutputDirectory>
-                    </configuration>
                     <executions>
                         <execution>
+                            <id>delombok-main</id>
                             <phase>generate-sources</phase>
                             <goals>
                                 <goal>delombok</goal>
                             </goals>
+                            <configuration>
+                                <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                                <outputDirectory>${delombok.output}</outputDirectory>
+                                <addOutputDirectory>false</addOutputDirectory>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>delombok-test</id>
+                            <phase>generate-test-sources</phase>
+                            <goals>
+                                <goal>testDelombok</goal>
+                            </goals>
+                            <configuration>
+                                <sourceDirectory>${project.basedir}/src/test/java</sourceDirectory>
+                                <outputDirectory>${delombok.test-output}</outputDirectory>
+                                <addOutputDirectory>false</addOutputDirectory>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -428,6 +444,10 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -628,7 +648,7 @@
                         <groupId>io.quarkus</groupId>
                         <artifactId>quarkus-maven-plugin</artifactId>
                         <!--suppress MavenModelInspection -->
-                        <version>${quarkus-plugin.version}</version>
+                        <version>${quarkus.version}</version>
                         <executions>
                             <execution>
                                 <goals>

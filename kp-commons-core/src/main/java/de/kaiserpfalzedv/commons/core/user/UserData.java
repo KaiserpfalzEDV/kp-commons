@@ -57,13 +57,13 @@ public class UserData extends DefaultResourceSpec {
     };
 
     @Builder.Default
-    private final String description = null;
+    private String description = null;
     @Builder.Default
-    private final Pointer picture = null;
+    private Pointer picture = null;
 
     @Schema(name = "driveThruRPGApiKey", description = "The API Key for DriveThruRPG.")
     @Builder.Default
-    private final String driveThruRPGKey = null;
+    private String driveThruRPGKey = null;
 
 
     @Transient
