@@ -33,7 +33,6 @@
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
         <kp-commons.version>2.0.2-SNAPSHOT</kp-commons.version>
-        <vaadin.version>14.5.3</vaadin.version>
         <discord.version>3.5.0_329</discord.version>
 
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
@@ -169,70 +168,6 @@
                 <artifactId>microprofile-openapi-api</artifactId>
                 <version>3.0-RC1</version>
             </dependency>
-
-
-            <!-- Vaadin Components -->
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <!-- Replace artifactId with vaadin-core to use only free components -->
-                <artifactId>vaadin</artifactId>
-                <version>${vaadin.version}</version>
-                <exclusions>
-                    <!-- Webjars are only needed when running in Vaadin 13 compatibility mode -->
-                    <exclusion>
-                        <groupId>com.vaadin.webjar</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.webjars.bowergithub.insites</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.webjars.bowergithub.polymer</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.webjars.bowergithub.polymerelements</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.webjars.bowergithub.vaadin</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.webjars.bowergithub.webcomponents</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-spring-boot-starter</artifactId>
-                <version>${vaadin.version}</version>
-                <exclusions>
-                    <!-- Excluding so that webjars are not included. -->
-                    <exclusion>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.vaadin.artur</groupId>
-                <artifactId>a-vaadin-helper</artifactId>
-                <version>1.6.0</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecamp.vaadin</groupId>
-                <artifactId>vaadin-service-ref</artifactId>
-                <version>0.5.0</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.carnet.kasparscherrer</groupId>
-                <artifactId>language-select</artifactId>
-                <version>1.0.9</version>
-            </dependency>
-
 
             <!-- testing -->
             <dependency>
