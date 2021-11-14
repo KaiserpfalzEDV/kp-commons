@@ -82,12 +82,16 @@ public class SpreadSheet {
         Sheets.Spreadsheets.Get result = sheet(sheet);
 
         if (result == null) {
-            log.debug("Tab does not exist. Creating a new tab")
+            log.debug("Tab does not exist. Creating a new tab");
         }
 
         return result;
     }
 
-    public Sheets.Spreadsheets.Get newSheet(final String sheet, final String[] titles) throws IOException {
+    public Sheets.Spreadsheets.Get newSheet(final String sheet, final String[] titles) {
+        log.debug("Creating a new Sheet: ");
+
+        // FIXME 2021-11-13 klenkes74 Implement the newSheet function
+        throw new UnsupportedOperationException("not-yet-implemented");
     }
 }
