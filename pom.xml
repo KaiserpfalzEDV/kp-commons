@@ -39,7 +39,7 @@
         <module>kp-commons-google</module>
         <module>kp-commons-events</module>
 
-        <module>testsupport</module>
+        <module>kp-commons-testsupport</module>
     </modules>
 
     <scm>
@@ -48,6 +48,15 @@
         <developerConnection>scm:git:git@github.com:Paladins-Inn/kp-commons.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Paladins-Inn/kp-commons</url>
+        </repository>
+    </distributionManagement>
+
 
     <profiles>
         <profile>

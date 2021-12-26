@@ -16,3 +16,4 @@ coverage
 storybook-static
 .env
 /rpg-bot/src/main/resources/static/
+http-client.private.env.json
