@@ -130,6 +130,7 @@
 
 
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
+        <quarkus-plugin.version>2.6.0.Final</quarkus-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -139,7 +140,7 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
-        <jandex-maven-plugin.version>1.2.0</jandex-maven-plugin.version>
+        <jandex-maven-plugin.version>1.2.1</jandex-maven-plugin.version>
     </properties>
 
     <reporting>
