@@ -126,7 +126,7 @@
 
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.version>2.4.2.Final</quarkus.version>
+        <quarkus.version>2.6.1.Final</quarkus.version>
 
 
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
