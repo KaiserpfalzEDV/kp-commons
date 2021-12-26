@@ -36,7 +36,6 @@
     <description>Test support for testing with quarkus tests.</description>
 
     <modules>
-        <module>mongodb-testsupport</module>
         <module>oauth2-testsupport</module>
         <module>discord-testsupport</module>
     </modules>
