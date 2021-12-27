@@ -20,10 +20,8 @@ package de.kaiserpfalzedv.commons.test.oauth2;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -32,9 +30,8 @@ import java.util.Map;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@Slf4j
 public class Oauth2WireMock implements QuarkusTestResourceLifecycleManager {
-    private static final Logger LOG = LoggerFactory.getLogger(Oauth2WireMock.class);
-
     private WireMockServer wireMockServer;
 
     @Override
@@ -52,8 +49,14 @@ public class Oauth2WireMock implements QuarkusTestResourceLifecycleManager {
                         )
         );
 
-        LOG.info("Oauth2 server wiremock started on '{}/introspect'", wireMockServer.baseUrl());
-        return Collections.singletonMap("quarkus.oauth2.introspection-url", wireMockServer.baseUrl() + "/introspect");
+        String url = wireMockServer.baseUrl() + "/introspect";
+        log.info("Oauth2 server wiremock started on '{}/introspect'", url);
+        return Map.of(
+                "quarkus.oauth2.introspection-url", url,
+                "quarkus.oidc.authorization-path", wireMockServer.baseUrl() + "/authorization",
+                "quarkus.oidc.user-info-path", wireMockServer.baseUrl() + "/user-info",
+                "quarkus.oidc.introspection-path", url
+        );
     }
 
     @Override
@@ -61,7 +64,8 @@ public class Oauth2WireMock implements QuarkusTestResourceLifecycleManager {
         if (null != wireMockServer) {
             wireMockServer.stop();
 
-            LOG.info("Oauth2 server wiremock '{}/introspect' stopped.", wireMockServer.baseUrl());
+            log.info("Oauth2 server wiremock '{}/introspect' stopped.", wireMockServer.baseUrl());
         }
     }
+
 }

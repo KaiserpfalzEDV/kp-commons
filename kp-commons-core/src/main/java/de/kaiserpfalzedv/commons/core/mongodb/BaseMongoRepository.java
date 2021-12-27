@@ -20,9 +20,9 @@ package de.kaiserpfalzedv.commons.core.mongodb;
 import de.kaiserpfalzedv.commons.core.resources.Resource;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
 import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,26 +32,20 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Slf4j
-public class BaseMongoRepository<T extends Resource<D>, D extends Serializable> implements PanacheMongoRepositoryBase<T, UUID> {
-    protected T prepareStorage(T object) throws OptimisticLockStoreException {
+public interface BaseMongoRepository<T extends Resource<D>, D extends Serializable> extends PanacheMongoRepositoryBase<T, UUID> {
+    default T prepareStorage(T object) throws OptimisticLockStoreException {
         Optional<T> stored = findByIdOptional(object.getUid());
 
         stored.ifPresentOrElse(
                 t -> {
-                    if (t.getGeneration() == object.getGeneration()) {
+                    if (Objects.equals(t.getGeneration(), object.getGeneration())) {
                         object.increaseGeneration();
 
-                        log.trace("Increase the generation to: {}", object.getGeneration());
                     } else if (t.getGeneration() > object.getGeneration()) {
-                        log.warn(
-                                "Generation of database object is higher than the object to store. object='{}', oldGeneration={}, newGeneration={}",
-                                object.getSelfLink(), t.getGeneration(), object.getGeneration()
-                        );
                         throw new OptimisticLockStoreException(t.getGeneration(), object.getGeneration());
                     }
                 },
-                () -> log.debug("Initial storing of object: '{}'", object.getSelfLink())
+                () -> {}
         );
 
         return object;
