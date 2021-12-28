@@ -21,11 +21,13 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * SpreadSheet --
@@ -76,22 +78,40 @@ public class SpreadSheet {
         return sheetCollection().get(sheet);
     }
 
-    public Sheets.Spreadsheets.Get tab(final String sheet, final String tab, final String... titles) throws IOException {
-        log.debug("Selecting sheet: name='{}', tab='{}', titles={}", sheet, tab, titles);
+    public Sheets.Spreadsheets.Get tab(final String sheet, final String tab) throws IOException {
+        log.debug("Selecting sheet: name='{}', tab='{}", sheet, tab);
 
         Sheets.Spreadsheets.Get result = sheet(sheet);
 
         if (result == null) {
-            log.debug("Tab does not exist. Creating a new tab");
+            log.debug("Sheet does not exist.");
+
+
         }
 
-        return result;
+        return null;
     }
 
-    public Sheets.Spreadsheets.Get newSheet(final String sheet, final String[] titles) {
+    public void newSheet(final String sheet, final String[] tabs) throws TabCreationFailedException {
         log.debug("Creating a new Sheet: ");
 
-        // FIXME 2021-11-13 klenkes74 Implement the newSheet function
-        throw new UnsupportedOperationException("not-yet-implemented");
+        ValueRange values = new ValueRange();
+
+        ArrayList<String> failedTitles = new ArrayList<>(tabs.length);
+        for (String tab : tabs) {
+            try {
+                sheets.spreadsheets().values().append(sheet, tab, values)
+                        .setIncludeValuesInResponse(true)
+                        .execute();
+            } catch (IOException e) {
+                log.warn("Tab could not be added. sheet='{}', tab='{}'", sheet, tab);
+
+                failedTitles.add(tab);
+            }
+        }
+
+        if (! failedTitles.isEmpty()) {
+            throw new TabCreationFailedException(sheet, tabs, failedTitles);
+        }
     }
 }
