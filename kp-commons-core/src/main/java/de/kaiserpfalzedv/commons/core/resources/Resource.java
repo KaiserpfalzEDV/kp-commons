@@ -45,7 +45,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonPropertyOrder({"metadata,spec,status"})
+@JsonPropertyOrder({"metadata,selfLink,spec,status"})
 public class Resource<D extends Serializable> implements Serializable, ResourcePointer {
     @BsonId
     @EqualsAndHashCode.Include
