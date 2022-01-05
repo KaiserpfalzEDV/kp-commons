@@ -17,14 +17,12 @@
 
 package de.kaiserpfalzedv.commons.core.workflow.rest;
 
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowFilter;
 import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-import javax.ws.rs.container.ContainerRequestContext;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
@@ -36,8 +34,28 @@ import java.util.Optional;
 @ApplicationScoped
 @Slf4j
 public class WorkflowProvider {
+    private final ThreadLocal<WorkflowInfo> infos = new WorkflowInfoThreadLocal();
+
     @Produces
-    public Optional<WorkflowInfo> getWorkflowInfo(@NotNull final ContainerRequestContext context) {
-        return Optional.ofNullable((WorkflowInfo) context.getProperty(WorkflowFilter.WORKFLOW_DATA));
+    public Optional<WorkflowInfo> getWorkflowInfo() {
+        return Optional.ofNullable(infos.get());
+    }
+
+    public void registerWorkflowInfo(@NotNull final WorkflowInfo context) {
+        infos.set(context);
+    }
+
+    public void unregisterWorkflowInfo() {
+        infos.remove();
+    }
+
+    /**
+     * Subclass of {@link ThreadLocal} to generate an initial {@link WorkflowInfo}.
+     */
+    private class WorkflowInfoThreadLocal extends ThreadLocal<WorkflowInfo> {
+        @Override
+        public WorkflowInfo initialValue() {
+            return WorkflowInfo.builder().build();
+        }
     }
 }

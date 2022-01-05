@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,18 +12,18 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.user;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.slf4j.MDC;
 
+import javax.validation.constraints.NotNull;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -55,10 +55,9 @@ public class TestMemoryUserStore {
     private static final User DATA = User.builder()
             .withKind(User.KIND)
             .withApiVersion(User.API_VERSION)
-            .withNamespace(DATA_NAMESPACE)
+            .withNameSpace(DATA_NAMESPACE)
             .withName(DATA_NAME)
             .withUid(DATA_UID)
-            .withGeneration(0L)
 
             .withMetadata(
                     generateMetadata(DATA_CREATED, null)
@@ -75,10 +74,9 @@ public class TestMemoryUserStore {
             User.builder()
                     .withKind(User.KIND)
                     .withApiVersion(User.API_VERSION)
-                    .withNamespace(OTHER_NAMESPACE)
+                    .withNameSpace(OTHER_NAMESPACE)
                     .withName(OTHER_NAME)
                     .withUid(OTHER_UID)
-                    .withGeneration(0L)
 
                     .withMetadata(
                             generateMetadata(OTHER_CREATED, null)
@@ -135,7 +133,7 @@ public class TestMemoryUserStore {
         assertTrue(result.isPresent(), "The data should have been stored!");
         Assertions.assertNotEquals(DATA.getGeneration(), result.get().getGeneration());
 
-        Assertions.assertEquals(1L, result.get().getGeneration());
+        Assertions.assertEquals(1, result.get().getGeneration());
     }
 
     /**
@@ -251,7 +249,11 @@ public class TestMemoryUserStore {
 
         sut.save(
                 DATA.toBuilder()
-                        .withGeneration(100L)
+                        .withMetadata(
+                                DATA.getMetadata().toBuilder()
+                                        .withGeneration(100)
+                                        .build()
+                        )
                         .build()
         );
 

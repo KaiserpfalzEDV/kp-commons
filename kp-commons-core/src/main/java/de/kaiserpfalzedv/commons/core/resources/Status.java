@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.resources;
@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -35,6 +36,7 @@ import java.util.List;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@Embeddable
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -45,12 +47,27 @@ import java.util.List;
 @JsonDeserialize(builder = Status.StatusBuilder.class)
 @JsonPropertyOrder({"observedGeneration,history"})
 @Schema(name = "ResourceStatus", description = "The status of a resource.")
-public class Status implements Serializable {
-    @Schema(name = "ObservedGeneration", description = "The generation of this resource which is observed.", required = true)
+public class Status implements Serializable, Cloneable {
+    @Schema(
+            name = "observedGeneration",
+            description = "The generation of this resource which is observed.",
+            required = true,
+            example = "0",
+            defaultValue = "0",
+            minimum = "0"
+    )
     @Builder.Default
-    Long observedGeneration = 0L;
+    Integer observedGeneration = 0;
 
-    @Schema(name = "History", description = "A list of changes of the resource status.")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name="HISTORY")
+    @CollectionTable(name="HISTORY", joinColumns=@JoinColumn(name="ID"))
+    @Schema(
+            name = "history",
+            description = "A list of changes of the resource status.",
+            nullable = true,
+            minItems = 0
+    )
     @Builder.Default
     List<History> history = new ArrayList<>();
 
@@ -72,5 +89,14 @@ public class Status implements Serializable {
         );
 
         return this;
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Status clone() {
+        return Status.builder()
+                .withObservedGeneration(observedGeneration)
+                .withHistory(history)
+                .build();
     }
 }

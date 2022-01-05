@@ -17,10 +17,13 @@
 
 package de.kaiserpfalzedv.commons.core.workflow;
 
+import de.kaiserpfalzedv.commons.core.workflow.rest.WorkflowProvider;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
@@ -43,6 +46,7 @@ import java.time.temporal.TemporalAmount;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-01-04
  */
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Produces
 @ApplicationScoped
 @Slf4j
@@ -61,12 +65,15 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
     private static final String ACTION_PREFIX = "X-wf-action-";
     private static final String CALL_PREFIX = "X-wf-call-";
 
+    private final WorkflowProvider provider;
+
     @Override
     public void filter(ContainerRequestContext context) {
         WorkflowInfo info = getWorkflowInfo(context);
         prepareMDC(info);
 
         context.setProperty(WORKFLOW_DATA, info);
+        provider.registerWorkflowInfo(info);
 
         log.trace(
                 "Created the workflow info. workflow='{}', action='{}', call='{}', user='{}'",
@@ -154,13 +161,13 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
         );
 
         unsetWorkflowInfoInContext(requestContext);
+        provider.unregisterWorkflowInfo();
 
         removeMDC();
     }
 
     private WorkflowInfo getWorkflowInfoFromContext(ClientRequestContext requestContext) {
-        WorkflowInfo info = (WorkflowInfo) requestContext.getProperty(WORKFLOW_DATA);
-        return info;
+        return (WorkflowInfo) requestContext.getProperty(WORKFLOW_DATA);
     }
 
     private void unsetWorkflowInfoInContext(ClientRequestContext requestContext) {

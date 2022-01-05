@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.discord;
@@ -60,10 +60,9 @@ public class TestMemoryGuildStore {
     private static final Guild DATA = Guild.builder()
             .withKind(Guild.KIND)
             .withApiVersion(Guild.API_VERSION)
-            .withNamespace(DATA_NAMESPACE)
+            .withNameSpace(DATA_NAMESPACE)
             .withName(DATA_NAME)
             .withUid(DATA_UID)
-            .withGeneration(0L)
 
             .withMetadata(
                     generateMetadata(DATA_CREATED, null)
@@ -77,7 +76,7 @@ public class TestMemoryGuildStore {
             .build();
 
     private static final Guild OTHER = Guild.builder()
-            .withNamespace(OTHER_NAMESPACE)
+            .withNameSpace(OTHER_NAMESPACE)
             .withName(OTHER_NAME)
             .withUid(OTHER_UID)
             .withMetadata(
@@ -115,7 +114,7 @@ public class TestMemoryGuildStore {
      */
     private static Metadata generateMetadata(
             final OffsetDateTime created,
-            final OffsetDateTime deleted
+            @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
                 .withCreated(created)
@@ -151,7 +150,11 @@ public class TestMemoryGuildStore {
         assertTrue(result.isPresent(), "The data should have been stored!");
         assertThat(result.get(), equalToObject(
                 DATA.toBuilder()
-                        .withGeneration(DATA.getGeneration() + 1)
+                        .withMetadata(
+                                DATA.getMetadata().toBuilder()
+                                        .withGeneration(DATA.getGeneration() + 1)
+                                        .build()
+                        )
                         .build()
                 )
         );
@@ -261,7 +264,11 @@ public class TestMemoryGuildStore {
 
         sut.save(
                 DATA.toBuilder()
-                        .withGeneration(DATA.getGeneration() + 100)
+                        .withMetadata(
+                                DATA.getMetadata().toBuilder()
+                                        .withGeneration(DATA.getGeneration() + 100)
+                                        .build()
+                        )
                         .build()
         );
 

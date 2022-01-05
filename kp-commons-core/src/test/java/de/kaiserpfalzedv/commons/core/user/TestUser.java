@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.user;
@@ -51,7 +51,7 @@ public class TestUser {
     private static final User DATA = User.builder()
             .withKind(User.KIND)
             .withApiVersion(User.API_VERSION)
-            .withNamespace(DATA_NAMESPACE)
+            .withNameSpace(DATA_NAMESPACE)
             .withName(DATA_NAME)
             .withUid(DATA_UID)
 

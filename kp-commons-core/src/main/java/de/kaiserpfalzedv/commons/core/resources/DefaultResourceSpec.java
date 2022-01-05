@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.resources;
@@ -25,7 +25,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.beans.Transient;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.*;
 
@@ -41,13 +41,13 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @ToString
-@EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DefaultResourceSpec.DefaultResourceSpecBuilder.class)
 @Schema(name = "DefaultResourceSpec", description = "A standardized resource.")
 public class DefaultResourceSpec implements Serializable {
     @SuppressWarnings("FieldMayBeFinal")
     @Schema(name = "properties", description = "A map of plugin properties for spec.")
+    @Builder.Default
     @Singular
     private Map<String, String> properties = new HashMap<>();
 
@@ -116,7 +116,7 @@ public class DefaultResourceSpec implements Serializable {
     }
 
     private ResourcePointer convertStringToResourcePointer(final String property) {
-        String[] data = property.split("/", 5);
+        String[] data = property.split("/", 4);
         if (data.length != 5) {
             throw new IllegalStateException("Invalid property for resource pointers: " + property);
         }
@@ -125,10 +125,8 @@ public class DefaultResourceSpec implements Serializable {
                 .withKind(data[0])
                 .withApiVersion(data[1])
 
-                .withNamespace(data[2])
+                .withNameSpace(data[2])
                 .withName(data[3])
-
-                .withUid(UUID.fromString(data[4]))
 
                 .build();
     }
@@ -153,9 +151,8 @@ public class DefaultResourceSpec implements Serializable {
         return new StringJoiner("/")
                 .add(pointer.getKind())
                 .add(pointer.getApiVersion())
-                .add(pointer.getNamespace())
+                .add(pointer.getNameSpace())
                 .add(pointer.getName())
-                .add(pointer.getUid() != null ? pointer.getUid().toString() : "")
                 .toString();
     }
 

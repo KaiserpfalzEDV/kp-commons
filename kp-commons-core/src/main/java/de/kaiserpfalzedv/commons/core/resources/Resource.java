@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.resources;
@@ -25,70 +25,155 @@ import lombok.experimental.SuperBuilder;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.hibernate.annotations.GenericGenerator;
 
-import java.beans.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * A generic resource.
+ * Resource -- A generic resource holding a single data set.
  *
- * @param <D> The data provided by this resource.
+ * @param <D> The data set provided by this resource.
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
+ * @version 2.0.2  2021-01-04
  */
+@MappedSuperclass
 @SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
-@ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonPropertyOrder({"metadata,selfLink,spec,status"})
-public class Resource<D extends Serializable> implements Serializable, ResourcePointer {
+@JsonPropertyOrder({"kind","apiVersion","nameSpace","name","selfLink","metadata","spec","status"})
+public class Resource<D extends Serializable> implements ResourcePointer {
+    @SuppressWarnings("deprecation")
+    @Id
     @BsonId
-    @EqualsAndHashCode.Include
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid2")
+    @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
+    @Schema(
+            name = "uid",
+            description = "The unique identifier of this resource",
+            required = true,
+            example = "caae022d-5728-4cb2-9245-b8c1ea03e380",
+            defaultValue = "random UUID",
+            minLength = 36,
+            maxLength = 36
+    )
     @ToString.Include
-    @Schema(name = "Uid", description = "The unique id.")
+    @EqualsAndHashCode.Include
     @Builder.Default
     private UUID uid = UUID.randomUUID();
 
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Schema(name = "Kind", description = "The kind (type) of the resource.", required = true)
+    @Column(name = "KIND", length = 100, nullable = false, updatable = false)
+    @Schema(
+            name = "kind",
+            description = "The type of the resource",
+            required = true,
+            example = "Resource",
+            defaultValue = "Resource",
+            minLength = 1,
+            maxLength = 100
+    )
     private String kind;
 
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Schema(name = "ApiVersion", description = "The version of the resource entry.", required = true)
+    @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
+    @Schema(
+            name = "apiVersion",
+            description = "The version of this resource",
+            required = true,
+            example = "v1",
+            defaultValue = "v1",
+            minLength = 3,
+            maxLength = 100
+    )
     @Builder.Default
     private String apiVersion = "v1";
 
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Schema(name = "Namespace", description = "The namespace of the resource.", required = true)
-    private String namespace;
+    @Column(name = "NAMESPACE", length = 100, nullable = false)
+    @Schema(
+            name = "nameSpace",
+            description = "The namespace (group) of this resource",
+            required = true,
+            example = "default",
+            defaultValue = "default",
+            minLength = 1,
+            maxLength = 100
+    )
+    @Builder.Default
+    private String nameSpace = "default";
 
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Schema(name = "Name", description = "The unique name (within a namespace) of a resource.", required = true)
+    @Column(name = "NAME", length = 100, nullable = false)
+    @Schema(
+            name = "name",
+            description = "The unique name of this resource within the namespace",
+            required = true,
+            example = "name",
+            minLength = 1,
+            maxLength = 100
+    )
     private String name;
 
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Schema(name = "generation", description = "The generation of this object. Every change adds 1.", required = true, defaultValue = "0L")
-    @Builder.Default
-    private Long generation = 0L;
+    @javax.persistence.Transient
+    @Schema(
+            name = "selfLink",
+            description = "The local part of the URL to retrieve the resource.",
+            nullable = true,
+            readOnly = true,
+            example = "/api/v1/Resource/default/name",
+            minLength = 8,
+            maxLength = 100
+    )
+    public String getSelfLink() {
+        return String.format("/api/%s/%s/%s", getApiVersion(), getKind(), getNameSpace(), getName());
+    }
 
-    @Schema(name = "metadata", description = "Technical data to the resource.", required = true)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pointer)) return false;
+        Pointer that = (Pointer) o;
+        return getKind().equals(that.getKind())
+                && getNameSpace().equals(that.getNameSpace())
+                && getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getKind(), getNameSpace(), getName());
+    }
+
+
+    @Embedded
+    @Schema(
+            name = "metadata",
+            description = "Technical data to the resource.",
+            required = true
+    )
     protected Metadata metadata;
 
-    @Schema(name = "spec", description = "The resource data itself.")
+
+    @Schema(
+            name = "spec",
+            description = "The resource data itself.",
+            required = true
+    )
     @Builder.Default
     protected D spec = null;
 
-    @Schema(name = "status", description = "The status of the resource (containing the history).")
+
+    @Embedded
+    @Schema(
+            name = "status",
+            description = "The status of the resource (containing the history).",
+            nullable = true
+    )
     @Builder.Default
     protected Status status = null;
 
@@ -99,15 +184,16 @@ public class Resource<D extends Serializable> implements Serializable, ResourceP
     @JsonIgnore
     @BsonIgnore
     public String getDisplayName() {
-        return String.format("%s/%s/%s/%s", getKind(), getApiVersion(), getNamespace(), getName());
+        return String.format("%s/%s/%s/%s", getKind(), getApiVersion(), getNameSpace(), getName());
     }
-
+    
     @Transient
     @JsonIgnore
     @BsonIgnore
-    public void increaseGeneration() {
-        generation++;
+    public Integer getGeneration() {
+        return metadata.getGeneration();
     }
+    
 
     @Transient
     @JsonIgnore
@@ -121,5 +207,29 @@ public class Resource<D extends Serializable> implements Serializable, ResourceP
     @BsonIgnore
     public Optional<Status> getState() {
         return Optional.ofNullable(status);
+    }
+
+    synchronized public Resource<D> increaseGeneration() {
+        return toBuilder()
+                .withMetadata(
+                        getMetadata().toBuilder()
+                                .withGeneration(getGeneration() + 1)
+                                .build()
+                )
+                .build();
+    }
+
+
+    @Override
+    public Resource<D> clone() {
+        return Resource.<D>builder()
+                .withKind(getKind())
+                .withApiVersion(getApiVersion())
+                .withNameSpace(getNameSpace())
+                .withName(getName())
+                .withMetadata(getMetadata())
+                .withSpec(getSpec())
+                .withStatus(getStatus())
+                .build();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.store;
@@ -70,12 +70,17 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
     public T save(final T object) throws OptimisticLockStoreException {
         log.trace("Saving: {}", object);
 
-        String key = generateStoreKey(object.getNamespace(), object.getName());
+        String key = generateStoreKey(object.getNameSpace(), object.getName());
 
         //noinspection unchecked
         T data = (!namedStore.containsKey(key))
                 ? object
-                : (T) object.toBuilder().withGeneration(object.getGeneration() + 1).build();
+                : (T) object.toBuilder().withMetadata(
+                        object.getMetadata().toBuilder()
+                                .withGeneration(object.getGeneration() + 1)
+                                .build()
+                ).build();
+
 
         checkOptimisticLocking(key, data);
 
@@ -95,7 +100,7 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
 
     @Override
     public void remove(final T object) {
-        String key = generateStoreKey(object.getNamespace(), object.getName());
+        String key = generateStoreKey(object.getNameSpace(), object.getName());
 
         namedStore.remove(key);
         uidStore.remove(object.getUid());
@@ -115,7 +120,7 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
     public void remove(final UUID uid) {
         if (uidStore.containsKey(uid)) {
             T data = uidStore.get(uid);
-            String key = generateStoreKey(data.getNamespace(), data.getName());
+            String key = generateStoreKey(data.getNameSpace(), data.getName());
 
             namedStore.remove(key);
             uidStore.remove(uid);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.resources;
@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -33,25 +34,55 @@ import java.time.ZoneOffset;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@Embeddable
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
-@EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = History.HistoryBuilder.class)
-@Schema(name = "ResourceHistory", description = "A single history entry of a change.")
-public class History implements Serializable {
-    @Schema(name = "TimeStamp", description = "The timestamp of the change.", required = true)
+@Schema(
+        name = "History",
+        description = "A single history entry of a change."
+)
+public class History implements Serializable, Cloneable {
+    @Schema(
+            name = "TimeStamp",
+            description = "The timestamp of the change.",
+            required = true,
+            example = "2022-01-04T21:51:00.000000Z",
+            defaultValue = "now"
+    )
     @Builder.Default
     private final OffsetDateTime timeStamp = OffsetDateTime.now(ZoneOffset.UTC);
 
-    @Schema(name = "Status", description = "The resource status after the change.", required = true)
+    @Schema(
+            name = "Status",
+            description = "The resource status after the change.",
+            required = true,
+            example = "Not specified",
+            defaultValue = "Not specified"
+    )
     @Builder.Default
     private final String status = "Not specified";
 
-    @Schema(name = "Message", description = "The human readable description of the change.")
+    @Schema(
+            name = "Message",
+            description = "The human readable description of the change.",
+            nullable = true
+    )
     @Builder.Default
     private final String message = null;
+
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public History clone() {
+        return History.builder()
+                .withStatus(status)
+                .withTimeStamp(timeStamp)
+                .withMessage(message)
+                .build();
+    }
 }

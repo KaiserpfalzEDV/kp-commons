@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.resources;
@@ -21,10 +21,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
-import org.bson.codecs.pojo.annotations.BsonId;
+import lombok.experimental.SuperBuilder;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
+import java.util.Objects;
 
 /**
  * ResourcePointer -- A single resource definition pointing to a unique resource on the server.
@@ -32,33 +35,113 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Builder(setterPrefix = "with", toBuilder = true)
+@Embeddable
+@SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Pointer.PointerBuilder.class)
-@JsonPropertyOrder({"kind,apiVersion,namespace,name,selfLink"})
-@Schema(name = "ResourcePointer", description = "A full address of a resource within the system.")
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonPropertyOrder({"kind","apiVersion","namespace","name","selfLink"})
+@Schema(
+        description = "A full pointer to a resource.",
+        example = "{" +
+                "\n\t\"kind\": \"Resource\"," +
+                "\n\t\"apiVersion\": \"v1\"," +
+                "\n\t\"nameSpace\": \"namespace\"," +
+                "\n\t\"name\": \"name\"," +
+                "\n\t\"selfLink\": \"/api/v1/Resource/namespace/name\"" +
+                "\n}"
+)
 public class Pointer implements ResourcePointer {
-    @BsonId
-    @Schema(name = "Uid", description = "The unique id.")
-    @Builder.Default
-    @EqualsAndHashCode.Include
-    private final UUID uid = UUID.randomUUID();
-
-    @Schema(name = "Kind", description = "The kind (type) of the resource.", required = true)
+    @Column(name = "KIND", length = 100, nullable = false, updatable = false)
+    @Schema(
+            name = "kind",
+            description = "The type of the resource",
+            required = true,
+            example = "Resource",
+            defaultValue = "Resource",
+            minLength = 1,
+            maxLength = 100
+    )
     private String kind;
 
-    @Schema(name = "ApiVersion", description = "The version of the resource entry.", required = true)
+    @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
+    @Schema(
+            name = "apiVersion",
+            description = "The version of this resource",
+            required = true,
+            example = "v1",
+            defaultValue = "v1",
+            minLength = 3,
+            maxLength = 100
+    )
     @Builder.Default
-    private final String apiVersion = "v1";
+    private String apiVersion = "v1";
 
-    @Schema(name = "Namespace", description = "The namespace of the resource.", required = true)
-    private String namespace;
+    @Column(name = "NAMESPACE", length = 100, nullable = false)
+    @Schema(
+            name = "nameSpace",
+            description = "The namespace (group) of this resource",
+            required = true,
+            example = "default",
+            defaultValue = "default",
+            minLength = 1,
+            maxLength = 100
+    )
+    @Builder.Default
+    private String nameSpace = "default";
 
-    @Schema(name = "Name", description = "The unique name (within a namespace) of a resource.", required = true)
+    @Column(name = "NAME", length = 100, nullable = false)
+    @Schema(
+            name = "name",
+            description = "The unique name of this resource within the namespace",
+            required = true,
+            example = "name",
+            minLength = 1,
+            maxLength = 100
+    )
     private String name;
+
+    @Transient
+    @Schema(
+            name = "selfLink",
+            description = "The local part of the URL to retrieve the resource.",
+            nullable = true,
+            readOnly = true,
+            example = "/api/v1/Resource/default/name",
+            minLength = 8,
+            maxLength = 100
+    )
+    public String getSelfLink() {
+        return String.format("/api/%s/%s/%s", getApiVersion(), getKind(), getNameSpace(), getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pointer)) return false;
+        Pointer that = (Pointer) o;
+        return getKind().equals(that.getKind())
+                && getNameSpace().equals(that.getNameSpace())
+                && getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getKind(), getNameSpace(), getName());
+    }
+
+
+
+    @Override
+    public Pointer clone() {
+        return Pointer.builder()
+                .withKind(kind)
+                .withApiVersion(apiVersion)
+                .withNameSpace(nameSpace)
+                .withName(name)
+                .build();
+    }
 }
