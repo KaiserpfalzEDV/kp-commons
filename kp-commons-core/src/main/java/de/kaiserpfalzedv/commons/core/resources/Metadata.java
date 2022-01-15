@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ import java.util.Optional;
         name = "ResourceMetadata",
         description = "The metadata of a resource."
 )
-public class Metadata implements Serializable {
+public class Metadata implements Serializable, Cloneable {
     @Version
     @ToString.Include
     @Schema(
@@ -220,5 +220,17 @@ public class Metadata implements Serializable {
     @BsonIgnore
     public Optional<String> getLabel(@NotNull final String name) {
         return Optional.ofNullable(getLabels().get(name));
+    }
+
+    public Metadata increaseGeneration() {
+        return toBuilder()
+                .withGeneration(generation + 1)
+                .build();
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Metadata clone() {
+        return toBuilder().build();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.discord.guilds;
@@ -38,11 +38,11 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(callSuper = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GuildData.GuildDataBuilder.class)
 @Schema(name = "guildData", description = "The data for a guild (server) within Discord.")
-public class GuildData implements Serializable {
+public class GuildData implements Serializable, Cloneable {
     public static String DEFAULT_PREFIX = "tb!";
 
     @Schema(name = "adminRoles", description = "The roles needed for being seen as admin.")
@@ -55,5 +55,12 @@ public class GuildData implements Serializable {
 
     @Schema(name = "prefix", description = "The global prefix to use in this discord guild.")
     @Builder.Default
+    @ToString.Include
     private final String prefix = DEFAULT_PREFIX;
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public GuildData clone() {
+        return toBuilder().build();
+    }
 }

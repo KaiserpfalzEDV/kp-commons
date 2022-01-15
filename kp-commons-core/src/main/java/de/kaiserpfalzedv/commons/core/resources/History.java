@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,10 +79,6 @@ public class History implements Serializable, Cloneable {
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public History clone() {
-        return History.builder()
-                .withStatus(status)
-                .withTimeStamp(timeStamp)
-                .withMessage(message)
-                .build();
+        return toBuilder().build();
     }
 }

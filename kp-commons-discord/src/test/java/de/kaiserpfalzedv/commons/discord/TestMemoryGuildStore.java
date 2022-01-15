@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,18 +147,11 @@ public class TestMemoryGuildStore {
         Optional<Guild> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
+
         assertTrue(result.isPresent(), "The data should have been stored!");
-        assertThat(result.get(), equalToObject(
-                DATA.toBuilder()
-                        .withMetadata(
-                                DATA.getMetadata().toBuilder()
-                                        .withGeneration(DATA.getGeneration() + 1)
-                                        .build()
-                        )
-                        .build()
-                )
-        );
-        assertEquals(DATA.getGeneration() + 1, result.get().getGeneration());
+        System.out.println(DATA.increaseGeneration());
+        System.out.println(result.get());
+        assertThat(result.get(), equalToObject(DATA.increaseGeneration()));
     }
 
     @Test

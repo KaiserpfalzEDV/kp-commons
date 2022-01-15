@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"kind","apiVersion","nameSpace","name","selfLink","metadata","spec","status"})
 public class Resource<D extends Serializable> implements ResourcePointer {
@@ -81,6 +82,7 @@ public class Resource<D extends Serializable> implements ResourcePointer {
             minLength = 1,
             maxLength = 100
     )
+    @ToString.Include
     private String kind;
 
     @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
@@ -107,6 +109,7 @@ public class Resource<D extends Serializable> implements ResourcePointer {
             maxLength = 100
     )
     @Builder.Default
+    @ToString.Include
     private String nameSpace = "default";
 
     @Column(name = "NAME", length = 100, nullable = false)
@@ -118,6 +121,7 @@ public class Resource<D extends Serializable> implements ResourcePointer {
             minLength = 1,
             maxLength = 100
     )
+    @ToString.Include
     private String name;
 
     @javax.persistence.Transient
@@ -211,25 +215,14 @@ public class Resource<D extends Serializable> implements ResourcePointer {
 
     synchronized public Resource<D> increaseGeneration() {
         return toBuilder()
-                .withMetadata(
-                        getMetadata().toBuilder()
-                                .withGeneration(getGeneration() + 1)
-                                .build()
-                )
+                .withMetadata(getMetadata().increaseGeneration())
                 .build();
     }
 
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Resource<D> clone() {
-        return Resource.<D>builder()
-                .withKind(getKind())
-                .withApiVersion(getApiVersion())
-                .withNameSpace(getNameSpace())
-                .withName(getName())
-                .withMetadata(getMetadata())
-                .withSpec(getSpec())
-                .withStatus(getStatus())
-                .build();
+        return toBuilder().build();
     }
 }

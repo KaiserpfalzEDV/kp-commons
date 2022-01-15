@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,11 +137,6 @@ public class Pointer implements ResourcePointer {
 
     @Override
     public Pointer clone() {
-        return Pointer.builder()
-                .withKind(kind)
-                .withApiVersion(apiVersion)
-                .withNameSpace(nameSpace)
-                .withName(name)
-                .build();
+        return toBuilder().build();
     }
 }

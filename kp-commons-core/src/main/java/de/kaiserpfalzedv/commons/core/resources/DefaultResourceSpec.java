@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,11 +44,10 @@ import java.util.*;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DefaultResourceSpec.DefaultResourceSpecBuilder.class)
 @Schema(name = "DefaultResourceSpec", description = "A standardized resource.")
-public class DefaultResourceSpec implements Serializable {
+public class DefaultResourceSpec implements Serializable, Cloneable {
     @SuppressWarnings("FieldMayBeFinal")
     @Schema(name = "properties", description = "A map of plugin properties for spec.")
     @Builder.Default
-    @Singular
     private Map<String, String> properties = new HashMap<>();
 
     /**
@@ -166,5 +165,11 @@ public class DefaultResourceSpec implements Serializable {
 
             properties.put(key, data.toString());
         }
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public DefaultResourceSpec clone() {
+        return toBuilder().build();
     }
 }

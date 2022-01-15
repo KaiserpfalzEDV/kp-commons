@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,9 +94,6 @@ public class Status implements Serializable, Cloneable {
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Status clone() {
-        return Status.builder()
-                .withObservedGeneration(observedGeneration)
-                .withHistory(history)
-                .build();
+        return toBuilder().build();
     }
 }
