@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,21 +12,23 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.snowflake.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
 public class BinHexUtilTest {
 	@Test
 	public void testBin() {
-		System.out.println(BinHexUtil.bin(-1L));
-		System.out.println(BinHexUtil.bin(-1L << 12));
-		System.out.println(BinHexUtil.bin(~(-1L << 12)));
+		log.debug(BinHexUtil.bin(-1L));
+		log.debug(BinHexUtil.bin(-1L << 12));
+		log.debug(BinHexUtil.bin(~(-1L << 12)));
 
 		assertEquals("1111111111111111111111111111111111111111111111111111111111111111", BinHexUtil.bin(-1L));
 		assertEquals("1111111111111111111111111111111111111111111111111111000000000000",
@@ -37,9 +39,9 @@ public class BinHexUtilTest {
 
 	@Test
 	public void testHex() {
-		System.out.println(BinHexUtil.hex(-1L));
-		System.out.println(BinHexUtil.hex(-1L << 12));
-		System.out.println(BinHexUtil.hex(~(-1L << 12)));
+		log.debug(BinHexUtil.hex(-1L));
+		log.debug(BinHexUtil.hex(-1L << 12));
+		log.debug(BinHexUtil.hex(~(-1L << 12)));
 
 		assertEquals("FFFFFFFFFFFFFFFF", BinHexUtil.hex(-1L));
 		assertEquals("FFFFFFFFFFFFF000", BinHexUtil.hex(-1L << 12));
@@ -48,32 +50,32 @@ public class BinHexUtilTest {
 
 	@Test
 	public void testDiode() {
-		System.out.println("diode: " + BinHexUtil.bin(BinHexUtil.diode(1, 41)));
-		System.out.println("diode: " + BinHexUtil.bin(BinHexUtil.diode(1+41, 5)));
-		System.out.println("diode: " + BinHexUtil.bin(BinHexUtil.diode(1+41+5, 5)));
-		System.out.println("diode: " + BinHexUtil.bin(BinHexUtil.diode(1+41+5+5, 12)));
-		
-		
+		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1, 41)));
+		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1 + 41, 5)));
+		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1 + 41 + 5, 5)));
+		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1 + 41 + 5 + 5, 12)));
+
+
 		assertEquals("0111111111111111111111111111111111111111110000000000000000000000",
 				BinHexUtil.bin(BinHexUtil.diode(1, 41)));
-		
+
 		assertEquals("0000000000000000000000000000000000000000001111100000000000000000",
-				BinHexUtil.bin(BinHexUtil.diode(1+41, 5)));
-		
+				BinHexUtil.bin(BinHexUtil.diode(1 + 41, 5)));
+
 		assertEquals("0000000000000000000000000000000000000000000000011111000000000000",
-				BinHexUtil.bin(BinHexUtil.diode(1+41+5, 5)));
-		
+				BinHexUtil.bin(BinHexUtil.diode(1 + 41 + 5, 5)));
+
 		assertEquals("0000000000000000000000000000000000000000000000000000111111111111",
-				BinHexUtil.bin(BinHexUtil.diode(1+41+5+5, 12)));
-		
-		System.out.println("diode: " + BinHexUtil.bin(BinHexUtil.diode(0, 0)));
-		System.out.println("diode: " + BinHexUtil.bin(BinHexUtil.diode(0, 64)));
-		
+				BinHexUtil.bin(BinHexUtil.diode(1 + 41 + 5 + 5, 12)));
+
+		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(0, 0)));
+		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(0, 64)));
+
 		assertEquals("0000000000000000000000000000000000000000000000000000000000000000",
-				BinHexUtil.bin(BinHexUtil.diode(0,0)));
-		
+				BinHexUtil.bin(BinHexUtil.diode(0, 0)));
+
 		assertEquals("1111111111111111111111111111111111111111111111111111111111111111",
-				BinHexUtil.bin(BinHexUtil.diode(0,64)));
-		
+				BinHexUtil.bin(BinHexUtil.diode(0, 64)));
+
 	}
 }

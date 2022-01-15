@@ -16,6 +16,7 @@
 
 package de.kaiserpfalzedv.commons.core.snowflake;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author downgoon {@literal http://downgoon.com}
  * @since 2.0.0  2021-05-24
  */
+@Slf4j
 public class SnowflakeTest {
 	@Test
 	public void testNextIdAndParse() throws Exception {
@@ -33,7 +35,7 @@ public class SnowflakeTest {
 		// gen id and parse it
 		long id = snowflake.nextId();
 		long[] arr = snowflake.parseId(id);
-		System.out.println(snowflake.formatId(id));
+		log.debug(snowflake.formatId(id));
 		
 		assertTrue(arr[0] >= beginTimeStamp);
 		assertEquals(3, arr[1]); // datacenterId
@@ -43,21 +45,21 @@ public class SnowflakeTest {
 		// gen two ids in different MS
 		long id2 = snowflake.nextId();
 		assertNotEquals(id2, id);
-		System.out.println(snowflake.formatId(id2));
+		log.debug(snowflake.formatId(id2));
 		 
 		Thread.sleep(1); // wait one ms 
 		long id3 = snowflake.nextId();
 		long[] arr3 = snowflake.parseId(id3);
-		System.out.println(snowflake.formatId(id3));
+		log.debug(snowflake.formatId(id3));
 		assertTrue(arr3[0] > arr[0]);
-		
+
 		// gen two ids in the same MS
 		long[] ids = new long[2];
-		for (int i = 0; i < ids.length; i ++) {
+		for (int i = 0; i < ids.length; i++) {
 			ids[i] = snowflake.nextId();
 		}
-		System.out.println(snowflake.formatId(ids[0]));
-		System.out.println(snowflake.formatId(ids[1]));
+		log.debug(snowflake.formatId(ids[0]));
+		log.debug(snowflake.formatId(ids[1]));
 		assertNotEquals(ids[1], ids[0]);
 		long[] arr_ids0 = snowflake.parseId(ids[0]);
 		long[] arr_ids1 = snowflake.parseId(ids[1]);

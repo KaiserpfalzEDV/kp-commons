@@ -16,12 +16,14 @@
 
 package de.kaiserpfalzedv.commons.core.snowflake;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 /**
  * @author downgoon {@literal http://downgoon.com}
  * @since 2.0.0  2021-05-24
  */
+@Slf4j
 public class SnowflakePerformanceTest {
 	@Test
 	public void testSingleThread() {
@@ -40,7 +42,7 @@ public class SnowflakePerformanceTest {
 		final Snowflake snowflake = new Snowflake(2, 5);
 		ConcurrentTestFramework.SummaryReport report = ctf.test(10, 100000, snowflake::nextId);
 		report.setAttachment(String.format("wait: %d", snowflake.getWaitCount()));
-		System.out.println("C10N10w Report: " + report);
+		log.info("C10N10w Report: {}", report);
 	}
 	
 	@Test
@@ -49,7 +51,7 @@ public class SnowflakePerformanceTest {
 		final Snowflake snowflake = new Snowflake(2, 5);
 		ConcurrentTestFramework.SummaryReport report = ctf.test(100, 10000, snowflake::nextId);
 		report.setAttachment(String.format("wait: %d", snowflake.getWaitCount()));
-		System.out.println("C100N1w Report: " + report);
+		log.info("C100N1w Report: {}", report);
 	}
 	
 	@Test
@@ -58,7 +60,7 @@ public class SnowflakePerformanceTest {
 		final Snowflake snowflake = new Snowflake(2, 5);
 		ConcurrentTestFramework.SummaryReport report = ctf.test(50, 1000000, snowflake::nextId);
 		report.setAttachment(String.format("wait: %d", snowflake.getWaitCount()));
-		System.out.println("C50N100w Report: " + report);
+		log.info("C50N100w Report: {}", report);
 	}
 
 	/**
@@ -82,8 +84,7 @@ public class SnowflakePerformanceTest {
 		long costMS = r[0];
 		long qps = (long) (n / (costMS / 1000.0));
 		long qpms = n / costMS;
-		System.out
-				.printf("C%dN%d: costMS=%d, QPS=%d, QPMS:=%d, wait=%d%n", c, n, costMS, qps, qpms, r[1]);
+		log.info("C{}N{}: costMS={}, QPS={}, QPMS:={}, wait={}", c, n, costMS, qps, qpms, r[1]);
 	}
 
 }

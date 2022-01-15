@@ -16,12 +16,15 @@
 
 package de.kaiserpfalzedv.commons.core.snowflake;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.CountDownLatch;
 
 /**
  * @author downgoon {@literal http://downgoon.com}
  * @since 2.0.0  2021-05-24
  */
+@Slf4j
 public class ConcurrentTestFramework {
 
 	private final String name;
@@ -119,7 +122,7 @@ public class ConcurrentTestFramework {
 					try {
 						startLatch.await(); // wait for start cmd
 						if (debugMode) {
-							System.out.println(Thread.currentThread().getName() + " starting ...");
+							log.debug("{} starting ...", Thread.currentThread().getName());
 						}
 						report.startIfNot();
 						for (int j = 0; j < n; j++) {
@@ -127,7 +130,7 @@ public class ConcurrentTestFramework {
 						}
 						finishLatch.countDown(); // report finish
 						if (debugMode) {
-							System.out.println(Thread.currentThread().getName() + " finished !!!");
+							log.debug("{} finished !!!", Thread.currentThread().getName());
 						}
 
 					} catch (Exception e) {
