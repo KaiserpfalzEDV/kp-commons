@@ -40,7 +40,8 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DefaultResourceSpec.DefaultResourceSpecBuilder.class)
 @Schema(name = "DefaultResourceSpec", description = "A standardized resource.")
@@ -48,6 +49,8 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
     @SuppressWarnings("FieldMayBeFinal")
     @Schema(name = "properties", description = "A map of plugin properties for spec.")
     @Builder.Default
+    @ToString.Include
+    @EqualsAndHashCode.Include
     private Map<String, String> properties = new HashMap<>();
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,37 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import java.io.Serializable;
 
 /**
  * ResourcePointer -- Identifies a single resource.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2.0.0  2021-05-24
  * @version 2.0.2  2021-01-04
+ * @since 2.0.0  2021-05-24
  */
 public interface ResourcePointer extends Serializable, Cloneable {
-    public String getKind();
-    public String getApiVersion();
-    public String getNameSpace();
-    public String getName();
+    String getKind();
+
+    String getApiVersion();
+
+    String getNameSpace();
+
+    String getName();
+
+    @Schema(
+            name = "selfLink",
+            description = "The local part of the URL to retrieve the resource.",
+            nullable = true,
+            readOnly = true,
+            example = "/api/v1/Resource/default/name",
+            minLength = 8,
+            maxLength = 100
+    )
+    default String getSelfLink() {
+        return String.format("/api/%s/%s/%s", getApiVersion(), getKind(), getNameSpace(), getName());
+    }
+
 }

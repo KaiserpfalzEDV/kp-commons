@@ -46,7 +46,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(callSuper = true)
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"kind","apiVersion","nameSpace","name","selfLink","metadata","spec","status"})
@@ -124,19 +124,6 @@ public class Resource<D extends Serializable> implements ResourcePointer {
     @ToString.Include
     private String name;
 
-    @javax.persistence.Transient
-    @Schema(
-            name = "selfLink",
-            description = "The local part of the URL to retrieve the resource.",
-            nullable = true,
-            readOnly = true,
-            example = "/api/v1/Resource/default/name",
-            minLength = 8,
-            maxLength = 100
-    )
-    public String getSelfLink() {
-        return String.format("/api/%s/%s/%s", getApiVersion(), getKind(), getNameSpace(), getName());
-    }
 
     @Override
     public boolean equals(Object o) {

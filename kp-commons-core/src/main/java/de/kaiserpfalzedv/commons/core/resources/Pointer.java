@@ -26,8 +26,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-import java.util.Objects;
 
 /**
  * ResourcePointer -- A single resource definition pointing to a unique resource on the server.
@@ -40,10 +38,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonDeserialize(builder = Pointer.PointerBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonPropertyOrder({"kind","apiVersion","namespace","name","selfLink"})
+@JsonPropertyOrder({"kind", "apiVersion", "namespace", "name", "selfLink"})
 @Schema(
         description = "A full pointer to a resource.",
         example = "{" +
@@ -65,6 +64,8 @@ public class Pointer implements ResourcePointer {
             minLength = 1,
             maxLength = 100
     )
+    @ToString.Include
+    @EqualsAndHashCode.Include
     private String kind;
 
     @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
@@ -91,6 +92,8 @@ public class Pointer implements ResourcePointer {
             maxLength = 100
     )
     @Builder.Default
+    @ToString.Include
+    @EqualsAndHashCode.Include
     private String nameSpace = "default";
 
     @Column(name = "NAME", length = 100, nullable = false)
@@ -102,21 +105,9 @@ public class Pointer implements ResourcePointer {
             minLength = 1,
             maxLength = 100
     )
+    @ToString.Include
+    @EqualsAndHashCode.Include
     private String name;
-
-    @Transient
-    @Schema(
-            name = "selfLink",
-            description = "The local part of the URL to retrieve the resource.",
-            nullable = true,
-            readOnly = true,
-            example = "/api/v1/Resource/default/name",
-            minLength = 8,
-            maxLength = 100
-    )
-    public String getSelfLink() {
-        return String.format("/api/%s/%s/%s", getApiVersion(), getKind(), getNameSpace(), getName());
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -127,13 +118,6 @@ public class Pointer implements ResourcePointer {
                 && getNameSpace().equals(that.getNameSpace())
                 && getName().equals(that.getName());
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getKind(), getNameSpace(), getName());
-    }
-
-
 
     @Override
     public Pointer clone() {
