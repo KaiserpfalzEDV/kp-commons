@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
 import lombok.*;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
@@ -30,9 +31,12 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -54,6 +58,7 @@ import java.util.UUID;
 @Builder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -72,14 +77,9 @@ public class Metadata implements Serializable, Cloneable {
     )
     @ToString.Include
     @EqualsAndHashCode.Include
-    @Builder.Default
+    @NonNull
     @Embedded
-    private Pointer identity = Pointer.builder()
-            .withKind("UNSPECIFIED")
-            .withApiVersion("v0")
-            .withNameSpace("unspecified")
-            .withName("unspecified")
-            .build();
+    private Pointer identity;
 
     @Id
     @BsonId
@@ -91,14 +91,18 @@ public class Metadata implements Serializable, Cloneable {
             name = "uid",
             description = "The unique identifier of this resource",
             required = true,
-            example = "caae022d-5728-4cb2-9245-b8c1ea03e380",
-            defaultValue = "random UUID",
-            minLength = 36,
-            maxLength = 36
+            minLength = HasId.VALID_UUID_LENGTH,
+            maxLength = HasId.VALID_UUID_LENGTH,
+            pattern = HasId.VALID_UUID_PATTERN,
+            example = HasId.VALID_UUID_EXAMPLE,
+            defaultValue = "random UUID"
     )
     @ToString.Include
     @EqualsAndHashCode.Include
     @Builder.Default
+    @NonNull
+    @Length(min = HasId.VALID_UUID_LENGTH, max = HasId.VALID_UUID_LENGTH, message = HasId.VALID_UUID_LENGTH_MSG)
+    @Pattern(regexp = HasId.VALID_UUID_PATTERN, message = HasId.VALID_UUID_PATTERN_MSG)
     private UUID uid = UUID.randomUUID();
 
     @Version
@@ -109,9 +113,12 @@ public class Metadata implements Serializable, Cloneable {
             required = true,
             example = "0",
             defaultValue = "0",
-            minimum = "0"
+            minimum = "0",
+            maxItems = Integer.MAX_VALUE
     )
     @Builder.Default
+    @NonNull
+    @Range(min = 0, max = Integer.MAX_VALUE, message = "The generation has to be between 0 and " + Integer.MAX_VALUE)
     private Integer generation = 0;
 
     @Schema(
@@ -134,32 +141,45 @@ public class Metadata implements Serializable, Cloneable {
             name = "created",
             description = "The timestamp of resource creation.",
             required = true,
-            example = "2022-01-04T21:01:00.000000Z",
-            defaultValue = "now"
+            defaultValue = "now",
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
     @CreationTimestamp
     @Column(name = "CREATED", nullable = false, updatable = false)
+    @Length(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
+    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Schema(
             name = "modified",
             description = "The timestamp of the last change.",
             required = true,
-            example = "2022-01-04T21:01:00.000000Z",
-            defaultValue = "now"
+            defaultValue = "now",
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
     @UpdateTimestamp
     @Column(name = "MODIFIED", nullable = false)
+    @Length(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
+    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     protected OffsetDateTime modified = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Schema(
             name = "deleted",
             description = "The timestamp of object deletion. Marks an object to be deleted.",
             nullable = true,
-            example = "2022-01-04T21:01:00.000000Z",
-            defaultValue = "null"
+            defaultValue = "null",
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
     @Column(name = "DELETED")
@@ -203,11 +223,15 @@ public class Metadata implements Serializable, Cloneable {
             nullable = true,
             readOnly = true,
             example = "/api/resource/v1/default/name",
-            minLength = 8,
-            maxLength = 100
+            pattern = "/api/" + HasName.VALID_NAME_PATTERN
+                    + "/" + HasApiVersion.VALID_VERSION_PATTERN
+                    + "/" + HasName.VALID_NAME_PATTERN
+                    + "/" + HasName.VALID_NAME_PATTERN,
+            minLength = 19,
+            maxLength = 318
     )
     @BsonProperty(value = "selfLink")
-    @JsonProperty(value = "selfLink", required = false, access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(value = "selfLink", access = JsonProperty.Access.READ_ONLY)
     public String getSelfLink() {
         return String.format("/api/%s/%s/%s/%s",
                 getKind().toLowerCase(), getApiVersion().toLowerCase(),

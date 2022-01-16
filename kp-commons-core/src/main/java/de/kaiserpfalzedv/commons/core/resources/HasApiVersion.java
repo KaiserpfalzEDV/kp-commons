@@ -31,12 +31,14 @@ import javax.validation.constraints.Size;
  * @since 2.0.2  2022-01-16
  */
 public interface HasApiVersion {
-    /**
-     * This is the pattern for a valid name.
-     */
     String VALID_VERSION_PATTERN = "^[a-zA-Z]([a-zA-Z0-9]{1,9})?$";
+    String VALID_VERSION_PATTERN_MSG = "The version must match the pattern '" + VALID_VERSION_PATTERN + "'.";
+    String VALID_VERSION_EXAMPLE = "v1";
+
     int VALID_VERSION_MIN_LENGTH = 1;
     int VALID_VERSION_MAX_LENGTH = 10;
+    String VALID_VERSION_LENGTH_MSG = "The length of an api version must be between "
+            + VALID_VERSION_MIN_LENGTH + " and " + VALID_VERSION_MAX_LENGTH + " characters.";
 
     @Schema(
             name = "apiVersion",

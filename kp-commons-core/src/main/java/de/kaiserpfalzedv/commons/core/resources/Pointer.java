@@ -23,9 +23,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
 
 /**
  * ResourcePointer -- A single resource definition pointing to a unique resource on the server.
@@ -59,13 +61,16 @@ public class Pointer implements ResourcePointer {
             name = "kind",
             description = "The type of the resource",
             required = true,
-            example = "Resource",
-            defaultValue = "Resource",
-            minLength = 1,
-            maxLength = 100
+            example = HasName.VALID_NAME_EXAMPLE,
+            pattern = HasName.VALID_NAME_PATTERN,
+            minLength = HasName.VALID_NAME_MIN_LENGTH,
+            maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
     @ToString.Include
     @EqualsAndHashCode.Include
+    @NonNull
+    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String kind;
 
     @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
@@ -73,40 +78,46 @@ public class Pointer implements ResourcePointer {
             name = "apiVersion",
             description = "The version of this resource",
             required = true,
-            example = "v1",
-            defaultValue = "v1",
-            minLength = 3,
-            maxLength = 100
+            example = HasApiVersion.VALID_VERSION_EXAMPLE,
+            defaultValue = HasApiVersion.VALID_VERSION_EXAMPLE,
+            minLength = HasApiVersion.VALID_VERSION_MIN_LENGTH,
+            maxLength = HasApiVersion.VALID_VERSION_MAX_LENGTH
     )
     @Builder.Default
-    private String apiVersion = "v1";
+    @Length(min = HasApiVersion.VALID_VERSION_MIN_LENGTH, max = HasApiVersion.VALID_VERSION_MAX_LENGTH, message = HasApiVersion.VALID_VERSION_LENGTH_MSG)
+    @Pattern(regexp = HasApiVersion.VALID_VERSION_PATTERN, message = HasApiVersion.VALID_VERSION_PATTERN_MSG)
+    private String apiVersion = HasApiVersion.VALID_VERSION_EXAMPLE;
 
     @Column(name = "NAMESPACE", length = 100, nullable = false)
     @Schema(
             name = "nameSpace",
             description = "The namespace (group) of this resource",
             required = true,
-            example = "default",
-            defaultValue = "default",
-            minLength = 1,
-            maxLength = 100
+            example = HasName.VALID_NAME_EXAMPLE,
+            pattern = HasName.VALID_NAME_PATTERN,
+            minLength = HasName.VALID_NAME_MIN_LENGTH,
+            maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
-    @Builder.Default
     @ToString.Include
     @EqualsAndHashCode.Include
-    private String nameSpace = "default";
+    @NonNull
+    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
+    private String nameSpace;
 
     @Column(name = "NAME", length = 100, nullable = false)
     @Schema(
             name = "name",
             description = "The unique name of this resource within the namespace",
             required = true,
-            example = "name",
-            minLength = 1,
-            maxLength = 100
+            example = HasName.VALID_NAME_EXAMPLE,
+            minLength = HasName.VALID_NAME_MIN_LENGTH,
+            maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
     @ToString.Include
     @EqualsAndHashCode.Include
+    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String name;
 
 

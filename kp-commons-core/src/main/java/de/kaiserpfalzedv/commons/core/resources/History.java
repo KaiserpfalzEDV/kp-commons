@@ -19,10 +19,13 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
 import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -51,21 +54,35 @@ public class History implements Serializable, Cloneable {
             name = "TimeStamp",
             description = "The timestamp of the change.",
             required = true,
-            example = "2022-01-04T21:51:00.000000Z",
-            defaultValue = "now"
+            defaultValue = "now",
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
+    @Length(
+            min = TimeStampPattern.VALID_LENGTH,
+            max = TimeStampPattern.VALID_LENGTH,
+            message = TimeStampPattern.VALID_LENGTH_MSG
+    )
+    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     private final OffsetDateTime timeStamp = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Schema(
             name = "Status",
             description = "The resource status after the change.",
             required = true,
-            example = "Not specified",
-            defaultValue = "Not specified"
+            defaultValue = "not-specified",
+            example = HasName.VALID_NAME_EXAMPLE,
+            pattern = HasName.VALID_NAME_PATTERN,
+            minLength = HasName.VALID_NAME_MIN_LENGTH,
+            maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
     @Builder.Default
-    private final String status = "Not specified";
+    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
+    private final String status = "not-specified";
 
     @Schema(
             name = "Message",

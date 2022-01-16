@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -31,12 +30,15 @@ import javax.validation.constraints.Size;
  * @since 0.1.0  2021-04-18
  */
 public interface HasName {
-    /**
-     * This is the pattern for a valid name.
-     */
     String VALID_NAME_PATTERN = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$";
+    String VALID_NAME_PATTERN_MSG = "The string must match the pattern '" + VALID_NAME_PATTERN + "'";
+
     int VALID_NAME_MIN_LENGTH = 3;
     int VALID_NAME_MAX_LENGTH = 100;
+    String VALID_NAME_LENGTH_MSG = "The length of the string must be between "
+            + VALID_NAME_MIN_LENGTH + " and " + VALID_NAME_MAX_LENGTH + " characters long.";
+
+    String VALID_NAME_EXAMPLE = "valid-name";
 
     @Schema(
             name = "name",
@@ -44,10 +46,9 @@ public interface HasName {
             pattern = VALID_NAME_PATTERN,
             minLength = VALID_NAME_MIN_LENGTH,
             maxLength = VALID_NAME_MAX_LENGTH,
-            example = "klenkes74"
+            example = VALID_NAME_EXAMPLE
     )
-    @NotBlank(message = "The name must not be empty.")
-    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = "The name is either too long or to short.")
-    @Pattern(regexp = VALID_NAME_PATTERN, message = "The name must follow the rules of an valid domain name.")
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = VALID_NAME_PATTERN, message = VALID_NAME_PATTERN_MSG)
     String getName();
 }

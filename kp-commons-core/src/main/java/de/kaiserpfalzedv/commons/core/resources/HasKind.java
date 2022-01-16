@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -29,20 +28,19 @@ import static de.kaiserpfalzedv.commons.core.resources.HasName.*;
  * HasKind -- The object has a kind.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.0.2  2022-01-16
+ * @version 2.1.0  2022-01-16
  * @since 2.0.2  2022-01-16
  */
 public interface HasKind {
     @Schema(
             name = "kind",
             description = "The kind of a resource.",
+            example = VALID_NAME_EXAMPLE,
             pattern = VALID_NAME_PATTERN,
             minLength = VALID_NAME_MIN_LENGTH,
-            maxLength = VALID_NAME_MAX_LENGTH,
-            example = "Resource"
+            maxLength = VALID_NAME_MAX_LENGTH
     )
-    @NotBlank(message = "The kind must not be empty.")
-    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = "The kind is either too long or to short.")
-    @Pattern(regexp = VALID_NAME_PATTERN, message = "The kind must follow the rules of an valid domain name.")
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = VALID_NAME_PATTERN, message = VALID_NAME_PATTERN_MSG)
     String getKind();
 }

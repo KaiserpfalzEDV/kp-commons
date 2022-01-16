@@ -37,8 +37,8 @@ import java.util.UUID;
  *
  * @param <D> The data set provided by this resource.
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 2.1.0  2022-01-16
  * @since 2.0.0  2021-05-24
- * @version 2.0.2  2021-01-04
  */
 @MappedSuperclass
 @SuperBuilder(setterPrefix = "with", toBuilder = true)

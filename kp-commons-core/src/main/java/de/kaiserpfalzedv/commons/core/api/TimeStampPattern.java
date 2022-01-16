@@ -15,24 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.resources;
-
-import java.io.Serializable;
-import java.util.UUID;
+package de.kaiserpfalzedv.commons.core.api;
 
 /**
- * HasId --
+ * OffsetDateTimeStampValidation --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.1.0  2022-01-16
- * @since 0.1.0  2021-04-18
+ * @since 2.0.0  2022-01-17
  */
-public interface HasId extends Serializable {
-    String VALID_UUID_PATTERN = "^[a-zA-Z0-9]{8}-([a-zA-Z0-9]{4}-){3}[a-zA-Z0-9]{12}$";
-    String VALID_UUID_PATTERN_MSG = "The UUID pattern must match '" + VALID_UUID_PATTERN + "'";
-    int VALID_UUID_LENGTH = 36;
-    String VALID_UUID_LENGTH_MSG = "The UUID must be exactely 36 characters long.";
-    String VALID_UUID_EXAMPLE = "caae022d-5728-4cb2-9245-b8c1ea03e380";
-
-    UUID getId();
+public interface TimeStampPattern {
+    String VALID_PATTERN = "^[0-9]{4}(-[0-9]{2}){2}T([0-9]{2}:){2}[0-9]{2}.[0-9]{6}+[0-9]{2}:[0-9]{2}$";
+    String VALID_PATTERN_MSG = "The timestamp must match the pattern '" + VALID_PATTERN + "'";
+    int VALID_LENGTH = 32;
+    String VALID_LENGTH_MSG = "The timestamp must be exactely 32 characters long.";
+    String VALID_EXAMPLE = "2022-01-04T21:51:00.000000+01:00";
 }

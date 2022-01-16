@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -39,10 +38,9 @@ public interface HasNameSpace {
             pattern = VALID_NAME_PATTERN,
             minLength = VALID_NAME_MIN_LENGTH,
             maxLength = VALID_NAME_MAX_LENGTH,
-            example = "klenkes74"
+            example = VALID_NAME_EXAMPLE
     )
-    @NotBlank(message = "The name space must not be empty.")
-    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = "The name space is either too long or to short.")
-    @Pattern(regexp = VALID_NAME_PATTERN, message = "The name space must follow the rules of an valid domain name.")
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = VALID_NAME_PATTERN, message = VALID_NAME_PATTERN_MSG)
     String getNameSpace();
 }

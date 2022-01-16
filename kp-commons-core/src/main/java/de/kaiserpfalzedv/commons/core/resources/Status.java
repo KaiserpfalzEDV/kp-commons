@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -53,10 +54,12 @@ public class Status implements Serializable, Cloneable {
             required = true,
             example = "0",
             defaultValue = "0",
-            minimum = "0"
+            minimum = "0",
+            maxItems = Integer.MAX_VALUE
     )
     @Builder.Default
     @ToString.Include
+    @Range(min = 0, max = Integer.MAX_VALUE, message = "The observed generation must be between 0 and " + Integer.MAX_VALUE)
     Integer observedGeneration = 0;
 
     @ElementCollection(fetch = FetchType.EAGER)

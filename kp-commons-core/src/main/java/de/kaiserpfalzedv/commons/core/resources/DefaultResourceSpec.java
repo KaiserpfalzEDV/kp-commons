@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.store.StoreService;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Transient;
@@ -61,6 +62,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
+    @BsonIgnore
     public Optional<String> getProperty(final String key) {
         return Optional.ofNullable(getProperties().get(key));
     }
@@ -73,6 +75,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
+    @BsonIgnore
     public String[] getDefaultProperties() {
         throw new UnsupportedOperationException();
     }
@@ -88,6 +91,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
+    @BsonIgnore
     public Optional<ResourcePointer> getResourcePointer(final String key) {
         try {
             String property = getProperty(key).orElseThrow();
@@ -100,6 +104,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
 
     @Transient
     @JsonIgnore
+    @BsonIgnore
     public List<ResourcePointer> getResourcePointers(final String key) {
         try {
             String property = getProperty(key).orElseThrow();
