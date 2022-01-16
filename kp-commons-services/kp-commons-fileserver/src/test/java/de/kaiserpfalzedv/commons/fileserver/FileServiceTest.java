@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.fileserver;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -39,11 +40,11 @@ import static io.restassured.RestAssured.given;
 @Slf4j
 public class FileServiceTest {
     @Test
+    @TestSecurity(user = "user", roles = "user")
     public void shouldReturnFullListWhenCalledWithoutParameters() {
         logTest("list-files");
 
         given()
-                .auth().basic("user", "userpassword")
                 .when()
                 .get()
                 .prettyPeek()

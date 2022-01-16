@@ -26,9 +26,16 @@ import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import io.quarkus.panache.common.Sort;
 import io.quarkus.security.identity.SecurityIdentity;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.info.Contact;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.eclipse.microprofile.openapi.annotations.info.License;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirements;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.annotation.PostConstruct;
@@ -56,6 +63,23 @@ import java.util.stream.Stream;
 @Path("/api/v1/file")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@OpenAPIDefinition(
+        info = @Info(
+                title = "KP FileService",
+                version = "1.0.0",
+                description = "This is a generic fileservice for storing files",
+                contact = @Contact(
+                        name = "Kaiserpfalz EDV-Service Tech Support",
+                        email = "tech@kaiserpfalz-edv.de",
+                        url = "https://www.kaiserpfalz-edv.de"
+                ),
+                license = @License(
+                        name = "GPL v3 or newer",
+                        url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+                ),
+                termsOfService = "https://www.kaiserpfalz-edv.de/impressum"
+        )
+)
 public class FileService {
     @Inject
     JPAFileRepository repository;
@@ -80,10 +104,14 @@ public class FileService {
     @Path("/")
     @RolesAllowed({"user", "admin"})
     @NoCache
+    @Operation(summary = "List all files available.", description = "Returns a list of files.")
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Ok found."),
             @APIResponse(responseCode = "403", description = "Forbidden."),
             @APIResponse(responseCode = "404", description = "Not found.")
+    })
+    @SecurityRequirements({
+            @SecurityRequirement(name = "basic", scopes = {"user", "admin"})
     })
     public List<FileResource> index(
             @Schema(

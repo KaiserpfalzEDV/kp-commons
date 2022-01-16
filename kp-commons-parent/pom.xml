@@ -554,7 +554,7 @@
             <id>quarkus</id>
             <activation>
                 <file>
-                    <exists>src/test/resources/application.properties</exists>
+                    <exists>src/main/resources/application.yaml</exists>
                 </file>
             </activation>
 

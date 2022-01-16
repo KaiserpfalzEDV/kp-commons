@@ -192,6 +192,9 @@ quarkus:
     hibernate-envers: &envers-dev
       store-data-at-delete: true
 
+    http:
+      auth:
+        basic: true
 
     log: &log-dev
       console:

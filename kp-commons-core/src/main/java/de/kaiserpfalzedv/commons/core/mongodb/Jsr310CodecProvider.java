@@ -33,7 +33,6 @@ import io.github.cbartosiak.bson.codecs.jsr310.zoneddatetime.ZonedDateTimeAsDocu
 import io.github.cbartosiak.bson.codecs.jsr310.zoneid.ZoneIdAsStringCodec;
 import io.github.cbartosiak.bson.codecs.jsr310.zoneoffset.ZoneOffsetAsStringCodec;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import org.apache.james.mime4j.dom.datetime.DateTime;
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -55,8 +54,6 @@ public class Jsr310CodecProvider implements CodecProvider {
             return (Codec<T>) new OffsetDateTimeAsDocumentCodec();
         } else if (clazz == OffsetTime.class) {
             return (Codec<T>) new OffsetDateTimeAsDocumentCodec();
-        } else if (clazz == DateTime.class) {
-            return (Codec<T>) new LocalDateTimeAsDocumentCodec();
         } else if (clazz == LocalDateTime.class) {
             return (Codec<T>) new LocalDateTimeAsDocumentCodec();
         } else if (clazz == LocalDate.class) {
