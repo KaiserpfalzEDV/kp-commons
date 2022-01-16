@@ -18,8 +18,8 @@
 package de.kaiserpfalzedv.commons.fileserver;
 
 import de.kaiserpfalzedv.commons.core.api.About;
-import de.kaiserpfalzedv.commons.core.files.File;
 import de.kaiserpfalzedv.commons.core.files.FileResource;
+import de.kaiserpfalzedv.commons.core.files.JPAFile;
 import de.kaiserpfalzedv.commons.core.files.JPAFileRepository;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
@@ -78,7 +78,7 @@ public class FileService {
     )
     @GET
     @Path("/")
-    @RolesAllowed({"player", "gm", "orga", "judge", "admin"})
+    @RolesAllowed({"user", "admin"})
     @NoCache
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Ok found."),
@@ -144,7 +144,7 @@ public class FileService {
         String owned = identity.getPrincipal().getName();
         Sort order = calculateSort(sort);
 
-        Stream<File> data = repository.streamAll(order).filter(d -> d.getOwner().equalsIgnoreCase(owned));
+        Stream<JPAFile> data = repository.streamAll(order).filter(d -> d.getOwner().equalsIgnoreCase(owned));
 
         if (owner != null) {
             data = data.filter(d -> d.getOwner().equals(owner));
@@ -193,9 +193,8 @@ public class FileService {
             @QueryParam("nameSpace") final String nameSpace,
             @NotNull final FileResource input
     ) {
-        File.FileBuilder data = File.builder().withFile(input.getSpec());
+        JPAFile store = JPAFile.builder().withFile(input.getSpec()).build();
 
-        File store = data.build();
         repository.persistAndFlush(store);
 
         return resource(store.getId());
@@ -214,7 +213,7 @@ public class FileService {
             )
             @PathParam("id") @NotNull final UUID id
     ) {
-        File data = repository.findById(id);
+        JPAFile data = repository.findById(id);
 
         if (data == null) {
             throw new NotFoundException("No file with ID '" + id + "' found.");

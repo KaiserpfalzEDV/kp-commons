@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ public class InvalidFileException extends BaseException {
      *
      * @param file The invalid file
      */
-    public InvalidFileException(final File file) {
+    public InvalidFileException(final JPAFile file) {
         super(String.format("The file '%s/%s' has no data set!", file.getNameSpace(), file.getName()));
     }
 }

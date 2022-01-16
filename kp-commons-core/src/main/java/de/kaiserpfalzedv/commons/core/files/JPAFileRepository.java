@@ -23,5 +23,5 @@ import javax.enterprise.context.ApplicationScoped;
 import java.util.UUID;
 
 @ApplicationScoped
-public class JPAFileRepository implements PanacheRepositoryBase<File, UUID> {
+public class JPAFileRepository implements PanacheRepositoryBase<JPAFile, UUID> {
 }

@@ -18,89 +18,39 @@
 package de.kaiserpfalzedv.commons.core.files;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.kaiserpfalzedv.commons.core.jpa.AbstractEntity;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.jetbrains.annotations.NotNull;
+import de.kaiserpfalzedv.commons.core.api.HasId;
 
-import javax.persistence.*;
+import javax.persistence.Transient;
 import java.io.OutputStream;
+import java.io.Serializable;
 
 /**
- * File -- A file saved inside the database (normally image files).
+ * File --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.1.0  2021-03-26
+ * @since 2.0.0  2022-01-16
  */
-@RegisterForReflection
-@Entity
-@Table(
-        name = "FILES",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "FILES_ID_UK", columnNames = "ID")
-        }
-)
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = File.FileBuilder.class)
-@SuperBuilder(toBuilder = true, setterPrefix = "with")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@ToString(callSuper = true)
-public class File extends AbstractEntity implements Comparable<File>, Cloneable {
-    @Column(name = "NAMESPACE", length = 50, nullable = false)
-    private String nameSpace;
+public interface File extends Serializable, Cloneable, HasId, Comparable<JPAFile> {
 
-    @Column(name = "OWNER", length = 100, nullable = false)
-    private String owner;
+    String getNameSpace();
 
-    @Embedded
-    private FileData file;
-
+    String getOwner();
 
     @Transient
     @JsonIgnore
-    public String getName() {
-        return file.getName();
-    }
+    String getName();
 
     @Transient
     @JsonIgnore
-    public String getMediaType() {
-        return file.getMediaType();
-    }
+    String getMediaType();
 
     @Transient
     @JsonIgnore
-    public byte[] getData() {
-        return file.getData();
-    }
+    byte[] getData();
 
     @Transient
     @JsonIgnore
-    public OutputStream getFileStream() {
-        return file.getDataStream();
-    }
+    OutputStream getFileStream();
 
-    @Override
-    public int compareTo(@NotNull File o) {
-        return new CompareToBuilder()
-                .append(nameSpace, o.nameSpace)
-                .append(owner, o.owner)
-                .append(file, o.file)
-                .toComparison();
-    }
-
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    @Override
-    public File clone() throws CloneNotSupportedException {
-        return toBuilder().build();
-    }
+    FileData getFile();
 }
