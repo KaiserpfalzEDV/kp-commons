@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,13 +59,13 @@ public class ResourceBoundleTranslator implements Translator, MessageSource {
         this("messages");
     }
 
-    public ResourceBoundleTranslator(@NotNull final String defaultBundle) {
+    public ResourceBoundleTranslator(final String defaultBundle) {
         this.defaultBundle = defaultBundle;
     }
 
 
     @Override
-    public String getMessage(String key, @NotNull Object[] params, Locale locale) throws NoSuchMessageException {
+    public String getMessage(String key, Object[] params, Locale locale) throws NoSuchMessageException {
         return getTranslation(key, locale, params);
     }
 

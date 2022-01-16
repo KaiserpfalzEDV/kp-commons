@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.discord.JDA;
 
 import de.kaiserpfalzedv.commons.core.discord.DiscordMessageHandler;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.discord.DiscordPluginNotAllowedException;
 import de.kaiserpfalzedv.commons.discord.DontWorkOnDiscordEventException;
 import de.kaiserpfalzedv.commons.discord.IgnoreBotsException;
@@ -145,12 +146,18 @@ public class DiscordDispatcher extends ListenerAdapter {
     @NotNull
     private Guild generateNewGuildEntry(final String name) {
         Guild result = Guild.builder()
-                .withKind(Guild.KIND)
-                .withApiVersion(Guild.API_VERSION)
-                .withNameSpace(Guild.DISCORD_NAMESPACE)
-                .withName(name)
-
-                .withMetadata(Metadata.builder().build())
+                .withMetadata(
+                        Metadata.builder()
+                                .withIdentity(
+                                        Pointer.builder()
+                                                .withKind(Guild.KIND)
+                                                .withApiVersion(Guild.API_VERSION)
+                                                .withNameSpace(Guild.DISCORD_NAMESPACE)
+                                                .withName(name)
+                                                .build()
+                                )
+                                .build()
+                )
 
                 .build();
 

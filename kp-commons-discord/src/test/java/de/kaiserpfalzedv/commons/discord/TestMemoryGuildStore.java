@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.discord;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
 import de.kaiserpfalzedv.commons.discord.guilds.Guild;
 import de.kaiserpfalzedv.commons.discord.guilds.GuildData;
@@ -58,14 +59,9 @@ public class TestMemoryGuildStore {
     private static final String OTHER_PREFIX = "other!";
 
     private static final Guild DATA = Guild.builder()
-            .withKind(Guild.KIND)
-            .withApiVersion(Guild.API_VERSION)
-            .withNameSpace(DATA_NAMESPACE)
-            .withName(DATA_NAME)
-            .withUid(DATA_UID)
 
             .withMetadata(
-                    generateMetadata(DATA_CREATED, null)
+                    generateMetadata(DATA_NAMESPACE, DATA_NAME, DATA_UID, DATA_CREATED, null)
             )
             .withSpec(
                     GuildData.builder()
@@ -76,11 +72,8 @@ public class TestMemoryGuildStore {
             .build();
 
     private static final Guild OTHER = Guild.builder()
-            .withNameSpace(OTHER_NAMESPACE)
-            .withName(OTHER_NAME)
-            .withUid(OTHER_UID)
             .withMetadata(
-                    generateMetadata(OTHER_CREATED, null)
+                    generateMetadata(OTHER_NAMESPACE, OTHER_NAME, OTHER_UID, OTHER_CREATED, null)
             )
             .withSpec(
                     GuildData.builder()
@@ -113,10 +106,20 @@ public class TestMemoryGuildStore {
      * @return The generated metadata
      */
     private static Metadata generateMetadata(
+            final String nameSpace, final String name, final UUID uid,
             final OffsetDateTime created,
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
+                .withIdentity(
+                        Pointer.builder()
+                                .withKind(Guild.KIND)
+                                .withApiVersion(Guild.API_VERSION)
+                                .withNameSpace(nameSpace)
+                                .withName(name)
+                                .build()
+                )
+                .withUid(uid)
                 .withCreated(created)
                 .withDeleted(deleted)
 

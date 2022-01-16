@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.discord;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.user.User;
 import de.kaiserpfalzedv.commons.core.user.UserStoreService;
 
@@ -92,13 +93,16 @@ public interface DiscordPluginCommand {
             annotations.put("discord-avatar-url", user.getEffectiveAvatarUrl());
 
             result = User.builder()
-                    .withKind(User.KIND)
-                    .withApiVersion(User.API_VERSION)
-                    .withNameSpace(DISCORD_NAMESPACE)
-                    .withName(context.getUser().getName())
-
                     .withMetadata(
                             Metadata.builder()
+                                    .withIdentity(
+                                            Pointer.builder()
+                                                    .withKind(User.KIND)
+                                                    .withApiVersion(User.API_VERSION)
+                                                    .withNameSpace(DISCORD_NAMESPACE)
+                                                    .withName(context.getUser().getName())
+                                                    .build()
+                                    )
                                     .withAnnotations(annotations)
                                     .build()
                     )

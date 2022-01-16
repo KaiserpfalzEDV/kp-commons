@@ -45,7 +45,7 @@ public class FileServiceTest {
         given()
                 .auth().basic("user", "userpassword")
                 .when()
-                .get("/api/v1/files")
+                .get()
                 .prettyPeek()
                 .then()
                 .statusCode(200);
