@@ -109,16 +109,8 @@ public class Pointer implements ResourcePointer {
     @EqualsAndHashCode.Include
     private String name;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pointer)) return false;
-        Pointer that = (Pointer) o;
-        return getKind().equals(that.getKind())
-                && getNameSpace().equals(that.getNameSpace())
-                && getName().equals(that.getName());
-    }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Pointer clone() {
         return toBuilder().build();

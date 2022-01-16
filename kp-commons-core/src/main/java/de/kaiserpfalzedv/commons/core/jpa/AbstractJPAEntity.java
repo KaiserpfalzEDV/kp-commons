@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.jpa;
 
-import de.kaiserpfalzedv.commons.core.api.HasId;
+import de.kaiserpfalzedv.commons.core.resources.HasId;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,23 +30,26 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@MappedSuperclass
 @SuperBuilder(toBuilder = true, setterPrefix = "with")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
-@MappedSuperclass
-public abstract class AbstractEntity implements Serializable, Cloneable, HasId {
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
+public abstract class AbstractJPAEntity implements HasId, Serializable, Cloneable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(generator = "uuid2")
     @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
     @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
+    @ToString.Include
     protected UUID id;
 
     @Version
     @Column(name = "VERSION", nullable = false)
     @Builder.Default
+    @ToString.Include
     protected Integer version = 0;
 
     @CreationTimestamp
@@ -56,16 +59,12 @@ public abstract class AbstractEntity implements Serializable, Cloneable, HasId {
     @Column(name = "MODIFIED")
     protected OffsetDateTime modified;
 
-    public int getVersion() {
-        return version;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractEntity)) return false;
-        AbstractEntity entity = (AbstractEntity) o;
+        if (!(o instanceof AbstractJPAEntity)) return false;
+        AbstractJPAEntity entity = (AbstractJPAEntity) o;
         return id.equals(entity.getId());
     }
 
@@ -75,8 +74,8 @@ public abstract class AbstractEntity implements Serializable, Cloneable, HasId {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        AbstractEntity result = (AbstractEntity) super.clone();
+    protected AbstractJPAEntity clone() throws CloneNotSupportedException {
+        AbstractJPAEntity result = (AbstractJPAEntity) super.clone();
 
         result.id = id;
         result.version = version;

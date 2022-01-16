@@ -15,13 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.files;
+package de.kaiserpfalzedv.commons.fileserver.jpa;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * JPAFileRepository -- A generic repository to handle files.
+ *
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 2.1.0  2022-01-16
+ * @since 2.1.0  2022-01-16
+ */
 @ApplicationScoped
 public class JPAFileRepository implements PanacheRepositoryBase<JPAFile, UUID> {
+    /**
+     * Retrieves the file by namespace and name.
+     *
+     * @param nameSpace NameSpace of the file to retrieve.
+     * @param name      Name of the file to retrieve.
+     * @return The file retrieved.
+     */
+    public Optional<JPAFile> findByNameSpaceAndName(
+            @NotNull final String nameSpace,
+            @NotNull final String name
+    ) {
+        return find("nameSpace = ?1 and name = ?2", nameSpace, name)
+                .firstResultOptional();
+    }
 }

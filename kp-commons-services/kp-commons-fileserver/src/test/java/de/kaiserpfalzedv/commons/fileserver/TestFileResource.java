@@ -15,8 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.files;
+package de.kaiserpfalzedv.commons.fileserver;
 
+import de.kaiserpfalzedv.commons.core.files.File;
+import de.kaiserpfalzedv.commons.core.files.FileData;
+import de.kaiserpfalzedv.commons.core.files.FileDescription;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import lombok.extern.slf4j.Slf4j;
@@ -45,15 +48,19 @@ public class TestFileResource {
     private static final String DATA_API_KEY = "test-api-key";
     private static final String BASE64_DATA = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK";
 
-    private static final FileResource DATA = FileResource.builder()
+    private static final File DATA = File.builder()
             .withMetadata(
                     generateMetadata(DATA_CREATED)
             )
             .withSpec(
                     FileData.builder()
-                            .withName(DATA_API_KEY)
-                            .withMediaType(MediaType.APPLICATION_JSON)
-                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                            .withFile(
+                                    FileDescription.builder()
+                                            .withName(DATA_API_KEY)
+                                            .withMediaType(MediaType.APPLICATION_JSON)
+                                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                                            .build()
+                            )
                             .build()
             )
             .build();
@@ -86,8 +93,8 @@ public class TestFileResource {
         return Metadata.builder()
                 .withIdentity(
                         Pointer.builder()
-                                .withKind(FileResource.KIND)
-                                .withApiVersion(FileResource.VERSION)
+                                .withKind(File.KIND)
+                                .withApiVersion(File.API_VERSION)
                                 .withNameSpace(DATA_NAMESPACE)
                                 .withName(DATA_NAME)
                                 .build()

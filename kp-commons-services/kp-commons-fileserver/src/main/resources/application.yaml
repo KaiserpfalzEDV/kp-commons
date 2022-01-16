@@ -74,7 +74,7 @@ quarkus:
     db-kind: mariadb
     jdbc:
       url: "jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}"
-      transactions: XA
+      transactions: enabled
       transaction-isolation-level: REPEATABLE_READ
       flush-on-close: true
       detect-statement-leaks: true
@@ -104,8 +104,8 @@ quarkus:
     min-level: ALL
     category:
       "de.kaiserpfalzedv":
-        level: INFO
-      http-problem:
+        level: TRACE
+      "http-problem":
         level: INFO
 
   logging-manager:
@@ -198,14 +198,14 @@ quarkus:
 
     log: &log-dev
       console:
-        json: false
         enable: true
+        json: false
       level: INFO
       min-level: TRACE
       category:
         "de.kaiserpfalzedv":
-          level: DEBUG
-        http-problem:
+          level: TRACE
+        "http-problem":
           level: INFO
     security: &security-dev
       users:
@@ -221,7 +221,6 @@ quarkus:
             user: user
             admin: player,gm,orga,admin,metrics
             metrics: metrics
-
 
 "%test":
   quarkus:

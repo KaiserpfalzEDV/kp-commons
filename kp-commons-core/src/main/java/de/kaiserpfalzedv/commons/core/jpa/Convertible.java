@@ -15,17 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.api;
-
-import java.io.Serializable;
-import java.util.UUID;
+package de.kaiserpfalzedv.commons.core.jpa;
 
 /**
- * HasId --
+ * Convertible -- This object can be converted.
+ * <p>
+ * The conversion to the B representation is specified by this interface.
+ * The conversion from B to A should be a static method from(B data) returning
+ * the new object.
  *
+ * @param <A> First representation.
+ * @param <B> Second representation.
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.1.0  2021-04-18
+ * @version 2.0.2  2022-01-16
+ * @since 2.0.0  2022-01-16
  */
-public interface HasId extends Serializable {
-    UUID getId();
+public interface Convertible<A, B> {
+    /**
+     * Converts the resource to the data representation.
+     *
+     * @return the converted data resource.
+     */
+    B to();
 }

@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.files;
+package de.kaiserpfalzedv.commons.fileserver;
 
 import de.kaiserpfalzedv.commons.core.api.BaseException;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
 
 /**
  * InvalidFileException -- The file has no data set.

@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 2.0.0  2021-05-24
  */
 @Slf4j
-public class TestMemoryFileResourceStore {
+public class TestMemoryFileStore {
     private static final UUID DATA_UID = UUID.randomUUID();
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
@@ -53,28 +53,36 @@ public class TestMemoryFileResourceStore {
     private static final String OTHER_NAME = "otherName";
     private static final OffsetDateTime OTHER_CREATED = OffsetDateTime.now(Clock.systemUTC());
 
-    private static final FileResource DATA = FileResource.builder()
+    private static final File DATA = File.builder()
             .withMetadata(
                     generateMetadata(DATA_NAMESPACE, DATA_NAME, DATA_UID, DATA_CREATED, null)
             )
             .withSpec(
                     FileData.builder()
-                            .withName(DATA_API_KEY)
-                            .withMediaType(MediaType.APPLICATION_JSON)
-                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                            .withFile(
+                                    FileDescription.builder()
+                                            .withName(DATA_API_KEY)
+                                            .withMediaType(MediaType.APPLICATION_JSON)
+                                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                                            .build()
+                            )
                             .build()
             )
             .build();
 
-    private static final FileResource OTHER = FileResource.builder()
+    private static final File OTHER = File.builder()
             .withMetadata(
                     generateMetadata(OTHER_NAMESPACE, OTHER_NAME, OTHER_UID, OTHER_CREATED, null)
             )
             .withSpec(
                     FileData.builder()
-                            .withName(DATA_API_KEY)
-                            .withMediaType(MediaType.APPLICATION_JSON)
-                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                            .withFile(
+                                    FileDescription.builder()
+                                            .withName(DATA_API_KEY)
+                                            .withMediaType(MediaType.APPLICATION_JSON)
+                                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                                            .build()
+                            )
                             .build()
             )
             .build();
@@ -83,26 +91,26 @@ public class TestMemoryFileResourceStore {
     /**
      * service under test.
      */
-    private final FileResourceStoreService sut;
+    private final FileStoreService sut;
 
-    public TestMemoryFileResourceStore() {
-        this.sut = new MemoryFileResourceStore();
+    public TestMemoryFileStore() {
+        this.sut = new MemoryFileStore();
     }
 
     @Test
     void shouldBeAMemoryUserStoreService() {
-        MDC.put("test", "store-is-memory-based");
+        logTest("store-is-memory-based");
 
-        assertTrue(sut instanceof MemoryFileResourceStore);
+        assertTrue(sut instanceof MemoryFileStore);
     }
 
     @Test
     void shouldSaveNewDataWhenDataIsNotStoredYet() {
-        MDC.put("test", "store-new-data");
+        logTest("store-new-data");
 
         sut.save(DATA);
 
-        Optional<FileResource> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
+        Optional<File> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
         assertTrue(result.isPresent(), "The data should have been stored!");
@@ -111,13 +119,13 @@ public class TestMemoryFileResourceStore {
 
     @Test
     void shouldSaveNewDataWhenDataIsAlreadyStoredYet() {
-        MDC.put("test", "update-stored-data");
+        logTest("update-stored-data");
 
         sut.save(DATA); // store data first time
 
         sut.save(DATA); // update data
 
-        Optional<FileResource> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
+        Optional<File> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
         assertTrue(result.isPresent(), "The data should have been stored!");
@@ -126,41 +134,15 @@ public class TestMemoryFileResourceStore {
         Assertions.assertEquals(1, result.get().getGeneration());
     }
 
-    /**
-     * Sets up a metadata set.
-     *
-     * @return The generated metadata
-     */
-    private static Metadata generateMetadata(
-            final String nameSpace,
-            final String name,
-            final UUID uid,
-            final OffsetDateTime created,
-            @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
-    ) {
-        return Metadata.builder()
-                .withIdentity(Pointer.builder()
-                        .withKind(FileResource.KIND)
-                        .withApiVersion(FileResource.VERSION)
-                        .withNameSpace(nameSpace)
-                        .withName(name)
-                        .build()
-                )
-                .withUid(uid)
-                .withCreated(created)
-                .withDeleted(deleted)
-                .build();
-    }
-
     @Test
     public void shouldSaveOtherDataSetsWhenDataIsAlreadyStored() {
-        MDC.put("test", "save-other-data");
+        logTest("save-other-data");
 
         sut.save(DATA);
 
         sut.save(OTHER);
 
-        Optional<FileResource> result = sut.findByUid(OTHER_UID);
+        Optional<File> result = sut.findByUid(OTHER_UID);
 
         assertTrue(result.isPresent(), "there should be a user resource defined by this UID!");
         assertEquals(OTHER, result.get());
@@ -168,86 +150,70 @@ public class TestMemoryFileResourceStore {
 
     @Test
     public void shouldDeleteByNameWhenTheDataExists() {
-        MDC.put("test", "delete-existing-by-name");
+        logTest("delete-existing-by-name");
 
         sut.save(DATA);
         sut.remove(DATA_NAMESPACE, DATA_NAME);
 
-        Optional<FileResource> result = sut.findByUid(DATA_UID);
+        Optional<File> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByUidWhenTheDataExists() {
-        MDC.put("test", "delete-existing-by-uid");
+        logTest("delete-existing-by-uid");
 
         sut.save(DATA);
         sut.remove(DATA_UID);
 
-        Optional<FileResource> result = sut.findByUid(DATA_UID);
+        Optional<File> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByObjectWhenTheDataExists() {
-        MDC.put("test", "delete-existing-by-uid");
+        logTest("delete-existing-by-uid");
 
         sut.save(DATA);
         sut.remove(DATA);
 
-        Optional<FileResource> result = sut.findByUid(DATA_UID);
+        Optional<File> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByNameWhenTheDataDoesNotExists() {
-        MDC.put("test", "delete-non-existing-by-name");
+        logTest("delete-non-existing-by-name");
 
         sut.remove(DATA_NAMESPACE, DATA_NAME);
 
-        Optional<FileResource> result = sut.findByUid(DATA_UID);
+        Optional<File> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByUidWhenTheDataDoesNotExists() {
-        MDC.put("test", "delete-non-existing-by-uid");
+        logTest("delete-non-existing-by-uid");
 
         sut.remove(DATA_UID);
 
-        Optional<FileResource> result = sut.findByUid(DATA_UID);
+        Optional<File> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByObjectWhenTheDataDoesNotExists() {
-        MDC.put("test", "delete-non-existing-by-uid");
+        logTest("delete-non-existing-by-uid");
 
         sut.remove(DATA);
 
-        Optional<FileResource> result = sut.findByUid(DATA_UID);
+        Optional<File> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
-    }
-
-
-    @AfterEach
-    void tearDownEach() {
-        MDC.remove("test");
-    }
-
-    @BeforeAll
-    static void setUp() {
-        MDC.put("test-class", TestMemoryFileResourceStore.class.getSimpleName());
-    }
-
-    @AfterAll
-    static void tearDown() {
-        MDC.clear();
     }
 
     @Test
     void shouldThrowOptimisticLockExceptionWhenTheNewGenerationIsNotHighEnough() {
-        MDC.put("test", "throw-optimistic-lock-exception");
+        logTest("throw-optimistic-lock-exception");
 
         sut.save(
                 DATA.toBuilder()
@@ -255,8 +221,8 @@ public class TestMemoryFileResourceStore {
                                 Metadata.builder()
                                         .withIdentity(
                                                 Pointer.builder()
-                                                        .withKind(FileResource.KIND)
-                                                        .withApiVersion(FileResource.VERSION)
+                                                        .withKind(File.KIND)
+                                                        .withApiVersion(File.API_VERSION)
                                                         .withNameSpace(DATA_NAMESPACE)
                                                         .withName(DATA_NAME)
                                                         .build()
@@ -275,4 +241,52 @@ public class TestMemoryFileResourceStore {
             // every thing is fine. We wanted this exception
         }
     }
+
+
+    /**
+     * Sets up a metadata set.
+     *
+     * @return The generated metadata
+     */
+    private static Metadata generateMetadata(
+            final String nameSpace,
+            final String name,
+            final UUID uid,
+            final OffsetDateTime created,
+            @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
+    ) {
+        return Metadata.builder()
+                .withIdentity(Pointer.builder()
+                        .withKind(File.KIND)
+                        .withApiVersion(File.API_VERSION)
+                        .withNameSpace(nameSpace)
+                        .withName(name)
+                        .build()
+                )
+                .withUid(uid)
+                .withCreated(created)
+                .withDeleted(deleted)
+                .build();
+    }
+
+    void logTest(final String test, final Object... params) {
+        MDC.put("test", test);
+        log.info("Running test. test='{}', params={}", test, params);
+    }
+
+    @AfterEach
+    void tearDownEach() {
+        MDC.remove("test");
+    }
+
+    @BeforeAll
+    static void setUp() {
+        MDC.put("test-class", TestMemoryFileStore.class.getSimpleName());
+    }
+
+    @AfterAll
+    static void tearDown() {
+        MDC.clear();
+    }
+
 }

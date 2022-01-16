@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.fileserver;
 
+import de.kaiserpfalzedv.commons.fileserver.services.FileResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
@@ -36,9 +37,10 @@ import static io.restassured.RestAssured.given;
  * @since 2.0.0  2022-01-01
  */
 @QuarkusTest
-@TestHTTPEndpoint(FileService.class)
+@TestHTTPEndpoint(FileResource.class)
 @Slf4j
-public class FileServiceTest {
+public class FileResourceTest {
+
     @Test
     @TestSecurity(user = "user", roles = "user")
     public void shouldReturnFullListWhenCalledWithoutParameters() {
@@ -47,9 +49,52 @@ public class FileServiceTest {
         given()
                 .when()
                 .get()
-                .prettyPeek()
                 .then()
                 .statusCode(200);
+    }
+
+
+    @Test
+    @TestSecurity(user = "user", roles = "user")
+    public void shouldReturnTheSelectedFileWhenGivenCorrectNameSpaceAndName() {
+        logTest("retrieve-by-namespace-and-name");
+
+        given()
+                .when()
+                .get("fileserver/liq-files-data")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @TestSecurity(user = "user", roles = "user")
+    public void shouldNotFindTheFileWhenNameSpaceOrNameDoesNotMatch() {
+        logTest("failed-retrieve-by-unknown-namespace-and-name");
+
+        given()
+                .when()
+                .get("fileserver/invalid-name")
+                .then()
+                .statusCode(404);
+
+
+        given()
+                .when()
+                .get("invalid-namespace/liq-files-data")
+                .then()
+                .statusCode(404);
+    }
+
+    @Test
+    @TestSecurity
+    public void shouldReturnNotAllowedWhenNotAuthenticated() {
+        logTest("fail-unauthenticated");
+
+        given()
+                .when()
+                .get()
+                .then()
+                .statusCode(401);
     }
 
 
@@ -61,7 +106,7 @@ public class FileServiceTest {
 
     @BeforeAll
     static void setUpLogging() {
-        MDC.put("test-class", FileServiceTest.class.getSimpleName());
+        MDC.put("test-class", FileResourceTest.class.getSimpleName());
 
         log.info("Starting test... test-class='{}'", MDC.get("test-class"));
     }

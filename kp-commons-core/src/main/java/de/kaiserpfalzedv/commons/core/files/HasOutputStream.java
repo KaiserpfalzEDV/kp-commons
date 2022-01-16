@@ -15,16 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.resources;
+package de.kaiserpfalzedv.commons.core.files;
 
-import java.io.Serializable;
+import de.kaiserpfalzedv.commons.core.api.WrappedException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
- * ResourcePointer -- Identifies a single resource.
+ * HasOutputStream -- This resource has an avatar (image).
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.1.0  2021-01-16
- * @since 2.0.0  2021-05-24
+ * @version 2.0.2  2022-01-16
+ * @since 2.0.2  2022-01-16
  */
-public interface ResourcePointer extends HasKind, HasApiVersion, HasNameSpace, HasName, Serializable, Cloneable {
+public interface HasOutputStream {
+    default OutputStream getStream(byte[] data) {
+        if (data != null) {
+            OutputStream result = new ByteArrayOutputStream();
+            try {
+                result.write(data);
+            } catch (IOException e) {
+                throw new WrappedException(e);
+            }
+
+            return result;
+        } else {
+            return null;
+        }
+    }
 }

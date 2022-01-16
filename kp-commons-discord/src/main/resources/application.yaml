@@ -1,0 +1,119 @@
+---
+#
+# Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+discord:
+  token: <token by DISCORD>
+
+quarkus:
+  application:
+    name: kp-rpg-discord-bot
+    version: ${project.version}
+  locales:
+    - en-GB
+    - en-US
+    - de-DE
+  default-locale: de_DE
+
+  http:
+    body:
+      handle-file-uploads: true
+      delete-uploaded-files-on-end: true
+    record-request-start-time: true
+    access-log:
+      enabled: true
+      pattern: common
+      exclude-pattern: /q/.*
+
+  ouauth2:
+    enabled: alse
+    client-id: <client-id>
+    client-secret: <client-secret>
+    role-claim: bot,connections,email,guilds,guilds.join,messages.read,applications.entitlements,applications.commands.update,rpc,rpc.api,rpc.notifications.read
+
+  health:
+    extensions:
+      enabled: true
+  smallrye-openapi:
+    path: /openapi
+    store-schema-directory: target
+  swagger-ui:
+    path: /docs
+    always-include: true
+    enable: true
+  jaeger:
+    enabled: true
+    metrics:
+      enabled: true
+  micrometer:
+    export:
+      json:
+        enabled: true
+
+  log:
+    metrics:
+      enabled: true
+    console:
+      json:
+        ~: true
+        pretty-print: true
+        exception-output-type: detailed_and_formatted
+
+    category:
+      "de.kaiserpfalzedv.rpg":
+        level: DEBUG
+
+
+  mongodb:
+    database: tomb
+    connection-string: tomb-mongodb
+    credentials:
+      username: <username>
+      password: <password>
+  #
+  # OpenShift deployment
+  package:
+    output-name: app
+
+  container-image:
+    build: false
+    push: false
+    registry: quay.io
+    group: klenkes74
+    builder: docker
+
+  kubernetes:
+    part-of: kp-rpg
+
+  openshift:
+    jar-directory: /deployments
+    jar-file-name: app.jar
+    part-of: kp-rpg
+    name: kp-rpg-discord-bot
+    version: ${project.version}
+
+"%dev":
+  quarkus:
+    log: &dev-log
+      console:
+        json: false
+        format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
+      category."de.kaiserpfalzedv.rpg".level=DEBUG
+#
+"%test":
+  quarkus:
+    log: *dev-log

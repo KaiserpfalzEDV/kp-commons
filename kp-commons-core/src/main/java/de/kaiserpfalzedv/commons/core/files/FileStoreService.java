@@ -15,35 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.api;
+package de.kaiserpfalzedv.commons.core.files;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import de.kaiserpfalzedv.commons.core.store.StoreService;
 
 /**
- * HasAvatar -- This resource has an avatar (image).
+ * FileStoreService -- The datastore interface for file resource data.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.1.0  2021-04-07
+ * @since 1.2.0  2021-05-24
  */
-public interface HasData {
-    byte[] getData();
-
-    OutputStream getDataStream();
-
-    default OutputStream getOutputStream(byte[] data) {
-        if (data != null) {
-            OutputStream result = new ByteArrayOutputStream();
-            try {
-                result.write(data);
-            } catch (IOException e) {
-                throw new WrappedException(e);
-            }
-
-            return result;
-        } else {
-            return null;
-        }
-    }
+public interface FileStoreService extends StoreService<File> {
 }

@@ -17,13 +17,19 @@
 
 package de.kaiserpfalzedv.commons.core.files;
 
-import de.kaiserpfalzedv.commons.core.store.StoreService;
+import java.io.OutputStream;
 
 /**
- * FileStoreService -- The datastore interface for file resource data.
+ * HasAvatar -- This resource has an avatar (image).
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-05-24
+ * @version 2.0.2  2022-01-16
+ * @since 2.0.2  2022-01-16
  */
-public interface FileResourceStoreService extends StoreService<FileResource> {
+public interface HasPreview extends HasOutputStream {
+    byte[] getPreviewData();
+
+    default OutputStream getPreviewStream() {
+        return getStream(getPreviewData());
+    }
 }

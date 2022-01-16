@@ -18,33 +18,50 @@
 package de.kaiserpfalzedv.commons.core.files;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.kaiserpfalzedv.commons.core.api.About;
-import de.kaiserpfalzedv.commons.core.resources.Resource;
+import de.kaiserpfalzedv.commons.core.resources.HasData;
+import de.kaiserpfalzedv.commons.core.resources.HasName;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import java.io.Serializable;
+
 /**
- * FileResource -- An image or any other file saved for the system..
+ * FileDescription -- The description of a single file.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.0.0  2021-12-31
- * @since 2.0.0  2021-12-31
+ * @since 2.0.0  2022-01-16
  */
+@RegisterForReflection
 @SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
-@JsonDeserialize(builder = FileResource.FileResourceBuilder.class)
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@Schema(description = "A file saved in the system.")
-public class FileResource extends Resource<FileData> {
-    public static final String KIND = "File";
-    public static final String VERSION = About.NAMESPACE + "/v1";
-    public static final String NAMESPACE = About.NAMESPACE;
+@ToString(onlyExplicitlyIncluded = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonDeserialize(builder = FileDescription.FileDescriptionBuilder.class)
+@JsonPropertyOrder({"name", "mediaType", "data"})
+@Schema(description = "Description of a single file containing of name, media type and data of the file.")
+public class FileDescription implements HasName, HasData, Serializable, Cloneable {
+    @ToString.Include
+    private String name;
+
+    @ToString.Include
+    private String mediaType;
+
+    @Schema(description = "The image itself encoded in BASE64.")
+    private byte[] data;
+
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public FileDescription clone() {
+        return toBuilder().build();
+    }
 }

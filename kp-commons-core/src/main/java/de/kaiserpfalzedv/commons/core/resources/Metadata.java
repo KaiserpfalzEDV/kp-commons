@@ -19,11 +19,13 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -57,7 +59,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Metadata.MetadataBuilder.class)
-@JsonPropertyOrder({"identity,uid,generation,owner,created,deleted,annotations,labels"})
+@JsonPropertyOrder({"identity,uid,generation,owner,created,deleted,annotations,labels,selfLink"})
 @Schema(
         name = "ResourceMetadata",
         description = "The metadata of a resource."
@@ -172,10 +174,10 @@ public class Metadata implements Serializable, Cloneable {
     )
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name="NAME")
-    @Column(name="VALUE")
-    @CollectionTable(name="ANNOTATIONS", joinColumns=@JoinColumn(name="ID"))
-    private HashMap<String, String> annotations = new HashMap<>();
+    @MapKeyColumn(name = "NAME")
+    @Column(name = "VALUE")
+    @CollectionTable(name = "ANNOTATIONS", joinColumns = @JoinColumn(name = "ID"))
+    private Map<String, String> annotations = new HashMap<>();
 
     @Schema(
             name = "labels",
@@ -186,10 +188,32 @@ public class Metadata implements Serializable, Cloneable {
     )
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name="NAME")
-    @Column(name="VALUE")
-    @CollectionTable(name="LABELS", joinColumns=@JoinColumn(name="ID"))
+    @MapKeyColumn(name = "NAME")
+    @Column(name = "VALUE")
+    @CollectionTable(name = "LABELS", joinColumns = @JoinColumn(name = "ID"))
     private Map<String, String> labels = new HashMap<>();
+
+
+    /**
+     * @return The display name of the resource.
+     */
+    @Schema(
+            name = "selfLink",
+            description = "The local part of the URL to retrieve the resource.",
+            nullable = true,
+            readOnly = true,
+            example = "/api/resource/v1/default/name",
+            minLength = 8,
+            maxLength = 100
+    )
+    @BsonProperty(value = "selfLink")
+    @JsonProperty(value = "selfLink", required = false, access = JsonProperty.Access.READ_ONLY)
+    public String getSelfLink() {
+        return String.format("/api/%s/%s/%s/%s",
+                getKind().toLowerCase(), getApiVersion().toLowerCase(),
+                getNameSpace(), getName()
+        );
+    }
 
 
     @Transient
@@ -291,6 +315,33 @@ public class Metadata implements Serializable, Cloneable {
     public String getName() {
         return identity.getName();
     }
+
+    /**
+     * Generates a metadata builder with the given identity.
+     *
+     * @param kind       the kind of resource.
+     * @param apiVersion the api version of the resource.
+     * @param nameSpace  the namespace of the resource.
+     * @param name       the name of the resource.
+     * @return A metadata builder for adding the other metadata.
+     */
+    public static MetadataBuilder of(
+            final String kind,
+            final String apiVersion,
+            final String nameSpace,
+            final String name
+    ) {
+        return Metadata.builder()
+                .withIdentity(
+                        Pointer.builder()
+                                .withKind(kind)
+                                .withApiVersion(apiVersion)
+                                .withNameSpace(nameSpace)
+                                .withName(name)
+                                .build()
+                );
+    }
+
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override

@@ -17,7 +17,10 @@
 
 package de.kaiserpfalzedv.commons.core.jpa;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
@@ -26,15 +29,14 @@ import org.hibernate.envers.RevisionTimestamp;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
-@RevisionEntity
 @MappedSuperclass
+@RevisionEntity
+@SuperBuilder(toBuilder = true, setterPrefix = "with")
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder(toBuilder = true, setterPrefix = "with")
-@ToString(callSuper = true)
 @Getter
 @Setter
-public abstract class AbstractRevisionedEntity extends AbstractEntity {
+public abstract class AbstractRevisionedJPAEntity extends AbstractJPAEntity {
     @RevisionNumber
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DbSequence")
     @SequenceGenerator(name = "DbSequence", sequenceName = "hibernate_sequence")
@@ -47,8 +49,8 @@ public abstract class AbstractRevisionedEntity extends AbstractEntity {
 
 
     @Override
-    public AbstractRevisionedEntity clone() throws CloneNotSupportedException {
-        AbstractRevisionedEntity result = (AbstractRevisionedEntity) super.clone();
+    public AbstractRevisionedJPAEntity clone() throws CloneNotSupportedException {
+        AbstractRevisionedJPAEntity result = (AbstractRevisionedJPAEntity) super.clone();
 
         result.revId = revId;
 

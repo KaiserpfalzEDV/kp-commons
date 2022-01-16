@@ -22,4 +22,8 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="files.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="tag-v2.1.0" author="rlichti">
+        <tagDatabase tag="v2.1.0"/>
+    </changeSet>
 </databaseChangeLog>

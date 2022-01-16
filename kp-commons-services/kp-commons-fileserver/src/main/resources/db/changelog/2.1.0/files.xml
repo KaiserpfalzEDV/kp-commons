@@ -37,11 +37,19 @@
             <column name="MODIFIED" type="TIMESTAMP"/>
 
 
-            <!-- Person data -->
-            <column name="NAMESPACE" type="VARCHAR(50)">
+            <column name="NAMESPACE" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="OWNER" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRP" type="VARCHAR(100)" defaultValue="./.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PERMISSIONS" type="VARCHAR(3)" defaultValue="666">
                 <constraints nullable="false"/>
             </column>
 
@@ -49,17 +57,29 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="FILE_MEDIATYPE" type="VARCHAR(50)">
+            <column name="FILE_MEDIATYPE" type="VARCHAR(100)">
                 <constraints nullable="true"/>
             </column>
 
             <column name="FILE_DATA" type="longblob"/>
+
+
+            <column name="PREVIEW_NAME" type="VARCHAR(100)"/>
+
+            <column name="PREVIEW_MEDIATYPE" type="VARCHAR(100)"/>
+
+            <column name="PREVIEW_DATA" type="longblob"/>
         </createTable>
 
+        <addUniqueConstraint
+                constraintName="FILES_NAME_UK"
+                tableName="FILES"
+                columnNames="NAMESPACE,NAME"/>
 
         <rollback>
-            <dropIndex tableName="FILES" indexName="FILES_ID_UK"/>
-            <dropIndex tableName="FILES" indexName="FILES_PK"/>
+            <dropUniqueConstraint tableName="FILES" constraintName="FILES_NAME_UK"/>
+            <dropUniqueConstraint tableName="FILES" constraintName="FILES_ID_UK"/>
+            <dropPrimaryKey tableName="FILES" constraintName="FILES_PK"/>
             <dropTable tableName="FILES"/>
         </rollback>
     </changeSet>

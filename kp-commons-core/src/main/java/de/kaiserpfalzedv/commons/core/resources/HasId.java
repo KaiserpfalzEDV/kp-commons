@@ -18,13 +18,14 @@
 package de.kaiserpfalzedv.commons.core.resources;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
- * ResourcePointer -- Identifies a single resource.
+ * HasId --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.1.0  2021-01-16
- * @since 2.0.0  2021-05-24
+ * @since 0.1.0  2021-04-18
  */
-public interface ResourcePointer extends HasKind, HasApiVersion, HasNameSpace, HasName, Serializable, Cloneable {
+public interface HasId extends Serializable {
+    UUID getId();
 }

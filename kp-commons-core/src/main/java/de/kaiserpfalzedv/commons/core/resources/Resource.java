@@ -80,16 +80,21 @@ public class Resource<D extends Serializable> implements ResourcePointer {
     @Builder.Default
     protected Status status = null;
 
+
     /**
-     * @return the display name of the resource
+     * @return Generated pointer for this resource.
      */
     @Transient
     @JsonIgnore
     @BsonIgnore
-    public String getDisplayName() {
-        return String.format("%s/%s/%s/%s", getKind(), getApiVersion(), getNameSpace(), getName());
+    public Pointer toPointer() {
+        return Pointer.builder()
+                .withKind(getKind())
+                .withApiVersion(getApiVersion())
+                .withNameSpace(getNameSpace())
+                .withNameSpace(getName())
+                .build();
     }
-
 
     @BsonIgnore
     @JsonIgnore
@@ -150,6 +155,13 @@ public class Resource<D extends Serializable> implements ResourcePointer {
     @BsonIgnore
     public Optional<Status> getState() {
         return Optional.ofNullable(status);
+    }
+
+    @Transient
+    @JsonIgnore
+    @BsonIgnore
+    public String getSelfLink() {
+        return getMetadata().getSelfLink();
     }
 
 

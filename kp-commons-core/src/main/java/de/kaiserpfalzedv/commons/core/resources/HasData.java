@@ -15,22 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.files;
+package de.kaiserpfalzedv.commons.core.resources;
 
-import de.kaiserpfalzedv.commons.core.store.GenericStoreService;
-import io.quarkus.arc.Priority;
+import de.kaiserpfalzedv.commons.core.files.HasOutputStream;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
+import java.io.OutputStream;
 
 /**
- * MemoryFileStore --
+ * HasAvatar -- This resource has an avatar (image).
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-05-24
+ * @since 0.1.0  2021-04-07
  */
-@ApplicationScoped
-@Alternative
-@Priority(100)
-public class MemoryFileResourceStore extends GenericStoreService<FileResource> implements FileResourceStoreService {
+public interface HasData extends HasOutputStream {
+    byte[] getData();
+
+    default OutputStream getDataStream() {
+        return getStream(getData());
+    }
 }

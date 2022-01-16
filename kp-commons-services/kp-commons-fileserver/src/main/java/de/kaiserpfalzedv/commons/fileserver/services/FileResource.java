@@ -15,14 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.fileserver;
+package de.kaiserpfalzedv.commons.fileserver.services;
 
 import de.kaiserpfalzedv.commons.core.api.About;
-import de.kaiserpfalzedv.commons.core.files.FileResource;
-import de.kaiserpfalzedv.commons.core.files.JPAFile;
-import de.kaiserpfalzedv.commons.core.files.JPAFileRepository;
-import de.kaiserpfalzedv.commons.core.resources.Metadata;
-import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.core.files.File;
+import de.kaiserpfalzedv.commons.core.resources.HasName;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileRepository;
 import io.quarkus.panache.common.Sort;
 import io.quarkus.security.identity.SecurityIdentity;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +35,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirements;
+import org.hibernate.validator.constraints.Length;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.annotation.PostConstruct;
@@ -44,9 +44,11 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,13 +62,13 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @ApplicationScoped
-@Path("/api/v1/file")
+@Path("/api/file/v1")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @OpenAPIDefinition(
         info = @Info(
                 title = "KP FileService",
-                version = "1.0.0",
+                version = "2.0.0",
                 description = "This is a generic fileservice for storing files",
                 contact = @Contact(
                         name = "Kaiserpfalz EDV-Service Tech Support",
@@ -80,7 +82,7 @@ import java.util.stream.Stream;
                 termsOfService = "https://www.kaiserpfalz-edv.de/impressum"
         )
 )
-public class FileService {
+public class FileResource {
     @Inject
     JPAFileRepository repository;
 
@@ -104,7 +106,10 @@ public class FileService {
     @Path("/")
     @RolesAllowed({"user", "admin"})
     @NoCache
-    @Operation(summary = "List all files available.", description = "Returns a list of files.")
+    @Operation(
+            summary = "List all files available.",
+            description = "Returns a list of files."
+    )
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Ok found."),
             @APIResponse(responseCode = "403", description = "Forbidden."),
@@ -113,7 +118,7 @@ public class FileService {
     @SecurityRequirements({
             @SecurityRequirement(name = "basic", scopes = {"user", "admin"})
     })
-    public List<FileResource> index(
+    public List<File> index(
             @Schema(
                     description = "Namespace to search for.",
                     required = true,
@@ -159,8 +164,8 @@ public class FileService {
                     minItems = 0,
                     maxItems = 5,
                     implementation = List.class,
-                    defaultValue = "[\"nameSpace\",\"owner\",\"file.name\"]",
-                    enumeration = {"nameSpace", "owner", "file.mimeType", "file.name"}
+                    defaultValue = "[\"nameSpace\",\"owner\",\"group\",\"name\"]",
+                    enumeration = {"nameSpace", "owner", "file.mimeType", "group", "name"}
             )
             @QueryParam("sort") List<String> sort
     ) {
@@ -172,32 +177,13 @@ public class FileService {
         String owned = identity.getPrincipal().getName();
         Sort order = calculateSort(sort);
 
-        Stream<JPAFile> data = repository.streamAll(order).filter(d -> d.getOwner().equalsIgnoreCase(owned));
+        Stream<JPAFile> data = repository.streamAll(order);
 
         if (owner != null) {
-            data = data.filter(d -> d.getOwner().equals(owner));
+            data = data.filter(d -> d.getOwner().equalsIgnoreCase(owned));
         }
 
-        return data.map(d -> FileResource.builder()
-                        .withMetadata(
-                                Metadata.builder()
-                                        .withIdentity(
-                                                Pointer.builder()
-                                                        .withKind(FileResource.KIND)
-                                                        .withApiVersion(FileResource.VERSION)
-                                                        .withNameSpace(d.getNameSpace())
-                                                        .withName(d.getName())
-                                                        .build()
-                                        )
-                                        .withUid(d.getId())
-                                        .withCreated(d.getCreated())
-                                        .withGeneration(d.getVersion())
-                                        .build()
-                        )
-                        .withSpec(d.getFile())
-                        .build()
-                )
-                .collect(Collectors.toList());
+        return data.map(JPAFile::to).collect(Collectors.toList());
     }
 
 
@@ -217,11 +203,11 @@ public class FileService {
     @NoCache
     @POST
     @RolesAllowed({"user", "admin"})
-    public FileResource create(
+    public File create(
             @QueryParam("nameSpace") final String nameSpace,
-            @NotNull final FileResource input
+            @NotNull final File input
     ) {
-        JPAFile store = JPAFile.builder().withFile(input.getSpec()).build();
+        JPAFile store = JPAFile.from(input);
 
         repository.persistAndFlush(store);
 
@@ -231,7 +217,12 @@ public class FileService {
     @Path("/{id}")
     @GET
     @RolesAllowed({"user", "admin"})
-    public FileResource resource(
+    @Operation(
+            summary = "Retrieves the file with the given UID",
+            description = "Retrieves the file by the unique ID of every file.",
+            hidden = true
+    )
+    public File resource(
             @Schema(
                     description = "The ID of the file.",
                     required = true,
@@ -247,23 +238,74 @@ public class FileService {
             throw new NotFoundException("No file with ID '" + id + "' found.");
         }
 
-        return FileResource.builder()
-                .withMetadata(
-                        Metadata.builder()
-                                .withIdentity(
-                                        Pointer.builder()
-                                                .withKind(FileResource.KIND)
-                                                .withApiVersion(FileResource.VERSION)
-                                                .withNameSpace(data.getNameSpace())
-                                                .withName(data.getName())
-                                                .build()
-                                )
-                                .withUid(data.getId())
-                                .withCreated(data.getCreated())
-                                .withGeneration(data.getVersion())
-                                .build()
-                )
-                .withSpec(data.getFile())
-                .build();
+        return data.to();
+    }
+
+    @GET
+    @Path("/{nameSpace}/{name}")
+    @Operation(
+            summary = "Retrieves the file",
+            description = "Retrieves the file by Name Space and Name"
+    )
+    public File resource(
+            @Schema(
+                    description = "The name space of the file.",
+                    required = true,
+                    minLength = HasName.VALID_NAME_MIN_LENGTH,
+                    maxLength = HasName.VALID_NAME_MAX_LENGTH,
+                    pattern = HasName.VALID_NAME_PATTERN,
+                    example = "default"
+            )
+            @Length(
+                    min = HasName.VALID_NAME_MIN_LENGTH,
+                    max = HasName.VALID_NAME_MAX_LENGTH,
+                    message = "Invalid length. Must be between "
+                            + HasName.VALID_NAME_MIN_LENGTH
+                            + " and "
+                            + HasName.VALID_NAME_MAX_LENGTH
+                            + " characters in size."
+            )
+            @Pattern(
+                    regexp = HasName.VALID_NAME_PATTERN,
+                    message = "Invalid content. Must follow the rules for domain names (pattern: '"
+                            + HasName.VALID_NAME_PATTERN + "')."
+            )
+            @PathParam("nameSpace")
+            @NotNull final String nameSpace,
+            @Schema(
+                    description = "The name of the file.",
+                    required = true,
+                    minLength = HasName.VALID_NAME_MIN_LENGTH,
+                    maxLength = HasName.VALID_NAME_MAX_LENGTH,
+                    pattern = HasName.VALID_NAME_PATTERN,
+                    example = "default"
+            )
+            @Length(
+                    min = HasName.VALID_NAME_MIN_LENGTH,
+                    max = HasName.VALID_NAME_MAX_LENGTH,
+                    message = "Invalid length. Must be between "
+                            + HasName.VALID_NAME_MIN_LENGTH
+                            + " and "
+                            + HasName.VALID_NAME_MAX_LENGTH
+                            + " characters in size."
+            )
+            @Pattern(
+                    regexp = HasName.VALID_NAME_PATTERN,
+                    message = "Invalid content. Must follow the rules for domain names (pattern: '"
+                            + HasName.VALID_NAME_PATTERN + "')."
+            )
+            @PathParam("name")
+            @NotNull final String name
+    ) {
+        Optional<JPAFile> data = repository.findByNameSpaceAndName(nameSpace, name);
+
+        if (data.isEmpty()) {
+            throw new NotFoundException(String.format(
+                    "No file with name space '%s' and name '%s' found.",
+                    nameSpace, name
+            ));
+        }
+
+        return data.get().to();
     }
 }

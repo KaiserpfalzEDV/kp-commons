@@ -15,14 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.api;
+package de.kaiserpfalzedv.commons.core.files;
+
+import de.kaiserpfalzedv.commons.core.store.GenericStoreService;
+import io.quarkus.arc.Priority;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 
 /**
- * HasName -- The object has a name.
+ * MemoryFileStore --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 0.1.0  2021-04-18
+ * @since 1.2.0  2021-05-24
  */
-public interface HasName extends HasId {
-    String getName();
+@ApplicationScoped
+@Alternative
+@Priority(100)
+public class MemoryFileStore extends GenericStoreService<File> implements FileStoreService {
 }
