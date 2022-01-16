@@ -41,8 +41,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
-@ToString
-@EqualsAndHashCode
+@ToString(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Status.StatusBuilder.class)
 @JsonPropertyOrder({"observedGeneration,history"})
@@ -57,6 +56,7 @@ public class Status implements Serializable, Cloneable {
             minimum = "0"
     )
     @Builder.Default
+    @ToString.Include
     Integer observedGeneration = 0;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -69,6 +69,7 @@ public class Status implements Serializable, Cloneable {
             minItems = 0
     )
     @Builder.Default
+    @ToString.Include
     List<History> history = new ArrayList<>();
 
     /**

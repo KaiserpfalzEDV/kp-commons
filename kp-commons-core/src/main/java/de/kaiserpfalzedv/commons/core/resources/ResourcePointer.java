@@ -17,6 +17,8 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -29,25 +31,42 @@ import java.io.Serializable;
  * @since 2.0.0  2021-05-24
  */
 public interface ResourcePointer extends Serializable, Cloneable {
+    /**
+     * @return The type of the resource.
+     */
     String getKind();
 
+    /**
+     * @return the API version of the resource.
+     */
     String getApiVersion();
 
+    /**
+     * @return The namespace of the resource.
+     */
     String getNameSpace();
 
+    /**
+     * @return The name of the resource.
+     */
     String getName();
 
+    /**
+     * @return The display name of the resource.
+     */
     @Schema(
             name = "selfLink",
             description = "The local part of the URL to retrieve the resource.",
             nullable = true,
             readOnly = true,
-            example = "/api/v1/Resource/default/name",
+            example = "/Resource/v1/default/name",
             minLength = 8,
             maxLength = 100
     )
-    default String getSelfLink() {
-        return String.format("/api/%s/%s/%s", getApiVersion(), getKind(), getNameSpace(), getName());
+    @BsonProperty(value = "selfLink")
+    @JsonProperty(value = "selfLink", required = false, access = JsonProperty.Access.READ_ONLY)
+    default String getDisplayName() {
+        return String.format("/%s/%s/%s/%s", getKind(), getApiVersion(), getNameSpace(), getName());
     }
 
 }

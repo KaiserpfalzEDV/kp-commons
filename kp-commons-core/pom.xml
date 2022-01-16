@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+  ~ Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -43,10 +43,21 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.eclipse.microprofile.openapi</groupId>
             <artifactId>microprofile-openapi-api</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jackson</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
@@ -64,12 +75,14 @@
             <artifactId>jackson-datatype-jsr353</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>org.jboss.spec.javax.ws.rs</groupId>
             <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
             <version>2.0.2.Final</version>
             <scope>provided</scope>
         </dependency>
+
 
         <!-- Discord Library -->
         <dependency>
@@ -84,17 +97,6 @@
             <groupId>io.github.cbartosiak</groupId>
             <artifactId>bson-codecs-jsr310</artifactId>
         </dependency>
-
-        <!-- Zalando Problem -->
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>problem</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>jackson-datatype-problem</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-mongodb-client</artifactId>
@@ -112,16 +114,32 @@
             <scope>test</scope>
         </dependency>
 
+
+        <!-- JPA/Hibernate -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-orm-panache</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-envers</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- Zalando Problem -->
+        <dependency>
+            <groupId>com.tietoevry.quarkus</groupId>
+            <artifactId>quarkus-resteasy-problem</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+
         <!-- Quarkus Integration -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jackson</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

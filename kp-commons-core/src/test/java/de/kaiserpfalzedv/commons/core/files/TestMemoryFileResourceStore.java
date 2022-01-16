@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,14 @@
 package de.kaiserpfalzedv.commons.core.files;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.slf4j.MDC;
 
-import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.MediaType;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.Optional;
@@ -38,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 2.0.0  2021-05-24
  */
 @Slf4j
-public class TestMemoryFileStore {
+public class TestMemoryFileResourceStore {
     private static final UUID DATA_UID = UUID.randomUUID();
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
@@ -51,57 +53,47 @@ public class TestMemoryFileStore {
     private static final String OTHER_NAME = "otherName";
     private static final OffsetDateTime OTHER_CREATED = OffsetDateTime.now(Clock.systemUTC());
 
-    private static final File DATA = File.builder()
-            .withKind(File.KIND)
-            .withApiVersion(File.API_VERSION)
-            .withNameSpace(DATA_NAMESPACE)
-            .withName(DATA_NAME)
-            .withUid(DATA_UID)
-
+    private static final FileResource DATA = FileResource.builder()
             .withMetadata(
-                    generateMetadata(DATA_CREATED, null)
+                    generateMetadata(DATA_NAMESPACE, DATA_NAME, DATA_UID, DATA_CREATED, null)
             )
             .withSpec(
                     FileData.builder()
-                            .withDescription(DATA_API_KEY)
-                            .withData(BASE64_DATA)
+                            .withName(DATA_API_KEY)
+                            .withMediaType(MediaType.APPLICATION_JSON)
+                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
                             .build()
             )
             .build();
 
-    private static final File OTHER =
-            File.builder()
-                    .withKind(File.KIND)
-                    .withApiVersion(File.API_VERSION)
-                    .withNameSpace(OTHER_NAMESPACE)
-                    .withName(OTHER_NAME)
-                    .withUid(OTHER_UID)
-
-                    .withMetadata(
-                            generateMetadata(OTHER_CREATED, null)
-                    )
-                    .withSpec(
-                            FileData.builder()
-                                    .withData(BASE64_DATA)
-                                    .build()
-                    )
-                    .build();
+    private static final FileResource OTHER = FileResource.builder()
+            .withMetadata(
+                    generateMetadata(OTHER_NAMESPACE, OTHER_NAME, OTHER_UID, OTHER_CREATED, null)
+            )
+            .withSpec(
+                    FileData.builder()
+                            .withName(DATA_API_KEY)
+                            .withMediaType(MediaType.APPLICATION_JSON)
+                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                            .build()
+            )
+            .build();
 
 
     /**
      * service under test.
      */
-    private final FileStoreService sut;
+    private final FileResourceStoreService sut;
 
-    public TestMemoryFileStore() {
-        this.sut = new MemoryFileStore();
+    public TestMemoryFileResourceStore() {
+        this.sut = new MemoryFileResourceStore();
     }
 
     @Test
     void shouldBeAMemoryUserStoreService() {
         MDC.put("test", "store-is-memory-based");
 
-        assertTrue(sut instanceof MemoryFileStore);
+        assertTrue(sut instanceof MemoryFileResourceStore);
     }
 
     @Test
@@ -110,7 +102,7 @@ public class TestMemoryFileStore {
 
         sut.save(DATA);
 
-        Optional<File> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
+        Optional<FileResource> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
         assertTrue(result.isPresent(), "The data should have been stored!");
@@ -125,7 +117,7 @@ public class TestMemoryFileStore {
 
         sut.save(DATA); // update data
 
-        Optional<File> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
+        Optional<FileResource> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
         assertTrue(result.isPresent(), "The data should have been stored!");
@@ -140,10 +132,21 @@ public class TestMemoryFileStore {
      * @return The generated metadata
      */
     private static Metadata generateMetadata(
-            @NotNull final OffsetDateTime created,
+            final String nameSpace,
+            final String name,
+            final UUID uid,
+            final OffsetDateTime created,
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
+                .withIdentity(Pointer.builder()
+                        .withKind(FileResource.KIND)
+                        .withApiVersion(FileResource.VERSION)
+                        .withNameSpace(nameSpace)
+                        .withName(name)
+                        .build()
+                )
+                .withUid(uid)
                 .withCreated(created)
                 .withDeleted(deleted)
                 .build();
@@ -157,7 +160,7 @@ public class TestMemoryFileStore {
 
         sut.save(OTHER);
 
-        Optional<File> result = sut.findByUid(OTHER_UID);
+        Optional<FileResource> result = sut.findByUid(OTHER_UID);
 
         assertTrue(result.isPresent(), "there should be a user resource defined by this UID!");
         assertEquals(OTHER, result.get());
@@ -170,7 +173,7 @@ public class TestMemoryFileStore {
         sut.save(DATA);
         sut.remove(DATA_NAMESPACE, DATA_NAME);
 
-        Optional<File> result = sut.findByUid(DATA_UID);
+        Optional<FileResource> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
@@ -181,7 +184,7 @@ public class TestMemoryFileStore {
         sut.save(DATA);
         sut.remove(DATA_UID);
 
-        Optional<File> result = sut.findByUid(DATA_UID);
+        Optional<FileResource> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
@@ -192,7 +195,7 @@ public class TestMemoryFileStore {
         sut.save(DATA);
         sut.remove(DATA);
 
-        Optional<File> result = sut.findByUid(DATA_UID);
+        Optional<FileResource> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
@@ -202,7 +205,7 @@ public class TestMemoryFileStore {
 
         sut.remove(DATA_NAMESPACE, DATA_NAME);
 
-        Optional<File> result = sut.findByUid(DATA_UID);
+        Optional<FileResource> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
@@ -212,7 +215,7 @@ public class TestMemoryFileStore {
 
         sut.remove(DATA_UID);
 
-        Optional<File> result = sut.findByUid(DATA_UID);
+        Optional<FileResource> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
@@ -222,7 +225,7 @@ public class TestMemoryFileStore {
 
         sut.remove(DATA);
 
-        Optional<File> result = sut.findByUid(DATA_UID);
+        Optional<FileResource> result = sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
@@ -234,7 +237,7 @@ public class TestMemoryFileStore {
 
     @BeforeAll
     static void setUp() {
-        MDC.put("test-class", TestMemoryFileStore.class.getSimpleName());
+        MDC.put("test-class", TestMemoryFileResourceStore.class.getSimpleName());
     }
 
     @AfterAll
@@ -250,6 +253,14 @@ public class TestMemoryFileStore {
                 DATA.toBuilder()
                         .withMetadata(
                                 Metadata.builder()
+                                        .withIdentity(
+                                                Pointer.builder()
+                                                        .withKind(FileResource.KIND)
+                                                        .withApiVersion(FileResource.VERSION)
+                                                        .withNameSpace(DATA_NAMESPACE)
+                                                        .withName(DATA_NAME)
+                                                        .build()
+                                        )
                                         .withGeneration(100)
                                         .build()
                         )

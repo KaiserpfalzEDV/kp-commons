@@ -22,9 +22,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -35,6 +37,7 @@ import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Metadata -- common data for every resource of the system.
@@ -50,16 +53,52 @@ import java.util.Optional;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Metadata.MetadataBuilder.class)
-@JsonPropertyOrder({"owner,created,deleted,annotations,labels"})
+@JsonPropertyOrder({"identity,uid,generation,owner,created,deleted,annotations,labels"})
 @Schema(
         name = "ResourceMetadata",
         description = "The metadata of a resource."
 )
 public class Metadata implements Serializable, Cloneable {
+    @Schema(
+            name = "identity",
+            description = "This is the identity of the resource.",
+            implementation = ResourcePointer.class
+    )
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    @Builder.Default
+    @Embedded
+    private Pointer identity = Pointer.builder()
+            .withKind("UNSPECIFIED")
+            .withApiVersion("v0")
+            .withNameSpace("unspecified")
+            .withName("unspecified")
+            .build();
+
+    @Id
+    @BsonId
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid2")
+    @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
+    @Schema(
+            name = "uid",
+            description = "The unique identifier of this resource",
+            required = true,
+            example = "caae022d-5728-4cb2-9245-b8c1ea03e380",
+            defaultValue = "random UUID",
+            minLength = 36,
+            maxLength = 36
+    )
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    @Builder.Default
+    private UUID uid = UUID.randomUUID();
+
     @Version
     @ToString.Include
     @Schema(
@@ -79,7 +118,6 @@ public class Metadata implements Serializable, Cloneable {
             nullable = true,
             implementation = ResourcePointer.class
     )
-    @ToString.Exclude
     @Builder.Default
     @Embedded
     @AttributeOverrides({
@@ -132,7 +170,6 @@ public class Metadata implements Serializable, Cloneable {
             minItems = 0,
             maxItems = 256
     )
-    @ToString.Include
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name="NAME")
@@ -147,7 +184,6 @@ public class Metadata implements Serializable, Cloneable {
             minItems = 0,
             maxItems = 256
     )
-    @ToString.Include
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name="NAME")
@@ -226,6 +262,34 @@ public class Metadata implements Serializable, Cloneable {
         return toBuilder()
                 .withGeneration(generation + 1)
                 .build();
+    }
+
+    @Transient
+    @JsonIgnore
+    @BsonIgnore
+    public String getKind() {
+        return identity.getKind();
+    }
+
+    @Transient
+    @JsonIgnore
+    @BsonIgnore
+    public String getApiVersion() {
+        return identity.getApiVersion();
+    }
+
+    @Transient
+    @JsonIgnore
+    @BsonIgnore
+    public String getNameSpace() {
+        return identity.getNameSpace();
+    }
+
+    @Transient
+    @JsonIgnore
+    @BsonIgnore
+    public String getName() {
+        return identity.getName();
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")

@@ -22,14 +22,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,104 +48,17 @@ import java.util.UUID;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonPropertyOrder({"kind","apiVersion","nameSpace","name","selfLink","metadata","spec","status"})
+@JsonPropertyOrder({"metadata", "spec", "status"})
 public class Resource<D extends Serializable> implements ResourcePointer {
-    @SuppressWarnings("deprecation")
-    @Id
-    @BsonId
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid2")
-    @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
-    @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
-    @Schema(
-            name = "uid",
-            description = "The unique identifier of this resource",
-            required = true,
-            example = "caae022d-5728-4cb2-9245-b8c1ea03e380",
-            defaultValue = "random UUID",
-            minLength = 36,
-            maxLength = 36
-    )
-    @ToString.Include
-    @EqualsAndHashCode.Include
-    @Builder.Default
-    private UUID uid = UUID.randomUUID();
-
-    @Column(name = "KIND", length = 100, nullable = false, updatable = false)
-    @Schema(
-            name = "kind",
-            description = "The type of the resource",
-            required = true,
-            example = "Resource",
-            defaultValue = "Resource",
-            minLength = 1,
-            maxLength = 100
-    )
-    @ToString.Include
-    private String kind;
-
-    @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
-    @Schema(
-            name = "apiVersion",
-            description = "The version of this resource",
-            required = true,
-            example = "v1",
-            defaultValue = "v1",
-            minLength = 3,
-            maxLength = 100
-    )
-    @Builder.Default
-    private String apiVersion = "v1";
-
-    @Column(name = "NAMESPACE", length = 100, nullable = false)
-    @Schema(
-            name = "nameSpace",
-            description = "The namespace (group) of this resource",
-            required = true,
-            example = "default",
-            defaultValue = "default",
-            minLength = 1,
-            maxLength = 100
-    )
-    @Builder.Default
-    @ToString.Include
-    private String nameSpace = "default";
-
-    @Column(name = "NAME", length = 100, nullable = false)
-    @Schema(
-            name = "name",
-            description = "The unique name of this resource within the namespace",
-            required = true,
-            example = "name",
-            minLength = 1,
-            maxLength = 100
-    )
-    @ToString.Include
-    private String name;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pointer)) return false;
-        Pointer that = (Pointer) o;
-        return getKind().equals(that.getKind())
-                && getNameSpace().equals(that.getNameSpace())
-                && getName().equals(that.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getKind(), getNameSpace(), getName());
-    }
-
-
     @Embedded
     @Schema(
             name = "metadata",
             description = "Technical data to the resource.",
             required = true
     )
+    @NonNull
+    @ToString.Include
+    @EqualsAndHashCode.Include
     protected Metadata metadata;
 
 
@@ -177,14 +89,54 @@ public class Resource<D extends Serializable> implements ResourcePointer {
     public String getDisplayName() {
         return String.format("%s/%s/%s/%s", getKind(), getApiVersion(), getNameSpace(), getName());
     }
-    
+
+
+    @BsonIgnore
+    @JsonIgnore
+    @Transient
+    @Override
+    public String getKind() {
+        return getMetadata().getKind();
+    }
+
+    @BsonIgnore
+    @JsonIgnore
+    @Transient
+    @Override
+    public String getApiVersion() {
+        return getMetadata().getApiVersion();
+    }
+
+    @BsonIgnore
+    @JsonIgnore
+    @Transient
+    @Override
+    public String getNameSpace() {
+        return getMetadata().getNameSpace();
+    }
+
+    @BsonIgnore
+    @JsonIgnore
+    @Transient
+    @Override
+    public String getName() {
+        return getMetadata().getName();
+    }
+
+    @Transient
+    @JsonIgnore
+    @BsonIgnore
+    public UUID getUid() {
+        return metadata.getUid();
+    }
+
     @Transient
     @JsonIgnore
     @BsonIgnore
     public Integer getGeneration() {
         return metadata.getGeneration();
     }
-    
+
 
     @Transient
     @JsonIgnore
@@ -199,6 +151,7 @@ public class Resource<D extends Serializable> implements ResourcePointer {
     public Optional<Status> getState() {
         return Optional.ofNullable(status);
     }
+
 
     synchronized public Resource<D> increaseGeneration() {
         return toBuilder()

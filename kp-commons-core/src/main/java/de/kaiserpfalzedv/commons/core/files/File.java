@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,90 @@
 
 package de.kaiserpfalzedv.commons.core.files;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import de.kaiserpfalzedv.commons.core.resources.Resource;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.kaiserpfalzedv.commons.core.jpa.AbstractEntity;
+import io.quarkus.runtime.annotations.RegisterForReflection;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.jetbrains.annotations.NotNull;
 
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
-@RequiredArgsConstructor
+import javax.persistence.*;
+import java.io.OutputStream;
+
+/**
+ * File -- A file saved inside the database (normally image files).
+ *
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @since 0.1.0  2021-03-26
+ */
+@RegisterForReflection
+@Entity
+@Table(
+        name = "FILES",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "FILES_ID_UK", columnNames = "ID")
+        }
+)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonDeserialize(builder = File.FileBuilder.class)
+@SuperBuilder(toBuilder = true, setterPrefix = "with")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString(callSuper = true)
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@Schema(name = "File", description = "A file on the file management service.")
-public class File extends Resource<FileData> {
-    public static String API_VERSION = "v1";
-    public static String KIND = "File";
+public class File extends AbstractEntity implements Comparable<File>, Cloneable {
+    @Column(name = "NAMESPACE", length = 50, nullable = false)
+    private String nameSpace;
+
+    @Column(name = "OWNER", length = 100, nullable = false)
+    private String owner;
+
+    @Embedded
+    private FileData file;
+
+
+    @Transient
+    @JsonIgnore
+    public String getName() {
+        return file.getName();
+    }
+
+    @Transient
+    @JsonIgnore
+    public String getMediaType() {
+        return file.getMediaType();
+    }
+
+    @Transient
+    @JsonIgnore
+    public byte[] getData() {
+        return file.getData();
+    }
+
+    @Transient
+    @JsonIgnore
+    public OutputStream getFileStream() {
+        return file.getDataStream();
+    }
+
+    @Override
+    public int compareTo(@NotNull File o) {
+        return new CompareToBuilder()
+                .append(nameSpace, o.nameSpace)
+                .append(owner, o.owner)
+                .append(file, o.file)
+                .toComparison();
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public File clone() throws CloneNotSupportedException {
+        return toBuilder().build();
+    }
 }

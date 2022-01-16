@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,13 @@
 package de.kaiserpfalzedv.commons.core.files;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.slf4j.MDC;
 
+import javax.ws.rs.core.MediaType;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -34,7 +37,7 @@ import java.util.UUID;
  * @since 1.2.0  2021-05-24
  */
 @Slf4j
-public class TestFile {
+public class TestFileResource {
     private static final UUID DATA_UID = UUID.randomUUID();
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
@@ -42,27 +45,22 @@ public class TestFile {
     private static final String DATA_API_KEY = "test-api-key";
     private static final String BASE64_DATA = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK";
 
-    private static final File DATA = File.builder()
-            .withKind(File.KIND)
-            .withApiVersion(File.API_VERSION)
-            .withNameSpace(DATA_NAMESPACE)
-            .withName(DATA_NAME)
-            .withUid(DATA_UID)
-
+    private static final FileResource DATA = FileResource.builder()
             .withMetadata(
                     generateMetadata(DATA_CREATED)
             )
             .withSpec(
                     FileData.builder()
-                            .withDescription(DATA_API_KEY)
-                            .withData(BASE64_DATA)
+                            .withName(DATA_API_KEY)
+                            .withMediaType(MediaType.APPLICATION_JSON)
+                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
                             .build()
             )
             .build();
 
     @BeforeAll
     static void setUp() {
-        MDC.put("test-class", TestFile.class.getSimpleName());
+        MDC.put("test-class", TestFileResource.class.getSimpleName());
     }
 
     @AfterAll
@@ -86,6 +84,15 @@ public class TestFile {
         labels.put("test", "valid");
 
         return Metadata.builder()
+                .withIdentity(
+                        Pointer.builder()
+                                .withKind(FileResource.KIND)
+                                .withApiVersion(FileResource.VERSION)
+                                .withNameSpace(DATA_NAMESPACE)
+                                .withName(DATA_NAME)
+                                .build()
+                )
+                .withUid(DATA_UID)
                 .withCreated(created)
 
                 .withAnnotations(annotations)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.core.user;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.slf4j.MDC;
@@ -49,12 +50,6 @@ public class TestUser {
     }
 
     private static final User DATA = User.builder()
-            .withKind(User.KIND)
-            .withApiVersion(User.API_VERSION)
-            .withNameSpace(DATA_NAMESPACE)
-            .withName(DATA_NAME)
-            .withUid(DATA_UID)
-
             .withMetadata(
                     generateMetadata(DATA_CREATED)
             )
@@ -92,6 +87,14 @@ public class TestUser {
         labels.put("test", "valid");
 
         return Metadata.builder()
+                .withIdentity(Pointer.builder()
+                        .withKind(User.KIND)
+                        .withApiVersion(User.API_VERSION)
+                        .withNameSpace(DATA_NAMESPACE)
+                        .withName(DATA_NAME)
+                        .build()
+                )
+                .withUid(DATA_UID)
                 .withCreated(created)
 
                 .withAnnotations(annotations)

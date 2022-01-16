@@ -1,0 +1,74 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="files" author="rlichti">
+        <createTable tableName="FILES">
+            <column name="ID" type="VARCHAR(36)">
+                <constraints nullable="false"
+                             unique="true" uniqueConstraintName="FILES_ID_UK"
+                             primaryKey="true" primaryKeyName="FILES_PK"
+                />
+            </column>
+            <column name="VERSION" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="TIMESTAMP"/>
+
+
+            <!-- Person data -->
+            <column name="NAMESPACE" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OWNER" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="FILE_NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="FILE_MEDIATYPE" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="FILE_DATA" type="longblob"/>
+        </createTable>
+
+
+        <rollback>
+            <dropIndex tableName="FILES" indexName="FILES_ID_UK"/>
+            <dropIndex tableName="FILES" indexName="FILES_PK"/>
+            <dropTable tableName="FILES"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="files-data" author="rlichti">
+        <loadData tableName="FILES" file="files.csv" relativeToChangelogFile="true"/>
+
+        <rollback>
+            <sql>TRUNCATE FILES;</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

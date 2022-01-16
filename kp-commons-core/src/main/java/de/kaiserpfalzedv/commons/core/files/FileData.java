@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,39 +17,71 @@
 
 package de.kaiserpfalzedv.commons.core.files;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpec;
-import lombok.*;
+import de.kaiserpfalzedv.commons.core.api.HasData;
+import io.quarkus.runtime.annotations.RegisterForReflection;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.ws.rs.core.MediaType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Lob;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
- * The basic data for every user.
+ * FileData -- An embedded file (byte coded).
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.2.0  2021-05-24
+ * @version 2.0.0  2021-12-31
+ * @since 2.0.0  2021-12-31
  */
+@RegisterForReflection
 @SuperBuilder(setterPrefix = "with", toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@ToString(onlyExplicitlyIncluded = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = FileData.FileDataBuilder.class)
-@Schema(description = "Managed file.")
-public class FileData extends DefaultResourceSpec {
-    @Builder.Default
-    @Schema(description = "A description of the file.", nullable = true, example = "File with accounting data for the month.")
-    private String description = null;
+@Embeddable
+@Schema(description = "Files saved on the server.")
+public class FileData implements HasData, Serializable, Cloneable {
+    @Column(name = "FILE_NAME", length = 100)
+    @Schema(description = "The name of the file.")
+    @ToString.Include
+    private String name;
 
-    @Builder.Default
-    @Schema(description = "Mediatype of the file.", example = MediaType.APPLICATION_OCTET_STREAM)
-    private String mediatype = null;
+    @Lob
+    @Column(name = "FILE_DATA", length = 16777215)
+    @Schema(description = "The image itself encoded in BASE64.")
+    private byte[] data;
 
-    @Builder.Default
-    @Schema(description = "Base64 encoded content of the file.", minLength = 1, example = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK")
-    private String data = "";
+    @Column(name = "FILE_MEDIATYPE", length = 100)
+    @Schema(description = "The mediatype of the encoded file.")
+    @ToString.Include
+    private String mediaType;
+
+    @JsonIgnore
+    public OutputStream getDataStream() {
+        return getOutputStream(data);
+    }
+
+    @Override
+    public FileData clone() throws CloneNotSupportedException {
+        FileData result = (FileData) super.clone();
+
+        if (data != null) {
+            result.data = Arrays.copyOf(data, data.length);
+        }
+
+        return result;
+    }
 }

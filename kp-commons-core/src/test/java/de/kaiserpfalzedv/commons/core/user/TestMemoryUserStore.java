@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.core.user;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -53,12 +54,6 @@ public class TestMemoryUserStore {
     private static final String OTHER_API_KEY = "other-api-key";
 
     private static final User DATA = User.builder()
-            .withKind(User.KIND)
-            .withApiVersion(User.API_VERSION)
-            .withNameSpace(DATA_NAMESPACE)
-            .withName(DATA_NAME)
-            .withUid(DATA_UID)
-
             .withMetadata(
                     generateMetadata(DATA_CREATED, null)
             )
@@ -72,12 +67,6 @@ public class TestMemoryUserStore {
 
     private static final User OTHER =
             User.builder()
-                    .withKind(User.KIND)
-                    .withApiVersion(User.API_VERSION)
-                    .withNameSpace(OTHER_NAMESPACE)
-                    .withName(OTHER_NAME)
-                    .withUid(OTHER_UID)
-
                     .withMetadata(
                             generateMetadata(OTHER_CREATED, null)
                     )
@@ -146,6 +135,14 @@ public class TestMemoryUserStore {
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
+                .withIdentity(Pointer.builder()
+                        .withKind(User.KIND)
+                        .withApiVersion(User.API_VERSION)
+                        .withNameSpace(DATA_NAMESPACE)
+                        .withName(DATA_NAME)
+                        .build()
+                )
+                .withUid(OTHER_UID)
                 .withCreated(created)
                 .withDeleted(deleted)
                 .build();

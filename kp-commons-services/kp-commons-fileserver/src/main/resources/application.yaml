@@ -1,0 +1,230 @@
+#
+# Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+
+quarkus:
+  application:
+    name: Fileserver
+    version: 1.0.0
+    api-version: "v1"
+
+  http:
+    insecure-requests: enabled
+    port: 8080
+    ssl-port: 8443
+    ssl:
+      protocols: TLSv1.3
+      sni: true
+
+    access-log:
+      enabled: true
+      log-to-file: false
+      exclude-pattern: "/q/.*"
+      pattern: combined
+
+    test-port: 8081
+    test-ssl-port: 8444
+    enable-compression: true
+    enable-decompression: true
+    record-request-start-time: true
+
+    body:
+      delete-uploaded-files-on-end: true
+      handle-file-uploads: true
+      preallocate-body-buffer: true
+      merge-form-attributes: true
+
+    auth:
+      realm: ${quarkus.application.name}
+      proactive: false
+      policy:
+        metrics:
+          roles-allowed: metrics
+      permission:
+        protected:
+          paths: /api/v1/*
+          policy: authenticated
+        metrics:
+          paths: /q/*
+          policy: metrics
+        sw-js:
+          paths: /sw.js
+          policy: permit
+    cors: true
+  security:
+    users:
+      embedded:
+        enabled: false
+
+  datasource:
+    db-kind: mariadb
+    jdbc:
+      url: "jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}"
+      transactions: XA
+      transaction-isolation-level: REPEATABLE_READ
+      flush-on-close: true
+      detect-statement-leaks: true
+    username: "${DB_USER:sa}"
+    password: "${DB_PASSWORD:sa}"
+    health:
+      enabled: true
+    metrics:
+      enabled: true
+      jdbc:
+        enable-metrics: true
+
+  hibernate-envers:
+    store-data-at-delete: true
+
+  liquibase:
+    migrate-at-start: true
+    change-log: db/changelog/db.changelog-master.xml
+
+  log:
+    metrics:
+      enabled: true
+    console:
+      enable: true
+      json: true
+    level: WARN
+    min-level: ALL
+    category:
+      "de.kaiserpfalzedv":
+        level: INFO
+      http-problem:
+        level: INFO
+
+  logging-manager:
+    enable: true
+    ui:
+      enable: true
+
+  resteasy:
+    problem:
+      include-mdc-properties: workflow-id,step-id,application,version,node
+
+  smallrye-health:
+    ui:
+      enable: true
+
+
+  micrometer:
+    enabled: true
+    registry-enabled-default: true
+    binder-enabled-default: true
+    binder:
+      http-server:
+        enabled: true
+      mp-metrics:
+        enabled: true
+      jvm: true
+      system: true
+      vertx:
+        enabled: true
+    export:
+      json:
+        enabled: true
+        path: /q/json-metrics
+      prometheus:
+        enabled: true
+        path: /q/metrics
+        default-registry: true
+
+  smallrye-openapi:
+    enable: true
+    operation-id-strategy: method
+    info: ${quarkus.application.name} API ${quarkus.application.api-version}
+    info-version: ${quarkus.application.version}
+    info-description: Fileserver for serving files.
+    info-terms-of-service: Service provided as is without any warranty
+    info-contact-email: info@kaiserpfalz-edv.de
+    info-contact-name: Tech Support Kaiserpfalz-EDV.Service
+    info-contact-url: https://www.kaiserpfalz-edv.de
+    info-license-name: GPL 3+
+    info-license-url: https://www.gnu.org/licenses/
+
+  swagger-ui:
+    enable: true
+    always-include: true
+
+
+  container-image:
+    name: kp-fileserver
+    tag: ${quarkus.application.version}
+  openshift:
+    deployment-kind: deployment
+
+  devservices:
+    enabled: false
+  jaeger:
+    enabled: true
+  banner:
+    enabled: true
+
+
+"%dev":
+  quarkus:
+    datasource: &datasource-dev
+      db-kind: h2
+      jdbc:
+        url: jdbc:h2:file:./target/db/fileserver;USER=sa;PASSWORD=sa;PAGE_SIZE=512;TRACE_LEVEL_SYSTEM_OUT=0;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE
+      username: sa
+      password: sa
+      health:
+        enabled: true
+      metrics:
+        enabled: true
+
+    hibernate-envers: &envers-dev
+      store-data-at-delete: true
+
+
+    log: &log-dev
+      console:
+        json: false
+        enable: true
+      level: INFO
+      min-level: TRACE
+      category:
+        "de.kaiserpfalzedv":
+          level: DEBUG
+        http-problem:
+          level: INFO
+    security: &security-dev
+      users:
+        embedded:
+          enabled: true
+          plain-text: true
+          realm-name: ${quarkus.application.name}
+          users:
+            user: userpassword
+            admin: admin
+            metrics: metrics
+          roles:
+            user: user
+            admin: player,gm,orga,admin,metrics
+            metrics: metrics
+
+
+"%test":
+  quarkus:
+    datasource: *datasource-dev
+    hibernate-envers: *envers-dev
+    log: *log-dev
+    security: *security-dev
+
+
