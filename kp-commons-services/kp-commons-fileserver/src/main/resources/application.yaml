@@ -56,7 +56,7 @@ quarkus:
           roles-allowed: metrics
       permission:
         protected:
-          paths: /api/v1/*
+          paths: /api/*
           policy: authenticated
         metrics:
           paths: /q/*
@@ -65,6 +65,17 @@ quarkus:
           paths: /sw.js
           policy: permit
     cors: true
+  oidc:
+    application-type: hybrid
+    auth-server-url: ${OAUTH2_URL}
+    client-id: ${OAUTH2_CLIENT}
+    credentials:
+      secret: ${OAUTH2_SECRET}
+    tls:
+      verification: none
+  keycloak:
+    policy-enforcer:
+      enable: true
   security:
     users:
       embedded:
@@ -221,6 +232,11 @@ quarkus:
             user: user
             admin: player,gm,orga,admin,metrics
             metrics: metrics
+    oidc: &oidc-dev
+      enabled: false
+    keycloak: &keycloak-dev
+      policy-enforcer:
+        enable: false
 
 "%test":
   quarkus:
@@ -228,5 +244,7 @@ quarkus:
     hibernate-envers: *envers-dev
     log: *log-dev
     security: *security-dev
+    oidc: *oidc-dev
+    keycloak: *keycloak-dev
 
 
