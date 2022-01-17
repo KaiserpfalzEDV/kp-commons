@@ -101,8 +101,6 @@ public class Metadata implements Serializable, Cloneable {
     @EqualsAndHashCode.Include
     @Builder.Default
     @NonNull
-    @Length(min = HasId.VALID_UUID_LENGTH, max = HasId.VALID_UUID_LENGTH, message = HasId.VALID_UUID_LENGTH_MSG)
-    @Pattern(regexp = HasId.VALID_UUID_PATTERN, message = HasId.VALID_UUID_PATTERN_MSG)
     private UUID uid = UUID.randomUUID();
 
     @Version

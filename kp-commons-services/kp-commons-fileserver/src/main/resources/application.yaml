@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 quarkus:
   application:
     name: Fileserver
@@ -55,15 +54,15 @@ quarkus:
         metrics:
           roles-allowed: metrics
       permission:
+        public:
+          paths: /public/*,/sw.js
+          policy: permit
         protected:
           paths: /api/*
           policy: authenticated
         metrics:
           paths: /q/*
           policy: metrics
-        sw-js:
-          paths: /sw.js
-          policy: permit
     cors: true
   oidc:
     application-type: hybrid
