@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,20 +12,19 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.fileserver;
+package de.kaiserpfalzedv.commons.core.files;
 
-import de.kaiserpfalzedv.commons.core.files.File;
-import de.kaiserpfalzedv.commons.core.files.FileData;
-import de.kaiserpfalzedv.commons.core.files.FileDescription;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.slf4j.MDC;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.core.MediaType;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
@@ -40,7 +39,7 @@ import java.util.UUID;
  * @since 1.2.0  2021-05-24
  */
 @Slf4j
-public class TestFileResource {
+public class FileTest extends AbstractTestBase {
     private static final UUID DATA_UID = UUID.randomUUID();
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
@@ -65,14 +64,10 @@ public class TestFileResource {
             )
             .build();
 
-    @BeforeAll
-    static void setUp() {
-        MDC.put("test-class", TestFileResource.class.getSimpleName());
-    }
-
-    @AfterAll
-    static void tearDown() {
-        MDC.clear();
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
     }
 
     /**
@@ -110,7 +105,7 @@ public class TestFileResource {
 
     @Test
     void shouldFindAnnotationWhenItIsSet() {
-        MDC.put("test", "read-valid-annotation");
+        startTest("read-valid-annotation");
 
         Assertions.assertTrue(DATA.getMetadata().isAnnotated("valid"));
         Assertions.assertEquals("test", DATA.getMetadata().getAnnotations().get("valid"));
@@ -118,14 +113,14 @@ public class TestFileResource {
 
     @Test
     void shouldNotFindAnnotationWhenItIsAbsent() {
-        MDC.put("test", "read-invalid-annotation");
+        startTest("test", "read-invalid-annotation");
 
         Assertions.assertFalse(DATA.getMetadata().isAnnotated("invalid"));
     }
 
     @Test
     void shouldFindLabelWhenItIsSet() {
-        MDC.put("test", "read-valid-label");
+        startTest("test", "read-valid-label");
 
         Assertions.assertTrue(DATA.getMetadata().isLabeled("test"));
         Assertions.assertEquals("valid", DATA.getMetadata().getLabels().get("test"));
@@ -133,13 +128,8 @@ public class TestFileResource {
 
     @Test
     void shouldNotFindLabelWhenItIsAbsent() {
-        MDC.put("test", "read-invalid-label");
+        startTest("test", "read-invalid-label");
 
         Assertions.assertFalse(DATA.getMetadata().isAnnotated("not-there"));
-    }
-
-    @AfterEach
-    void tearDownEach() {
-        MDC.remove("test");
     }
 }

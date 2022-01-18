@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.fileserver.services;
@@ -20,7 +20,10 @@ package de.kaiserpfalzedv.commons.fileserver.services;
 import de.kaiserpfalzedv.commons.core.api.About;
 import de.kaiserpfalzedv.commons.core.files.File;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
+import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.rest.HttpErrorGenerator;
 import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileData;
 import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileRepository;
 import io.quarkus.panache.common.Sort;
 import io.quarkus.security.identity.SecurityIdentity;
@@ -43,11 +46,14 @@ import javax.annotation.PreDestroy;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -85,6 +91,9 @@ import java.util.stream.Stream;
 public class FileResource {
     @Inject
     JPAFileRepository repository;
+
+    @Inject
+    HttpErrorGenerator errorGenerator;
 
     @Inject
     SecurityIdentity identity;
@@ -203,15 +212,157 @@ public class FileResource {
     @NoCache
     @POST
     @RolesAllowed({"user", "admin"})
+    @Operation(
+            summary = "Creates a new file.",
+            description = "Creates a new file with the given data."
+    )
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "409",
+                    name = "Conflict",
+                    description = "The Resource already exists (UUID or NameSpace and Name)."
+            )
+    })
+    @Transactional
     public File create(
-            @QueryParam("nameSpace") final String nameSpace,
+            @Schema(
+                    description = "The file to be saved with all metadata needed",
+                    required = true,
+                    example = HasName.VALID_NAME_EXAMPLE,
+                    pattern = HasName.VALID_NAME_PATTERN,
+                    minLength = HasName.VALID_NAME_MIN_LENGTH,
+                    maxLength = HasName.VALID_NAME_MAX_LENGTH
+            )
+            @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH,
+                    message = HasName.VALID_NAME_LENGTH_MSG)
+            @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @NotNull final File input
     ) {
-        JPAFile store = JPAFile.from(input);
+        log.info("Creating file. namespace='{}', name='{}'",
+                input.getNameSpace(), input.getName()
+        );
 
-        repository.persistAndFlush(store);
+        if (input.getUid() != null) {
+            log.warn("Removing UUID to create a new entity.");
+        }
 
+        JPAFile store = JPAFile.from(input)
+                .toBuilder()
+                .withId(null)
+                .build();
+
+        persist(input, store);
+
+        log.info("Created entity. uuid='{}', namespace='{}', name='{}'",
+                store.getId(), store.getNameSpace(), store.getName());
         return resource(store.getId());
+    }
+
+    private void persist(File input, JPAFile store) {
+        log.debug("Trying to persist entity ...");
+        try {
+            repository.persistAndFlush(store);
+
+            log.debug("Persisted entity. uuid='{}', namespace='{}', name='{}'",
+                    store.getId(), store.getNameSpace(), store.getName());
+        } catch (javax.persistence.EntityExistsException cause) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.CONFLICT,
+                    "Either UUID or NameSpace+Name already taken",
+                    Map.of(
+                            "UUID", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    ),
+                    cause
+            );
+        } catch (RuntimeException cause) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    cause.getMessage(),
+                    Map.of(
+                            "UUID", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    ),
+                    cause
+            );
+        }
+    }
+
+
+    @NoCache
+    @PUT
+    @RolesAllowed({"user", "admin"})
+    @Operation(
+            summary = "Updates the file",
+            description = "This resource updates the file. If the file does not exist, it get's created."
+    )
+    @APIResponses({
+            @APIResponse(responseCode = "401", name = "Forbidden", description = "You are not allowed to change this file"),
+            @APIResponse(
+                    responseCode = "409",
+                    name = "Conflict",
+                    description = "The Resource already exists (UUID or NameSpace and Name)."
+            )
+    })
+    @Transactional
+    public File update(
+            @Schema(
+                    description = "The file data to be stored.",
+                    required = true
+            )
+            @NotNull final File input
+    ) {
+        log.info("Updating file. uuid='{}', namespace='{}', name='{}'",
+                input.getUid(), input.getNameSpace(), input.getName()
+        );
+
+        JPAFile stored = repository.findById(input.getUid());
+        if (stored == null) {
+            log.warn("Entity with UID does not exist. Creating a new one.");
+            return create(input);
+        }
+
+        if (!stored.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), File.WRITE)) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.FORBIDDEN,
+                    "User has no write access to this file!",
+                    Map.of(
+                            "user", identity.getPrincipal().getName(),
+                            "groups", identity.getRoles().stream()
+                                    .collect(Collectors.joining(",", "{", "}")),
+                            "owner", stored.getOwner(),
+                            "group", stored.getGroup(),
+                            "permission", stored.getPermissions(),
+                            "UUID", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
+            );
+        }
+
+        log.trace("Updating the data of entity.");
+        Metadata metadata = input.getMetadata();
+        metadata.getAnnotation(File.ANNOTATION_GROUP).ifPresent(stored::setGroup);
+        metadata.getAnnotation(File.ANNOTATION_PERMISSIONS).ifPresent(stored::setPermissions);
+
+        if (stored.getOwner().equals(identity.getPrincipal().getName())) {
+            log.info("Handing over ownership of file. uuid='{}' old='{}', new='{}'",
+                    stored.getId(), stored.getOwner(), metadata.getAnnotation(File.ANNOTATION_OWNER));
+            metadata.getAnnotation(File.ANNOTATION_OWNER).ifPresent(stored::setOwner);
+        }
+
+        stored.setFile(JPAFileData.from(input.getSpec().getFile()));
+        if (input.getSpec().getPreview() != null) {
+            stored.setPreview(JPAFileData.from(input.getSpec().getPreview()));
+        }
+
+        persist(input, stored);
+
+        log.info("Updated entity. uuid='{}', namespace='{}', name='{}'",
+                stored.getId(), stored.getNameSpace(), stored.getName());
+        return resource(stored.getId());
     }
 
     @Path("/{id}")
@@ -232,6 +383,8 @@ public class FileResource {
             )
             @PathParam("id") @NotNull final UUID id
     ) {
+        log.info("Retrieving file. uuid='{}'", id);
+
         JPAFile data = repository.findById(id);
 
         if (data == null) {
@@ -297,6 +450,9 @@ public class FileResource {
             @PathParam("name")
             @NotNull final String name
     ) {
+        log.info("Retrieving file. namespace='{}', name='{}'",
+                nameSpace, name
+        );
         Optional<JPAFile> data = repository.findByNameSpaceAndName(nameSpace, name);
 
         if (data.isEmpty()) {

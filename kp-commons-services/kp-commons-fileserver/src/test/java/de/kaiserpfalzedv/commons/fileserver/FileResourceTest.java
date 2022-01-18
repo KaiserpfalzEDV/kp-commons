@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,23 +12,35 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.fileserver;
 
+import de.kaiserpfalzedv.commons.core.files.File;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileData;
+import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileRepository;
 import de.kaiserpfalzedv.commons.fileserver.services.FileResource;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.MDC;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.ws.rs.core.MediaType;
+import java.nio.charset.StandardCharsets;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 
 /**
  * FileServiceTest --
@@ -39,12 +51,22 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 @TestHTTPEndpoint(FileResource.class)
 @Slf4j
-public class FileResourceTest {
+public class FileResourceTest extends AbstractTestBase {
+    @Inject
+    JPAFileRepository repository;
+
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
+
+        RestAssured.defaultParser = Parser.JSON;
+    }
 
     @Test
     @TestSecurity(user = "user", roles = "user")
     public void shouldReturnFullListWhenCalledWithoutParameters() {
-        logTest("list-files");
+        startTest("list-files");
 
         given()
                 .when()
@@ -57,7 +79,7 @@ public class FileResourceTest {
     @Test
     @TestSecurity(user = "user", roles = "user")
     public void shouldReturnTheSelectedFileWhenGivenCorrectNameSpaceAndName() {
-        logTest("retrieve-by-namespace-and-name");
+        startTest("retrieve-by-namespace-and-name");
 
         given()
                 .when()
@@ -68,15 +90,20 @@ public class FileResourceTest {
 
     @Test
     @TestSecurity(user = "user", roles = "user")
-    public void shouldNotFindTheFileWhenNameSpaceOrNameDoesNotMatch() {
-        logTest("failed-retrieve-by-unknown-namespace-and-name");
+    public void shouldNotFindTheFileWhenNameisInvalid() {
+        startTest("failed-retrieve-by-unknown-name");
 
         given()
                 .when()
                 .get("fileserver/invalid-name")
                 .then()
                 .statusCode(404);
+    }
 
+    @Test
+    @TestSecurity(user = "user", roles = "user")
+    public void shouldNotFindTheFileWhenNameSpaceisInvalid() {
+        startTest("failed-retrieve-by-unknown-namespace");
 
         given()
                 .when()
@@ -85,41 +112,67 @@ public class FileResourceTest {
                 .statusCode(404);
     }
 
+    @Transactional
+    @Test
+    @TestSecurity(user = "user", roles = "user")
+    public void shouldUpdateTheFileWhenUserMatch() {
+        startTest("update-owned-file");
+
+        JPAFile orig = JPAFile.builder()
+                .withNameSpace("update-owned-file")
+                .withName("update-owned-file")
+                .withOwner("user")
+                .withGroup("user")
+                .withPermissions("000")
+                .withFile(
+                        JPAFileData.builder()
+                                .withName("update-owned-file.txt")
+                                .withMediaType(MediaType.TEXT_PLAIN)
+                                .withData("content".getBytes(StandardCharsets.UTF_8))
+                                .build()
+                )
+                .build();
+        repository.persistAndFlush(orig);
+        log.trace("Created file to update. data={}", orig);
+
+        JPAFile update = orig.toBuilder()
+                .withPreview(
+                        JPAFileData.builder()
+                                .withName("update-owned-preview.txt")
+                                .withMediaType(MediaType.TEXT_PLAIN)
+                                .withData("con...".getBytes(StandardCharsets.UTF_8))
+                                .build()
+                )
+                .build();
+
+        File result = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(update)
+                .put()
+                .prettyPeek()
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON).extract().response()
+                .prettyPeek()
+                .jsonPath().get();
+
+        assertThat(result.getSpec().getPreview().getName(), equals(update.getPreview().getName()));
+        assertThat(result.getMetadata().getModified(), not(equals(orig.getCreated())));
+
+        // cleanup
+        repository.deleteById(result.getUid());
+    }
+
     @Test
     @TestSecurity
     public void shouldReturnNotAllowedWhenNotAuthenticated() {
-        logTest("fail-unauthenticated");
+        startTest("fail-unauthenticated");
 
         given()
                 .when()
                 .get()
                 .then()
                 .statusCode(401);
-    }
-
-
-    private void logTest(final String test, final Object... parameters) {
-        MDC.put("test", test);
-
-        log.debug("Starting. test='{}', parameters={}", test, parameters);
-    }
-
-    @BeforeAll
-    static void setUpLogging() {
-        MDC.put("test-class", FileResourceTest.class.getSimpleName());
-
-        log.info("Starting test... test-class='{}'", MDC.get("test-class"));
-    }
-
-    @AfterEach
-    void removeMDC() {
-        MDC.remove("test");
-    }
-
-    @AfterAll
-    static void tearDownLogging() {
-        MDC.remove("test");
-        log.info("Ended test. test-class='{}'", MDC.get("test-class"));
-        MDC.remove("test-class");
     }
 }

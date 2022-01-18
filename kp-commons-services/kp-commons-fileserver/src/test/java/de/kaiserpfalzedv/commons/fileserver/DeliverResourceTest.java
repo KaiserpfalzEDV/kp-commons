@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,21 +12,20 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.fileserver;
 
 import de.kaiserpfalzedv.commons.fileserver.services.DeliverResource;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.MDC;
+
+import javax.annotation.PostConstruct;
 
 import static io.restassured.RestAssured.given;
 
@@ -39,11 +38,18 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 @TestHTTPEndpoint(DeliverResource.class)
 @Slf4j
-public class DeliverResourceTest {
+public class DeliverResourceTest extends AbstractTestBase {
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
+    }
+
+
     @Test
     @TestSecurity
     public void shouldReturnTheSelectedFileWhenGivenCorrectNameSpaceAndName() {
-        logTest("retrieve-by-namespace-and-name", "fileserver/liq-files-data");
+        startTest("retrieve-by-namespace-and-name", "fileserver/liq-files-data");
 
         given()
                 .when()
@@ -55,7 +61,7 @@ public class DeliverResourceTest {
     @Test
     @TestSecurity
     public void shouldReturnTheFileWhenCorrectUidIsGiven() {
-        logTest("retrieve-by-uid", "39062d79-e1a9-437a-b1b4-7dc783bd9eb4");
+        startTest("retrieve-by-uid", "39062d79-e1a9-437a-b1b4-7dc783bd9eb4");
 
         given()
                 .when()
@@ -67,7 +73,7 @@ public class DeliverResourceTest {
     @Test
     @TestSecurity
     public void shouldNotFindTheFileWhenNameSpaceOrNameDoesNotMatch() {
-        logTest("failed-retrieve-by-unknown-namespace-and-name");
+        startTest("failed-retrieve-by-unknown-namespace-and-name");
 
         given()
                 .when()
@@ -87,37 +93,12 @@ public class DeliverResourceTest {
     @Test
     @TestSecurity
     public void shouldDenyTheFileWhenItIsNotPublic() {
-        logTest("failed-non-public-retrieve", "39062d79-e1a9-437a-b1b4-7dc783bd9eb1");
+        startTest("failed-non-public-retrieve", "39062d79-e1a9-437a-b1b4-7dc783bd9eb1");
 
         given()
                 .when()
                 .get("file/39062d79-e1a9-437a-b1b4-7dc783bd9eb1")
                 .then()
                 .statusCode(403);
-    }
-
-    private void logTest(final String test, final Object... parameters) {
-        MDC.put("test", test);
-
-        log.debug("Starting. test='{}', parameters={}", test, parameters);
-    }
-
-    @BeforeAll
-    static void setUpLogging() {
-        MDC.put("test-class", DeliverResourceTest.class.getSimpleName());
-
-        log.info("Starting test... test-class='{}'", MDC.get("test-class"));
-    }
-
-    @AfterEach
-    void removeMDC() {
-        MDC.remove("test");
-    }
-
-    @AfterAll
-    static void tearDownLogging() {
-        MDC.remove("test");
-        log.info("Ended test. test-class='{}'", MDC.get("test-class"));
-        MDC.remove("test-class");
     }
 }
