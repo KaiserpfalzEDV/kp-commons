@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.i18n;
@@ -137,7 +137,7 @@ public class ResourceBoundleTranslator implements Translator, MessageSource {
                         bundle = ResourceBundle.getBundle(defaultBundle, Locale.forLanguageTag(defaultLocale),
                                 new UnicodeResourceBundleControl());
                     } catch (NullPointerException e2) {
-                        log.error("Resource bundle can't be read.", e2);
+                        log.error("Resource bundle can't be read.");
 
                         return;
                     }
