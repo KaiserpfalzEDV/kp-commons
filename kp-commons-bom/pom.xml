@@ -38,7 +38,7 @@
 
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.version>2.6.1.Final</quarkus.version>
+        <quarkus.version>2.6.3.Final</quarkus.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
@@ -48,7 +48,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.31</version>
+                <version>1.7.33</version>
             </dependency>
 
             <!-- KP RPG modules -->
