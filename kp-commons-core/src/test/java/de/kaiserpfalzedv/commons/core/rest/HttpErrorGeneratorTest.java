@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.core.rest;
 
 import com.tietoevry.quarkus.resteasy.problem.HttpProblem;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-01-17
  */
+@QuarkusTest
 @Slf4j
 public class HttpErrorGeneratorTest extends AbstractTestBase {
     private static final Response.Status DEFAULT_STATUS = Response.Status.PAYMENT_REQUIRED;

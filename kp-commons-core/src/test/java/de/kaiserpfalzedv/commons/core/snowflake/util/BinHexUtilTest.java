@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,20 +12,25 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.snowflake.util;
 
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@QuarkusTest
 @Slf4j
-public class BinHexUtilTest {
+public class BinHexUtilTest extends AbstractTestBase {
 	@Test
 	public void testBin() {
+		startTest("bin");
+
 		log.debug(BinHexUtil.bin(-1L));
 		log.debug(BinHexUtil.bin(-1L << 12));
 		log.debug(BinHexUtil.bin(~(-1L << 12)));
@@ -39,6 +44,8 @@ public class BinHexUtilTest {
 
 	@Test
 	public void testHex() {
+		startTest("hex");
+
 		log.debug(BinHexUtil.hex(-1L));
 		log.debug(BinHexUtil.hex(-1L << 12));
 		log.debug(BinHexUtil.hex(~(-1L << 12)));
@@ -50,6 +57,8 @@ public class BinHexUtilTest {
 
 	@Test
 	public void testDiode() {
+		startTest("diode");
+
 		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1, 41)));
 		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1 + 41, 5)));
 		log.debug("diode: {}", BinHexUtil.bin(BinHexUtil.diode(1 + 41 + 5, 5)));

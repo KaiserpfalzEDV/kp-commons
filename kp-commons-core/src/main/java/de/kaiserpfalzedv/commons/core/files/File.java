@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.files;
@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
@@ -65,16 +66,19 @@ public class File extends Resource<FileData> {
     public static final int WRITE = 4;
     public static final int READ_WRITE = 6;
 
+    @BsonIgnore
     @JsonIgnore
     public Optional<String> getOwner() {
         return getMetadata().getAnnotation(ANNOTATION_OWNER);
     }
 
+    @BsonIgnore
     @JsonIgnore
     public Optional<String> getGroup() {
         return getMetadata().getAnnotation(ANNOTATION_GROUP);
     }
 
+    @BsonIgnore
     @JsonIgnore
     public int[] getPermissions() {
         if (getMetadata().getAnnotation(ANNOTATION_PERMISSIONS).isEmpty()) {
@@ -103,6 +107,7 @@ public class File extends Resource<FileData> {
      * @param permission The requested permission ({@link #READ}, {@link #WRITE} or {@link #READ_WRITE}).
      * @return TRUE if the access is granted, FALSE if the access is denied.
      */
+    @BsonIgnore
     @JsonIgnore
     public boolean hasAccess(@NotNull final String user, @NotNull final Set<String> groups, final int permission) {
         log.debug(
