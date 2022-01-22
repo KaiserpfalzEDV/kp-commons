@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,17 +12,20 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.user;
 
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.slf4j.MDC;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+import javax.annotation.PostConstruct;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -34,8 +37,9 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@QuarkusTest
 @Slf4j
-public class TestUser {
+public class TestUser extends AbstractTestBase {
     private static final UUID DATA_UID = UUID.randomUUID();
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
@@ -61,14 +65,11 @@ public class TestUser {
             )
             .build();
 
-    @BeforeAll
-    static void setUp() {
-        MDC.put("test-class", TestUser.class.getSimpleName());
-    }
 
-    @AfterAll
-    static void tearDown() {
-        MDC.clear();
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
     }
 
     /**
@@ -105,14 +106,14 @@ public class TestUser {
 
     @Test
     void shouldReturnDiscordIdWhenUserHasAnDiscordIdSet() {
-        MDC.put("test", "read-discord-id");
+        startTest("read-discord-id");
 
         Assertions.assertEquals(DISCORD_ID, DATA.getData().orElseThrow().getProperty("discord-id").orElseThrow());
     }
 
     @Test
     void shouldFindAnnotationWhenItIsSet() {
-        MDC.put("test", "read-valid-annotation");
+        startTest("read-valid-annotation");
 
         Assertions.assertTrue(DATA.getMetadata().isAnnotated("valid"));
         Assertions.assertEquals("test", DATA.getMetadata().getAnnotations().get("valid"));
@@ -120,14 +121,14 @@ public class TestUser {
 
     @Test
     void shouldNotFindAnnotationWhenItIsAbsent() {
-        MDC.put("test", "read-invalid-annotation");
+        startTest("read-invalid-annotation");
 
         Assertions.assertFalse(DATA.getMetadata().isAnnotated("invalid"));
     }
 
     @Test
     void shouldFindLabelWhenItIsSet() {
-        MDC.put("test", "read-valid-label");
+        startTest("read-valid-label");
 
         Assertions.assertTrue(DATA.getMetadata().isLabeled("test"));
         Assertions.assertEquals("valid", DATA.getMetadata().getLabels().get("test"));
@@ -135,13 +136,8 @@ public class TestUser {
 
     @Test
     void shouldNotFindLabelWhenItIsAbsent() {
-        MDC.put("test", "read-invalid-label");
+        startTest("read-invalid-label");
 
         Assertions.assertFalse(DATA.getMetadata().isAnnotated("not-there"));
-    }
-
-    @AfterEach
-    void tearDownEach() {
-        MDC.remove("test");
     }
 }

@@ -16,8 +16,12 @@
 
 package de.kaiserpfalzedv.commons.core.snowflake;
 
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+
+import javax.annotation.PostConstruct;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,18 +29,27 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author downgoon {@literal http://downgoon.com}
  * @since 2.0.0  2021-05-24
  */
+@QuarkusTest
 @Slf4j
-public class SnowflakeTest {
+public class SnowflakeTest extends AbstractTestBase {
+	@PostConstruct
+	void init() {
+		setTestSuite(getClass().getSimpleName());
+		setLog(log);
+	}
+
 	@Test
 	public void testNextIdAndParse() throws Exception {
+		startTest("next-id-and-parse");
+
 		long beginTimeStamp = System.currentTimeMillis();
 		Snowflake snowflake = new Snowflake(3, 16);
-	
+
 		// gen id and parse it
 		long id = snowflake.nextId();
 		long[] arr = snowflake.parseId(id);
 		log.debug(snowflake.formatId(id));
-		
+
 		assertTrue(arr[0] >= beginTimeStamp);
 		assertEquals(3, arr[1]); // datacenterId
 		assertEquals(16, arr[2]); // workerId

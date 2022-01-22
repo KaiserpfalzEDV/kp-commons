@@ -16,21 +16,34 @@
 
 package de.kaiserpfalzedv.commons.core.snowflake;
 
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author downgoon {@literal http://downgoon.com}
  * @since 2.0.0  2021-05-24
  */
+@QuarkusTest
 @Slf4j
-public class SnowflakePerformanceTest {
+public class SnowflakePerformanceTest extends AbstractTestBase {
+	@PostConstruct
+	void init() {
+		setTestSuite(getClass().getSimpleName());
+		setLog(log);
+	}
+
 	@Test
 	public void testSingleThread() {
+		startTest("single-thread", 1000000, 10000000);
+
 		int n1 = 1000000; // 1百万次
 		long[] r1 = runC1N(n1);
 		showReport(1, n1, r1);
-		
+
 		int n2 = 10000000; // 1千万次
 		long[] r2 = runC1N(n2);
 		showReport(1, n2, r2);
@@ -38,8 +51,10 @@ public class SnowflakePerformanceTest {
 	
 	@Test
 	public void testC10N10w() throws Exception {
+		startTest("C10N10w");
 		ConcurrentTestFramework ctf = new ConcurrentTestFramework("C10N10w", true);
 		final Snowflake snowflake = new Snowflake(2, 5);
+
 		ConcurrentTestFramework.SummaryReport report = ctf.test(10, 100000, snowflake::nextId);
 		report.setAttachment(String.format("wait: %d", snowflake.getWaitCount()));
 		log.info("C10N10w Report: {}", report);
@@ -47,8 +62,11 @@ public class SnowflakePerformanceTest {
 	
 	@Test
 	public void testC100N1w() throws Exception {
+		startTest("C100N1w");
+
 		ConcurrentTestFramework ctf = new ConcurrentTestFramework("C100N1w", false);
 		final Snowflake snowflake = new Snowflake(2, 5);
+
 		ConcurrentTestFramework.SummaryReport report = ctf.test(100, 10000, snowflake::nextId);
 		report.setAttachment(String.format("wait: %d", snowflake.getWaitCount()));
 		log.info("C100N1w Report: {}", report);
@@ -56,8 +74,10 @@ public class SnowflakePerformanceTest {
 	
 	@Test
 	public void testC50N100w() throws Exception {
+		startTest("C50N100w");
 		ConcurrentTestFramework ctf = new ConcurrentTestFramework("C50N100w", false);
 		final Snowflake snowflake = new Snowflake(2, 5);
+
 		ConcurrentTestFramework.SummaryReport report = ctf.test(50, 1000000, snowflake::nextId);
 		report.setAttachment(String.format("wait: %d", snowflake.getWaitCount()));
 		log.info("C50N100w Report: {}", report);
@@ -67,6 +87,8 @@ public class SnowflakePerformanceTest {
 	 * @return time cost in MS, wait count
 	 */
 	private long[] runC1N(int n) {
+		startTest("C1N");
+
 		Snowflake snowflake = new Snowflake(2, 5);
 		long btm = System.currentTimeMillis();
 		for (int i = 0; i < n; i++) {

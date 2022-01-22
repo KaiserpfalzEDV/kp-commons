@@ -1,24 +1,29 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
- * later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with this program.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.i18n;
 
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
-import org.jboss.logging.MDC;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -33,8 +38,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 0.1.0  2021-04-08
  */
+@QuarkusTest
 @Slf4j
-class TranslatorTest {
+class TranslatorTest extends AbstractTestBase {
     private static final List<Locale> supportedLocales = Arrays.asList(Locale.GERMAN, Locale.ENGLISH);
     private static final Locale DEFAULT_LOCALE = Locale.GERMAN;
 
@@ -44,9 +50,17 @@ class TranslatorTest {
      */
     private Translator sut;
 
+
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
+    }
+
+
     @Test
     void shouldReturnListOfSupportedLocales() {
-        MDC.put("test-name", "supported-locales");
+        startTest("supported-locales");
 
         List<Locale> result = sut.getProvidedLocales();
         log.debug("result: {}", result.toArray());
@@ -56,7 +70,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnTheGermanTranslationWhenCalledWithAnExistingElementFromTheDefaultBundle() {
-        MDC.put("test-name", "valid-german-translation");
+        startTest("valid-german-translation");
 
         String result = sut.getTranslation("existing.no-params", DEFAULT_LOCALE);
         log.debug("result: {}", result);
@@ -66,7 +80,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnTheTranslationWhenCalledWithAnExistingElementFromTheClassLocalBundle() {
-        MDC.put("test-name", "valid-german-translation-class-bundle");
+        startTest("valid-german-translation-class-bundle");
 
         String result = sut.getTranslation(this, "existing.no-params", DEFAULT_LOCALE);
         log.debug("result: {}", result);
@@ -77,7 +91,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnAnErrorCodedStringWhenCalledWithAnNonExistingElementFromTheDefaultBundle() {
-        MDC.put("test-name", "missing-german-translation");
+        startTest("missing-german-translation");
 
         String result = sut.getTranslation("non-existing", DEFAULT_LOCALE);
         log.debug("result: {}", result);
@@ -87,7 +101,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnTheStringWithParametersReplasedWhenCalledWithParamters() {
-        MDC.put("test-name", "adding-parameters-to-translation");
+        startTest("adding-parameters-to-translation");
 
         UUID uuid = UUID.randomUUID();
         String expected = String.format("Dies ist ein Teststring mit 1 Parameter: 0='%s'", uuid);
@@ -100,7 +114,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnTheStringWithParametersReplasedWhenCalledWithTooFewParamters() {
-        MDC.put("test-name", "adding-too-few-parameters-to-translation");
+        startTest("adding-too-few-parameters-to-translation");
 
         UUID uuid = UUID.randomUUID();
         String expected = String.format("Dieser String hat 2 Parameter: 0='%s', 1='{1}'.", uuid);
@@ -113,7 +127,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnTheStringWithTwoParametersReplasedWhenAllParametersAreGiven() {
-        MDC.put("test-name", "adding-two-parameters-to-translation");
+        startTest("adding-two-parameters-to-translation");
 
         UUID uuid = UUID.randomUUID();
         String param2 = "Und ein String";
@@ -128,7 +142,7 @@ class TranslatorTest {
 
     @Test
     void shouldReturnTheEnglishTranslationWhenCalledWithAnExistingElementFromTheDefaultBundle() {
-        MDC.put("test-name", "valid-english-translation");
+        startTest("valid-english-translation");
 
         String result = sut.getTranslation("existing.no-params", Locale.ENGLISH);
         log.debug("result: {}", result);
@@ -138,7 +152,7 @@ class TranslatorTest {
 
     @Test
     void shouldFailWhenANonExistingMessageBundleIsSpecified() {
-        MDC.put("test-name", "non-existing-bundle");
+        startTest("non-existing-bundle");
 
         String result = sut.getTranslation("ignored", "ignored", Locale.GERMAN);
         log.debug("result: {}", result);
@@ -156,23 +170,5 @@ class TranslatorTest {
     @BeforeEach
     void setUp() {
         sut = new ResourceBoundleTranslator("test-messages");
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        sut.close();
-        MDC.remove("test");
-    }
-
-    @BeforeAll
-    static void setUpAll() {
-        MDC.put("test-class", TranslatorTest.class.getSimpleName());
-        log.info("Starting tests.");
-    }
-
-    @AfterAll
-    static void tearDownAll() {
-        log.info("Tests ended.");
-        MDC.remove("test-class");
     }
 }

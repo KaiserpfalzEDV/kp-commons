@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.user;
@@ -20,10 +20,13 @@ package de.kaiserpfalzedv.commons.core.user;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.slf4j.MDC;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 import java.time.Clock;
 import java.time.OffsetDateTime;
@@ -39,8 +42,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@QuarkusTest
 @Slf4j
-public class TestMemoryUserStore {
+public class TestMemoryUserStore extends AbstractTestBase {
     private static final UUID DATA_UID = UUID.randomUUID();
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
@@ -82,22 +86,25 @@ public class TestMemoryUserStore {
     /**
      * service under test.
      */
-    private final UserStoreService sut;
+    private final UserStoreService sut = new MemoryUserStore();
 
-    public TestMemoryUserStore() {
-        this.sut = new MemoryUserStore();
+
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
     }
 
     @Test
     void shouldBeAMemoryUserStoreService() {
-        MDC.put("test", "store-is-memory-based");
+        startTest("store-is-memory-based");
 
         assertTrue(sut instanceof MemoryUserStore);
     }
 
     @Test
     void shouldSaveNewDataWhenDataIsNotStoredYet() {
-        MDC.put("test", "store-new-data");
+        startTest("store-new-data");
 
         sut.save(DATA);
 
@@ -110,7 +117,7 @@ public class TestMemoryUserStore {
 
     @Test
     void shouldSaveNewDataWhenDataIsAlreadyStoredYet() {
-        MDC.put("test", "update-stored-data");
+        startTest("update-stored-data");
 
         sut.save(DATA); // store data first time
 
@@ -150,7 +157,7 @@ public class TestMemoryUserStore {
 
     @Test
     public void shouldSaveOtherDataSetsWhenDataIsAlreadyStored() {
-        MDC.put("test", "save-other-data");
+        startTest("save-other-data");
 
         sut.save(DATA);
 
@@ -164,7 +171,7 @@ public class TestMemoryUserStore {
 
     @Test
     public void shouldDeleteByNameWhenTheDataExists() {
-        MDC.put("test", "delete-existing-by-name");
+        startTest("delete-existing-by-name");
 
         sut.save(DATA);
         sut.remove(DATA_NAMESPACE, DATA_NAME);
@@ -175,7 +182,7 @@ public class TestMemoryUserStore {
 
     @Test
     public void shouldDeleteByUidWhenTheDataExists() {
-        MDC.put("test", "delete-existing-by-uid");
+        startTest("delete-existing-by-uid");
 
         sut.save(DATA);
         sut.remove(DATA_UID);
@@ -186,7 +193,7 @@ public class TestMemoryUserStore {
 
     @Test
     public void shouldDeleteByObjectWhenTheDataExists() {
-        MDC.put("test", "delete-existing-by-uid");
+        startTest("delete-existing-by-uid");
 
         sut.save(DATA);
         sut.remove(DATA);
@@ -196,7 +203,7 @@ public class TestMemoryUserStore {
     }
     @Test
     public void shouldDeleteByNameWhenTheDataDoesNotExists() {
-        MDC.put("test", "delete-non-existing-by-name");
+        startTest("delete-non-existing-by-name");
 
         sut.remove(DATA_NAMESPACE, DATA_NAME);
 
@@ -206,7 +213,7 @@ public class TestMemoryUserStore {
 
     @Test
     public void shouldDeleteByUidWhenTheDataDoesNotExists() {
-        MDC.put("test", "delete-non-existing-by-uid");
+        startTest("delete-non-existing-by-uid");
 
         sut.remove(DATA_UID);
 
@@ -216,7 +223,7 @@ public class TestMemoryUserStore {
 
     @Test
     public void shouldDeleteByObjectWhenTheDataDoesNotExists() {
-        MDC.put("test", "delete-non-existing-by-uid");
+        startTest("delete-non-existing-by-uid");
 
         sut.remove(DATA);
 
@@ -225,24 +232,9 @@ public class TestMemoryUserStore {
     }
 
 
-    @AfterEach
-    void tearDownEach() {
-        MDC.remove("test");
-    }
-
-    @BeforeAll
-    static void setUp() {
-        MDC.put("test-class", TestMemoryUserStore.class.getSimpleName());
-    }
-
-    @AfterAll
-    static void tearDown() {
-        MDC.clear();
-    }
-
     @Test
     void shouldThrowOptimisticLockExceptionWhenTheNewGenerationIsNotHighEnough() {
-        MDC.put("test", "throw-optimistic-lock-exception");
+        startTest("throw-optimistic-lock-exception");
 
         sut.save(
                 DATA.toBuilder()

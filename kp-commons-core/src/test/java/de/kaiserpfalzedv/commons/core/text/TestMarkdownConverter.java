@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
 
 package de.kaiserpfalzedv.commons.core.text;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import io.quarkus.test.junit.QuarkusTest;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.MDC;
+
+import javax.annotation.PostConstruct;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,33 +32,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-public class TestMarkdownConverter {
-    /** The markdown converter to be tested. */
+@QuarkusTest
+@Slf4j
+public class TestMarkdownConverter extends AbstractTestBase {
+    @PostConstruct
+    void init() {
+        setTestSuite(getClass().getSimpleName());
+        setLog(log);
+    }
+
+    /**
+     * The markdown converter to be tested.
+     */
     private final MarkdownConverter sut = new MarkdownConverter();
 
     @Test
     public void shouldConvertTheMarkdownCorrectWhenTextIsGiven() {
-        MDC.put("test", "convert-markdown");
+        startTest("convert-markdown");
 
         String input = "### MD-Test\n\nDas hier ist der Test.";
 
         String result = sut.convert(input);
 
         assertEquals("<h3>MD-Test</h3>\n<p>Das hier ist der Test.</p>\n", result);
-    }
-
-    @AfterEach
-    void tearDownEach() {
-        MDC.remove("test");
-    }
-
-    @BeforeAll
-    static void setUp() {
-        MDC.put("test-class", TestMarkdownConverter.class.getSimpleName());
-    }
-
-    @AfterAll
-    static void tearDown() {
-        MDC.clear();
     }
 }
