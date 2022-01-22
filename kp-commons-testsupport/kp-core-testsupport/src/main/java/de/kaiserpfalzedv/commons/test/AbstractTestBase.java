@@ -17,13 +17,12 @@
 
 package de.kaiserpfalzedv.commons.test;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Setter;
 import org.junit.jupiter.api.AfterEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * AbstractTestBase -- A base class for common junit tests.
