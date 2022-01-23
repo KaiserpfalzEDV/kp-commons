@@ -28,7 +28,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.Size;
 
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
@@ -120,7 +120,7 @@ public class DeliverResource {
                     pattern = HasName.VALID_NAME_PATTERN,
                     example = "default"
             )
-            @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+            @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
             @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @PathParam("nameSpace")
             @NotNull final String nameSpace,
@@ -132,7 +132,7 @@ public class DeliverResource {
                     minLength = HasName.VALID_NAME_MIN_LENGTH,
                     maxLength = HasName.VALID_NAME_MAX_LENGTH
             )
-            @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+            @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
             @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @PathParam("name")
             @NotNull final String name

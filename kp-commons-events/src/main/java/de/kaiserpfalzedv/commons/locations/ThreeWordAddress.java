@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.locations;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
@@ -27,7 +28,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.1.0  2021-06-13
  */
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @EqualsAndHashCode

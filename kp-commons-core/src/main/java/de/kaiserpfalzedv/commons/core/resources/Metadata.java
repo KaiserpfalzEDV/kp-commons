@@ -23,9 +23,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -33,8 +33,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -55,14 +53,14 @@ import java.util.UUID;
  * @version 2.0.2 2022-01-04
  */
 @Embeddable
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Metadata.MetadataBuilder.class)
 @JsonPropertyOrder({"identity,uid,generation,owner,created,deleted,annotations,labels,selfLink"})
 @Schema(
         name = "ResourceMetadata",
@@ -115,7 +113,8 @@ public class Metadata implements Serializable, Cloneable {
     )
     @Builder.Default
     @NonNull
-    @Range(min = 0, max = Integer.MAX_VALUE, message = "The generation has to be between 0 and " + Integer.MAX_VALUE)
+    @Min(value = 0, message = "The generation must be at least 0.")
+    @Max(value = Integer.MAX_VALUE, message = "The generation must not be bigger than " + Integer.MAX_VALUE + ".")
     private Integer generation = 0;
 
     @Schema(
@@ -147,7 +146,7 @@ public class Metadata implements Serializable, Cloneable {
     @Builder.Default
     @CreationTimestamp
     @Column(name = "CREATED", nullable = false, updatable = false)
-    @Length(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
+    @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
     @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
 
@@ -164,7 +163,7 @@ public class Metadata implements Serializable, Cloneable {
     @Builder.Default
     @UpdateTimestamp
     @Column(name = "MODIFIED", nullable = false)
-    @Length(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
+    @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
     @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     protected OffsetDateTime modified = OffsetDateTime.now(ZoneOffset.UTC);
 
@@ -305,7 +304,7 @@ public class Metadata implements Serializable, Cloneable {
 
     public Metadata increaseGeneration() {
         return toBuilder()
-                .withGeneration(generation + 1)
+                .generation(generation + 1)
                 .build();
     }
 
@@ -353,12 +352,12 @@ public class Metadata implements Serializable, Cloneable {
             final String name
     ) {
         return Metadata.builder()
-                .withIdentity(
+                .identity(
                         Pointer.builder()
-                                .withKind(kind)
-                                .withApiVersion(apiVersion)
-                                .withNameSpace(nameSpace)
-                                .withName(name)
+                                .kind(kind)
+                                .apiVersion(apiVersion)
+                                .nameSpace(nameSpace)
+                                .name(name)
                                 .build()
                 );
     }

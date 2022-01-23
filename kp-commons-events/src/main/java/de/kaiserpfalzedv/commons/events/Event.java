@@ -25,6 +25,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
@@ -33,13 +34,13 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.3.0  2021-06-13
  */
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Event.EventBuilder.class)
 @Schema(name = "Event", description = "A generic event (not in the it meaning, a real event with people).")
 public class Event extends Resource<EventData> {
     public static String API_VERSION = "v1";

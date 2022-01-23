@@ -29,6 +29,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -44,7 +45,8 @@ import java.io.Serializable;
  */
 @Embeddable
 @RegisterForReflection
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -74,18 +76,18 @@ public class JPAFileData implements HasName, HasData, HasMediaType, HasOutputStr
             return null;
         }
         return JPAFileData.builder()
-                .withName(data.getName())
-                .withMediaType(data.getMediaType())
-                .withData(data.getData())
+                .name(data.getName())
+                .mediaType(data.getMediaType())
+                .data(data.getData())
                 .build();
     }
 
     @Override
     public FileDescription to() {
         return FileDescription.builder()
-                .withName(getName())
-                .withMediaType(getMediaType())
-                .withData(getData())
+                .name(getName())
+                .mediaType(getMediaType())
+                .data(getData())
                 .build();
     }
 }

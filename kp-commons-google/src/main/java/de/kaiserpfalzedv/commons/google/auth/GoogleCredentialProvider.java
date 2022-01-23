@@ -78,10 +78,10 @@ public class GoogleCredentialProvider {
         log.info("Creating authorization. credentialsFile='{}', scopes={}", credentialsFile.orElse("./."), scopes);
 
         Authorization.AuthorizationBuilder authorizationBuilder = Authorization.builder()
-                .withKeyFile(credentialsFile.orElseThrow(() -> new NoGoogleCredentialsFileException("")));
+                .keyFile(credentialsFile.orElseThrow(() -> new NoGoogleCredentialsFileException("")));
 
         if (!scopes.isEmpty()) {
-            authorizationBuilder.withScopes(scopes);
+            authorizationBuilder.scopes(scopes);
         }
 
         authorization = authorizationBuilder.build();

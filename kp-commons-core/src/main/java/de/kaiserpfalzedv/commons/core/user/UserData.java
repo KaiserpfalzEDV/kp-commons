@@ -25,6 +25,7 @@ import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -38,14 +39,14 @@ import java.util.Optional;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = UserData.UserDataBuilder.class)
 @Schema(name = "userData", description = "Registered User.")
 public class UserData extends DefaultResourceSpec {
     public static String CAMPAIGNS = "campaigns";

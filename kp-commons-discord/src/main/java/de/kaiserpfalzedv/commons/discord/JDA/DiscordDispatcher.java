@@ -146,14 +146,14 @@ public class DiscordDispatcher extends ListenerAdapter {
     @NotNull
     private Guild generateNewGuildEntry(final String name) {
         Guild result = Guild.builder()
-                .withMetadata(
+                .metadata(
                         Metadata.builder()
-                                .withIdentity(
+                                .identity(
                                         Pointer.builder()
-                                                .withKind(Guild.KIND)
-                                                .withApiVersion(Guild.API_VERSION)
-                                                .withNameSpace(Guild.DISCORD_NAMESPACE)
-                                                .withName(name)
+                                                .kind(Guild.KIND)
+                                                .apiVersion(Guild.API_VERSION)
+                                                .nameSpace(Guild.DISCORD_NAMESPACE)
+                                                .name(name)
                                                 .build()
                                 )
                                 .build()

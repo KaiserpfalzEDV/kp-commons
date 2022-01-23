@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -39,13 +40,13 @@ import java.io.Serializable;
  * @since 2.0.0  2022-01-16
  */
 @RegisterForReflection
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = FileDescription.FileDescriptionBuilder.class)
 @JsonPropertyOrder({"name", "mediaType", "data"})
 @Schema(description = "Description of a single file containing of name, media type and data of the file.")
 public class FileDescription implements HasName, HasData, Serializable, Cloneable {

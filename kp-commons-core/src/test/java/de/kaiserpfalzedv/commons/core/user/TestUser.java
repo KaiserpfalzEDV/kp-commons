@@ -54,13 +54,13 @@ public class TestUser extends AbstractTestBase {
     }
 
     private static final User DATA = User.builder()
-            .withMetadata(
+            .metadata(
                     generateMetadata(DATA_CREATED)
             )
-            .withSpec(
+            .spec(
                     UserData.builder()
-                            .withDriveThruRPGKey(DATA_API_KEY)
-                            .withProperties(DATA_PROPERTIES)
+                            .driveThruRPGKey(DATA_API_KEY)
+                            .properties(DATA_PROPERTIES)
                             .build()
             )
             .build();
@@ -88,18 +88,18 @@ public class TestUser extends AbstractTestBase {
         labels.put("test", "valid");
 
         return Metadata.builder()
-                .withIdentity(Pointer.builder()
-                        .withKind(User.KIND)
-                        .withApiVersion(User.API_VERSION)
-                        .withNameSpace(DATA_NAMESPACE)
-                        .withName(DATA_NAME)
+                .identity(Pointer.builder()
+                        .kind(User.KIND)
+                        .apiVersion(User.API_VERSION)
+                        .nameSpace(DATA_NAMESPACE)
+                        .name(DATA_NAME)
                         .build()
                 )
-                .withUid(DATA_UID)
-                .withCreated(created)
+                .uid(DATA_UID)
+                .created(created)
 
-                .withAnnotations(annotations)
-                .withLabels(labels)
+                .annotations(annotations)
+                .labels(labels)
 
                 .build();
     }

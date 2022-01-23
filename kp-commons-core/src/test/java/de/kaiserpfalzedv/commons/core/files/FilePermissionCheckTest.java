@@ -56,13 +56,13 @@ public class FilePermissionCheckTest extends AbstractTestBase {
     private static final byte[] FILE_DATA = "Some content".getBytes(StandardCharsets.UTF_8);
 
     private static final File SUT = File.of(NAME_SPACE, NAME, ANNOTATIONS, LABELS)
-            .withSpec(
+            .spec(
                     FileData.builder()
-                            .withFile(
+                            .file(
                                     FileDescription.builder()
-                                            .withName(FILE_NAME)
-                                            .withMediaType(FILE_MIMETYPE)
-                                            .withData(FILE_DATA)
+                                            .name(FILE_NAME)
+                                            .mediaType(FILE_MIMETYPE)
+                                            .data(FILE_DATA)
                                             .build()
                             )
                             .build()

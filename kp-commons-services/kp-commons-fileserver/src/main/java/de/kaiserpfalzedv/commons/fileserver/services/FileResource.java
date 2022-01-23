@@ -40,7 +40,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirements;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.Size;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.annotation.PostConstruct;
@@ -48,6 +48,7 @@ import javax.annotation.PreDestroy;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.PessimisticLockException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -233,7 +234,7 @@ public class FileResource {
                     minLength = HasName.VALID_NAME_MIN_LENGTH,
                     maxLength = HasName.VALID_NAME_MAX_LENGTH
             )
-            @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH,
+            @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH,
                     message = HasName.VALID_NAME_LENGTH_MSG)
             @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @NotNull final File input
@@ -248,7 +249,7 @@ public class FileResource {
 
         JPAFile store = JPAFile.from(input)
                 .toBuilder()
-                .withId(null)
+                .id(null)
                 .build();
 
         persist(input, store);
@@ -273,8 +274,17 @@ public class FileResource {
                             "UUID", input.getUid().toString(),
                             "NameSpace", input.getNameSpace(),
                             "Name", input.getName()
-                    ),
-                    cause
+                    )
+            );
+        } catch (PessimisticLockException cause) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    "The data set has been changed by another transaction",
+                    Map.of(
+                            "UUID", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
             );
         } catch (RuntimeException cause) {
             errorGenerator.throwHttpProblem(
@@ -284,8 +294,7 @@ public class FileResource {
                             "UUID", input.getUid().toString(),
                             "NameSpace", input.getNameSpace(),
                             "Name", input.getName()
-                    ),
-                    cause
+                    )
             );
         }
     }
@@ -324,7 +333,30 @@ public class FileResource {
             return create(input);
         }
 
-        if (!stored.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), File.WRITE)) {
+        checkPermission(input, stored, File.WRITE);
+
+        log.trace("Updating the data of entity.");
+        Metadata metadata = input.getMetadata();
+
+        updateGroup(stored, metadata);
+        updateOwner(stored, metadata);
+        updatePermissions(stored, metadata);
+
+        stored.setFile(JPAFileData.from(input.getSpec().getFile()));
+
+        if (input.getSpec().getPreview() != null) {
+            stored.setPreview(JPAFileData.from(input.getSpec().getPreview()));
+        }
+
+        persist(input, stored);
+
+        log.info("Updated entity. uuid='{}', namespace='{}', name='{}'",
+                stored.getId(), stored.getNameSpace(), stored.getName());
+        return resource(stored.getId());
+    }
+    
+    private void checkPermission(final File input, final JPAFile stored, final int permission) {
+        if (!stored.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), permission)) {
             errorGenerator.throwHttpProblem(
                     Response.Status.FORBIDDEN,
                     "User has no write access to this file!",
@@ -341,29 +373,37 @@ public class FileResource {
                     )
             );
         }
-
-        log.trace("Updating the data of entity.");
-        Metadata metadata = input.getMetadata();
-        metadata.getAnnotation(File.ANNOTATION_GROUP).ifPresent(stored::setGroup);
-        metadata.getAnnotation(File.ANNOTATION_PERMISSIONS).ifPresent(stored::setPermissions);
-
-        if (stored.getOwner().equals(identity.getPrincipal().getName())) {
-            log.info("Handing over ownership of file. uuid='{}' old='{}', new='{}'",
-                    stored.getId(), stored.getOwner(), metadata.getAnnotation(File.ANNOTATION_OWNER));
-            metadata.getAnnotation(File.ANNOTATION_OWNER).ifPresent(stored::setOwner);
-        }
-
-        stored.setFile(JPAFileData.from(input.getSpec().getFile()));
-        if (input.getSpec().getPreview() != null) {
-            stored.setPreview(JPAFileData.from(input.getSpec().getPreview()));
-        }
-
-        persist(input, stored);
-
-        log.info("Updated entity. uuid='{}', namespace='{}', name='{}'",
-                stored.getId(), stored.getNameSpace(), stored.getName());
-        return resource(stored.getId());
     }
+
+    private void updateGroup(final JPAFile stored, final Metadata metadata) {
+        metadata.getOwningResource().ifPresent(
+                o -> stored.setGroup(o.getNameSpace())
+        );
+
+        metadata.getAnnotation(File.ANNOTATION_GROUP).ifPresent(stored::setGroup);
+    }
+
+    private void updateOwner(final JPAFile stored, final Metadata metadata) {
+        if (stored.getOwner().equals(identity.getPrincipal().getName())) {
+            String oldOwner = stored.getOwner();
+
+            metadata.getOwningResource().ifPresent(
+                    o -> stored.setOwner(o.getName())
+            );
+
+            metadata.getAnnotation(File.ANNOTATION_OWNER).ifPresent(stored::setOwner);
+
+            if (!oldOwner.equals(stored.getOwner())) {
+                log.info("Handed over ownership of file. id={}, nameSpace='{}', name='{}', owner.old='{}', owner.new='{}",
+                        stored.getId(), stored.getNameSpace(), stored.getName(), oldOwner, stored.getOwner());
+            }
+        }
+    }
+
+    private void updatePermissions(final JPAFile stored, final Metadata metadata) {
+        metadata.getAnnotation(File.ANNOTATION_PERMISSIONS).ifPresent(stored::setPermissions);
+    }
+
 
     @Path("/{id}")
     @GET
@@ -394,6 +434,7 @@ public class FileResource {
         return data.to();
     }
 
+
     @GET
     @Path("/{nameSpace}/{name}")
     @Operation(
@@ -409,7 +450,7 @@ public class FileResource {
                     pattern = HasName.VALID_NAME_PATTERN,
                     example = "default"
             )
-            @Length(
+            @Size(
                     min = HasName.VALID_NAME_MIN_LENGTH,
                     max = HasName.VALID_NAME_MAX_LENGTH,
                     message = "Invalid length. Must be between "
@@ -433,7 +474,7 @@ public class FileResource {
                     pattern = HasName.VALID_NAME_PATTERN,
                     example = "default"
             )
-            @Length(
+            @Size(
                     min = HasName.VALID_NAME_MIN_LENGTH,
                     max = HasName.VALID_NAME_MAX_LENGTH,
                     message = "Invalid length. Must be between "
@@ -463,5 +504,158 @@ public class FileResource {
         }
 
         return data.get().to();
+    }
+
+
+    @Transactional
+    @NoCache
+    @DELETE
+    @RolesAllowed({"user", "admin"})
+    @Path("/{uid}")
+    @Operation(
+            summary = "Deletes the file by UUID",
+            description = "Deletes the file with the given UUID as long as the user is allowed to write that file"
+    )
+    public void delete(
+            @Schema(
+                    description = "UUID of the file to be deleted."
+            )
+            @PathParam("uid") final UUID id
+    ) {
+        log.info("Deleting file. uuid='{}'", id);
+
+        Optional<JPAFile> orig = repository.findByIdOptional(id);
+        orig.ifPresentOrElse(
+                o -> {
+                    if (o.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), File.WRITE)) {
+                        remove(o);
+                        log.info("Deleted file. id={}, nameSpace='{}', name='{}'", id, o.getNameSpace(), o.getName());
+                    } else {
+                        log.warn("User has no write access to the file. user='{}', groups={}, id={}, nameSpace='{}', name='{}'",
+                                identity.getPrincipal().getName(), identity.getRoles(),
+                                id, o.getNameSpace(), o.getName());
+                    }
+                },
+                () -> log.info("No file with ID found. Everything is fine, it should have been deleted nevertheless. id={}",
+                        id)
+        );
+    }
+
+    @Transactional
+    @NoCache
+    @DELETE
+    @RolesAllowed({"user", "admin"})
+    @Path("/{nameSpace}/{name}")
+    @Operation(
+            summary = "Deletes the file by UUID",
+            description = "Deletes the file with the given UUID as long as the user is allowed to write that file"
+    )
+    public void delete(
+
+            @Schema(
+                    description = "The name space of the file.",
+                    required = true,
+                    minLength = HasName.VALID_NAME_MIN_LENGTH,
+                    maxLength = HasName.VALID_NAME_MAX_LENGTH,
+                    pattern = HasName.VALID_NAME_PATTERN,
+                    example = "default"
+            )
+            @Size(
+                    min = HasName.VALID_NAME_MIN_LENGTH,
+                    max = HasName.VALID_NAME_MAX_LENGTH,
+                    message = "Invalid length. Must be between "
+                            + HasName.VALID_NAME_MIN_LENGTH
+                            + " and "
+                            + HasName.VALID_NAME_MAX_LENGTH
+                            + " characters in size."
+            )
+            @Pattern(
+                    regexp = HasName.VALID_NAME_PATTERN,
+                    message = "Invalid content. Must follow the rules for domain names (pattern: '"
+                            + HasName.VALID_NAME_PATTERN + "')."
+            )
+            @PathParam("nameSpace")
+            @NotNull final String nameSpace,
+            @Schema(
+                    description = "The name of the file.",
+                    required = true,
+                    minLength = HasName.VALID_NAME_MIN_LENGTH,
+                    maxLength = HasName.VALID_NAME_MAX_LENGTH,
+                    pattern = HasName.VALID_NAME_PATTERN,
+                    example = "default"
+            )
+            @Size(
+                    min = HasName.VALID_NAME_MIN_LENGTH,
+                    max = HasName.VALID_NAME_MAX_LENGTH,
+                    message = "Invalid length. Must be between "
+                            + HasName.VALID_NAME_MIN_LENGTH
+                            + " and "
+                            + HasName.VALID_NAME_MAX_LENGTH
+                            + " characters in size."
+            )
+            @Pattern(
+                    regexp = HasName.VALID_NAME_PATTERN,
+                    message = "Invalid content. Must follow the rules for domain names (pattern: '"
+                            + HasName.VALID_NAME_PATTERN + "')."
+            )
+            @PathParam("name")
+            @NotNull final String name
+    ) {
+        log.info("Deleting file. namespace='{}', name='{}'",
+                nameSpace, name
+        );
+        Optional<JPAFile> orig = repository.findByNameSpaceAndName(nameSpace, name);
+
+        orig.ifPresentOrElse(
+                o -> {
+                    if (o.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), File.WRITE)) {
+                        remove(o);
+                        log.info("Deleted file. id={}, nameSpace='{}', name='{}'", o.getId(), o.getNameSpace(), o.getName());
+                    } else {
+                        log.warn("User has no write access to the file. user='{}', groups={}, id={}, nameSpace='{}', name='{}'",
+                                identity.getPrincipal().getName(), identity.getRoles(),
+                                o.getId(), o.getNameSpace(), o.getName());
+                    }
+                },
+                () -> log.info("No file with nameSpace and name found. Everything is fine, it should have been deleted nevertheless. nameSpace='{}', name='{}'",
+                        nameSpace, name)
+        );
+    }
+
+    private void remove(final JPAFile input) {
+        log.debug("Trying to delete entity ...");
+        try {
+            repository.deleteById(input.getId());
+        } catch (javax.persistence.EntityExistsException cause) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.CONFLICT,
+                    "Either UUID or NameSpace+Name already taken",
+                    Map.of(
+                            "UUID", input.getId().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
+            );
+        } catch (PessimisticLockException cause) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    "The data set has been changed by another transaction",
+                    Map.of(
+                            "UUID", input.getId().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
+            );
+        } catch (RuntimeException cause) {
+            errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    cause.getMessage(),
+                    Map.of(
+                            "UUID", input.getId().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
+            );
+        }
     }
 }

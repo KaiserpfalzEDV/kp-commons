@@ -20,8 +20,15 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="schema" author="rlichti">
+        <sql dbms="h2, mysql, mariadb, postgresql" endDelimiter=";">
+            CREATE SCHEMA IF NOT EXISTS FILESTORE
+        </sql>
+        <comment>Create SCHEMA for files.</comment>
+    </changeSet>
+    
     <changeSet id="files" author="rlichti">
-        <createTable tableName="FILES">
+        <createTable tableName="FILES" schemaName="FILESTORE">
             <column name="ID" type="VARCHAR(36)">
                 <constraints nullable="false"
                              unique="true" uniqueConstraintName="FILES_ID_UK"
@@ -49,7 +56,7 @@
             <column name="GRP" type="VARCHAR(100)" defaultValue="./.">
                 <constraints nullable="false"/>
             </column>
-            <column name="PERMISSIONS" type="VARCHAR(3)" defaultValue="666">
+            <column name="PERMISSIONS" type="VARCHAR(3)" defaultValue="620">
                 <constraints nullable="false"/>
             </column>
 
@@ -74,21 +81,16 @@
         <addUniqueConstraint
                 constraintName="FILES_NAME_UK"
                 tableName="FILES"
+                schemaName="FILESTORE"
                 columnNames="NAMESPACE,NAME"/>
 
         <rollback>
-            <dropUniqueConstraint tableName="FILES" constraintName="FILES_NAME_UK"/>
-            <dropUniqueConstraint tableName="FILES" constraintName="FILES_ID_UK"/>
-            <dropPrimaryKey tableName="FILES" constraintName="FILES_PK"/>
-            <dropTable tableName="FILES"/>
+            <dropUniqueConstraint schemaName="FILESTORE" tableName="FILES" constraintName="FILES_NAME_UK"/>
+            <dropUniqueConstraint schemaName="FILESTORE" tableName="FILES" constraintName="FILES_ID_UK"/>
+            <dropPrimaryKey schemaName="FILESTORE" tableName="FILES" constraintName="FILES_PK"/>
+            <dropTable schemaName="FILESTORE" tableName="FILES"/>
         </rollback>
-    </changeSet>
 
-    <changeSet id="files-data" author="rlichti">
-        <loadData tableName="FILES" file="files.csv" relativeToChangelogFile="true"/>
-
-        <rollback>
-            <sql>TRUNCATE FILES;</sql>
-        </rollback>
+        <comment>Table to save the file and preview data.</comment>
     </changeSet>
 </databaseChangeLog>

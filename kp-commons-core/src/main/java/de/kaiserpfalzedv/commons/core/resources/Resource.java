@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -41,7 +42,8 @@ import java.util.UUID;
  * @since 2.0.0  2021-05-24
  */
 @MappedSuperclass
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -49,7 +51,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"metadata", "spec", "status"})
-public class Resource<D extends Serializable> implements ResourcePointer {
+public class Resource<D extends Serializable> implements ResourcePointer, HasMetadata {
     @Embedded
     @Schema(
             name = "metadata",
@@ -89,10 +91,10 @@ public class Resource<D extends Serializable> implements ResourcePointer {
     @BsonIgnore
     public Pointer toPointer() {
         return Pointer.builder()
-                .withKind(getKind())
-                .withApiVersion(getApiVersion())
-                .withNameSpace(getNameSpace())
-                .withNameSpace(getName())
+                .kind(getKind())
+                .apiVersion(getApiVersion())
+                .nameSpace(getNameSpace())
+                .nameSpace(getName())
                 .build();
     }
 
@@ -167,7 +169,7 @@ public class Resource<D extends Serializable> implements ResourcePointer {
 
     synchronized public Resource<D> increaseGeneration() {
         return toBuilder()
-                .withMetadata(getMetadata().increaseGeneration())
+                .metadata(getMetadata().increaseGeneration())
                 .build();
     }
 

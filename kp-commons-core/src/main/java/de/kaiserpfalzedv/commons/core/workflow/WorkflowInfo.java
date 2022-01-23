@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.core.workflow;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -35,7 +36,8 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-01-04
  */
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -43,7 +45,6 @@ import java.util.UUID;
 @Getter
 @Slf4j
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = WorkflowInfo.WorkflowInfoBuilder.class)
 @Schema(name = "WorkflowInfo", description = "Information of a workflow call.")
 public class WorkflowInfo implements Serializable {
     @Schema(

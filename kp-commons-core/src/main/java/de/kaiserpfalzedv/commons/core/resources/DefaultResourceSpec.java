@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.store.StoreService;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -37,14 +38,14 @@ import java.util.*;
  * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings({"unused"})
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = DefaultResourceSpec.DefaultResourceSpecBuilder.class)
 @Schema(name = "DefaultResourceSpec", description = "A standardized resource.")
 public class DefaultResourceSpec implements Serializable, Cloneable {
     @SuppressWarnings("FieldMayBeFinal")
@@ -129,11 +130,11 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
         }
 
         return Pointer.builder()
-                .withKind(data[0])
-                .withApiVersion(data[1])
+                .kind(data[0])
+                .apiVersion(data[1])
 
-                .withNameSpace(data[2])
-                .withName(data[3])
+                .nameSpace(data[2])
+                .name(data[3])
 
                 .build();
     }

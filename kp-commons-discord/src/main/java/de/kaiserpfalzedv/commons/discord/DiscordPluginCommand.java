@@ -93,17 +93,17 @@ public interface DiscordPluginCommand {
             annotations.put("discord-avatar-url", user.getEffectiveAvatarUrl());
 
             result = User.builder()
-                    .withMetadata(
+                    .metadata(
                             Metadata.builder()
-                                    .withIdentity(
+                                    .identity(
                                             Pointer.builder()
-                                                    .withKind(User.KIND)
-                                                    .withApiVersion(User.API_VERSION)
-                                                    .withNameSpace(DISCORD_NAMESPACE)
-                                                    .withName(context.getUser().getName())
+                                                    .kind(User.KIND)
+                                                    .apiVersion(User.API_VERSION)
+                                                    .nameSpace(DISCORD_NAMESPACE)
+                                                    .name(context.getUser().getName())
                                                     .build()
                                     )
-                                    .withAnnotations(annotations)
+                                    .annotations(annotations)
                                     .build()
                     )
                     .build();

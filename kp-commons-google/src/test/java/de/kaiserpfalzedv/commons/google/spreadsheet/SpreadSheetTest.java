@@ -63,7 +63,7 @@ public class SpreadSheetTest {
     @BeforeEach
     public void setUpService() throws GeneralSecurityException, IOException {
         sut = SpreadSheet.builder()
-                .withTransport(GoogleNetHttpTransport.newTrustedTransport())
+                .transport(GoogleNetHttpTransport.newTrustedTransport())
                 .build();
     }
 

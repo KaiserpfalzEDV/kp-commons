@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.core.files;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Resource;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +27,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -43,13 +43,13 @@ import java.util.Set;
  * @version 2.0.0  2021-12-31
  * @since 2.0.0  2022-01-16
  */
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @Slf4j
-@JsonDeserialize(builder = File.FileBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(description = "A file saved in the system.")
 public class File extends Resource<FileData> {
@@ -152,7 +152,7 @@ public class File extends Resource<FileData> {
     public static <C extends File, B extends File.FileBuilder<C, B>> FileBuilder<C, B> of(final String nameSpace, final String name) {
         //noinspection unchecked
         return (FileBuilder<C, B>) File.builder()
-                .withMetadata(
+                .metadata(
                         Metadata.of(KIND, API_VERSION, nameSpace, name)
                                 .build()
                 );
@@ -166,10 +166,10 @@ public class File extends Resource<FileData> {
     ) {
         //noinspection unchecked
         return (FileBuilder<C, B>) File.builder()
-                .withMetadata(
+                .metadata(
                         Metadata.of(KIND, API_VERSION, nameSpace, name)
-                                .withAnnotations(annotations)
-                                .withLabels(labels)
+                                .annotations(annotations)
+                                .labels(labels)
                                 .build()
                 );
     }

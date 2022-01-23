@@ -75,9 +75,9 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
         //noinspection unchecked
         T data = (!namedStore.containsKey(key))
                 ? object
-                : (T) object.toBuilder().withMetadata(
+                : (T) object.toBuilder().metadata(
                         object.getMetadata().toBuilder()
-                                .withGeneration(object.getGeneration() + 1)
+                                .generation(object.getGeneration() + 1)
                                 .build()
                 ).build();
 

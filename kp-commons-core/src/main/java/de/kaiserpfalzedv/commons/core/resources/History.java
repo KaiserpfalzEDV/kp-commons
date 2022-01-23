@@ -22,7 +22,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Embeddable;
@@ -38,13 +40,13 @@ import java.time.ZoneOffset;
  * @since 2.0.0  2021-05-24
  */
 @Embeddable
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = History.HistoryBuilder.class)
 @Schema(
         name = "History",
         description = "A single history entry of a change."
@@ -61,7 +63,7 @@ public class History implements Serializable, Cloneable {
             maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
-    @Length(
+    @Size(
             min = TimeStampPattern.VALID_LENGTH,
             max = TimeStampPattern.VALID_LENGTH,
             message = TimeStampPattern.VALID_LENGTH_MSG
@@ -80,7 +82,7 @@ public class History implements Serializable, Cloneable {
             maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
     @Builder.Default
-    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private final String status = "not-specified";
 

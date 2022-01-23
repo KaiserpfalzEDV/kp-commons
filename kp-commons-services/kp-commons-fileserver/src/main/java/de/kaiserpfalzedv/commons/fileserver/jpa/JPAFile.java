@@ -26,10 +26,13 @@ import de.kaiserpfalzedv.commons.core.jpa.Convertible;
 import de.kaiserpfalzedv.commons.core.resources.HasId;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.core.user.User;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.validator.constraints.Length;
+import lombok.extern.jackson.Jacksonized;
+import jakarta.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -44,13 +47,15 @@ import java.util.Map;
 @RegisterForReflection
 @Entity
 @Table(
+        schema = "FILESTORE",
         name = "FILES",
         uniqueConstraints = {
                 @UniqueConstraint(name = "FILES_ID_UK", columnNames = "ID"),
                 @UniqueConstraint(name = "FILES_NAME_UK", columnNames = {"NAMESPACE", "NAME"})
         }
 )
-@SuperBuilder(toBuilder = true, setterPrefix = "with")
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -61,27 +66,27 @@ public class JPAFile extends AbstractJPAEntity implements HasId, HasName, HasMed
 
     @Column(name = "NAMESPACE", length = VALID_NAME_MAX_LENGTH, nullable = false)
     @NonNull
-    @Length(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String nameSpace;
 
     @Column(name = "NAME", length = VALID_NAME_MAX_LENGTH, nullable = false)
     @NonNull
-    @Length(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String name;
 
     @Column(name = "OWNER", length = VALID_NAME_MAX_LENGTH, nullable = false)
     @NonNull
-    @Length(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String owner;
 
     @Column(name = "GRP", length = VALID_NAME_MAX_LENGTH, nullable = false)
     @Builder.Default
-    @Length(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
+    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String group = "unspecified";
 
     @Column(name = "PERMISSIONS", length = 3, nullable = false)
     @Builder.Default
-    @Length(min = 3, max = 3)
+    @Size(min = 3, max = 3)
     private String permissions = "620";
 
     @Embedded
@@ -107,27 +112,35 @@ public class JPAFile extends AbstractJPAEntity implements HasId, HasName, HasMed
     @Override
     public File to() {
         return File.builder()
-                .withMetadata(
+                .metadata(
                         Metadata.of(File.KIND, File.API_VERSION, getNameSpace(), getName())
-                                .withUid(getId())
-                                .withAnnotations(Map.of(
+                                .uid(getId())
+                                .annotations(Map.of(
                                         File.ANNOTATION_OWNER, getOwner(),
                                         File.ANNOTATION_GROUP, getGroup(),
                                         File.ANNOTATION_PERMISSIONS, getPermissions()
                                 ))
+                                .owner(
+                                        Pointer.builder()
+                                                .kind(User.KIND)
+                                                .apiVersion(User.API_VERSION)
+                                                .nameSpace(getGroup())
+                                                .name(getOwner())
+                                                .build()
+                                )
                                 .build()
                 )
-                .withSpec(buildSpec())
+                .spec(buildSpec())
                 .build();
     }
 
     private <C extends FileData, B extends FileData.FileDataBuilder<C, B>> FileData buildSpec() {
         @SuppressWarnings("unchecked")
         FileData.FileDataBuilder<C, B> result = (FileData.FileDataBuilder<C, B>) FileData.builder()
-                .withFile(getFile().to());
+                .file(getFile().to());
 
         if (getPreview() != null) {
-            result.withPreview(getPreview().to());
+            result.preview(getPreview().to());
         }
 
         return result.build();
@@ -136,22 +149,28 @@ public class JPAFile extends AbstractJPAEntity implements HasId, HasName, HasMed
     public static <C extends JPAFile, B extends JPAFileBuilder<C, B>> JPAFile from(File data) {
         @SuppressWarnings("unchecked")
         JPAFile.JPAFileBuilder<C, B> result = (JPAFileBuilder<C, B>) JPAFile.builder()
-                .withId(data.getUid())
-                .withCreated(data.getMetadata().getCreated())
-                .withVersion(data.getGeneration())
-                .withNameSpace(data.getNameSpace())
-                .withFile(JPAFileData.from(data.getSpec().getFile()))
-                .withPreview(JPAFileData.from(data.getSpec().getPreview()));
+                .id(data.getUid())
+                .created(data.getMetadata().getCreated())
+                .version(data.getGeneration())
+                .nameSpace(data.getNameSpace())
+                .name(data.getName())
+                .file(JPAFileData.from(data.getSpec().getFile()))
+                .preview(JPAFileData.from(data.getSpec().getPreview()));
+
+        data.getMetadata().getOwningResource()
+                .ifPresent(o -> result.group(o.getNameSpace()));
+        data.getMetadata().getOwningResource()
+                .ifPresent(o -> result.owner(o.getName()));
 
         data.getMetadata()
                 .getAnnotation(File.ANNOTATION_OWNER)
-                .ifPresent(result::withOwner);
+                .ifPresent(result::owner);
         data.getMetadata()
                 .getAnnotation(File.ANNOTATION_GROUP)
-                .ifPresent(result::withGroup);
+                .ifPresent(result::group);
         data.getMetadata()
                 .getAnnotation(File.ANNOTATION_PERMISSIONS)
-                .ifPresent(result::withPermissions);
+                .ifPresent(result::permissions);
 
         return result.build();
     }

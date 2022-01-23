@@ -58,26 +58,26 @@ public class TestMemoryUserStore extends AbstractTestBase {
     private static final String OTHER_API_KEY = "other-api-key";
 
     private static final User DATA = User.builder()
-            .withMetadata(
+            .metadata(
                     generateMetadata(DATA_CREATED, null)
             )
-            .withSpec(
+            .spec(
                     UserData.builder()
-                            .withDriveThruRPGKey(DATA_API_KEY)
-                            .withProperties(new HashMap<>())
+                            .driveThruRPGKey(DATA_API_KEY)
+                            .properties(new HashMap<>())
                             .build()
             )
             .build();
 
     private static final User OTHER =
             User.builder()
-                    .withMetadata(
+                    .metadata(
                             generateMetadata(OTHER_CREATED, null)
                     )
-                    .withSpec(
+                    .spec(
                             UserData.builder()
-                                    .withDriveThruRPGKey(OTHER_API_KEY)
-                                    .withProperties(new HashMap<>())
+                                    .driveThruRPGKey(OTHER_API_KEY)
+                                    .properties(new HashMap<>())
                                     .build()
                     )
                     .build();
@@ -142,16 +142,16 @@ public class TestMemoryUserStore extends AbstractTestBase {
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
-                .withIdentity(Pointer.builder()
-                        .withKind(User.KIND)
-                        .withApiVersion(User.API_VERSION)
-                        .withNameSpace(DATA_NAMESPACE)
-                        .withName(DATA_NAME)
+                .identity(Pointer.builder()
+                        .kind(User.KIND)
+                        .apiVersion(User.API_VERSION)
+                        .nameSpace(DATA_NAMESPACE)
+                        .name(DATA_NAME)
                         .build()
                 )
-                .withUid(OTHER_UID)
-                .withCreated(created)
-                .withDeleted(deleted)
+                .uid(OTHER_UID)
+                .created(created)
+                .deleted(deleted)
                 .build();
     }
 
@@ -238,9 +238,9 @@ public class TestMemoryUserStore extends AbstractTestBase {
 
         sut.save(
                 DATA.toBuilder()
-                        .withMetadata(
+                        .metadata(
                                 DATA.getMetadata().toBuilder()
-                                        .withGeneration(100)
+                                        .generation(100)
                                         .build()
                         )
                         .build()

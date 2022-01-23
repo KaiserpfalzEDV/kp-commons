@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.core.jpa;
 import de.kaiserpfalzedv.commons.core.resources.HasId;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,7 +32,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @MappedSuperclass
-@SuperBuilder(toBuilder = true, setterPrefix = "with")
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

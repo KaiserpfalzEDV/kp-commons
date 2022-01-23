@@ -22,6 +22,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -35,7 +36,8 @@ import java.net.URL;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor(onConstructor = @__(@Inject))
 @NoArgsConstructor
 @Getter

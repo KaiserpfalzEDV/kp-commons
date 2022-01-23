@@ -50,16 +50,16 @@ public class FileTest extends AbstractTestBase {
     private static final String BASE64_DATA = "RGFzIGhpZXIgaXN0IGVpbmZhY2ggbnVyIGVpbiBCZWlzcGllbGZpbGUK";
 
     private static final File DATA = File.builder()
-            .withMetadata(
+            .metadata(
                     generateMetadata(DATA_CREATED)
             )
-            .withSpec(
+            .spec(
                     FileData.builder()
-                            .withFile(
+                            .file(
                                     FileDescription.builder()
-                                            .withName(DATA_API_KEY)
-                                            .withMediaType(MediaType.APPLICATION_JSON)
-                                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                                            .name(DATA_API_KEY)
+                                            .mediaType(MediaType.APPLICATION_JSON)
+                                            .data(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
                                             .build()
                             )
                             .build()
@@ -88,19 +88,19 @@ public class FileTest extends AbstractTestBase {
         labels.put("test", "valid");
 
         return Metadata.builder()
-                .withIdentity(
+                .identity(
                         Pointer.builder()
-                                .withKind(File.KIND)
-                                .withApiVersion(File.API_VERSION)
-                                .withNameSpace(DATA_NAMESPACE)
-                                .withName(DATA_NAME)
+                                .kind(File.KIND)
+                                .apiVersion(File.API_VERSION)
+                                .nameSpace(DATA_NAMESPACE)
+                                .name(DATA_NAME)
                                 .build()
                 )
-                .withUid(DATA_UID)
-                .withCreated(created)
+                .uid(DATA_UID)
+                .created(created)
 
-                .withAnnotations(annotations)
-                .withLabels(labels)
+                .annotations(annotations)
+                .labels(labels)
 
                 .build();
     }

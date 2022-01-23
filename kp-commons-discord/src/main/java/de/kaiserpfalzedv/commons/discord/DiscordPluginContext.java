@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.discord.guilds.Guild;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -31,14 +32,14 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = DiscordPluginContext.DiscordPluginContextBuilder.class)
 @Schema(name = "card", description = "a single card definition.")
 public class DiscordPluginContext {
     /**

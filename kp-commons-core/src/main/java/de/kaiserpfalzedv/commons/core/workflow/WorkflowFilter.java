@@ -86,10 +86,10 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
 
     private WorkflowInfo getWorkflowInfo(final ContainerRequestContext context) {
         return WorkflowInfo.builder()
-                .withUser(checkValidHeader(context.getHeaderString(WORKFLOW_USER)))
-                .withWorkflow(getWorkflowInfoDetail(context, WORKFLOW_PREFIX))
-                .withAction(getWorkflowInfoDetail(context, ACTION_PREFIX))
-                .withCall(getWorkflowInfoDetail(context, CALL_PREFIX))
+                .user(checkValidHeader(context.getHeaderString(WORKFLOW_USER)))
+                .workflow(getWorkflowInfoDetail(context, WORKFLOW_PREFIX))
+                .action(getWorkflowInfoDetail(context, ACTION_PREFIX))
+                .call(getWorkflowInfoDetail(context, CALL_PREFIX))
                 .build();
     }
 
@@ -99,12 +99,12 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
         String response = checkValidHeader(context.getHeaderString(prefix + RESPONSE));
 
         WorkflowDetailInfo.WorkflowDetailInfoBuilder result = WorkflowDetailInfo.builder()
-                .withCreated(checkValidTimeHeader(context.getHeaderString(prefix + CREATED), Duration.ofMillis(0)))
-                .withTtl(checkValidTimeHeader(context.getHeaderString(prefix + TTL), Duration.of(10, ChronoUnit.YEARS)));
+                .created(checkValidTimeHeader(context.getHeaderString(prefix + CREATED), Duration.ofMillis(0)))
+                .ttl(checkValidTimeHeader(context.getHeaderString(prefix + TTL), Duration.of(10, ChronoUnit.YEARS)));
 
-        if (name != null) result.withName(name);
-        if (id != null) result.withId(id);
-        if (response != null) result.withResponseChannel(response);
+        if (name != null) result.name(name);
+        if (id != null) result.id(id);
+        if (response != null) result.responseChannel(response);
 
         return result.build();
     }

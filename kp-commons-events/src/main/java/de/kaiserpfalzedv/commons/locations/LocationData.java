@@ -23,6 +23,7 @@ import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpec;
 import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.Set;
@@ -32,13 +33,13 @@ import java.util.Set;
  * @since 1.2.0 2021-02-06
  */
 @SuppressWarnings("unused")
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = LocationData.LocationDataBuilder.class)
 @Schema(description = "The data of a single location.")
 public class LocationData extends DefaultResourceSpec {
     @Schema(description = "A location may have sub locations (for example a congress space may have floors and floors may have rooms.", nullable = true)

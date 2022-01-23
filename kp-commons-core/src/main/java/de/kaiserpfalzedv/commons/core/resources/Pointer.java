@@ -19,12 +19,12 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.Size;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -36,13 +36,13 @@ import javax.persistence.Embeddable;
  * @since 2.0.0  2021-05-24
  */
 @Embeddable
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@JsonDeserialize(builder = Pointer.PointerBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"kind", "apiVersion", "namespace", "name", "selfLink"})
 @Schema(
@@ -69,7 +69,7 @@ public class Pointer implements ResourcePointer {
     @ToString.Include
     @EqualsAndHashCode.Include
     @NonNull
-    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String kind;
 
@@ -84,7 +84,7 @@ public class Pointer implements ResourcePointer {
             maxLength = HasApiVersion.VALID_VERSION_MAX_LENGTH
     )
     @Builder.Default
-    @Length(min = HasApiVersion.VALID_VERSION_MIN_LENGTH, max = HasApiVersion.VALID_VERSION_MAX_LENGTH, message = HasApiVersion.VALID_VERSION_LENGTH_MSG)
+    @Size(min = HasApiVersion.VALID_VERSION_MIN_LENGTH, max = HasApiVersion.VALID_VERSION_MAX_LENGTH, message = HasApiVersion.VALID_VERSION_LENGTH_MSG)
     @Pattern(regexp = HasApiVersion.VALID_VERSION_PATTERN, message = HasApiVersion.VALID_VERSION_PATTERN_MSG)
     private String apiVersion = HasApiVersion.VALID_VERSION_EXAMPLE;
 
@@ -101,7 +101,7 @@ public class Pointer implements ResourcePointer {
     @ToString.Include
     @EqualsAndHashCode.Include
     @NonNull
-    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String nameSpace;
 
@@ -116,7 +116,7 @@ public class Pointer implements ResourcePointer {
     )
     @ToString.Include
     @EqualsAndHashCode.Include
-    @Length(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String name;
 

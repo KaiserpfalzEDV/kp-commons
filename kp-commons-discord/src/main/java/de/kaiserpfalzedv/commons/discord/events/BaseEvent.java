@@ -25,11 +25,12 @@ import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.time.OffsetDateTime;
 
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString

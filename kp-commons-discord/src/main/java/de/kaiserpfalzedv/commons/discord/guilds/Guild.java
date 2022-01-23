@@ -25,6 +25,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
@@ -32,13 +33,13 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * <p>
  * This data is used for customizing the bot and checking for permissions to use certain functions.
  */
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Guild.GuildBuilder.class)
 @Schema(name = "guild", description = "A single guild (server) within discord.")
 public class Guild extends Resource<GuildData> {
     public static String API_VERSION = "v1";

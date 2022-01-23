@@ -24,6 +24,7 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.model.Permission;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -38,7 +39,8 @@ import java.util.List;
  * @since 2.0.0  2021-06-03
  */
 @SuppressWarnings("unused")
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Getter

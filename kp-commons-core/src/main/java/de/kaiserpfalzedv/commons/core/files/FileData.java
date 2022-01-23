@@ -26,6 +26,7 @@ import de.kaiserpfalzedv.commons.core.resources.HasName;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -39,13 +40,13 @@ import java.io.Serializable;
  * @since 2.0.0  2021-12-31
  */
 @RegisterForReflection
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = FileData.FileDataBuilder.class)
 @JsonPropertyOrder({"file", "preview"})
 @Schema(description = "Files saved on the server.")
 public class FileData implements HasName, HasData, HasOutputStream, HasPreview, Serializable, Cloneable {

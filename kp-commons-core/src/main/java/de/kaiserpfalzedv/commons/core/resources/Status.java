@@ -20,9 +20,11 @@ package de.kaiserpfalzedv.commons.core.resources;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -38,13 +40,13 @@ import java.util.List;
  * @since 2.0.0  2021-05-24
  */
 @Embeddable
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Status.StatusBuilder.class)
 @JsonPropertyOrder({"observedGeneration,history"})
 @Schema(name = "ResourceStatus", description = "The status of a resource.")
 public class Status implements Serializable, Cloneable {
@@ -59,7 +61,8 @@ public class Status implements Serializable, Cloneable {
     )
     @Builder.Default
     @ToString.Include
-    @Range(min = 0, max = Integer.MAX_VALUE, message = "The observed generation must be between 0 and " + Integer.MAX_VALUE)
+    @Min(value = 0, message = "The generation must be at least 0.")
+    @Max(value = Integer.MAX_VALUE, message = "The generation must not be bigger than " + Integer.MAX_VALUE + ".")
     Integer observedGeneration = 0;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -86,9 +89,9 @@ public class Status implements Serializable, Cloneable {
     public Status addHistory(final String status, final String message) {
         getHistory().add(
                 History.builder()
-                        .withStatus(status)
-                        .withTimeStamp(OffsetDateTime.now(ZoneOffset.UTC))
-                        .withMessage(message)
+                        .status(status)
+                        .timeStamp(OffsetDateTime.now(ZoneOffset.UTC))
+                        .message(message)
                         .build()
         );
 

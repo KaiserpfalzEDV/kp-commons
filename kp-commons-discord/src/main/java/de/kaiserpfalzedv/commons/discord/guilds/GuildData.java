@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.discord.guilds;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -34,13 +35,13 @@ import java.util.Map;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Builder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = GuildData.GuildDataBuilder.class)
 @Schema(name = "guildData", description = "The data for a guild (server) within Discord.")
 public class GuildData implements Serializable, Cloneable {
     public static String DEFAULT_PREFIX = "tb!";

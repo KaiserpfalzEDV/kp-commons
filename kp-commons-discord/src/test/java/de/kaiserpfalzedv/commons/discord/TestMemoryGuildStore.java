@@ -60,25 +60,25 @@ public class TestMemoryGuildStore {
 
     private static final Guild DATA = Guild.builder()
 
-            .withMetadata(
+            .metadata(
                     generateMetadata(DATA_NAMESPACE, DATA_NAME, DATA_UID, DATA_CREATED, null)
             )
-            .withSpec(
+            .spec(
                     GuildData.builder()
-                            .withPrefix(DATA_PREFIX)
-                            .withProperties(new HashMap<>())
+                            .prefix(DATA_PREFIX)
+                            .properties(new HashMap<>())
                             .build()
             )
             .build();
 
     private static final Guild OTHER = Guild.builder()
-            .withMetadata(
+            .metadata(
                     generateMetadata(OTHER_NAMESPACE, OTHER_NAME, OTHER_UID, OTHER_CREATED, null)
             )
-            .withSpec(
+            .spec(
                     GuildData.builder()
-                            .withPrefix(OTHER_PREFIX)
-                            .withProperties(new HashMap<>())
+                            .prefix(OTHER_PREFIX)
+                            .properties(new HashMap<>())
                             .build()
             )
             .build();
@@ -111,17 +111,17 @@ public class TestMemoryGuildStore {
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
-                .withIdentity(
+                .identity(
                         Pointer.builder()
-                                .withKind(Guild.KIND)
-                                .withApiVersion(Guild.API_VERSION)
-                                .withNameSpace(nameSpace)
-                                .withName(name)
+                                .kind(Guild.KIND)
+                                .apiVersion(Guild.API_VERSION)
+                                .nameSpace(nameSpace)
+                                .name(name)
                                 .build()
                 )
-                .withUid(uid)
-                .withCreated(created)
-                .withDeleted(deleted)
+                .uid(uid)
+                .created(created)
+                .deleted(deleted)
 
                 .build();
     }
@@ -260,9 +260,9 @@ public class TestMemoryGuildStore {
 
         sut.save(
                 DATA.toBuilder()
-                        .withMetadata(
+                        .metadata(
                                 DATA.getMetadata().toBuilder()
-                                        .withGeneration(DATA.getGeneration() + 100)
+                                        .generation(DATA.getGeneration() + 100)
                                         .build()
                         )
                         .build()

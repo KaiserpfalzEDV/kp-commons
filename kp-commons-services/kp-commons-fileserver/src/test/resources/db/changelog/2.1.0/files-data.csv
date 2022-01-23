@@ -1,0 +1,5 @@
+ID,NAMESPACE,NAME,OWNER,GRP,PERMISSIONS,FILE_NAME,FILE_MEDIATYPE,CREATED,MODIFIED,FILE_DATA
+a52715e7-074b-4368-9de9-67736e01b2f6,fileserver,liq-files-definition,rlichti@kaiserpfalz-edv.de,user,622,files.xml,text/plain,2021-03-13T07:35:00.001,2021-03-13T07:35:00.002,./files-data.xml
+39062d79-e1a9-437a-b1b4-7dc783bd9eb4,fileserver,liq-files-data,rlichti@kaiserpfalz-edv.de,user,622,files.csv,text/plain,2021-03-13T07:35:00.001,2021-03-13T07:35:00.002,./files-data.csv
+39062d79-e1a9-437a-b1b4-7dc783bd9eb1,fileserver,liq-files-restricted,rlichti@kaiserpfalz-edv.de,user,620,changeLog.xml,text/plain,2022-01-16T10:00:00.005,2022-01-16T10:00:00.005,./data.xml
+39062d79-e1a9-437a-b1b4-7dc783bd9eb2,name.namespace,name.name,user,user,000,test-file.txt,text/plain,2022-01-16T10:00:00.005,2022-01-16T10:00:00.005,./files-data.csv

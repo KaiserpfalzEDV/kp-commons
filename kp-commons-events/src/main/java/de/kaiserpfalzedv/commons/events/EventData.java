@@ -24,6 +24,7 @@ import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpec;
 import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -40,13 +41,13 @@ import java.util.TimeZone;
  * @since 1.2.0 2021-02-06
  */
 @SuppressWarnings("unused")
-@SuperBuilder(setterPrefix = "with", toBuilder = true)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = EventData.EventDataBuilder.class)
 @Schema(name = "GameData", description = "A game session data.")
 public class EventData extends DefaultResourceSpec {
     public static String CAMPAIGN = "campaign";

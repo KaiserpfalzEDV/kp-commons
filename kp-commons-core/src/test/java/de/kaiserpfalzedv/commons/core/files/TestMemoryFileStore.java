@@ -58,16 +58,16 @@ public class TestMemoryFileStore extends AbstractTestBase {
     private static final OffsetDateTime OTHER_CREATED = OffsetDateTime.now(Clock.systemUTC());
 
     private static final File DATA = File.builder()
-            .withMetadata(
+            .metadata(
                     generateMetadata(DATA_NAMESPACE, DATA_NAME, DATA_UID, DATA_CREATED, null)
             )
-            .withSpec(
+            .spec(
                     FileData.builder()
-                            .withFile(
+                            .file(
                                     FileDescription.builder()
-                                            .withName(DATA_API_KEY)
-                                            .withMediaType(MediaType.APPLICATION_JSON)
-                                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                                            .name(DATA_API_KEY)
+                                            .mediaType(MediaType.APPLICATION_JSON)
+                                            .data(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
                                             .build()
                             )
                             .build()
@@ -75,16 +75,16 @@ public class TestMemoryFileStore extends AbstractTestBase {
             .build();
 
     private static final File OTHER = File.builder()
-            .withMetadata(
+            .metadata(
                     generateMetadata(OTHER_NAMESPACE, OTHER_NAME, OTHER_UID, OTHER_CREATED, null)
             )
-            .withSpec(
+            .spec(
                     FileData.builder()
-                            .withFile(
+                            .file(
                                     FileDescription.builder()
-                                            .withName(DATA_API_KEY)
-                                            .withMediaType(MediaType.APPLICATION_JSON)
-                                            .withData(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
+                                            .name(DATA_API_KEY)
+                                            .mediaType(MediaType.APPLICATION_JSON)
+                                            .data(BASE64_DATA.getBytes(StandardCharsets.UTF_8))
                                             .build()
                             )
                             .build()
@@ -224,17 +224,17 @@ public class TestMemoryFileStore extends AbstractTestBase {
 
         sut.save(
                 DATA.toBuilder()
-                        .withMetadata(
+                        .metadata(
                                 Metadata.builder()
-                                        .withIdentity(
+                                        .identity(
                                                 Pointer.builder()
-                                                        .withKind(File.KIND)
-                                                        .withApiVersion(File.API_VERSION)
-                                                        .withNameSpace(DATA_NAMESPACE)
-                                                        .withName(DATA_NAME)
+                                                        .kind(File.KIND)
+                                                        .apiVersion(File.API_VERSION)
+                                                        .nameSpace(DATA_NAMESPACE)
+                                                        .name(DATA_NAME)
                                                         .build()
                                         )
-                                        .withGeneration(100)
+                                        .generation(100)
                                         .build()
                         )
                         .build()
@@ -263,16 +263,16 @@ public class TestMemoryFileStore extends AbstractTestBase {
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
         return Metadata.builder()
-                .withIdentity(Pointer.builder()
-                        .withKind(File.KIND)
-                        .withApiVersion(File.API_VERSION)
-                        .withNameSpace(nameSpace)
-                        .withName(name)
+                .identity(Pointer.builder()
+                        .kind(File.KIND)
+                        .apiVersion(File.API_VERSION)
+                        .nameSpace(nameSpace)
+                        .name(name)
                         .build()
                 )
-                .withUid(uid)
-                .withCreated(created)
-                .withDeleted(deleted)
+                .uid(uid)
+                .created(created)
+                .deleted(deleted)
                 .build();
     }
 }

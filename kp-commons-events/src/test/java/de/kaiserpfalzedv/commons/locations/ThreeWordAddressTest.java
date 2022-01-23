@@ -40,9 +40,9 @@ public class ThreeWordAddressTest {
     @Test
     public void shouldWorkWithBuilder() {
         ThreeWordAddress result = ThreeWordAddress.builder()
-                .withWord1("geteilt")
-                .withWord2("flexibler")
-                .withWord3("entfernt")
+                .word1("geteilt")
+                .word2("flexibler")
+                .word3("entfernt")
                 .build();
 
         assertNotNull(result);
