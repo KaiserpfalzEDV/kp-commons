@@ -18,7 +18,7 @@
 quarkus:
   application:
     name: Fileserver
-    version: 1.0.0
+    version: 2.1.0
     api-version: "v1"
 
   http:
@@ -66,10 +66,10 @@ quarkus:
     cors: true
   oidc:
     application-type: hybrid
-    auth-server-url: ${OAUTH2_URL}
-    client-id: ${OAUTH2_CLIENT}
+    auth-server-url: https://localhost:12345/please-override-quarkus_oidc_auth-server-url
+    client-id: please-override-quarkus_oidc_client-id
     credentials:
-      secret: ${OAUTH2_SECRET}
+      secret: please-override-quarkus_oidc_credentials_secret
     tls:
       verification: none
   keycloak:

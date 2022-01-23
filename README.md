@@ -4,7 +4,6 @@
 >
 > -- @blue_eyed_darkness on TikTok
 
-![Dependabot](https://flat.badgen.net/dependabot/Paladins-Inn/kp-commons/?icon=dependabot)
 ![Maven](https://github.com/Paladins-Inn/kp-commons/workflows/CI/badge.svg)
 
 ## Abstract
@@ -32,10 +31,15 @@ wrong. Every line that needs not be written is a bug free line without need to t
 
 * kp-commons-core
 * kp-commons-discord
-* kp-commons-google
-* discord-testsupport
-* mongodb-testsupport
-* oauth2-testsupport
+* kp-commons-history (planned)
+* kp-commons-services
+  * kp-commons-fileserver
+  * kp-commons-profiles (planned)
+  * kp-commons-events
+* kp-commons-testsupport
+  * kp-core-testsupport
+  * discord-testsupport
+  * oauth2-testsupport
 
 
 ## Distribution

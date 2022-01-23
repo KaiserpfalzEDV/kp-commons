@@ -124,7 +124,7 @@ public class JPAFile extends AbstractJPAEntity implements HasId, HasName, HasMed
                                         Pointer.builder()
                                                 .kind(User.KIND)
                                                 .apiVersion(User.API_VERSION)
-                                                .nameSpace(getGroup())
+                                                .nameSpace(getNameSpace())
                                                 .name(getOwner())
                                                 .build()
                                 )

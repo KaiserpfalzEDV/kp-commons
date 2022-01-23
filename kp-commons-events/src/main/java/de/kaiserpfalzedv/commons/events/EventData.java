@@ -19,20 +19,22 @@ package de.kaiserpfalzedv.commons.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpec;
 import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Transient;
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -50,89 +52,31 @@ import java.util.TimeZone;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "GameData", description = "A game session data.")
 public class EventData extends DefaultResourceSpec {
-    public static String CAMPAIGN = "campaign";
-    public static String GAME_GM = "game.gm";
-    public static String GAME_PLAYERS = "game.players";
-    public static String DISCORD_GUILD = "discord.guild";
-    public static String DISCORD_CHANNEL = "discord.channel";
-
-    public static String[] STRUCTURED_PROPERTIES = {
-            CAMPAIGN,
-            GAME_GM,
-            GAME_PLAYERS,
-            DISCORD_GUILD,
-            DISCORD_CHANNEL
-    };
-
     @Schema(description = "An Event may have sub events (like a convention may have tracks or multiple sessions.", nullable = true, minItems = 0)
-    @Singular
-    private final Set<ResourcePointer> subEvents;
+    @Builder.Default
+    private final Set<ResourcePointer> subEvents = new HashSet<>();
 
     @Schema(description = "The location of the event.", nullable = true)
+    @NonNull
     private final ResourcePointer location;
 
     @Schema(description = "The start of the event. Includes also the timezone this event takes place.", required = true)
+    @NonNull
     private final OffsetDateTime startsAt;
 
     @Schema(description = "The duration of the event.", nullable = true)
+    @NonNull
     private final Duration duration;
 
-    @Override
-    public String[] getDefaultProperties() {
-        return STRUCTURED_PROPERTIES;
-    }
-
-
-    @Transient
     @JsonIgnore
     @BsonIgnore
     public boolean hasSessions() {
         return subEvents != null && !subEvents.isEmpty();
     }
 
-    @Transient
     @JsonIgnore
     @BsonIgnore
     public TimeZone getTimeZone() {
         return TimeZone.getTimeZone(startsAt.toZonedDateTime().getZone());
-    }
-
-    @Transient
-    @JsonIgnore
-    @BsonIgnore
-    public Optional<ResourcePointer> getCampaign() {
-        return getResourcePointer(CAMPAIGN);
-    }
-
-
-    @Transient
-    @JsonIgnore
-    @BsonIgnore
-    public Optional<ResourcePointer> getGameMaster() {
-        return getResourcePointer(GAME_GM);
-    }
-
-
-    @Transient
-    @JsonIgnore
-    @BsonIgnore
-    public List<ResourcePointer> getPlayers() {
-        return getResourcePointers(GAME_PLAYERS);
-    }
-
-
-    @Transient
-    @JsonIgnore
-    @BsonIgnore
-    public Optional<ResourcePointer> getDiscordChannel() {
-        return getResourcePointer(DISCORD_CHANNEL);
-    }
-
-
-    @Transient
-    @JsonIgnore
-    @BsonIgnore
-    public Optional<ResourcePointer> getDiscordGuild() {
-        return getResourcePointer(DISCORD_GUILD);
     }
 }

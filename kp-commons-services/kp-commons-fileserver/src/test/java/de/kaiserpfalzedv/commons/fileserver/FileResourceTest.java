@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.fileserver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.kaiserpfalzedv.commons.core.files.File;
 import de.kaiserpfalzedv.commons.core.files.FileData;
 import de.kaiserpfalzedv.commons.core.files.FileDescription;
@@ -31,13 +32,17 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
 import io.restassured.RestAssured;
+import io.restassured.config.ObjectMapperConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 import java.nio.charset.StandardCharsets;
@@ -64,7 +69,12 @@ public class FileResourceTest extends AbstractTestBase {
     private static final String UPDATEABLE_NAMESPACE = "name.namespace";
     private static final String UPDATEABLE_NAME = "name.name";
 
+    private RestAssuredConfig restAssuredConfig;
+
     private UUID entityUid = UPDATEABLE_UUID;
+
+    @Inject
+    ObjectMapper mapper;
 
     @PostConstruct
     void init() {
@@ -72,6 +82,9 @@ public class FileResourceTest extends AbstractTestBase {
         setLog(log);
 
         RestAssured.defaultParser = Parser.JSON;
+        restAssuredConfig = RestAssuredConfig.config().objectMapperConfig(
+                new ObjectMapperConfig().jackson2ObjectMapperFactory((type, s) -> mapper)
+        );
     }
 
     @Test
@@ -183,6 +196,7 @@ public class FileResourceTest extends AbstractTestBase {
                 .build();
 
         File result = given()
+                .config(restAssuredConfig)
             .when()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -190,8 +204,11 @@ public class FileResourceTest extends AbstractTestBase {
                 .prettyPeek()
             .then()
                 .statusCode(200)
-                .contentType(ContentType.JSON).extract().response().as(File.class);
+                .extract().response()
+                .as(File.class);
+//                .contentType(ContentType.JSON).extract().jsonPath().peek().get();
 
+        log.info("Result. data=", result);
         entityUid = result.getUid();
 
         log.info("Result. id={}, data={}", entityUid, result);
@@ -259,6 +276,7 @@ public class FileResourceTest extends AbstractTestBase {
                 .build();
 
         File result = given()
+                .config(restAssuredConfig)
             .when()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -266,10 +284,16 @@ public class FileResourceTest extends AbstractTestBase {
                 .prettyPeek()
             .then()
                 .statusCode(200)
-                .contentType(ContentType.JSON).extract().response()
-                .jsonPath().get();
+                .contentType(ContentType.JSON)
+                .extract().response()
+                .as(File.class);
 
-        assertThat(result.getSpec().getPreview().getName(), equals(request.getSpec().getPreview().getName()));
+        Assertions.assertEquals(
+                request.getSpec().getPreview().getName(),
+                result.getSpec().getPreview().getName(),
+                "The preview name doesn't match the expected result"
+        );
+
         assertThat(result.getMetadata().getModified(), not(equals(request.getMetadata().getCreated())));
     }
 
