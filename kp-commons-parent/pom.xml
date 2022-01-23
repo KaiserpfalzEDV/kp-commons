@@ -96,8 +96,8 @@
             </dependency>
 
             <dependency>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <groupId>${quarkus.group-id}</groupId>
+                <artifactId>${quarkus.artifact-id}</artifactId>
                 <version>${quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -121,13 +121,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-        <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+        <quarkus.artifact-id>quarkus-universe-bom</quarkus.artifact-id>
+        <quarkus.group-id>io.quarkus</quarkus.group-id>
         <quarkus.version>2.6.3.Final</quarkus.version>
 
-
         <compiler-plugin.version>3.9.0</compiler-plugin.version>
-        <quarkus-plugin.version>2.6.0.Final</quarkus-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
@@ -143,16 +141,18 @@
     <reporting>
         <plugins>
             <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
             </plugin>
         </plugins>
     </reporting>
@@ -312,13 +312,16 @@
                 <filtering>true</filtering>
                 <directory>src/main/resources</directory>
                 <excludes>
+                    <exclude>**/*.webp</exclude>
                     <exclude>**/*.docx</exclude>
                     <exclude>**/*.xlsx</exclude>
                     <exclude>**/*.zip</exclude>
                     <exclude>**/*.tgz</exclude>
                     <exclude>**/*.png</exclude>
                     <exclude>**/*.jpg</exclude>
+                    <exclude>**/*.jpeg</exclude>
                     <exclude>**/*.gpg</exclude>
+                    <exclude>**/*.svg</exclude>
                     <exclude>**/*.license</exclude>
                     <exclude>src/main/resources/static/*</exclude>
                 </excludes>
@@ -327,13 +330,16 @@
                 <filtering>false</filtering>
                 <directory>src/main/resources</directory>
                 <includes>
+                    <include>**/*.webp</include>
                     <include>**/*.docx</include>
                     <include>**/*.xlsx</include>
                     <include>**/*.zip</include>
                     <include>**/*.tgz</include>
                     <include>**/*.png</include>
                     <include>**/*.jpg</include>
+                    <include>**/*.jpeg</include>
                     <include>**/*.gpg</include>
+                    <include>**/*.svg</include>
                     <include>**/*.license</include>
                 </includes>
             </resource>
