@@ -27,7 +27,6 @@ import javax.ws.rs.core.Response;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * HttpErrorGeneratorTest --
@@ -60,16 +59,11 @@ public class HttpErrorGeneratorTest extends AbstractTestBase {
                 DEFAULT_STATUS, DEFAULT_MESSAGE, DEFAULT_DATA
         );
 
-        try {
-            sut.throwHttpProblem(DEFAULT_STATUS, DEFAULT_MESSAGE, DEFAULT_DATA);
+        HttpProblem result = sut.throwHttpProblem(DEFAULT_STATUS, DEFAULT_MESSAGE, DEFAULT_DATA);
+        log.trace("Received {}. cause={}", result.getClass().getCanonicalName(), result);
 
-            fail("A HttpProblem should have been thrown.");
-        } catch (HttpProblem e) {
-            log.trace("Received {}. cause={}", e.getClass().getCanonicalName(), e);
-
-            assertEquals(DEFAULT_STATUS, e.getStatus());
-            assertEquals(DEFAULT_MESSAGE, e.getDetail());
-            assertEquals(DEFAULT_DATA, e.getParameters());
-        }
+        assertEquals(DEFAULT_STATUS, result.getStatus());
+        assertEquals(DEFAULT_MESSAGE, result.getDetail());
+        assertEquals(DEFAULT_DATA, result.getParameters());
     }
 }

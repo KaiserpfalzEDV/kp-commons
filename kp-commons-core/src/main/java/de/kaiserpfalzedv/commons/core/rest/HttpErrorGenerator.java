@@ -34,24 +34,25 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 @Slf4j
 public class HttpErrorGenerator {
-    public void throwHttpProblem(
+    @SuppressWarnings("unused")
+    public HttpProblem throwHttpProblem(
             final Response.StatusType code,
             final String message,
             final Map<String, String> data,
             final Throwable cause
     ) {
         log.error(formatMessage(code, message, data), cause);
-        buildHttpError(code, message, data);
+        return buildHttpError(code, message, data);
     }
 
 
-    public void throwHttpProblem(
+    public HttpProblem throwHttpProblem(
             final Response.StatusType code,
             final String message,
             final Map<String, String> data
     ) {
         log.error(formatMessage(code, message, data));
-        buildHttpError(code, message, data);
+        return buildHttpError(code, message, data);
     }
 
 
@@ -67,7 +68,7 @@ public class HttpErrorGenerator {
         );
     }
 
-    private void buildHttpError(Response.StatusType code, String message, Map<String, String> data) {
+    private HttpProblem buildHttpError(Response.StatusType code, String message, Map<String, String> data) {
         HttpProblem.Builder result = HttpProblem.builder()
                 .withStatus(code)
                 .withTitle(code.getReasonPhrase())
@@ -75,6 +76,6 @@ public class HttpErrorGenerator {
 
         data.forEach(result::with);
 
-        throw result.build();
+        return result.build();
     }
 }

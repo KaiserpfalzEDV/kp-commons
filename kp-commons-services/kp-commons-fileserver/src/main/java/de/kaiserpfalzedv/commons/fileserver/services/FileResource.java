@@ -20,15 +20,11 @@ package de.kaiserpfalzedv.commons.fileserver.services;
 import de.kaiserpfalzedv.commons.core.api.About;
 import de.kaiserpfalzedv.commons.core.files.File;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
-import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.rest.HttpErrorGenerator;
-import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
-import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileData;
-import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileRepository;
-import io.quarkus.panache.common.Sort;
 import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -40,7 +36,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirements;
-import jakarta.validation.constraints.Size;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.annotation.PostConstruct;
@@ -49,16 +44,21 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.PessimisticLockException;
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * FileService -- Save a file or retrieve it.
@@ -91,7 +91,7 @@ import java.util.stream.Stream;
 )
 public class FileResource {
     @Inject
-    JPAFileRepository repository;
+    FileService service;
 
     @Inject
     HttpErrorGenerator errorGenerator;
@@ -101,12 +101,12 @@ public class FileResource {
 
     @PostConstruct
     public void init() {
-        log.info("Started file service. repository={}", repository);
+        log.info("Started file rest resource. service={}, errorGenerator={}", service, errorGenerator);
     }
 
     @PreDestroy
     public void close() {
-        log.info("Closing file service ...");
+        log.info("Closing file rest resource ...");
     }
 
     @Schema(
@@ -179,34 +179,7 @@ public class FileResource {
             )
             @QueryParam("sort") List<String> sort
     ) {
-        log.info(
-                "List files. namespace='{}', mediaType='{}', size={}, page={}, sort[]={}",
-                nameSpace, mediaType, size, page, sort
-        );
-
-        String owned = identity.getPrincipal().getName();
-        Sort order = calculateSort(sort);
-
-        Stream<JPAFile> data = repository.streamAll(order);
-
-        if (owner != null) {
-            data = data.filter(d -> d.getOwner().equalsIgnoreCase(owned));
-        }
-
-        return data.map(JPAFile::to).collect(Collectors.toList());
-    }
-
-
-    Sort calculateSort(@NotNull List<String> columns) {
-        if (columns == null || columns.isEmpty()) {
-            log.trace("No columns to sort by given. Setting default column order (namespace, owner, name)");
-
-            columns = List.of("nameSpace", "owner", "file.name");
-        }
-
-        log.debug("Setting sort order. columns={}", columns);
-        return Sort.ascending(columns.toArray(new String[0]));
-
+        return service.index(nameSpace, mediaType, owner, size, page, sort, identity.getPrincipal(), identity.getRoles());
     }
 
 
@@ -224,7 +197,6 @@ public class FileResource {
                     description = "The Resource already exists (UUID or NameSpace and Name)."
             )
     })
-    @Transactional
     public File create(
             @Schema(
                     description = "The file to be saved with all metadata needed",
@@ -239,59 +211,34 @@ public class FileResource {
             @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @NotNull final File input
     ) {
-        log.info("Creating file. namespace='{}', name='{}'",
-                input.getNameSpace(), input.getName()
-        );
-
-        if (input.getUid() != null) {
-            log.warn("Removing UUID to create a new entity.");
-        }
-
-        JPAFile store = JPAFile.from(input)
-                .toBuilder()
-                .id(null)
-                .build();
-
-        persist(input, store);
-
-        log.info("Created entity. uuid='{}', namespace='{}', name='{}'",
-                store.getId(), store.getNameSpace(), store.getName());
-        return resource(store.getId());
-    }
-
-    private void persist(File input, JPAFile store) {
-        log.debug("Trying to persist entity ...");
         try {
-            repository.persistAndFlush(store);
-
-            log.debug("Persisted entity. uuid='{}', namespace='{}', name='{}'",
-                    store.getId(), store.getNameSpace(), store.getName());
+            return service.create(input);
         } catch (javax.persistence.EntityExistsException cause) {
-            errorGenerator.throwHttpProblem(
+            throw errorGenerator.throwHttpProblem(
                     Response.Status.CONFLICT,
                     "Either UUID or NameSpace+Name already taken",
                     Map.of(
-                            "UUID", input.getUid().toString(),
+                            "uuid", input.getUid().toString(),
                             "NameSpace", input.getNameSpace(),
                             "Name", input.getName()
                     )
             );
         } catch (PessimisticLockException cause) {
-            errorGenerator.throwHttpProblem(
+            throw errorGenerator.throwHttpProblem(
                     Response.Status.INTERNAL_SERVER_ERROR,
                     "The data set has been changed by another transaction",
                     Map.of(
-                            "UUID", input.getUid().toString(),
+                            "uuid", input.getUid().toString(),
                             "NameSpace", input.getNameSpace(),
                             "Name", input.getName()
                     )
             );
         } catch (RuntimeException cause) {
-            errorGenerator.throwHttpProblem(
+            throw errorGenerator.throwHttpProblem(
                     Response.Status.INTERNAL_SERVER_ERROR,
                     cause.getMessage(),
                     Map.of(
-                            "UUID", input.getUid().toString(),
+                            "uuid", input.getUid().toString(),
                             "NameSpace", input.getNameSpace(),
                             "Name", input.getName()
                     )
@@ -315,7 +262,6 @@ public class FileResource {
                     description = "The Resource already exists (UUID or NameSpace and Name)."
             )
     })
-    @Transactional
     public File update(
             @Schema(
                     description = "The file data to be stored.",
@@ -323,85 +269,52 @@ public class FileResource {
             )
             @NotNull final File input
     ) {
-        log.info("Updating file. uuid='{}', namespace='{}', name='{}'",
-                input.getUid(), input.getNameSpace(), input.getName()
-        );
-
-        JPAFile stored = repository.findById(input.getUid());
-        if (stored == null) {
-            log.warn("Entity with UID does not exist. Creating a new one.");
-            return create(input);
-        }
-
-        checkPermission(input, stored, File.WRITE);
-
-        log.trace("Updating the data of entity.");
-        Metadata metadata = input.getMetadata();
-
-        updateGroup(stored, metadata);
-        updateOwner(stored, metadata);
-        updatePermissions(stored, metadata);
-
-        stored.setFile(JPAFileData.from(input.getSpec().getFile()));
-
-        if (input.getSpec().getPreview() != null) {
-            stored.setPreview(JPAFileData.from(input.getSpec().getPreview()));
-        }
-
-        persist(input, stored);
-
-        log.info("Updated entity. uuid='{}', namespace='{}', name='{}'",
-                stored.getId(), stored.getNameSpace(), stored.getName());
-        return resource(stored.getId());
-    }
-    
-    private void checkPermission(final File input, final JPAFile stored, final int permission) {
-        if (!stored.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), permission)) {
-            errorGenerator.throwHttpProblem(
+        try {
+            return service.update(input, identity.getPrincipal(), identity.getRoles());
+        } catch (SecurityException cause) {
+            throw errorGenerator.throwHttpProblem(
                     Response.Status.FORBIDDEN,
                     "User has no write access to this file!",
                     Map.of(
                             "user", identity.getPrincipal().getName(),
-                            "groups", identity.getRoles().stream()
+                            "groups",identity.getRoles().stream()
                                     .collect(Collectors.joining(",", "{", "}")),
-                            "owner", stored.getOwner(),
-                            "group", stored.getGroup(),
-                            "permission", stored.getPermissions(),
                             "UUID", input.getUid().toString(),
                             "NameSpace", input.getNameSpace(),
                             "Name", input.getName()
                     )
             );
-        }
-    }
-
-    private void updateGroup(final JPAFile stored, final Metadata metadata) {
-        metadata.getOwningResource().ifPresent(
-                o -> stored.setGroup(o.getNameSpace())
-        );
-
-        metadata.getAnnotation(File.ANNOTATION_GROUP).ifPresent(stored::setGroup);
-    }
-
-    private void updateOwner(final JPAFile stored, final Metadata metadata) {
-        if (stored.getOwner().equals(identity.getPrincipal().getName())) {
-            String oldOwner = stored.getOwner();
-
-            metadata.getOwningResource().ifPresent(
-                    o -> stored.setOwner(o.getName())
+        } catch (javax.persistence.EntityExistsException cause) {
+            throw errorGenerator.throwHttpProblem(
+                    Response.Status.CONFLICT,
+                    "Either UUID or NameSpace+Name already taken",
+                    Map.of(
+                            "uuid", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
             );
-
-            metadata.getAnnotation(File.ANNOTATION_OWNER).ifPresent(stored::setOwner);
-
-            if (!oldOwner.equals(stored.getOwner())) {
-                log.info("Handed over ownership of file. id={}, nameSpace='{}', name='{}', owner.old='{}', owner.new='{}",
-                        stored.getId(), stored.getNameSpace(), stored.getName(), oldOwner, stored.getOwner());
-            }
+        } catch (PessimisticLockException cause) {
+            throw errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    "The data set has been changed by another transaction",
+                    Map.of(
+                            "uuid", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
+            );
+        } catch (RuntimeException cause) {
+            throw errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    cause.getMessage(),
+                    Map.of(
+                            "uuid", input.getUid().toString(),
+                            "NameSpace", input.getNameSpace(),
+                            "Name", input.getName()
+                    )
+            );
         }
-    }
-
-    private void updatePermissions(final JPAFile stored, final Metadata metadata) {
-        metadata.getAnnotation(File.ANNOTATION_PERMISSIONS).ifPresent(stored::setPermissions);
     }
 
 
@@ -423,15 +336,7 @@ public class FileResource {
             )
             @PathParam("id") @NotNull final UUID id
     ) {
-        log.info("Retrieving file. uuid='{}'", id);
-
-        JPAFile data = repository.findById(id);
-
-        if (data == null) {
-            throw new NotFoundException("No file with ID '" + id + "' found.");
-        }
-
-        return data.to();
+        return service.resource(id, identity.getPrincipal(), identity.getRoles());
     }
 
 
@@ -491,23 +396,10 @@ public class FileResource {
             @PathParam("name")
             @NotNull final String name
     ) {
-        log.info("Retrieving file. namespace='{}', name='{}'",
-                nameSpace, name
-        );
-        Optional<JPAFile> data = repository.findByNameSpaceAndName(nameSpace, name);
-
-        if (data.isEmpty()) {
-            throw new NotFoundException(String.format(
-                    "No file with name space '%s' and name '%s' found.",
-                    nameSpace, name
-            ));
-        }
-
-        return data.get().to();
+        return service.resource(nameSpace, name, identity.getPrincipal(), identity.getRoles());
     }
 
 
-    @Transactional
     @NoCache
     @DELETE
     @RolesAllowed({"user", "admin"})
@@ -522,26 +414,28 @@ public class FileResource {
             )
             @PathParam("uid") final UUID id
     ) {
-        log.info("Deleting file. uuid='{}'", id);
+        try {
+        service.delete(id, identity.getPrincipal(), identity.getRoles());
+        } catch (PessimisticLockException cause) {
+            throw errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    "The data set has been changed by another transaction",
+                    Map.of(
+                            "uuid", id.toString()
+                    )
+            );
+        } catch (RuntimeException cause) {
+            throw errorGenerator.throwHttpProblem(
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    cause.getMessage(),
+                    Map.of(
+                            "uuid", id.toString()
+                    )
+            );
+        }
 
-        Optional<JPAFile> orig = repository.findByIdOptional(id);
-        orig.ifPresentOrElse(
-                o -> {
-                    if (o.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), File.WRITE)) {
-                        remove(o);
-                        log.info("Deleted file. id={}, nameSpace='{}', name='{}'", id, o.getNameSpace(), o.getName());
-                    } else {
-                        log.warn("User has no write access to the file. user='{}', groups={}, id={}, nameSpace='{}', name='{}'",
-                                identity.getPrincipal().getName(), identity.getRoles(),
-                                id, o.getNameSpace(), o.getName());
-                    }
-                },
-                () -> log.info("No file with ID found. Everything is fine, it should have been deleted nevertheless. id={}",
-                        id)
-        );
     }
 
-    @Transactional
     @NoCache
     @DELETE
     @RolesAllowed({"user", "admin"})
@@ -551,7 +445,6 @@ public class FileResource {
             description = "Deletes the file with the given UUID as long as the user is allowed to write that file"
     )
     public void delete(
-
             @Schema(
                     description = "The name space of the file.",
                     required = true,
@@ -601,59 +494,24 @@ public class FileResource {
             @PathParam("name")
             @NotNull final String name
     ) {
-        log.info("Deleting file. namespace='{}', name='{}'",
-                nameSpace, name
-        );
-        Optional<JPAFile> orig = repository.findByNameSpaceAndName(nameSpace, name);
-
-        orig.ifPresentOrElse(
-                o -> {
-                    if (o.to().hasAccess(identity.getPrincipal().getName(), identity.getRoles(), File.WRITE)) {
-                        remove(o);
-                        log.info("Deleted file. id={}, nameSpace='{}', name='{}'", o.getId(), o.getNameSpace(), o.getName());
-                    } else {
-                        log.warn("User has no write access to the file. user='{}', groups={}, id={}, nameSpace='{}', name='{}'",
-                                identity.getPrincipal().getName(), identity.getRoles(),
-                                o.getId(), o.getNameSpace(), o.getName());
-                    }
-                },
-                () -> log.info("No file with nameSpace and name found. Everything is fine, it should have been deleted nevertheless. nameSpace='{}', name='{}'",
-                        nameSpace, name)
-        );
-    }
-
-    private void remove(final JPAFile input) {
-        log.debug("Trying to delete entity ...");
         try {
-            repository.deleteById(input.getId());
-        } catch (javax.persistence.EntityExistsException cause) {
-            errorGenerator.throwHttpProblem(
-                    Response.Status.CONFLICT,
-                    "Either UUID or NameSpace+Name already taken",
-                    Map.of(
-                            "UUID", input.getId().toString(),
-                            "NameSpace", input.getNameSpace(),
-                            "Name", input.getName()
-                    )
-            );
+            service.delete(nameSpace, name, identity.getPrincipal(), identity.getRoles());
         } catch (PessimisticLockException cause) {
-            errorGenerator.throwHttpProblem(
+            throw errorGenerator.throwHttpProblem(
                     Response.Status.INTERNAL_SERVER_ERROR,
                     "The data set has been changed by another transaction",
                     Map.of(
-                            "UUID", input.getId().toString(),
-                            "NameSpace", input.getNameSpace(),
-                            "Name", input.getName()
+                            "NameSpace", nameSpace,
+                            "Name", name
                     )
             );
         } catch (RuntimeException cause) {
-            errorGenerator.throwHttpProblem(
+            throw errorGenerator.throwHttpProblem(
                     Response.Status.INTERNAL_SERVER_ERROR,
                     cause.getMessage(),
                     Map.of(
-                            "UUID", input.getId().toString(),
-                            "NameSpace", input.getNameSpace(),
-                            "Name", input.getName()
+                            "NameSpace", nameSpace,
+                            "Name", name
                     )
             );
         }

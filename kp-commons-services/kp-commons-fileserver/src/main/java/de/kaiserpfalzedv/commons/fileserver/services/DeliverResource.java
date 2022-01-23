@@ -18,22 +18,27 @@
 package de.kaiserpfalzedv.commons.fileserver.services;
 
 import de.kaiserpfalzedv.commons.core.files.File;
+import de.kaiserpfalzedv.commons.core.files.FileDescription;
 import de.kaiserpfalzedv.commons.core.resources.HasId;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
-import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
-import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileData;
-import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileRepository;
+import io.quarkus.security.identity.SecurityIdentity;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import jakarta.validation.constraints.Size;
 
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
 import java.util.Set;
@@ -46,13 +51,18 @@ import java.util.UUID;
  * @version 2.1.0  2022-01-16
  * @since 2.1.0  2022-01-16
  */
+@Produces("*/*")
 @Slf4j
 @ApplicationScoped
 @Path("/public/deliver")
 @PermitAll
 public class DeliverResource {
     @Inject
-    JPAFileRepository repository;
+    FileService service;
+
+    @Inject
+    SecurityIdentity identity;
+
 
     @Path("/{type}/{id}")
     @GET
@@ -79,20 +89,21 @@ public class DeliverResource {
             )
             @PathParam("id") @NotNull final UUID id
     ) {
-        Optional<JPAFile> data = repository.findByIdOptional(id);
+        try {
+            File data = service.resource(id, identity.getPrincipal(), identity.getRoles());
 
-        checkDataFound(data.isEmpty(), String.format("No file with id '%s' found.", id));
-
-        Optional<JPAFileData> file = retrieveFileOrPreview(data.get(), type);
-        return returnFile(data.get(), file);
+            return returnFile(data, type);
+        } catch (SecurityException cause) {
+            throw new ForbiddenException();
+        }
     }
 
-    private Optional<JPAFileData> retrieveFileOrPreview(JPAFile data, final String type) {
+    private Optional<FileDescription> retrieveFileOrPreview(File data, final String type) {
         switch (type) {
             case "file":
-                return Optional.of(data.getFile());
+                return Optional.of(data.getSpec().getFile());
             case "preview":
-                return Optional.ofNullable(data.getPreview());
+                return Optional.ofNullable(data.getSpec().getPreview());
         }
 
         throw new UnsupportedOperationException("Only 'file' and 'preview' is allowed (current: '" + type + "').");
@@ -137,47 +148,37 @@ public class DeliverResource {
             @PathParam("name")
             @NotNull final String name
     ) {
-        Optional<JPAFile> data = repository.findByNameSpaceAndName(nameSpace, name);
+        try {
+            File data = service.resource(nameSpace, name, identity.getPrincipal(), identity.getRoles());
 
-        checkDataFound(data.isEmpty(), String.format("No file with name space '%s' and name '%s' found.", nameSpace, name));
-
-        Optional<JPAFileData> file = retrieveFileOrPreview(data.get(), type);
-        return returnFile(data.get(), file);
-    }
-
-    private void checkDataFound(boolean empty, String message) {
-        if (empty) {
-            throw new NotFoundException(message);
+            return returnFile(data, type);
+        } catch (SecurityException cause) {
+            throw new ForbiddenException();
         }
+
     }
+
 
     private Response returnFile(
-            @NotNull final JPAFile file,
-            @NotNull final Optional<JPAFileData> fileData
+            @NotNull final File data,
+            @NotEmpty final String type
     ) {
-        checkAccess(file);
+        Optional<FileDescription> file = retrieveFileOrPreview(data, type);
 
-        if (fileData.isEmpty()) {
-            throw new NotFoundException("Not found");
-        }
+        file.orElseThrow(NotFoundException::new);
 
-        JPAFileData data = fileData.get();
+        log.info("Delivering file. id={}, name='{}', mediaType='{}'",
+                 data.getUid(), file.get().getName(), file.get().getMediaType());
 
-        log.info("Delivering File. file={}", fileData);
         return Response
-                .ok(data.getData(), data.getMediaType())
-                .header("X-File-Metadata-NameSpace", file.getNameSpace())
-                .header("X-File-Metadata-Name", file.getName())
-                .header("X-File-Metadata-Uid", file.getId())
-                .header("X-File-Owner", file.getOwner())
-                .header("X-File-Group", file.getGroup())
-                .header("X-File-Name", data.getName())
+                .ok(file.get().getData())
+                .header("Content-Type", file.get().getMediaType())
+                .header("X-File-Metadata-NameSpace", data.getNameSpace())
+                .header("X-File-Metadata-Name", data.getName())
+                .header("X-File-Metadata-Uid", data.getUid())
+                .header("X-File-Owner", data.getOwner())
+                .header("X-File-Group", data.getGroup())
+                .header("X-File-Name", file.get().getName())
                 .build();
-    }
-
-    private void checkAccess(JPAFile data) {
-        if (!data.to().hasAccess("./.", Set.of(), File.READ)) {
-            throw new ForbiddenException("Forbidden");
-        }
     }
 }
