@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>testsupport</artifactId>
+        <artifactId>kp-commons-testsupport</artifactId>
         <groupId>de.kaiserpfalz-edv.commons.test-support</groupId>
         <version>2.1.0</version>
         <relativePath>../pom.xml</relativePath>
