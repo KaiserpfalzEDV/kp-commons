@@ -28,8 +28,6 @@ import de.kaiserpfalzedv.commons.discord.guilds.Guild;
 import de.kaiserpfalzedv.commons.discord.guilds.GuildStoreService;
 import de.kaiserpfalzedv.commons.discord.text.DiscordMessageChannelPlugin;
 import io.quarkus.runtime.StartupEvent;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -38,6 +36,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.enterprise.event.Observes;
@@ -53,9 +53,8 @@ import java.util.ArrayList;
  * @since 2.0.0  2021-05-24
  */
 @Singleton // since ListenerAdapter contains a final method, we need a proxy-less implementation.
-@Slf4j
-@ToString
 public class DiscordDispatcher extends ListenerAdapter {
+    private static final Logger log = LoggerFactory.getLogger(DiscordDispatcher.class);
     /**
      * The plugins to work on.
      */
@@ -158,7 +157,6 @@ public class DiscordDispatcher extends ListenerAdapter {
                                 )
                                 .build()
                 )
-
                 .build();
 
         result = store.save(result);

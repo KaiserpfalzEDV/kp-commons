@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.i18n;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 import java.util.Locale;
 

@@ -111,8 +111,10 @@ quarkus:
     log: &dev-log
       console:
         json: false
-        format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
-      category."de.kaiserpfalzedv.rpg".level=DEBUG
+        format: "%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      category:
+        "de.kaiserpfalzedv.rpg":
+          level: DEBUG
 #
 "%test":
   quarkus:

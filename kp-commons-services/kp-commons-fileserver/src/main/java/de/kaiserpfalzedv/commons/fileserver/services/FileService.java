@@ -24,9 +24,9 @@ import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFile;
 import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileData;
 import de.kaiserpfalzedv.commons.fileserver.jpa.JPAFileRepository;
 import io.quarkus.panache.common.Sort;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;

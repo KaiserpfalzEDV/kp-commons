@@ -32,7 +32,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.io.Serializable;

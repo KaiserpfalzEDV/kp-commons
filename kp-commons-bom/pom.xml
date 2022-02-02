@@ -32,12 +32,12 @@
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>2.0.2-SNAPSHOT</kp-commons.version>
+        <kp-commons.version>2.1.0</kp-commons.version>
         <discord.version>3.5.0_329</discord.version>
 
-        <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-        <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.version>2.6.3.Final</quarkus.version>
+        <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>
+        <quarkus.group-id>io.quarkus</quarkus.group-id>
+        <quarkus.version>2.7.0.Final</quarkus.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
@@ -96,13 +96,6 @@
 
             <dependency>
                 <groupId>${kp-commons.groupId}.test-support</groupId>
-                <artifactId>mongodb-testsupport</artifactId>
-                <version>${kp-commons.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>${kp-commons.groupId}.test-support</groupId>
                 <artifactId>oauth2-testsupport</artifactId>
                 <version>${kp-commons.version}</version>
                 <scope>test</scope>
@@ -118,8 +111,8 @@
 
             <!-- quarkus -->
             <dependency>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <groupId>${quarkus.group-id}</groupId>
+                <artifactId>${quarkus.artifact-id}</artifactId>
                 <version>${quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonId;

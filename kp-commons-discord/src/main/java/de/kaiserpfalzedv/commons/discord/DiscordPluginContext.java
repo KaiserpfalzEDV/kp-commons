@@ -35,7 +35,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @Jacksonized
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode

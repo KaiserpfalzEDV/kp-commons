@@ -17,7 +17,8 @@
 
 package de.kaiserpfalzedv.commons.locations;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -31,46 +32,21 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @Jacksonized
 @Builder(toBuilder = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
 @EqualsAndHashCode
 @Schema(description = "A 3word address (see https://what3words.com/)")
 public class ThreeWordAddress {
-    @Schema(description = "First word.", required = true, example = "geteilt")
-    private final String word1;
-    @Schema(description = "Second word.", required = true, example = "flexibler")
-    private final String word2;
-    @Schema(description = "Third word.", required = true, example = "entfernt")
-    private final String word3;
+    @Pattern(
+            regexp = "(///)?\\w+.\\w+.\\w+",
+            message= "A 3WordAddress needs to start with '///' and must consist of 3 words seperated by '.' (pattern='///\\w+.\\w+.\\w+')"
+    )
+    @Schema(description = "The three words.", required = true, minLength=5, example = "///geteilt.flexibler.entfernt")
+    private final String address;
 
-    public String toString() {
-        return String.format("///%s.%s.%s", word1, word2, word3);
+    public String getAddress() {
+        return address.startsWith("///") ? address : String.format("///%s", address);
     }
 
-    /**
-     * Parses the given 3word address to a ThreeWordAddress object.
-     *
-     * @param threeWordAddress a 3word address in form "{@code ///<word>.<word>.<word>}".
-     * @return The ThreeWordAddress objects.
-     * @throws IllegalArgumentException When the address does not conform to the format
-     *                                  {@code ///<word>.<word>.<word>}.
-     */
-    public static ThreeWordAddress parse(@NotNull final String threeWordAddress) {
-        if (!threeWordAddress.startsWith("///")) {
-            throw new IllegalArgumentException(String.format(
-                    "Only 3word addresses starting with '///' are parseable ('%s' is invalid).",
-                    threeWordAddress
-            ));
-        }
-
-        String[] words = threeWordAddress.substring(3).split("\\.");
-        if (words.length != 3) {
-            throw new IllegalArgumentException(String.format(
-                    "Only 3word addresses containing 3 words are parseable ('%s' is invalid, it contains only %d words).",
-                    threeWordAddress,
-                    words.length
-            ));
-        }
-
-        return new ThreeWordAddress(words[0], words[1], words[2]);
+    public String toString() {
+        return getAddress();
     }
 }

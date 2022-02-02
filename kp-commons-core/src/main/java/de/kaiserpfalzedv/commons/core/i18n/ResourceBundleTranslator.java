@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.i18n;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -38,7 +38,7 @@ import java.util.*;
  */
 @Singleton
 @Slf4j
-public class ResourceBoundleTranslator implements Translator, MessageSource {
+public class ResourceBundleTranslator implements Translator, MessageSource {
     /**
      * The languages this class provides
      */
@@ -50,16 +50,17 @@ public class ResourceBoundleTranslator implements Translator, MessageSource {
     private final String defaultBundle;
 
     @ConfigProperty(name = "quarkus.default-locale", defaultValue = "de")
-    private String defaultLocale;
+    String defaultLocale;
 
     private final HashMap<String, HashMap<Locale, ResourceBundle>> bundles = new HashMap<>();
 
 
-    public ResourceBoundleTranslator() {
+    @SuppressWarnings("unused")
+    public ResourceBundleTranslator() {
         this("messages");
     }
 
-    public ResourceBoundleTranslator(final String defaultBundle) {
+    public ResourceBundleTranslator(final String defaultBundle) {
         this.defaultBundle = defaultBundle;
     }
 
@@ -76,7 +77,9 @@ public class ResourceBoundleTranslator implements Translator, MessageSource {
 
     @Override
     public String getTranslation(final Object bundleObject, final String key, final Locale locale, final Object... arguments) {
-        String bundleName = bundleObject.getClass().getCanonicalName().replace(".", "/");
+        String bundleName = bundleObject.getClass().getCanonicalName()
+                .replace(".", "/")
+                .replace("_Subclass", ""); // get around Quarkus.io or lombok or both or so. :-(
 
         return getTranslation(bundleName, key, locale, arguments);
     }
@@ -148,7 +151,7 @@ public class ResourceBoundleTranslator implements Translator, MessageSource {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         log.info("Closing all bundles.");
         bundles.clear();
     }

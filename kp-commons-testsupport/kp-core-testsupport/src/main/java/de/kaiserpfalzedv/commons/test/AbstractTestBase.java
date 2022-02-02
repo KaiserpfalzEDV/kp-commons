@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.test;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import lombok.Setter;
 import org.junit.jupiter.api.AfterEach;
 import org.slf4j.Logger;
@@ -38,6 +38,10 @@ public class AbstractTestBase {
     private Logger log = LoggerFactory.getLogger("test");
     private String testSuite = "unspecified";
 
+    public void setTestSuite(final String suite) {
+        // replace due to Quarkus subclassing ...
+        testSuite = suite.replace("_Subclass", "");
+    }
 
     protected void startTest(@NotNull final String test, Object... params) {
         MDC.put(MDC_TEST_SUITE_KEY, testSuite);

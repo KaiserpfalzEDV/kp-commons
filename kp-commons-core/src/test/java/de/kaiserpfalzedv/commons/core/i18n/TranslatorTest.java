@@ -169,6 +169,6 @@ class TranslatorTest extends AbstractTestBase {
 
     @BeforeEach
     void setUp() {
-        sut = new ResourceBoundleTranslator("test-messages");
+        sut = new ResourceBundleTranslator("test-messages");
     }
 }

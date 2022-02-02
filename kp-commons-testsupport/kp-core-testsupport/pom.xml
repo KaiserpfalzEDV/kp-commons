@@ -31,7 +31,6 @@
     <name>KP Commons :: Test-Suppport :: Core</name>
     <description>Helpers for doing the testing ...</description>
 
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

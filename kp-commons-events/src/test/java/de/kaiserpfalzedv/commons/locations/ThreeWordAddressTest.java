@@ -17,15 +17,12 @@
 
 package de.kaiserpfalzedv.commons.locations;
 
-import lombok.AllArgsConstructor;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import javax.inject.Inject;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * ThreeWordAddressTest --
@@ -33,50 +30,41 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-06-13
  */
-@AllArgsConstructor(onConstructor = @__(@Inject))
 @Slf4j
-public class ThreeWordAddressTest {
+public class ThreeWordAddressTest extends AbstractTestBase {
+
+    public ThreeWordAddressTest() {
+        super.setTestSuite(getClass().getSimpleName());
+        super.setLog(log);
+    }
 
     @Test
-    public void shouldWorkWithBuilder() {
+    public void shouldWorkWhenAdressStartsWith3Slashes() {
+        startTest("with-3-slashes", "///geteilt.flexibler.entfernt");
+
         ThreeWordAddress result = ThreeWordAddress.builder()
-                .word1("geteilt")
-                .word2("flexibler")
-                .word3("entfernt")
+                .address("///geteilt.flexibler.entfernt")
                 .build();
 
         assertNotNull(result);
-        assertEquals("geteilt", result.getWord1());
-        assertEquals("flexibler", result.getWord2());
-        assertEquals("entfernt", result.getWord3());
-        assertEquals(result, result);
-        assertEquals(115297568, result.hashCode());
+        assertEquals("///geteilt.flexibler.entfernt", result.getAddress());
+        assertEquals(ThreeWordAddress.builder()
+                .address("geteilt.flexibler.entfernt")
+                .build(), result);
     }
 
     @Test
-    public void shouldReturnAValidThreeWordAddressForKaiserpfalzEDVHeadQuarter() {
-        ThreeWordAddress result = ThreeWordAddress.parse("///geteilt.flexibler.entfernt");
-        log.trace("result: {}", result);
+    public void shouldWorkWhenAdressStartsWithoutSlashes() {
+        startTest("without-3-slashes", "geteilt.flexibler.entfernt");
+
+        ThreeWordAddress result = ThreeWordAddress.builder()
+                .address("geteilt.flexibler.entfernt")
+                .build();
 
         assertNotNull(result);
-        assertEquals("geteilt", result.getWord1());
-        assertEquals("flexibler", result.getWord2());
-        assertEquals("entfernt", result.getWord3());
-    }
-
-    @Test
-    public void shouldThrowAnIllegalArgumentExceptionWithoutLeadingSlashes() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> ThreeWordAddress.parse("geteilt.flexibler.entfernt")
-        );
-    }
-
-    @Test
-    public void shouldThrowAnIllegalArgumentExceptionWithNotExactelyThreeWords() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> ThreeWordAddress.parse("///geteilt.flexibler")
-        );
+        assertEquals("///geteilt.flexibler.entfernt", result.getAddress());
+        assertEquals(ThreeWordAddress.builder()
+                .address("///geteilt.flexibler.entfernt")
+                .build(), result);
     }
 }

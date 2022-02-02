@@ -29,17 +29,4 @@
     <artifactId>oauth2-testsupport</artifactId>
     <name>KP Commons :: Test-Suppport :: Oauth2</name>
     <description>Test support for testing security via oauth2 with quarkus tests.</description>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>com.github.tomakehurst</groupId>
-            <artifactId>wiremock-jre8</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5</artifactId>
-        </dependency>
-    </dependencies>
 </project>

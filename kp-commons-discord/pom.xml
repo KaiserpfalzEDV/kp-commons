@@ -29,23 +29,10 @@
     <name>KP Commons :: Discord</name>
     <description>Integration into the Discord system.</description>
 
-    <properties>
-        <activate.jcenter>true</activate.jcenter>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-elytron-security-oauth2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
 
         <!-- Discord Library -->

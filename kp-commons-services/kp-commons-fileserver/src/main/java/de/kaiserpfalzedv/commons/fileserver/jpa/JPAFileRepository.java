@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.fileserver.jpa;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.Optional;

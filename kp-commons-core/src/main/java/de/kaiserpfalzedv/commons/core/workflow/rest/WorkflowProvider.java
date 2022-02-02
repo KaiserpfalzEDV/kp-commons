@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.core.workflow.rest;
 
 import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
