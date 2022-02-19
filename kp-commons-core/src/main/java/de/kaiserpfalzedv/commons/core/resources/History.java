@@ -63,11 +63,6 @@ public class History implements Serializable, Cloneable {
             maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
-    @Size(
-            min = TimeStampPattern.VALID_LENGTH,
-            max = TimeStampPattern.VALID_LENGTH,
-            message = TimeStampPattern.VALID_LENGTH_MSG
-    )
     @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     private final OffsetDateTime timeStamp = OffsetDateTime.now(ZoneOffset.UTC);
 

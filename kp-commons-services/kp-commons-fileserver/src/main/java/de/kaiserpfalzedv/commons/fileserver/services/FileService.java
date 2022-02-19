@@ -113,9 +113,6 @@ public class FileService {
 
     @Transactional
     public File create(
-            @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH,
-                    message = HasName.VALID_NAME_LENGTH_MSG)
-            @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @NotNull final File input
     ) {
         log.info("Creating file. namespace='{}', name='{}'",

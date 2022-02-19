@@ -206,9 +206,6 @@ public class FileResource {
                     minLength = HasName.VALID_NAME_MIN_LENGTH,
                     maxLength = HasName.VALID_NAME_MAX_LENGTH
             )
-            @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH,
-                    message = HasName.VALID_NAME_LENGTH_MSG)
-            @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
             @NotNull final File input
     ) {
         try {
