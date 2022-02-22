@@ -8,7 +8,7 @@ on:
 
 jobs:
   java-build:
-    runs-on: [ java ]
+    runs-on: [ java, self-hosted ]
     steps:
       - name: Checkout sources
         id: checkout-sources
