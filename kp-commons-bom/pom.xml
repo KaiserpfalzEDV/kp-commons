@@ -23,7 +23,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>2.1.1</version>
+        <version>2.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -32,7 +32,7 @@
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>2.1.0</kp-commons.version>
+        <kp-commons.version>2.1.1</kp-commons.version>
         <discord.version>3.5.0_329</discord.version>
 
         <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>

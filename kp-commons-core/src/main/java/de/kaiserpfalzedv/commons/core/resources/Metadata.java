@@ -21,9 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
-import javax.validation.constraints.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -35,6 +33,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -101,7 +100,6 @@ public class Metadata implements Serializable, Cloneable {
     private UUID uid = UUID.randomUUID();
 
     @Version
-    @ToString.Include
     @Schema(
             name = "generation",
             description = "The generation of this object. Every change adds 1.",
@@ -111,6 +109,7 @@ public class Metadata implements Serializable, Cloneable {
             minimum = "0",
             maxItems = Integer.MAX_VALUE
     )
+    @ToString.Include
     @Builder.Default
     @NonNull
     @Min(value = 0, message = "The generation must be at least 0.")

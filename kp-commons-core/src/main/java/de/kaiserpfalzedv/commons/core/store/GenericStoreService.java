@@ -76,9 +76,7 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
         T data = (!namedStore.containsKey(key))
                 ? object
                 : (T) object.toBuilder().metadata(
-                        object.getMetadata().toBuilder()
-                                .generation(object.getGeneration() + 1)
-                                .build()
+                        object.getMetadata().increaseGeneration()
                 ).build();
 
 
