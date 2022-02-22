@@ -211,6 +211,7 @@
                     <version>${maven-javadoc-plugin.version}</version>
                     <configuration>
                         <skip>${skip.javadoc}</skip>
+                        <doclint>none</doclint>
                     </configuration>
                     <executions>
                         <execution>
