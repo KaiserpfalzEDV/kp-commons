@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,14 @@ package de.kaiserpfalzedv.commons.test.discord;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Region;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.templates.Template;
+import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.managers.GuildManager;
 import net.dv8tion.jda.api.requests.RestAction;
-import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
-import net.dv8tion.jda.api.requests.restaction.ChannelAction;
-import net.dv8tion.jda.api.requests.restaction.MemberAction;
-import net.dv8tion.jda.api.requests.restaction.RoleAction;
+import net.dv8tion.jda.api.requests.restaction.*;
 import net.dv8tion.jda.api.requests.restaction.order.CategoryOrderAction;
 import net.dv8tion.jda.api.requests.restaction.order.ChannelOrderAction;
 import net.dv8tion.jda.api.requests.restaction.order.RoleOrderAction;
@@ -38,8 +39,8 @@ import net.dv8tion.jda.api.utils.concurrent.Task;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.temporal.TemporalAccessor;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 /**
@@ -56,6 +57,66 @@ public class TestGuild implements Guild {
         this.name = name;
     }
 
+
+    @NotNull
+    @Override
+    public RestAction<List<Command>> retrieveCommands() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Command> retrieveCommandById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Command> upsertCommand(@NotNull final CommandData commandData) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public CommandListUpdateAction updateCommands() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public CommandEditAction editCommandById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Void> deleteCommandById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<List<CommandPrivilege>> retrieveCommandPrivilegesById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Map<String, List<CommandPrivilege>>> retrieveCommandPrivileges() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<List<CommandPrivilege>> updateCommandPrivilegesById(@NotNull final String s, @NotNull final Collection<? extends CommandPrivilege> collection) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Map<String, List<CommandPrivilege>>> updateCommandPrivileges(@NotNull final Map<String, ? extends Collection<CommandPrivilege>> map) {
+        return null;
+    }
 
     @NotNull
     @Override
@@ -110,12 +171,6 @@ public class TestGuild implements Guild {
     @Nullable
     @Override
     public String getSplashId() {
-        return null;
-    }
-
-    @NotNull
-    @Override
-    public RestAction<String> retrieveVanityUrl() {
         return null;
     }
 
@@ -223,12 +278,6 @@ public class TestGuild implements Guild {
         return null;
     }
 
-    @NotNull
-    @Override
-    public String getRegionRaw() {
-        return null;
-    }
-
     @Override
     public boolean isMember(@NotNull User user) {
         return false;
@@ -237,6 +286,12 @@ public class TestGuild implements Guild {
     @NotNull
     @Override
     public Member getSelfMember() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public NSFWLevel getNSFWLevel() {
         return null;
     }
 
@@ -254,19 +309,31 @@ public class TestGuild implements Guild {
 
     @NotNull
     @Override
+    public SortedSnowflakeCacheView<StageChannel> getStageChannelCache() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public SortedSnowflakeCacheView<ThreadChannel> getThreadChannelCache() {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public SortedSnowflakeCacheView<Category> getCategoryCache() {
         return null;
     }
 
     @NotNull
     @Override
-    public SortedSnowflakeCacheView<StoreChannel> getStoreChannelCache() {
+    public SortedSnowflakeCacheView<TextChannel> getTextChannelCache() {
         return null;
     }
 
     @NotNull
     @Override
-    public SortedSnowflakeCacheView<TextChannel> getTextChannelCache() {
+    public SortedSnowflakeCacheView<NewsChannel> getNewsChannelCache() {
         return null;
     }
 
@@ -342,6 +409,11 @@ public class TestGuild implements Guild {
         return null;
     }
 
+    @Override
+    public boolean isBoostProgressBarEnabled() {
+        return false;
+    }
+
     @NotNull
     @Override
     public AuditLogPaginationAction retrieveAuditLogs() {
@@ -374,6 +446,18 @@ public class TestGuild implements Guild {
 
     @NotNull
     @Override
+    public Task<Void> requestToSpeak() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public Task<Void> cancelRequestToSpeak() {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public JDA getJDA() {
         return new TestJDA();
     }
@@ -381,6 +465,18 @@ public class TestGuild implements Guild {
     @NotNull
     @Override
     public RestAction<List<Invite>> retrieveInvites() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<List<Template>> retrieveTemplates() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Template> createTemplate(@NotNull final String s, @Nullable final String s1) {
         return null;
     }
 
@@ -420,22 +516,6 @@ public class TestGuild implements Guild {
         return null;
     }
 
-    @Override
-    public boolean checkVerification() {
-        return false;
-    }
-
-    @Override
-    public boolean isAvailable() {
-        return false;
-    }
-
-    @NotNull
-    @Override
-    public CompletableFuture<Void> retrieveMembers() {
-        return null;
-    }
-
     @NotNull
     @Override
     public Task<Void> loadMembers(@NotNull Consumer<Member> callback) {
@@ -462,7 +542,13 @@ public class TestGuild implements Guild {
 
     @NotNull
     @Override
-    public RestAction<Void> moveVoiceMember(@NotNull Member member, @Nullable VoiceChannel voiceChannel) {
+    public RestAction<List<ThreadChannel>> retrieveActiveThreads() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Void> moveVoiceMember(@NotNull final Member member, @Nullable final AudioChannel audioChannel) {
         return null;
     }
 
@@ -505,6 +591,18 @@ public class TestGuild implements Guild {
     @NotNull
     @Override
     public AuditableRestAction<Void> unban(@NotNull String userId) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public AuditableRestAction<Void> timeoutUntilById(@NotNull final String s, @NotNull final TemporalAccessor temporalAccessor) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public AuditableRestAction<Void> removeTimeoutById(@NotNull final String s) {
         return null;
     }
 
@@ -558,7 +656,19 @@ public class TestGuild implements Guild {
 
     @NotNull
     @Override
+    public ChannelAction<NewsChannel> createNewsChannel(@NotNull final String s, @Nullable final Category category) {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public ChannelAction<VoiceChannel> createVoiceChannel(@NotNull String name, @Nullable Category parent) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public ChannelAction<StageChannel> createStageChannel(@NotNull final String s, @Nullable final Category category) {
         return null;
     }
 

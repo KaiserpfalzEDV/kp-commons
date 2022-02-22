@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,18 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.hooks.IEventManager;
+import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.managers.DirectAudioController;
 import net.dv8tion.jda.api.managers.Presence;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.RestAction;
+import net.dv8tion.jda.api.requests.restaction.CommandEditAction;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.requests.restaction.GuildAction;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.dv8tion.jda.api.utils.cache.CacheView;
 import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
 import okhttp3.OkHttpClient;
@@ -60,6 +65,12 @@ public class TestJDA implements JDA {
     @NotNull
     @Override
     public EnumSet<GatewayIntent> getGatewayIntents() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public EnumSet<CacheFlag> getCacheFlags() {
         return null;
     }
 
@@ -132,7 +143,49 @@ public class TestJDA implements JDA {
 
     @NotNull
     @Override
+    public RestAction<List<Command>> retrieveCommands() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Command> retrieveCommandById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Command> upsertCommand(@NotNull final CommandData commandData) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public CommandListUpdateAction updateCommands() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public CommandEditAction editCommandById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Void> deleteCommandById(@NotNull final String s) {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public GuildAction createGuild(@NotNull String name) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public RestAction<Void> createGuildFromTemplate(@NotNull final String s, @NotNull final String s1, @Nullable final Icon icon) {
         return null;
     }
 
@@ -191,19 +244,33 @@ public class TestJDA implements JDA {
 
     @NotNull
     @Override
+    public SnowflakeCacheView<StageChannel> getStageChannelCache() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public SnowflakeCacheView<ThreadChannel> getThreadChannelCache() {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public SnowflakeCacheView<Category> getCategoryCache() {
         return null;
     }
 
+
+
     @NotNull
     @Override
-    public SnowflakeCacheView<StoreChannel> getStoreChannelCache() {
+    public SnowflakeCacheView<TextChannel> getTextChannelCache() {
         return null;
     }
 
     @NotNull
     @Override
-    public SnowflakeCacheView<TextChannel> getTextChannelCache() {
+    public SnowflakeCacheView<NewsChannel> getNewsChannelCache() {
         return null;
     }
 
@@ -315,6 +382,12 @@ public class TestJDA implements JDA {
     @NotNull
     @Override
     public RestAction<ApplicationInfo> retrieveApplicationInfo() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public net.dv8tion.jda.api.JDA setRequiredScopes(@NotNull final Collection<String> collection) {
         return null;
     }
 

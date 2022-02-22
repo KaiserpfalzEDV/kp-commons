@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,12 @@ public class NullDiscordUser implements User {
 
     @NotNull
     @Override
+    public RestAction<Profile> retrieveProfile() {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public String getAsTag() {
         return getName();
     }
@@ -83,6 +89,11 @@ public class NullDiscordUser implements User {
         return false;
     }
 
+    @Override
+    public boolean isSystem() {
+        return false;
+    }
+
     @NotNull
     @Override
     public JDA getJDA() {
@@ -102,12 +113,6 @@ public class NullDiscordUser implements User {
     @Override
     public int getFlagsRaw() {
         return 0;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean isFake() {
-        return false;
     }
 
     @NotNull

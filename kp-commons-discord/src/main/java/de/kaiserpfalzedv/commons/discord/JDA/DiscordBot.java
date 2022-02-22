@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,11 +115,14 @@ public class DiscordBot {
         LOG.info("Created Discord bot: {}", bot.getInviteUrl(
                 Permission.MANAGE_ROLES,
                 Permission.MANAGE_CHANNEL,
-                Permission.MANAGE_EMOTES,
+                Permission.MANAGE_EMOTES_AND_STICKERS,
                 Permission.MANAGE_WEBHOOKS,
 
-                Permission.MESSAGE_READ,
-                Permission.MESSAGE_WRITE,
+                Permission.CREATE_PRIVATE_THREADS,
+                Permission.CREATE_PUBLIC_THREADS,
+                Permission.CREATE_INSTANT_INVITE,
+                Permission.MESSAGE_SEND,
+                Permission.MESSAGE_SEND_IN_THREADS,
                 Permission.MESSAGE_TTS,
                 Permission.MESSAGE_ATTACH_FILES,
                 Permission.MESSAGE_EMBED_LINKS,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@ package de.kaiserpfalzedv.commons.test.discord;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.LayoutComponent;
 import net.dv8tion.jda.api.requests.RestAction;
 import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
@@ -28,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Formatter;
 import java.util.List;
@@ -51,6 +54,12 @@ public class TestMessage implements Message {
         this.channel = channel;
         this.user = user;
         this.message = message;
+    }
+
+    @Nullable
+    @Override
+    public MessageReference getMessageReference() {
+        return null;
     }
 
     @Nullable
@@ -206,6 +215,12 @@ public class TestMessage implements Message {
 
     @NotNull
     @Override
+    public GuildMessageChannel getGuildChannel() {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public PrivateChannel getPrivateChannel() {
         return null;
     }
@@ -214,6 +229,12 @@ public class TestMessage implements Message {
     @Override
     public TextChannel getTextChannel() {
         return channel;
+    }
+
+    @NotNull
+    @Override
+    public NewsChannel getNewsChannel() {
+        return null;
     }
 
     @Nullable
@@ -242,6 +263,12 @@ public class TestMessage implements Message {
 
     @NotNull
     @Override
+    public List<ActionRow> getActionRows() {
+        return null;
+    }
+
+    @NotNull
+    @Override
     public List<Emote> getEmotes() {
         return null;
     }
@@ -255,6 +282,12 @@ public class TestMessage implements Message {
     @NotNull
     @Override
     public List<MessageReaction> getReactions() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public List<MessageSticker> getStickers() {
         return null;
     }
 
@@ -277,7 +310,13 @@ public class TestMessage implements Message {
 
     @NotNull
     @Override
-    public MessageAction editMessage(@NotNull MessageEmbed newContent) {
+    public MessageAction editMessageEmbeds(@NotNull final Collection<? extends MessageEmbed> collection) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public MessageAction editMessageComponents(@NotNull final Collection<? extends LayoutComponent> collection) {
         return null;
     }
 
@@ -429,9 +468,30 @@ public class TestMessage implements Message {
         return null;
     }
 
+    @Override
+    public long getFlagsRaw() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEphemeral() {
+        return false;
+    }
+
     @NotNull
     @Override
     public MessageType getType() {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Interaction getInteraction() {
+        return null;
+    }
+
+    @Override
+    public RestAction<ThreadChannel> createThreadChannel(final String s) {
         return null;
     }
 

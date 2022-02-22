@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,10 @@ package de.kaiserpfalzedv.commons.test.discord;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.managers.ChannelManager;
+import net.dv8tion.jda.api.managers.channel.concrete.TextChannelManager;
 import net.dv8tion.jda.api.requests.RestAction;
 import net.dv8tion.jda.api.requests.restaction.*;
+import net.dv8tion.jda.api.requests.restaction.pagination.ThreadChannelPaginationAction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,11 +65,6 @@ public class TestTextChannel implements TextChannel {
     }
 
     @Override
-    public boolean isNews() {
-        return false;
-    }
-
-    @Override
     public int getSlowmode() {
         return 0;
     }
@@ -84,11 +80,6 @@ public class TestTextChannel implements TextChannel {
         return 0;
     }
 
-    @Override
-    public boolean hasLatestMessage() {
-        return false;
-    }
-
     @NotNull
     @Override
     public String getName() {
@@ -99,12 +90,6 @@ public class TestTextChannel implements TextChannel {
     @Override
     public Guild getGuild() {
         return guild;
-    }
-
-    @Nullable
-    @Override
-    public Category getParent() {
-        return null;
     }
 
     @NotNull
@@ -172,13 +157,23 @@ public class TestTextChannel implements TextChannel {
 
     @NotNull
     @Override
-    public ChannelManager getManager() {
+    public TextChannelManager getManager() {
         return null;
+    }
+
+    @Override
+    public long getParentCategoryIdLong() {
+        return 0;
     }
 
     @NotNull
     @Override
     public AuditableRestAction<Void> delete() {
+        return null;
+    }
+
+    @Override
+    public IPermissionContainer getPermissionContainer() {
         return null;
     }
 
@@ -215,12 +210,6 @@ public class TestTextChannel implements TextChannel {
     @NotNull
     @Override
     public WebhookAction createWebhook(@NotNull String name) {
-        return null;
-    }
-
-    @NotNull
-    @Override
-    public RestAction<Webhook.WebhookReference> follow(@NotNull String s) {
         return null;
     }
 
@@ -290,5 +279,35 @@ public class TestTextChannel implements TextChannel {
     @Override
     public long getIdLong() {
         return id;
+    }
+
+    @NotNull
+    @Override
+    public ThreadChannelAction createThreadChannel(final String s, final boolean b) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public ThreadChannelAction createThreadChannel(final String s, final long l) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public ThreadChannelPaginationAction retrieveArchivedPublicThreadChannels() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public ThreadChannelPaginationAction retrieveArchivedPrivateThreadChannels() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public ThreadChannelPaginationAction retrieveArchivedPrivateJoinedThreadChannels() {
+        return null;
     }
 }
