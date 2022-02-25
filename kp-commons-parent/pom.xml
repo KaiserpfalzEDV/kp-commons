@@ -114,6 +114,7 @@
         <skip.site>false</skip.site>
 
         <war.output.directory>undefined</war.output.directory>
+        <delombok.output>${project.build.outputDirectory}/delombok</delombok.output>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>11</maven.compiler.source>
@@ -203,6 +204,27 @@
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok-maven-plugin</artifactId>
                     <version>${lombok-maven-plugin.version}</version>
+                    <configuration>
+                        <skip>${skip.javadoc}</skip>
+                        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                        <outputDirectory>${delombok.output}</outputDirectory>
+                        <addOutputDirectory>false</addOutputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>delombok</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.22</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -211,6 +233,7 @@
                     <version>${maven-javadoc-plugin.version}</version>
                     <configuration>
                         <skip>${skip.javadoc}</skip>
+                        <sourcepath>${delombok.output}</sourcepath>
                         <doclint>none</doclint>
                     </configuration>
                     <executions>
