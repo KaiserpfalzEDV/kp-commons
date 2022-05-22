@@ -33,7 +33,7 @@
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
         <kp-commons.version>2.2.0-SNAPSHOT</kp-commons.version>
-        <discord.version>5.0.0-alpha.9</discord.version>
+        <discord.version>5.0.0-alpha.12</discord.version>
 
         <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>
         <quarkus.group-id>io.quarkus</quarkus.group-id>
