@@ -35,7 +35,6 @@
         <module>kp-commons-bom</module>
         <module>kp-commons-core</module>
 
-        <module>kp-commons-discord</module>
         <module>kp-commons-google</module>
         <module>kp-commons-events</module>
 

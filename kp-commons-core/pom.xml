@@ -48,12 +48,5 @@
             <artifactId>txtmark</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Discord Library -->
-        <dependency>
-            <groupId>net.dv8tion</groupId>
-            <artifactId>JDA</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>

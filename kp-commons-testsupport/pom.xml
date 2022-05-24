@@ -36,7 +36,6 @@
 
     <modules>
         <module>kp-core-testsupport</module>
-        <module>discord-testsupport</module>
     </modules>
 
     <dependencyManagement>

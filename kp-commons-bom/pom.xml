@@ -33,7 +33,6 @@
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
         <kp-commons.version>2.2.0-SNAPSHOT</kp-commons.version>
-        <discord.version>5.0.0-alpha.12</discord.version>
 
         <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>
         <quarkus.group-id>io.quarkus</quarkus.group-id>
@@ -73,11 +72,6 @@
             </dependency>
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
-                <artifactId>kp-commons-discord</artifactId>
-                <version>${kp-commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-google</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>
@@ -101,12 +95,6 @@
                 <scope>test</scope>
             </dependency>
 
-            <dependency>
-                <groupId>${kp-commons.groupId}.test-support</groupId>
-                <artifactId>discord-testsupport</artifactId>
-                <version>${kp-commons.version}</version>
-                <scope>test</scope>
-            </dependency>
 
 
             <!-- quarkus -->
@@ -145,13 +133,6 @@
                 <groupId>com.github.rjeschke</groupId>
                 <artifactId>txtmark</artifactId>
                 <version>0.13</version>
-            </dependency>
-
-            <!-- Discord Library -->
-            <dependency>
-                <groupId>net.dv8tion</groupId>
-                <artifactId>JDA</artifactId>
-                <version>${discord.version}</version>
             </dependency>
 
 

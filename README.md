@@ -30,7 +30,6 @@ wrong. Every line that needs not be written is a bug free line without need to t
 ## Included libraries
 
 * kp-commons-core
-* kp-commons-discord
 * kp-commons-history (planned)
 * kp-commons-services
   * kp-commons-fileserver
@@ -38,7 +37,6 @@ wrong. Every line that needs not be written is a bug free line without need to t
   * kp-commons-events
 * kp-commons-testsupport
   * kp-core-testsupport
-  * discord-testsupport
   * oauth2-testsupport
 
 
