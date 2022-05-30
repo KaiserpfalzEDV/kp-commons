@@ -37,6 +37,7 @@
 
     <modules>
         <module>kp-commons-fileserver</module>
+        <module>kp-commons-userserver</module>
     </modules>
 
     <dependencies>
@@ -55,6 +56,13 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-oidc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>4.1.77.Final</version>
+        </dependency>
+        <!-- According to https://access.redhat.com/security/cve/cve-2020-14359 -->
+        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-keycloak-authorization</artifactId>
@@ -104,6 +112,11 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.1.212</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

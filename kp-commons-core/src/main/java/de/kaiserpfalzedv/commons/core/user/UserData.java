@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpec;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
-import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -29,8 +28,6 @@ import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Transient;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * The basic data for every user.
@@ -48,23 +45,21 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "userData", description = "Registered User.")
 public class UserData extends DefaultResourceSpec {
-    public static String CAMPAIGNS = "campaigns";
-    public static String GAMES = "games";
+    public static final String ISSUER = "issuer";
+    public static final String SUBJECT = "subject";
 
     public static String[] STRUCTURED_PROPERTIES = {
-            CAMPAIGNS,
-            GAMES
+            ISSUER,
+            SUBJECT
     };
+
+    @Builder.Default
+    private String name = null;
 
     @Builder.Default
     private String description = null;
     @Builder.Default
     private Pointer picture = null;
-
-    @Schema(name = "driveThruRPGApiKey", description = "The API Key for DriveThruRPG.")
-    @Builder.Default
-    private String driveThruRPGKey = null;
-
 
     @Transient
     @BsonIgnore
@@ -74,30 +69,4 @@ public class UserData extends DefaultResourceSpec {
         return STRUCTURED_PROPERTIES;
     }
 
-    /**
-     * @return The campaigns owned by this user.
-     */
-    @Transient
-    @BsonIgnore
-    @JsonIgnore
-    public List<ResourcePointer> getCampaigns() {
-        return getResourcePointers(CAMPAIGNS);
-    }
-
-    /**
-     * @return The games owned by this user.
-     */
-    @Transient
-    @BsonIgnore
-    @JsonIgnore
-    public List<ResourcePointer> getGames() {
-        return getResourcePointers(GAMES);
-    }
-
-    @Transient
-    @BsonIgnore
-    @JsonIgnore
-    public Optional<String> getDriveThruRPGApiKey() {
-        return Optional.ofNullable(driveThruRPGKey);
-    }
 }

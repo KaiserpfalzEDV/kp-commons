@@ -32,7 +32,7 @@
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>2.2.0-SNAPSHOT</kp-commons.version>
+        <kp-commons.version>2.2.0</kp-commons.version>
 
         <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>
         <quarkus.group-id>io.quarkus</quarkus.group-id>

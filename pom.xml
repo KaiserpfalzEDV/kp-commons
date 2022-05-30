@@ -51,8 +51,8 @@
 
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
+            <id>kp-commons</id>
+            <name>GitHub Packages for kp-commons</name>
             <url>https://maven.pkg.github.com/Paladins-Inn/kp-commons</url>
         </repository>
     </distributionManagement>

@@ -29,6 +29,7 @@ import javax.annotation.PostConstruct;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -44,14 +45,13 @@ public class TestUser extends AbstractTestBase {
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
     private static final OffsetDateTime DATA_CREATED = OffsetDateTime.now(Clock.systemUTC());
-    private static final String DATA_API_KEY = "test-api-key";
-    private static final String DISCORD_ID = "123123591";
+    private static final String ISSUER = "issuer";
+    private static final String SUBJECT = "subject";
 
-    private static final HashMap<String, String> DATA_PROPERTIES = new HashMap<>();
-
-    static {
-        DATA_PROPERTIES.put("discord-id", DISCORD_ID);
-    }
+    private static final Map<String, String> DATA_PROPERTIES = Map.of(
+            UserData.ISSUER, ISSUER,
+            UserData.SUBJECT, SUBJECT
+    );
 
     private static final User DATA = User.builder()
             .metadata(
@@ -59,7 +59,7 @@ public class TestUser extends AbstractTestBase {
             )
             .spec(
                     UserData.builder()
-                            .driveThruRPGKey(DATA_API_KEY)
+                            .name(DATA_NAME)
                             .properties(DATA_PROPERTIES)
                             .build()
             )
@@ -84,8 +84,11 @@ public class TestUser extends AbstractTestBase {
         HashMap<String, String> annotations = new HashMap<>(1);
         annotations.put("valid", "test");
 
-        HashMap<String, String> labels = new HashMap<>();
-        labels.put("test", "valid");
+        Map<String, String> labels = Map.of(
+                "test", "valid",
+                UserData.ISSUER, ISSUER,
+                UserData.SUBJECT, SUBJECT
+        );
 
         return Metadata.builder()
                 .identity(Pointer.builder()
@@ -105,10 +108,11 @@ public class TestUser extends AbstractTestBase {
     }
 
     @Test
-    void shouldReturnDiscordIdWhenUserHasAnDiscordIdSet() {
-        startTest("read-discord-id");
+    void shouldReturnCorrectIssuerAndSubject() {
+        startTest("read-issuer-and-subject");
 
-        Assertions.assertEquals(DISCORD_ID, DATA.getData().orElseThrow().getProperty("discord-id").orElseThrow());
+        Assertions.assertEquals(ISSUER, DATA.getMetadata().getLabel(UserData.ISSUER).orElseThrow());
+        Assertions.assertEquals(SUBJECT, DATA.getMetadata().getLabel(UserData.SUBJECT).orElseThrow());
     }
 
     @Test

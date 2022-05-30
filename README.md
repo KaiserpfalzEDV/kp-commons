@@ -31,10 +31,11 @@ wrong. Every line that needs not be written is a bug free line without need to t
 
 * kp-commons-core
 * kp-commons-history (planned)
+* kp-commons-events
 * kp-commons-services
   * kp-commons-fileserver
-  * kp-commons-profiles (planned)
-  * kp-commons-events
+  * kp-commons-userserver (WIP)
+  * kp-commons-eventsserver (planned)
 * kp-commons-testsupport
   * kp-core-testsupport
   * oauth2-testsupport

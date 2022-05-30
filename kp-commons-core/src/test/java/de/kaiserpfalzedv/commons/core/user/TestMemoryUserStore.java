@@ -22,12 +22,12 @@ import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import io.quarkus.test.junit.QuarkusTest;
-import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotNull;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ public class TestMemoryUserStore extends AbstractTestBase {
             )
             .spec(
                     UserData.builder()
-                            .driveThruRPGKey(DATA_API_KEY)
+                            .name(DATA_NAME)
                             .properties(new HashMap<>())
                             .build()
             )
@@ -76,7 +76,7 @@ public class TestMemoryUserStore extends AbstractTestBase {
                     )
                     .spec(
                             UserData.builder()
-                                    .driveThruRPGKey(OTHER_API_KEY)
+                                    .name(OTHER_NAME)
                                     .properties(new HashMap<>())
                                     .build()
                     )
