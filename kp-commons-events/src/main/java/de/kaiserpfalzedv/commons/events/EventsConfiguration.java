@@ -17,12 +17,12 @@
 
 package de.kaiserpfalzedv.commons.events;
 
-import io.quarkus.arc.config.ConfigProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperties;
 
 /**
  * Configuration --
