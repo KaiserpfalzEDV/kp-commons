@@ -17,12 +17,7 @@
 
 package de.kaiserpfalzedv.commons.locations;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.config.inject.ConfigProperties;
+import io.smallrye.config.ConfigMapping;
 
 /**
  * LocationsConfiguration --
@@ -30,17 +25,12 @@ import org.eclipse.microprofile.config.inject.ConfigProperties;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-06-13
  */
-@Slf4j
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@ConfigProperties(prefix = "kp.commons.locations")
-public class LocationsConfiguration {
-    private String defaultLocation = "///geteilt.flexibler.entfernt";
+@ConfigMapping(prefix = "kp.commons.locations")
+public interface LocationsConfiguration {
+    public String defaultLocation = "///geteilt.flexibler.entfernt";
 
     /**
      * 3word address API-KEY.
      */
-    private String apiKey;
+    public String apiKey();
 }

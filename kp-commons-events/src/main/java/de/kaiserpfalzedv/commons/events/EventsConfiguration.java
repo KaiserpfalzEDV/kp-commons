@@ -17,12 +17,7 @@
 
 package de.kaiserpfalzedv.commons.events;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.config.inject.ConfigProperties;
+import io.smallrye.config.ConfigMapping;
 
 /**
  * Configuration --
@@ -30,12 +25,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperties;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-06-13
  */
-@Slf4j
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@ConfigProperties(prefix = "kp.commons.events")
-public class EventsConfiguration {
-    private String defaultTimeZone = "Europe/Berlin";
+@ConfigMapping(prefix = "kp.commons.events")
+public interface EventsConfiguration {
+    public String defaultTimeZone = "Europe/Berlin";
 }
