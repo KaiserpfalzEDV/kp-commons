@@ -102,7 +102,7 @@ quarkus:
 
   liquibase:
     migrate-at-start: true
-    change-log: db/changelog/db.changelog-master.xml
+    change-log: db/changelog/db.commons-fileserver.xml
 
   log:
     metrics:
@@ -205,7 +205,7 @@ quarkus:
     liquibase:
       migrate-at-start: true
       context: data
-      change-log: db/changelog/db.changelog-master.xml
+      change-log: db/changelog/db.commons-fileserver.xml
 
 
     http:
