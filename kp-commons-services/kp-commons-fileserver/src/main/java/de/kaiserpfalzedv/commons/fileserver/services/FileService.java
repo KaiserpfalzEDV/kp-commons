@@ -229,6 +229,7 @@ public class FileService {
         JPAFile data = repository.findById(id);
 
         if (data == null) {
+            log.info("File not found. uuid='{}'", id);
             throw new NotFoundException("No file with ID '" + id + "' found.");
         }
 

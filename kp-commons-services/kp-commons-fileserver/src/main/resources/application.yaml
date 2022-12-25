@@ -202,10 +202,10 @@ quarkus:
     hibernate-envers: &envers-dev
       store-data-at-delete: true
 
-    liquibase:
+    liquibase: &liquibase-dev
       migrate-at-start: true
       context: data
-      change-log: db/changelog/db.commons-fileserver.xml
+      change-log: db/changelog/db.commons-fileserver-data.xml
 
 
     http:
@@ -247,6 +247,7 @@ quarkus:
   quarkus:
     datasource: *datasource-dev
     hibernate-envers: *envers-dev
+    liquibase: *liquibase-dev
     log: *log-dev
     security: *security-dev
     oidc: *oidc-dev

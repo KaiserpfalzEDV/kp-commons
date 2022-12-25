@@ -114,11 +114,11 @@
         <skip.site>false</skip.site>
 
         <war.output.directory>undefined</war.output.directory>
-        <delombok.output>${project.build.outputDirectory}/delombok</delombok.output>
+        <delombok.output>${project.build.directory}/delombok</delombok.output>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 

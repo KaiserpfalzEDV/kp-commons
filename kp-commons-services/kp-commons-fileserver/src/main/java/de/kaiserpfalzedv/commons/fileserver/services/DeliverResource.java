@@ -164,6 +164,7 @@ public class DeliverResource {
             @NotEmpty final String type
     ) {
         Optional<FileDescription> file = retrieveFileOrPreview(data, type);
+        log.info("Loaded data. id='{}', type='{}', loaded={}", data.getUid(), type, file.isPresent());
 
         file.orElseThrow(NotFoundException::new);
 
