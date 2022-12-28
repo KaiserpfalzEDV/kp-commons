@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Embedded;
@@ -88,7 +87,6 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
      */
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Pointer toPointer() {
         return Pointer.builder()
                 .kind(getKind())
@@ -98,7 +96,6 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
                 .build();
     }
 
-    @BsonIgnore
     @JsonIgnore
     @Transient
     @Override
@@ -106,7 +103,6 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
         return getMetadata().getKind();
     }
 
-    @BsonIgnore
     @JsonIgnore
     @Transient
     @Override
@@ -114,7 +110,6 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
         return getMetadata().getApiVersion();
     }
 
-    @BsonIgnore
     @JsonIgnore
     @Transient
     @Override
@@ -122,7 +117,6 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
         return getMetadata().getNameSpace();
     }
 
-    @BsonIgnore
     @JsonIgnore
     @Transient
     @Override
@@ -132,14 +126,12 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public UUID getUid() {
         return metadata.getUid();
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Integer getGeneration() {
         return metadata.getGeneration();
     }
@@ -147,21 +139,18 @@ public class Resource<D extends Serializable> implements ResourcePointer, HasMet
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Optional<D> getData() {
         return Optional.ofNullable(spec);
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Optional<Status> getState() {
         return Optional.ofNullable(status);
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public String getSelfLink() {
         return getMetadata().getSelfLink();
     }
