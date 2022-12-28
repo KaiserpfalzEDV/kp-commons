@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.kaiserpfalzedv.commons.core.files.HasOutputStream;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 
 import javax.persistence.Transient;
 import java.io.OutputStream;
@@ -35,7 +34,6 @@ public interface HasData extends HasOutputStream {
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     default OutputStream getDataStream() {
         return getStream(getData());
     }

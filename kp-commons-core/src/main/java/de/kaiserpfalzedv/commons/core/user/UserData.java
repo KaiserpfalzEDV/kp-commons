@@ -24,7 +24,6 @@ import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.Transient;
@@ -62,7 +61,6 @@ public class UserData extends DefaultResourceSpec {
     private Pointer picture = null;
 
     @Transient
-    @BsonIgnore
     @JsonIgnore
     @Override
     public String[] getDefaultProperties() {

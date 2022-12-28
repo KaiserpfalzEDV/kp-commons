@@ -29,7 +29,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.Map;
@@ -66,19 +65,16 @@ public class File extends Resource<FileData> {
     public static final int WRITE = 4;
     public static final int READ_WRITE = 6;
 
-    @BsonIgnore
     @JsonIgnore
     public Optional<String> getOwner() {
         return getMetadata().getAnnotation(ANNOTATION_OWNER);
     }
 
-    @BsonIgnore
     @JsonIgnore
     public Optional<String> getGroup() {
         return getMetadata().getAnnotation(ANNOTATION_GROUP);
     }
 
-    @BsonIgnore
     @JsonIgnore
     public int[] getPermissions() {
         if (getMetadata().getAnnotation(ANNOTATION_PERMISSIONS).isEmpty()) {
@@ -107,7 +103,6 @@ public class File extends Resource<FileData> {
      * @param permission The requested permission ({@link #READ}, {@link #WRITE} or {@link #READ_WRITE}).
      * @return TRUE if the access is granted, FALSE if the access is denied.
      */
-    @BsonIgnore
     @JsonIgnore
     public boolean hasAccess(@NotNull final String user, @NotNull final Set<String> groups, final int permission) {
         log.debug(

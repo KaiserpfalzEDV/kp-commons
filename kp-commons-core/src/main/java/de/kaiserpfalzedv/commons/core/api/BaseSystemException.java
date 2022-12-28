@@ -17,7 +17,9 @@
 
 package de.kaiserpfalzedv.commons.core.api;
 
-import java.util.StringJoiner;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.UUID;
 
 /**
@@ -26,6 +28,8 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@Getter
+@ToString(callSuper = true)
 public abstract class BaseSystemException extends RuntimeException {
     /**
      * A unique ID for this exception.
@@ -97,19 +101,5 @@ public abstract class BaseSystemException extends RuntimeException {
      */
     public BaseSystemException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
-    }
-    /**
-     * @return The unique ID of this exception
-     */
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", getClass().getSimpleName() + "[", "]")
-                .add("identity=" + System.identityHashCode(this))
-                .add("uuid=" + uuid)
-                .toString();
     }
 }

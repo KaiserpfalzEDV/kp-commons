@@ -69,13 +69,11 @@ public class EventData extends DefaultResourceSpec {
     private final Duration duration;
 
     @JsonIgnore
-    @BsonIgnore
     public boolean hasSessions() {
         return subEvents != null && !subEvents.isEmpty();
     }
 
     @JsonIgnore
-    @BsonIgnore
     public TimeZone getTimeZone() {
         return TimeZone.getTimeZone(startsAt.toZonedDateTime().getZone());
     }

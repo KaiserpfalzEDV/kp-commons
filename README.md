@@ -12,8 +12,9 @@ This is a library of software artifacts I found useful in a number of projects. 
 
 ## License
 The license for the software is LGPL 3.0 or newer. Parts of the software may be licensed under other licences like MIT
-or Apache 2.0 - the files are marked appropriately. Patternfly4 is published unter MIT license.
-
+or Apache 2.0 - the files are marked appropriately. 
+Patternfly4 is published unter MIT license.
+libravatar is published unter MIT license from Alessandro Leite.
 
 ## Architecture
 
