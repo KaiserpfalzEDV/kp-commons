@@ -27,7 +27,6 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -65,21 +64,18 @@ public class FileData implements HasName, HasData, HasOutputStream, HasPreview, 
     )
     private FileDescription preview;
 
-    @BsonIgnore
     @JsonIgnore
     @Override
     public String getName() {
         return file.getName();
     }
 
-    @BsonIgnore
     @JsonIgnore
     @Override
     public byte[] getData() {
         return file.getData();
     }
 
-    @BsonIgnore
     @JsonIgnore
     @Override
     public byte[] getPreviewData() {
