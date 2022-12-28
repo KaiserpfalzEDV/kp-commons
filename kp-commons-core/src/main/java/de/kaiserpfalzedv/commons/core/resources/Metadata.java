@@ -24,9 +24,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -78,7 +75,6 @@ public class Metadata implements Serializable, Cloneable {
     private Pointer identity;
 
     @Id
-    @BsonId
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(generator = "uuid2")
     @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
@@ -225,7 +221,6 @@ public class Metadata implements Serializable, Cloneable {
             minLength = 19,
             maxLength = 318
     )
-    @BsonProperty(value = "selfLink")
     @JsonProperty(value = "selfLink", access = JsonProperty.Access.READ_ONLY)
     public String getSelfLink() {
         return String.format("/api/%s/%s/%s/%s",
@@ -237,14 +232,12 @@ public class Metadata implements Serializable, Cloneable {
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Optional<OffsetDateTime> getDeletionTimestamp() {
         return Optional.ofNullable(deleted);
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Optional<ResourcePointer> getOwningResource() {
         return Optional.ofNullable(owner);
     }
@@ -257,7 +250,6 @@ public class Metadata implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public boolean isAnnotated(@NotNull final String name) {
         return getAnnotations().containsKey(name);
     }
@@ -270,7 +262,6 @@ public class Metadata implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Optional<String> getAnnotation(@NotNull final String name) {
         return Optional.ofNullable(getAnnotations().get(name));
     }
@@ -283,7 +274,6 @@ public class Metadata implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public boolean isLabeled(final String name) {
         return getLabels().containsKey(name);
     }
@@ -296,7 +286,6 @@ public class Metadata implements Serializable, Cloneable {
      */
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public Optional<String> getLabel(@NotNull final String name) {
         return Optional.ofNullable(getLabels().get(name));
     }
@@ -309,28 +298,24 @@ public class Metadata implements Serializable, Cloneable {
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public String getKind() {
         return identity.getKind();
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public String getApiVersion() {
         return identity.getApiVersion();
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public String getNameSpace() {
         return identity.getNameSpace();
     }
 
     @Transient
     @JsonIgnore
-    @BsonIgnore
     public String getName() {
         return identity.getName();
     }

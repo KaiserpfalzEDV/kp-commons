@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.core.api;
 
 /**
- * OffsetDateTimeStampValidation --
+ * TimeStampPattern --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-01-17
