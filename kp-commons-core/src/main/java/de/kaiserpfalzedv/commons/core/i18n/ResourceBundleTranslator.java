@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2023 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 package de.kaiserpfalzedv.commons.core.i18n;
 
-import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -109,7 +108,7 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      * @param bundleName The base filename for the translation bundle.
      * @param locale     The locale to load the bundle for.
      */
-    private void loadBundle(@NotNull String bundleName, @NotNull Locale locale) {
+    private void loadBundle(String bundleName, Locale locale) {
         if (!bundles.containsKey(bundleName)) {
             log.debug("Adding bundle. baseName='{}'", bundleName);
 
