@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -128,18 +129,18 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
             } catch (NullPointerException | MissingResourceException e) {
                 Locale l = Locale.forLanguageTag(locale.getLanguage());
 
-                log.warn("Translator did not find the wanted locale for the bundle. bundle={}, locale={}, orig.locale={}",
-                        bundleName, l, locale);
+                log.warn("Translator did not find the wanted locale for the bundle. bundle={}, locale={}, orig.locale={}, error='{}'",
+                        bundleName, l, locale, e.getMessage());
                 try {
                     bundle = ResourceBundle.getBundle(bundleName, l, new UnicodeResourceBundleControl());
                 } catch (NullPointerException | MissingResourceException e1) {
-                    log.warn("Translator did not find the wanted bundle. Using default bundle. bundle={}", bundleName);
+                    log.warn("Translator did not find the wanted bundle. Using default bundle. bundle={}, error='{}'", bundleName, e1.getMessage());
 
                     try {
                         bundle = ResourceBundle.getBundle(defaultBundle, Locale.forLanguageTag(defaultLocale),
                                 new UnicodeResourceBundleControl());
-                    } catch (NullPointerException e2) {
-                        log.error("Resource bundle can't be read.");
+                    } catch (NullPointerException | MissingResourceException e2) {
+                        log.error("Resource bundle can't be read. error='{}'", e2.getMessage());
 
                         return;
                     }
@@ -173,10 +174,13 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
                 final ClassLoader loader,
                 final boolean reload
         ) throws IOException {
+            ClassLoader used = Thread.currentThread().getContextClassLoader();
+
+            log.debug("Classloader will be ignored. used={}, ignored={}", used, loader);
 
             String bundleName = toBundleName(baseName, locale);
             String resourceName = toResourceName(bundleName, "properties");
-            final URL resourceURL = loader.getResource(resourceName);
+            final URL resourceURL = used.getResource(resourceName);
             if (resourceURL == null)
                 return null;
 

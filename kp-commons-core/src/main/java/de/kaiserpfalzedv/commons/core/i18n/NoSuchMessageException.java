@@ -16,13 +16,7 @@
 package de.kaiserpfalzedv.commons.core.i18n;
 
 import de.kaiserpfalzedv.commons.core.api.BaseException;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.inject.Inject;
 
 /**
  * @author rlichti
