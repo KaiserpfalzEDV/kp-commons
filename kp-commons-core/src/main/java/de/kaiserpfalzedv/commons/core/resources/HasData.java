@@ -18,9 +18,11 @@
 package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.kaiserpfalzedv.commons.core.files.HasOutputStream;
+import de.kaiserpfalzedv.commons.core.api.WrappedException;
 
 import javax.persistence.Transient;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -29,12 +31,24 @@ import java.io.OutputStream;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 0.1.0  2021-04-07
  */
-public interface HasData extends HasOutputStream {
+public interface HasData {
     byte[] getData();
 
     @Transient
     @JsonIgnore
     default OutputStream getDataStream() {
-        return getStream(getData());
+        byte[] data = getData();
+        if (data != null) {
+            OutputStream result = new ByteArrayOutputStream();
+            try {
+                result.write(data);
+            } catch (IOException e) {
+                throw new WrappedException(e);
+            }
+
+            return result;
+        } else {
+            return null;
+        }
     }
 }
