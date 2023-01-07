@@ -36,7 +36,6 @@
     <description>Test support for testing with quarkus tests.</description>
 
     <modules>
-        <module>kp-commons-fileserver</module>
         <module>kp-commons-userserver</module>
     </modules>
 
