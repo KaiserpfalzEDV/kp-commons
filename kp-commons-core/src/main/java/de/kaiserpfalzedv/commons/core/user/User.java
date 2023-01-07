@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.core.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import de.kaiserpfalzedv.commons.core.resources.Resource;
+import de.kaiserpfalzedv.commons.core.resources.ResourceImpl;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "User", description = "a user of the tomb system.")
-public class User extends Resource<UserData> {
+public class User extends ResourceImpl<UserData> {
     public static String API_VERSION = "v1";
     public static String KIND = "User";
 }

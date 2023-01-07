@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.store;
 
-import de.kaiserpfalzedv.commons.core.resources.Resource;
+import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +27,7 @@ import java.util.UUID;
  *
  * @param <T> The resource type to be stored.
  */
-public interface StoreService<T extends Resource<?>> {
+public interface StoreService<T extends ResourcePointer> {
     /**
      * @param nameSpace the namespace of the object to load.
      * @param name      the name of the object to load.
@@ -56,6 +56,7 @@ public interface StoreService<T extends Resource<?>> {
      * @throws DuplicateStoreException      If name and nameSpace matches but uid not, then an object is considered a
      *                                      duplicate.
      */
+    @SuppressWarnings("UnusedReturnValue")
     T save(final T object) throws OptimisticLockStoreException, DuplicateStoreException;
 
     /**

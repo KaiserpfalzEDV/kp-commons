@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2023 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,160 +12,85 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Embedded;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Resource -- A generic resource holding a single data set.
+ * Resource --
  *
- * @param <D> The data set provided by this resource.
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.1.0  2022-01-16
- * @since 2.0.0  2021-05-24
+ * @since 2.0.0  2023-01-07
  */
-@MappedSuperclass
-@Jacksonized
-@SuperBuilder(toBuilder = true)
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonPropertyOrder({"metadata", "spec", "status"})
-public class Resource<D extends Serializable> implements ResourcePointer, HasMetadata {
-    @Embedded
-    @Schema(
-            name = "metadata",
-            description = "Technical data to the resource.",
-            required = true
-    )
-    @NonNull
-    @ToString.Include
-    @EqualsAndHashCode.Include
-    protected Metadata metadata;
-
-
-    @Schema(
-            name = "spec",
-            description = "The resource data itself.",
-            required = true
-    )
-    @Builder.Default
-    protected D spec = null;
-
-
-    @Embedded
-    @Schema(
-            name = "status",
-            description = "The status of the resource (containing the history).",
-            nullable = true
-    )
-    @Builder.Default
-    protected Status status = null;
-
-
+public interface Resource<D extends Serializable> extends ResourcePointer, HasMetadata {
     /**
      * @return Generated pointer for this resource.
      */
     @Transient
     @JsonIgnore
-    public Pointer toPointer() {
+    default Pointer toPointer() {
         return Pointer.builder()
                 .kind(getKind())
                 .apiVersion(getApiVersion())
                 .nameSpace(getNameSpace())
-                .nameSpace(getName())
+                .name(getName())
                 .build();
     }
 
     @JsonIgnore
     @Transient
     @Override
-    public String getKind() {
+    default String getKind() {
         return getMetadata().getKind();
     }
 
     @JsonIgnore
     @Transient
     @Override
-    public String getApiVersion() {
+    default String getApiVersion() {
         return getMetadata().getApiVersion();
     }
 
     @JsonIgnore
     @Transient
     @Override
-    public String getNameSpace() {
+    default String getNameSpace() {
         return getMetadata().getNameSpace();
     }
 
     @JsonIgnore
     @Transient
     @Override
-    public String getName() {
+    default String getName() {
         return getMetadata().getName();
     }
 
     @Transient
     @JsonIgnore
-    public UUID getUid() {
-        return metadata.getUid();
+    default UUID getUid() {
+        return getMetadata().getUid();
     }
 
     @Transient
     @JsonIgnore
-    public Integer getGeneration() {
-        return metadata.getGeneration();
-    }
-
-
-    @Transient
-    @JsonIgnore
-    public Optional<D> getData() {
-        return Optional.ofNullable(spec);
+    default Integer getGeneration() {
+        return getMetadata().getGeneration();
     }
 
     @Transient
     @JsonIgnore
-    public Optional<Status> getState() {
-        return Optional.ofNullable(status);
-    }
+    String getSelfLink();
 
-    @Transient
-    @JsonIgnore
-    public String getSelfLink() {
-        return getMetadata().getSelfLink();
-    }
+    Resource<D> increaseGeneration();
 
+    D getSpec();
 
-    synchronized public Resource<D> increaseGeneration() {
-        return toBuilder()
-                .metadata(getMetadata().increaseGeneration())
-                .build();
-    }
-
-
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    @Override
-    public Resource<D> clone() {
-        return toBuilder().build();
-    }
+    Status getStatus();
 }

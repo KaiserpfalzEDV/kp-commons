@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.locations;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.kaiserpfalzedv.commons.core.resources.Resource;
+import de.kaiserpfalzedv.commons.core.resources.ResourceImpl;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,7 +41,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(description = "A generic location (not in the it meaning, a real event with people).")
-public class Location extends Resource<LocationData> {
+public class Location extends ResourceImpl<LocationData> {
     public static String API_VERSION = "v1";
     public static String KIND = "Location";
 }

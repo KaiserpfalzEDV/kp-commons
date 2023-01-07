@@ -18,9 +18,10 @@
 package de.kaiserpfalzedv.commons.core.user;
 
 import de.kaiserpfalzedv.commons.core.store.GenericStoreService;
-import io.quarkus.arc.AlternativePriority;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 
 /**
  * MemoryUserStore --
@@ -29,6 +30,7 @@ import javax.enterprise.context.ApplicationScoped;
  * @since 2.0.0  2021-05-24
  */
 @ApplicationScoped
-@AlternativePriority(100)
+@Alternative
+@Priority(100)
 public class MemoryUserStore extends GenericStoreService<User> implements UserStoreService {
 }

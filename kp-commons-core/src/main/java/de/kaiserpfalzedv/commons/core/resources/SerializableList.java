@@ -28,5 +28,11 @@ import java.util.List;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@SuppressWarnings("unused")
 public class SerializableList<T extends Serializable> extends ArrayList<T> implements List<T>, Serializable, Cloneable {
+
+    @Override
+    public SerializableList<T> clone() {
+        return (SerializableList) super.clone();
+    }
 }

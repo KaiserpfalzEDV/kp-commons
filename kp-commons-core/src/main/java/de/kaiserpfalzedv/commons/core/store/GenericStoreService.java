@@ -75,9 +75,7 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
         //noinspection unchecked
         T data = (!namedStore.containsKey(key))
                 ? object
-                : (T) object.toBuilder().metadata(
-                        object.getMetadata().increaseGeneration()
-                ).build();
+                : (T) object.increaseGeneration();
 
 
         checkOptimisticLocking(key, data);
