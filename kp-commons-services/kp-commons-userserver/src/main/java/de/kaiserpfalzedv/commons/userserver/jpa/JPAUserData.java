@@ -17,16 +17,20 @@
 
 package de.kaiserpfalzedv.commons.userserver.jpa;
 
-import de.kaiserpfalzedv.commons.core.jpa.Convertible;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
 import de.kaiserpfalzedv.commons.core.user.UserData;
+import de.kaiserpfalzedv.commons.jpa.Convertible;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -47,7 +51,7 @@ import java.io.Serializable;
 @ToString(onlyExplicitlyIncluded = true)
 public class JPAUserData implements HasName, Serializable, Cloneable, Convertible<JPAUserData, UserData> {
     @Column(name = "NAME", length = VALID_NAME_MAX_LENGTH)
-    @NonNull
+    @NotNull
     @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     @ToString.Include
     private String name;

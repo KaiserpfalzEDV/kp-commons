@@ -45,7 +45,6 @@ public abstract class BaseException extends Exception {
      *                later retrieval by the {@link #getMessage()} method.
      * @since 2.0.0  2021-05-24
      */
-    @SuppressWarnings("CdiInjectionPointsInspection")
     public BaseException(final String message) {
         super(message);
     }
@@ -93,9 +92,9 @@ public abstract class BaseException extends Exception {
      * @param  message the detail message.
      * @param cause the cause.  (A {@code null} value is permitted,
      * and indicates that the cause is nonexistent or unknown.)
-     * @param enableSuppression whether or not suppression is enabled
+     * @param enableSuppression controls if suppression is enabled
      *                          or disabled
-     * @param writableStackTrace whether or not the stack trace should
+     * @param writableStackTrace controls if the stack trace should
      *                           be writable
      * @since 2.0.0  2021-05-24
      */

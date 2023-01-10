@@ -17,11 +17,8 @@
 package de.kaiserpfalzedv.commons.core.snowflake;
 
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
-import javax.annotation.PostConstruct;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,11 +26,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author downgoon {@literal http://downgoon.com}
  * @since 2.0.0  2021-05-24
  */
-@QuarkusTest
 @Slf4j
 public class SnowflakeTest extends AbstractTestBase {
-	@PostConstruct
-	void init() {
+	public SnowflakeTest() {
 		setTestSuite(getClass().getSimpleName());
 		setLog(log);
 	}

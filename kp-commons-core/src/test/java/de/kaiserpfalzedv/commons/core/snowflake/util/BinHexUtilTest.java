@@ -18,13 +18,11 @@
 package de.kaiserpfalzedv.commons.core.snowflake.util;
 
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@QuarkusTest
 @Slf4j
 public class BinHexUtilTest extends AbstractTestBase {
 	@Test

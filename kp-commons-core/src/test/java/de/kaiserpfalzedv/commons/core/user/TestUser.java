@@ -20,12 +20,10 @@ package de.kaiserpfalzedv.commons.core.user;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.annotation.PostConstruct;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -38,7 +36,6 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@QuarkusTest
 @Slf4j
 public class TestUser extends AbstractTestBase {
     private static final UUID DATA_UID = UUID.randomUUID();
@@ -66,8 +63,7 @@ public class TestUser extends AbstractTestBase {
             .build();
 
 
-    @PostConstruct
-    void init() {
+    public TestUser() {
         setTestSuite(getClass().getSimpleName());
         setLog(log);
     }

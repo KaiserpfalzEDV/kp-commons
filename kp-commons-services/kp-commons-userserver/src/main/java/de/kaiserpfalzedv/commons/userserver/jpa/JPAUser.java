@@ -17,19 +17,20 @@
 
 package de.kaiserpfalzedv.commons.userserver.jpa;
 
-import de.kaiserpfalzedv.commons.core.jpa.AbstractJPAEntity;
-import de.kaiserpfalzedv.commons.core.jpa.Convertible;
 import de.kaiserpfalzedv.commons.core.resources.HasId;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
 import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.user.User;
 import de.kaiserpfalzedv.commons.core.user.UserData;
+import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
+import de.kaiserpfalzedv.commons.jpa.Convertible;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Map;
@@ -60,23 +61,23 @@ import java.util.Map;
 @ToString(callSuper = true)
 public class JPAUser extends AbstractJPAEntity implements HasId, HasName, Serializable, Cloneable, Convertible<JPAUser, User> {
     @Column(name = "NAMESPACE", length = VALID_NAME_MAX_LENGTH, nullable = false)
-    @NonNull
+    @NotNull
     @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String nameSpace;
 
     @Column(name = "ISSUER", length = VALID_NAME_MAX_LENGTH, nullable = false)
-    @NonNull
+    @NotNull
     @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String issuer;
 
     @Column(name = "SUBJECT", length = VALID_NAME_MAX_LENGTH, nullable = false)
-    @NonNull
+    @NotNull
     @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH)
     private String subject;
 
 
     @Embedded
-    @NonNull
+    @NotNull
     private JPAUserData user;
 
     public String getName() {

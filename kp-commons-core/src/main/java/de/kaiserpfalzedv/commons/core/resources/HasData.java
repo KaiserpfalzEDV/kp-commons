@@ -18,9 +18,8 @@
 package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.kaiserpfalzedv.commons.core.api.WrappedException;
+import de.kaiserpfalzedv.commons.core.api.ExceptionWrap;
 
-import javax.persistence.Transient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,7 +33,6 @@ import java.io.OutputStream;
 public interface HasData {
     byte[] getData();
 
-    @Transient
     @JsonIgnore
     default OutputStream getDataStream() {
         byte[] data = getData();
@@ -43,7 +41,7 @@ public interface HasData {
             try {
                 result.write(data);
             } catch (IOException e) {
-                throw new WrappedException(e);
+                throw new ExceptionWrap(e);
             }
 
             return result;

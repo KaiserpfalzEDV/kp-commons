@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.store;
 
-import de.kaiserpfalzedv.commons.core.resources.ResourcePointer;
+import de.kaiserpfalzedv.commons.core.resources.Resource;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +27,7 @@ import java.util.UUID;
  *
  * @param <T> The resource type to be stored.
  */
-public interface StoreService<T extends ResourcePointer> {
+public interface StoreService<T extends Resource<?>> {
     /**
      * @param nameSpace the namespace of the object to load.
      * @param name      the name of the object to load.

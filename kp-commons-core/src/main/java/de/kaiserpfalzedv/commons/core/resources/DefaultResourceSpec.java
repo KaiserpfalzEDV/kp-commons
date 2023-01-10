@@ -19,14 +19,13 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.store.StoreService;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Transient;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -60,8 +59,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      * @param key The unique key of the property within the user dataset.
      * @return The property saved with the user.
      */
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     public Optional<String> getProperty(final String key) {
         return Optional.ofNullable(getProperties().get(key));
     }
@@ -72,8 +70,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      *
      * @return the names of the default properties of this resource.
      */
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     public String[] getDefaultProperties() {
         throw new UnsupportedOperationException();
     }
@@ -87,8 +84,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      * @throws IllegalArgumentException If the UUID of the pointer can't be read from the property.
      * @throws NoSuchElementException   There is no such property.
      */
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     public Optional<ResourcePointer> getResourcePointer(final String key) {
         try {
             String property = getProperty(key).orElseThrow();
@@ -99,8 +95,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
         }
     }
 
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     public List<ResourcePointer> getResourcePointers(final String key) {
         try {
             String property = getProperty(key).orElseThrow();
@@ -140,8 +135,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
      * @param key     The name of the property.
      * @param pointer the pointer to save.
      */
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     public void saveResourcePointer(final String key, final ResourcePointer pointer) {
         if (pointer != null) {
             String data = convertResourcePointerToString(pointer);
@@ -159,8 +153,7 @@ public class DefaultResourceSpec implements Serializable, Cloneable {
                 .toString();
     }
 
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     public void saveResourcePointers(final String key, final Collection<ResourcePointer> pointers) {
         if (pointers != null) {
             StringJoiner data = new StringJoiner(",");

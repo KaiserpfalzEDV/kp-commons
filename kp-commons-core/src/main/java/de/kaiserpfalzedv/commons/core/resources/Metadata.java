@@ -25,11 +25,7 @@ import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -48,7 +44,7 @@ import java.util.UUID;
  * @since 2.0.0  2021-05-24
  * @version 2.0.2 2022-01-04
  */
-@Embeddable
+@SuppressWarnings("unused")
 @Jacksonized
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -70,15 +66,9 @@ public class Metadata implements Serializable, Cloneable {
     )
     @ToString.Include
     @EqualsAndHashCode.Include
-    @NonNull
-    @Embedded
+    @NotNull
     private Pointer identity;
 
-    @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid2")
-    @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
-    @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
     @Schema(
             name = "uid",
             description = "The unique identifier of this resource",
@@ -92,10 +82,9 @@ public class Metadata implements Serializable, Cloneable {
     @ToString.Include
     @EqualsAndHashCode.Include
     @Builder.Default
-    @NonNull
+    @NotNull
     private UUID uid = UUID.randomUUID();
 
-    @Version
     @Schema(
             name = "generation",
             description = "The generation of this object. Every change adds 1.",
@@ -107,7 +96,7 @@ public class Metadata implements Serializable, Cloneable {
     )
     @ToString.Include
     @Builder.Default
-    @NonNull
+    @NotNull
     @Min(value = 0, message = "The generation must be at least 0.")
     @Max(value = Integer.MAX_VALUE, message = "The generation must not be bigger than " + Integer.MAX_VALUE + ".")
     private Integer generation = 0;
@@ -119,13 +108,6 @@ public class Metadata implements Serializable, Cloneable {
             implementation = ResourcePointer.class
     )
     @Builder.Default
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "kind", column = @Column(name = "OWNER_KIND", length = 100)),
-            @AttributeOverride(name = "apiVersion", column = @Column(name = "OWNER_API_VERSION", length = 100)),
-            @AttributeOverride(name = "nameSpace", column = @Column(name = "OWNER_NAMESPACE", length = 100)),
-            @AttributeOverride(name = "name", column = @Column(name = "OWNER_NAME", length = 100)),
-    })
     private Pointer owner = null;
 
     @Schema(
@@ -139,8 +121,6 @@ public class Metadata implements Serializable, Cloneable {
             maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
-    @CreationTimestamp
-    @Column(name = "CREATED", nullable = false, updatable = false)
     @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
     @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
@@ -156,8 +136,6 @@ public class Metadata implements Serializable, Cloneable {
             maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
-    @UpdateTimestamp
-    @Column(name = "MODIFIED", nullable = false)
     @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
     @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
     protected OffsetDateTime modified = OffsetDateTime.now(ZoneOffset.UTC);
@@ -173,7 +151,6 @@ public class Metadata implements Serializable, Cloneable {
             maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
-    @Column(name = "DELETED")
     private OffsetDateTime deleted = null;
 
     @Schema(
@@ -184,10 +161,6 @@ public class Metadata implements Serializable, Cloneable {
             maxItems = 256
     )
     @Builder.Default
-    @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name = "NAME")
-    @Column(name = "VALUE")
-    @CollectionTable(name = "ANNOTATIONS", joinColumns = @JoinColumn(name = "ID"))
     private Map<String, String> annotations = new HashMap<>();
 
     @Schema(
@@ -198,10 +171,6 @@ public class Metadata implements Serializable, Cloneable {
             maxItems = 256
     )
     @Builder.Default
-    @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name = "NAME")
-    @Column(name = "VALUE")
-    @CollectionTable(name = "LABELS", joinColumns = @JoinColumn(name = "ID"))
     private Map<String, String> labels = new HashMap<>();
 
 
@@ -230,13 +199,11 @@ public class Metadata implements Serializable, Cloneable {
     }
 
 
-    @Transient
     @JsonIgnore
     public Optional<OffsetDateTime> getDeletionTimestamp() {
         return Optional.ofNullable(deleted);
     }
 
-    @Transient
     @JsonIgnore
     public Optional<ResourcePointer> getOwningResource() {
         return Optional.ofNullable(owner);
@@ -248,7 +215,6 @@ public class Metadata implements Serializable, Cloneable {
      * @param name the name of the annotation.
      * @return If there is an annotation for this name.
      */
-    @Transient
     @JsonIgnore
     public boolean isAnnotated(@NotNull final String name) {
         return getAnnotations().containsKey(name);
@@ -260,7 +226,6 @@ public class Metadata implements Serializable, Cloneable {
      * @param name Annotation name to retrieve
      * @return The value of the annotation.
      */
-    @Transient
     @JsonIgnore
     public Optional<String> getAnnotation(@NotNull final String name) {
         return Optional.ofNullable(getAnnotations().get(name));
@@ -272,7 +237,6 @@ public class Metadata implements Serializable, Cloneable {
      * @param name The name of the label.
      * @return If the label is there.
      */
-    @Transient
     @JsonIgnore
     public boolean isLabeled(final String name) {
         return getLabels().containsKey(name);
@@ -284,7 +248,7 @@ public class Metadata implements Serializable, Cloneable {
      * @param name Label name to retrieve.
      * @return The value of the label.
      */
-    @Transient
+    
     @JsonIgnore
     public Optional<String> getLabel(@NotNull final String name) {
         return Optional.ofNullable(getLabels().get(name));
@@ -296,25 +260,25 @@ public class Metadata implements Serializable, Cloneable {
                 .build();
     }
 
-    @Transient
+    
     @JsonIgnore
     public String getKind() {
         return identity.getKind();
     }
 
-    @Transient
+    
     @JsonIgnore
     public String getApiVersion() {
         return identity.getApiVersion();
     }
 
-    @Transient
+    
     @JsonIgnore
     public String getNameSpace() {
         return identity.getNameSpace();
     }
 
-    @Transient
+    
     @JsonIgnore
     public String getName() {
         return identity.getName();

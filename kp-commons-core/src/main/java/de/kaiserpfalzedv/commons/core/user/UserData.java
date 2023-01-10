@@ -26,8 +26,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Transient;
-
 /**
  * The basic data for every user.
  *
@@ -60,8 +58,7 @@ public class UserData extends DefaultResourceSpec {
     @Builder.Default
     private Pointer picture = null;
 
-    @Transient
-    @JsonIgnore
+        @JsonIgnore
     @Override
     public String[] getDefaultProperties() {
         return STRUCTURED_PROPERTIES;

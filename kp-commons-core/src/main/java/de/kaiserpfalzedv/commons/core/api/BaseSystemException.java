@@ -28,6 +28,7 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
+@SuppressWarnings("unused")
 @Getter
 @ToString(callSuper = true)
 public abstract class BaseSystemException extends RuntimeException {
@@ -45,7 +46,6 @@ public abstract class BaseSystemException extends RuntimeException {
      *                later retrieval by the {@link #getMessage()} method.
      * @since 2.0.0  2021-05-24
      */
-    @SuppressWarnings("CdiInjectionPointsInspection")
     public BaseSystemException(final String message) {
         super(message);
     }
@@ -93,9 +93,9 @@ public abstract class BaseSystemException extends RuntimeException {
      * @param  message the detail message.
      * @param cause the cause.  (A {@code null} value is permitted,
      * and indicates that the cause is nonexistent or unknown.)
-     * @param enableSuppression whether or not suppression is enabled
+     * @param enableSuppression controls if suppression is enabled
      *                          or disabled
-     * @param writableStackTrace whether or not the stack trace should
+     * @param writableStackTrace controls if the stack trace should
      *                           be writable
      * @since 2.0.0  2021-05-24
      */

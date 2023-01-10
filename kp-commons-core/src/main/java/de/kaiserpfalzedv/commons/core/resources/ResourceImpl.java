@@ -25,9 +25,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.Embedded;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +39,6 @@ import java.util.UUID;
  * @version 2.1.0  2022-01-16
  * @since 2.0.0  2021-05-24
  */
-@MappedSuperclass
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
@@ -52,13 +49,12 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"metadata", "spec", "status"})
 public class ResourceImpl<D extends Serializable> implements Resource<D> {
-    @Embedded
     @Schema(
             name = "metadata",
             description = "Technical data to the resource.",
             required = true
     )
-    @NonNull
+    @NotNull
     @ToString.Include
     @EqualsAndHashCode.Include
     protected Metadata metadata;
@@ -73,7 +69,6 @@ public class ResourceImpl<D extends Serializable> implements Resource<D> {
     protected D spec = null;
 
 
-    @Embedded
     @Schema(
             name = "status",
             description = "The status of the resource (containing the history).",
@@ -84,7 +79,6 @@ public class ResourceImpl<D extends Serializable> implements Resource<D> {
 
 
     @Override
-    @Transient
     @JsonIgnore
     public Pointer toPointer() {
         return Pointer.builder()
@@ -96,62 +90,53 @@ public class ResourceImpl<D extends Serializable> implements Resource<D> {
     }
 
     @JsonIgnore
-    @Transient
     @Override
     public String getKind() {
         return getMetadata().getKind();
     }
 
     @JsonIgnore
-    @Transient
     @Override
     public String getApiVersion() {
         return getMetadata().getApiVersion();
     }
 
     @JsonIgnore
-    @Transient
     @Override
     public String getNameSpace() {
         return getMetadata().getNameSpace();
     }
 
     @JsonIgnore
-    @Transient
     @Override
     public String getName() {
         return getMetadata().getName();
     }
 
     @Override
-    @Transient
     @JsonIgnore
     public UUID getUid() {
         return metadata.getUid();
     }
 
     @Override
-    @Transient
     @JsonIgnore
     public Integer getGeneration() {
         return metadata.getGeneration();
     }
 
 
-    @Transient
     @JsonIgnore
     public Optional<D> getData() {
         return Optional.ofNullable(spec);
     }
 
-    @Transient
     @JsonIgnore
     public Optional<Status> getState() {
         return Optional.ofNullable(status);
     }
 
     @Override
-    @Transient
     @JsonIgnore
     public String getSelfLink() {
         return getMetadata().getSelfLink();

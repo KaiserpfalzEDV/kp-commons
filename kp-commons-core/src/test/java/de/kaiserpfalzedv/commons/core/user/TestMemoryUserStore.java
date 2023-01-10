@@ -21,12 +21,10 @@ import de.kaiserpfalzedv.commons.core.resources.Metadata;
 import de.kaiserpfalzedv.commons.core.resources.Pointer;
 import de.kaiserpfalzedv.commons.core.store.OptimisticLockStoreException;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 import java.time.Clock;
 import java.time.OffsetDateTime;
@@ -42,7 +40,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@QuarkusTest
 @Slf4j
 public class TestMemoryUserStore extends AbstractTestBase {
     private static final UUID DATA_UID = UUID.randomUUID();
@@ -89,8 +86,7 @@ public class TestMemoryUserStore extends AbstractTestBase {
     private final UserStoreService sut = new MemoryUserStore();
 
 
-    @PostConstruct
-    void init() {
+    public TestMemoryUserStore() {
         setTestSuite(getClass().getSimpleName());
         setLog(log);
     }

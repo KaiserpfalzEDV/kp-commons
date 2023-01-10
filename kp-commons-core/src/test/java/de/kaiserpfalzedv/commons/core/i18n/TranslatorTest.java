@@ -18,12 +18,10 @@
 package de.kaiserpfalzedv.commons.core.i18n;
 
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +36,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 0.1.0  2021-04-08
  */
-@QuarkusTest
 @Slf4j
 class TranslatorTest extends AbstractTestBase {
     private static final List<Locale> supportedLocales = Arrays.asList(Locale.GERMAN, Locale.ENGLISH);
@@ -51,8 +48,8 @@ class TranslatorTest extends AbstractTestBase {
     private Translator sut;
 
 
-    @PostConstruct
-    void init() {
+    public TranslatorTest() {
+
         setTestSuite(getClass().getSimpleName());
         setLog(log);
     }

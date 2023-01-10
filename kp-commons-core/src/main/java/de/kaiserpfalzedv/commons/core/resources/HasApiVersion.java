@@ -17,10 +17,11 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
  * HasApiVersion -- The object has an api version.
@@ -30,7 +31,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  * @since 2.0.2  2022-01-16
  */
 public interface HasApiVersion {
-    String VALID_VERSION_PATTERN = "^[a-zA-Z]([a-zA-Z0-9]{1,9})?$";
+    String VALID_VERSION_PATTERN = "^[a-zA-Z]([a-zA-Z\\d]{1,9})?$";
     String VALID_VERSION_PATTERN_MSG = "The version must match the pattern '" + VALID_VERSION_PATTERN + "'.";
     String VALID_VERSION_EXAMPLE = "v1";
 

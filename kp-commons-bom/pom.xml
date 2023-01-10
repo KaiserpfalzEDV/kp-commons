@@ -72,12 +72,22 @@
             </dependency>
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
-                <artifactId>kp-commons-google</artifactId>
+                <artifactId>kp-commons-jpa</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-rest</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-quarkus</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
                 <groupId>${kp-commons.groupId}.services</groupId>
-                <artifactId>kp-commons-fileserver</artifactId>
+                <artifactId>kp-commons-events</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>
             <dependency>

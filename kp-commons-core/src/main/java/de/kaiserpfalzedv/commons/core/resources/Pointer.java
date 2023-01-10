@@ -19,15 +19,15 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import javax.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import javax.validation.constraints.Size;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * ResourcePointer -- A single resource definition pointing to a unique resource on the server.
@@ -35,7 +35,6 @@ import javax.persistence.Embeddable;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Embeddable
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
@@ -47,16 +46,16 @@ import javax.persistence.Embeddable;
 @JsonPropertyOrder({"kind", "apiVersion", "namespace", "name", "selfLink"})
 @Schema(
         description = "A full pointer to a resource.",
-        example = "{" +
-                "\n\t\"kind\": \"Resource\"," +
-                "\n\t\"apiVersion\": \"v1\"," +
-                "\n\t\"nameSpace\": \"namespace\"," +
-                "\n\t\"name\": \"name\"," +
-                "\n\t\"selfLink\": \"/api/v1/Resource/namespace/name\"" +
-                "\n}"
+        example = """
+                {
+                    "kind": "Resource",
+                    "apiVersion": "v1",
+                    "nameSpace": "namespace",
+                    "name": "name",
+                    "selfLink": "/api/v1/Resource/namespace/name"
+                }"""
 )
 public class Pointer implements ResourcePointer {
-    @Column(name = "KIND", length = 100, nullable = false, updatable = false)
     @Schema(
             name = "kind",
             description = "The type of the resource",
@@ -68,12 +67,11 @@ public class Pointer implements ResourcePointer {
     )
     @ToString.Include
     @EqualsAndHashCode.Include
-    @NonNull
+    @NotNull
     @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String kind;
 
-    @Column(name = "API_VERSION", length = 100, nullable = false, updatable = false)
     @Schema(
             name = "apiVersion",
             description = "The version of this resource",
@@ -88,7 +86,6 @@ public class Pointer implements ResourcePointer {
     @Pattern(regexp = HasApiVersion.VALID_VERSION_PATTERN, message = HasApiVersion.VALID_VERSION_PATTERN_MSG)
     private String apiVersion = HasApiVersion.VALID_VERSION_EXAMPLE;
 
-    @Column(name = "NAMESPACE", length = 100, nullable = false)
     @Schema(
             name = "nameSpace",
             description = "The namespace (group) of this resource",
@@ -100,12 +97,11 @@ public class Pointer implements ResourcePointer {
     )
     @ToString.Include
     @EqualsAndHashCode.Include
-    @NonNull
+    @NotNull
     @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     private String nameSpace;
 
-    @Column(name = "NAME", length = 100, nullable = false)
     @Schema(
             name = "name",
             description = "The unique name of this resource within the namespace",

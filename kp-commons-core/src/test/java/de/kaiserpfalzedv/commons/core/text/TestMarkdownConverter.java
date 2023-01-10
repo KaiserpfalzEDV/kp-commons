@@ -18,11 +18,8 @@
 package de.kaiserpfalzedv.commons.core.text;
 
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
-import javax.annotation.PostConstruct;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -32,11 +29,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@QuarkusTest
 @Slf4j
 public class TestMarkdownConverter extends AbstractTestBase {
-    @PostConstruct
-    void init() {
+    public TestMarkdownConverter() {
         setTestSuite(getClass().getSimpleName());
         setLog(log);
     }

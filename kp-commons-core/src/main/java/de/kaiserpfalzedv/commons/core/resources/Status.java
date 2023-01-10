@@ -19,14 +19,12 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -39,7 +37,6 @@ import java.util.List;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Embeddable
 @Jacksonized
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -65,9 +62,6 @@ public class Status implements Serializable, Cloneable {
     @Max(value = Integer.MAX_VALUE, message = "The generation must not be bigger than " + Integer.MAX_VALUE + ".")
     Integer observedGeneration = 0;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name="HISTORY")
-    @CollectionTable(name="HISTORY", joinColumns=@JoinColumn(name="ID"))
     @Schema(
             name = "history",
             description = "A list of changes of the resource status.",

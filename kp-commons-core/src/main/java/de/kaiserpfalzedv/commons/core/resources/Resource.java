@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -33,7 +32,6 @@ public interface Resource<D extends Serializable> extends ResourcePointer, HasMe
     /**
      * @return Generated pointer for this resource.
      */
-    @Transient
     @JsonIgnore
     default Pointer toPointer() {
         return Pointer.builder()
@@ -45,46 +43,39 @@ public interface Resource<D extends Serializable> extends ResourcePointer, HasMe
     }
 
     @JsonIgnore
-    @Transient
     @Override
     default String getKind() {
         return getMetadata().getKind();
     }
 
     @JsonIgnore
-    @Transient
     @Override
     default String getApiVersion() {
         return getMetadata().getApiVersion();
     }
 
     @JsonIgnore
-    @Transient
     @Override
     default String getNameSpace() {
         return getMetadata().getNameSpace();
     }
 
     @JsonIgnore
-    @Transient
     @Override
     default String getName() {
         return getMetadata().getName();
     }
 
-    @Transient
     @JsonIgnore
     default UUID getUid() {
         return getMetadata().getUid();
     }
 
-    @Transient
     @JsonIgnore
     default Integer getGeneration() {
         return getMetadata().getGeneration();
     }
 
-    @Transient
     @JsonIgnore
     String getSelfLink();
 

@@ -18,16 +18,13 @@
 package de.kaiserpfalzedv.commons.core.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.core.api.TimeStampPattern;
-import javax.validation.constraints.Pattern;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -39,7 +36,6 @@ import java.time.ZoneOffset;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@Embeddable
 @Jacksonized
 @Builder(toBuilder = true)
 @AllArgsConstructor

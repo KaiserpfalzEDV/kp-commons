@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.core.workflow;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;

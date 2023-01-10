@@ -17,11 +17,10 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import static de.kaiserpfalzedv.commons.core.resources.HasName.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * HasKind -- The object has a kind.
@@ -34,12 +33,12 @@ public interface HasKind {
     @Schema(
             name = "kind",
             description = "The kind of a resource.",
-            example = VALID_NAME_EXAMPLE,
-            pattern = VALID_NAME_PATTERN,
-            minLength = VALID_NAME_MIN_LENGTH,
-            maxLength = VALID_NAME_MAX_LENGTH
+            example = HasName.VALID_NAME_EXAMPLE,
+            pattern = HasName.VALID_NAME_PATTERN,
+            minLength = HasName.VALID_NAME_MIN_LENGTH,
+            maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
-    @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = VALID_NAME_LENGTH_MSG)
-    @Pattern(regexp = VALID_NAME_PATTERN, message = VALID_NAME_PATTERN_MSG)
+    @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
     String getKind();
 }

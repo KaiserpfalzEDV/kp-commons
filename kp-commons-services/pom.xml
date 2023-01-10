@@ -36,6 +36,7 @@
     <description>Test support for testing with quarkus tests.</description>
 
     <modules>
+        <module>kp-commons-events</module>
         <module>kp-commons-userserver</module>
     </modules>
 
@@ -44,6 +45,18 @@
             <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
+            <artifactId>kp-commons-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
+            <artifactId>kp-commons-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
+            <artifactId>kp-commons-quarkus</artifactId>
+        </dependency>
 
 
         <dependency>
@@ -51,22 +64,55 @@
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
 
+        <!-- REST handling -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-oidc</artifactId>
+            <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-common</artifactId>
-            <version>4.1.86.Final</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-oidc-token-propagation-reactive</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tietoevry.quarkus</groupId>
+            <artifactId>quarkus-resteasy-problem</artifactId>
         </dependency>
 
+        <!-- API handling -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-swagger-ui</artifactId>
+        </dependency>
+
+        <!-- observability -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.opentelemetry.exporter</groupId>
+            <artifactId>quarkus-opentelemetry-exporter-jaeger</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+
+
+        <!-- configuration -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-config-yaml</artifactId>
             <scope>provided</scope>
         </dependency>
 
+
+        <!-- database -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-agroal</artifactId>
@@ -86,7 +132,7 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-mariadb</artifactId>
-            <scope>provided,test,build</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -99,70 +145,9 @@
             <version>2.1.214</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-mysql</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-postgresql</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-db2</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-oracle</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-mssql</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-health</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-openapi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-swagger-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile.metrics</groupId>
-            <artifactId>microprofile-metrics-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-opentracing</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jaeger</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jackson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.tietoevry.quarkus</groupId>
-            <artifactId>quarkus-resteasy-problem</artifactId>
-        </dependency>
-
+        <!-- testing -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-test-security</artifactId>

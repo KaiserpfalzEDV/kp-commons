@@ -19,8 +19,8 @@ package de.kaiserpfalzedv.commons.userserver.services;
 
 import de.kaiserpfalzedv.commons.core.api.About;
 import de.kaiserpfalzedv.commons.core.resources.HasName;
-import de.kaiserpfalzedv.commons.core.rest.HttpErrorGenerator;
 import de.kaiserpfalzedv.commons.core.user.User;
+import de.kaiserpfalzedv.commons.rest.HttpErrorGenerator;
 import io.quarkus.security.identity.SecurityIdentity;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
@@ -33,7 +33,6 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirements;
-import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -107,7 +106,6 @@ public class UserResource {
     @GET
     @Path("/")
     @RolesAllowed({"user", "admin"})
-    @NoCache
     @Operation(
             summary = "List all files available.",
             description = "Returns a list of files."
@@ -175,7 +173,6 @@ public class UserResource {
     }
 
 
-    @NoCache
     @POST
     @RolesAllowed({"user", "admin"})
     @Operation(
@@ -236,7 +233,6 @@ public class UserResource {
     }
 
 
-    @NoCache
     @PUT
     @RolesAllowed({"user", "admin"})
     @Operation(
@@ -389,7 +385,6 @@ public class UserResource {
     }
 
 
-    @NoCache
     @DELETE
     @RolesAllowed({"user", "admin"})
     @Path("/{uid}")
@@ -425,7 +420,6 @@ public class UserResource {
 
     }
 
-    @NoCache
     @DELETE
     @RolesAllowed({"user", "admin"})
     @Path("/{nameSpace}/{name}")
