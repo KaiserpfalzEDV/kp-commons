@@ -33,17 +33,23 @@ import javax.ws.rs.ext.Provider;
  * @since 3.0.0  2023-01-17
  */
 @Provider
-public class ResponseErrorMapper implements ResponseExceptionMapper<RuntimeException> {
+public class ResponseErrorMapper implements ResponseExceptionMapper<EanSearchException> {
+    public static final int INVALID_OPERATION = 400;
+    public static final int INVALID_ACCESS_TOKEN = 401;
+    public static final int REQUEST_LIMIT_REACHED = 402;
+    public static final int INVALID_HTTP_METHOD = 405;
+    public static final int RATE_LIMIT_REACHED = 429;
+
     @Override
     public EanSearchException toThrowable(final Response response) {
-        switch (response.getStatus()) {
-            case 400: return new EanSearchInvalidOperationException();
-            case 401: return new EanSearchInvalidAccessTokenException();
-            case 402: return new EanSearchRequestLimitReachedException();
-            case 405: return new EanSearchWrongHTTPMethodException();
-            case 429: return new EanSearchTooManyRequestsException();
-        }
+        return switch (response.getStatus()) {
+            case INVALID_OPERATION -> new EanSearchInvalidOperationException();
+            case INVALID_ACCESS_TOKEN -> new EanSearchInvalidAccessTokenException();
+            case REQUEST_LIMIT_REACHED -> new EanSearchRequestLimitReachedException();
+            case INVALID_HTTP_METHOD -> new EanSearchWrongHTTPMethodException();
+            case RATE_LIMIT_REACHED -> new EanSearchTooManyRequestsException();
+            default -> null;
+        };
 
-        return null;
     }
 }

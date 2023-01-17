@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.external.eansearch.client;
 
+import de.kaiserpfalzedv.commons.external.eansearch.filter.RequestLimitFilter;
 import de.kaiserpfalzedv.commons.external.eansearch.mapper.EanSearchException;
 import de.kaiserpfalzedv.commons.external.eansearch.mapper.EanSearchTooManyRequestsException;
 import de.kaiserpfalzedv.commons.external.eansearch.mapper.ResponseErrorMapper;
@@ -44,13 +45,14 @@ import java.util.Set;
  */
 @RegisterRestClient
 @RegisterProvider(value = ResponseErrorMapper.class, priority = 10)
+@RegisterProvider(value = RequestLimitFilter.class, priority = 9)
 @ClientQueryParams({
         // the paid-for API token
         @ClientQueryParam(name = "token", value = "${ean_search.token}"),
         // We only like JSon
         @ClientQueryParam(name = "format", value = "json"),
         // the language according to https://www.ean-search.org/premium/ean-api.html#__RefHeading___Toc147_3132899627 Appendix B
-        @ClientQueryParam(name = "language", value = "${ean_search.language")
+        @ClientQueryParam(name = "language", value = "${ean_search.language}")
 })
 @Path("/api")
 @Consumes(MediaType.APPLICATION_JSON)

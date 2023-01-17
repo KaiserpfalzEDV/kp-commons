@@ -1,0 +1,121 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/api",
+        "queryParameters": {
+          "op": {
+            "equalTo": "barcode-lookup"
+          },
+          "ean": {
+            "equalTo": "978-5-01234-678-9"
+          },
+          "token": {
+            "matches": "^.+$"
+          },
+          "format": {
+            "equalTo": "json"
+          }
+        },
+        "headers": {
+          "Accept": {
+            "equalTo": "application/json"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json",
+          "X-Credits-Remaining": "15"
+        },
+        "jsonBody": [
+          {
+            "ean": "9785012346789",
+            "name": "A nice name (ISBN: 5-01234-678-9)",
+            "categoryId": "15",
+            "categoryName": "Books and Magazines",
+            "issuingCountry": "DE"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/api",
+        "queryParameters": {
+          "op": {
+            "equalTo": "barcode-lookup"
+          },
+          "ean": {
+            "equalTo": "978-5-01234-678-0"
+          },
+          "token": {
+            "matches": "^.+$"
+          },
+          "format": {
+            "equalTo": "json"
+          }
+        },
+        "headers": {
+          "Accept": {
+            "equalTo": "application/json"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json",
+          "X-Credits-Remaining": "0"
+        },
+        "jsonBody": [
+          {
+            "ean": "9785012346789",
+            "name": "A nice name (ISBN: 5-01234-678-0)",
+            "categoryId": "15",
+            "categoryName": "Books and Magazines",
+            "issuingCountry": "DE"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/api",
+        "queryParameters": {
+          "op": {
+            "equalTo": "barcode-lookup"
+          },
+          "ean": {
+            "equalTo": "978-5-01234-678-1"
+          },
+          "token": {
+            "matches": "^.+$"
+          },
+          "format": {
+            "equalTo": "json"
+          }
+        },
+        "headers": {
+          "Accept": {
+            "equalTo": "application/json"
+          }
+        }
+      },
+      "response": {
+        "status": 402,
+        "headers": {
+          "Content-Type": "application/json",
+          "X-Credits-Remaining": "0"
+        },
+        "jsonBody": {
+          "error": "No credit left."
+        }
+      }
+    }
+  ]
+}

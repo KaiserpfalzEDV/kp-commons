@@ -23,8 +23,8 @@ ean-search-mock: &ean-search-api-mock
   scope: javax.inject.Singleton
 
 ean_search:
-  token: ${EAN_SEARCH_API_KEY}
-  language: ${EAN_SEARCH_RESULT_LANGUAGE}
+  token: ${EAN_SEARCH_API_KEY:this is an invalid token}
+  language: ${EAN_SEARCH_RESULT_LANGUAGE:1}
 
 quarkus:
   rest-client:
@@ -34,5 +34,4 @@ quarkus:
   quarkus:
     rest-client:
       "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *ean-search-api-mock
-
 "%dev": *test

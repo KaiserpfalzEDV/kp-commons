@@ -577,6 +577,13 @@
             <properties>
                 <quarkus-build>true</quarkus-build>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-config-yaml</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
 
         <profile>
@@ -671,6 +678,13 @@
             <properties>
                 <quarkus-test>true</quarkus-test>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-config-yaml</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
 
         <profile>
@@ -792,12 +806,6 @@
                     <artifactId>rest-assured</artifactId>
                     <scope>test</scope>
                 </dependency>
-
-                <dependency>
-                    <groupId>com.github.tomakehurst</groupId>
-                    <artifactId>wiremock-jre8</artifactId>
-                    <scope>test</scope>
-                </dependency>
             </dependencies>
         </profile>
 
@@ -812,21 +820,18 @@
             <dependencies>
                 <dependency>
                     <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-rest-client</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-rest-client-jackson</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-rest-client-config</artifactId>
+                    <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
                 </dependency>
 
                 <!-- testing -->
                 <dependency>
                     <groupId>com.github.tomakehurst</groupId>
                     <artifactId>wiremock-jre8</artifactId>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-junit5</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
