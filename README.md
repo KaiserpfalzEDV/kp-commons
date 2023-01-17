@@ -40,6 +40,7 @@ Beat me.
 * kp-commons-services
   * kp-commons-userserver (WIP)
   * kp-commons-events (planned)
+* kp-commons-ean-search
 * kp-commons-testsupport
   * kp-core-testsupport
   * oauth2-testsupport (defunct)
