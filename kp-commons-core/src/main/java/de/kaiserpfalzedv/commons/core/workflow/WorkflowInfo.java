@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2023 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,13 +12,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.workflow;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
@@ -47,12 +46,6 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "WorkflowInfo", description = "Information of a workflow call.")
 public class WorkflowInfo implements Serializable {
-    @Schema(
-            description = "The big workflow this call belongs to.",
-            required = true,
-            example = "{\"name\": \"create-user\", \"id\": \"37625db0-f418-4695-9f03-ccea94234399\", \"created\": \"2022-01-04T14:22:00.000000Z\", \"ttl\": \"2022-01-04T14:25:00.000000Z\"}",
-            defaultValue = "A workfow with random ID and current timestamps"
-    )
     @Builder.Default
     private WorkflowDetailInfo workflow = WorkflowDetailInfo.builder().build();
 

@@ -38,6 +38,7 @@
         <module>kp-commons-modules/kp-commons-jpa</module>
         <module>kp-commons-modules/kp-commons-rest</module>
         <module>kp-commons-modules/kp-commons-quarkus</module>
+        <module>kp-commons-modules/kp-commons-vaadin</module>
 
         <module>kp-commons-services/kp-commons-events</module>
         <module>kp-commons-services/kp-commons-userserver</module>

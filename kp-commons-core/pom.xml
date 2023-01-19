@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
+  ~ Copyright (c) 2023 Kaiserpfalz EDV-Service, Roland T. Lichti.
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -47,6 +47,12 @@
             <groupId>com.github.rjeschke</groupId>
             <artifactId>txtmark</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.semver4j</groupId>
+            <artifactId>semver4j</artifactId>
+            <version>4.1.1</version>
         </dependency>
 
         <dependency>

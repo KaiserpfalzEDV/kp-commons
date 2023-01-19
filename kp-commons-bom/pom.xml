@@ -87,6 +87,11 @@
             </dependency>
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-vaadin</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-ean-search</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) &today.year Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2023 Kaiserpfalz EDV-Service, Roland T. Lichti.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package de.kaiserpfalzedv.commons.core.workflow;
@@ -43,7 +43,13 @@ import java.util.UUID;
 @Getter
 @Slf4j
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@Schema(name = "WorkflowDetailInfo", description = "Identity and timing data of workflows, actions and calls.")
+@Schema(
+        name = "WorkflowDetailInfo",
+        description = "Identity and timing data of workflows, actions and calls.",
+        required = true,
+        example = "{\"name\": \"create-user\", \"id\": \"37625db0-f418-4695-9f03-ccea94234399\", \"created\": \"2022-01-04T14:22:00.000000Z\", \"ttl\": \"2022-01-04T14:25:00.000000Z\"}",
+        defaultValue = "A workfow with random ID and current timestamps"
+)
 public class WorkflowDetailInfo implements Serializable {
     @Schema(
             description = "A user understandable name.",
