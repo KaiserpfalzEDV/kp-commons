@@ -4,7 +4,7 @@
 >
 > -- @blue_eyed_darkness on TikTok
 
-![Maven](https://github.com/Paladins-Inn/kp-commons/workflows/CI/badge.svg)
+![Maven](https://github.com/KaiserpfalzEDV/kp-commons/workflows/CI/badge.svg)
 
 ## Abstract
 This is a library of software artifacts I found useful in a number of projects. 

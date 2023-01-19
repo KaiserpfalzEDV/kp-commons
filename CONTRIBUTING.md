@@ -13,7 +13,7 @@ You can help kp-commons by helping others who use it and need support.
 ## Analyze Issues
 
 Analyzing issue reports can be a lot of effort. Any help is welcome!
-Go to [the GitHub issue tracker](https://github.com/Paladins-Inn/kp-commons/issues?state=open) and find an open issue which needs additional work or a bugfix (e.g. issues labeled with "help wanted" or "bug").
+Go to [the GitHub issue tracker](https://github.com/KaiserpfalzEDV/kp-commons/issues?state=open) and find an open issue which needs additional work or a bugfix (e.g. issues labeled with "help wanted" or "bug").
 
 Additional work could include any further information, or a gist, or it might be a hint that helps understanding the issue. Maybe you can even find and [contribute](#contribute-code) a bugfix?
 
@@ -22,7 +22,7 @@ Additional work could include any further information, or a gist, or it might be
 If you find a bug - behavior of kp-commons code contradicting your expectation - you are welcome to report it.
 We can only handle well-reported, actual bugs, so please follow the guidelines below.
 
-Once you have familiarized with the guidelines, you can go to the [GitHub issue tracker for kp-commons](https://github.com/Paladins-Inn/kp-commons/issues/new) to report the issue.
+Once you have familiarized with the guidelines, you can go to the [GitHub issue tracker for kp-commons](https://github.com/KaiserpfalzEDV/kp-commons/issues/new) to report the issue.
 
 ### Quick Checklist for Bug Reports
 
@@ -101,7 +101,7 @@ If employees of a company contribute code, in **addition** to the individual agr
 agreement submitted. This is mainly for the protection of the contributing employees.
 
 A company representative authorized to do so needs to download, fill, and print the
-[Corporate Contributor License Agreement](https://github.com/Paladins-Inn/kp-commons/blob/master/KES%20Corporate%20Contributor%20License%20Agreement%20(2019-12-31).pdf)
+[Corporate Contributor License Agreement](https://github.com/KaiserpfalzEDV/kp-commons/blob/master/KES%20Corporate%20Contributor%20License%20Agreement%20(2019-12-31).pdf)
 form. Then either:
 
 - Scan it and e-mail it to [support@kaiserpfalz-edv.de](mailto:support@kaiserpfalz-edv.de)

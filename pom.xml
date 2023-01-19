@@ -40,18 +40,15 @@
         <module>kp-commons-modules/kp-commons-quarkus</module>
         <module>kp-commons-modules/kp-commons-vaadin</module>
 
-        <module>kp-commons-services/kp-commons-events</module>
-        <module>kp-commons-services/kp-commons-userserver</module>
-
         <module>kp-commons-modules/kp-commons-ean-search</module>
 
         <module>kp-commons-testsupport</module>
     </modules>
 
     <scm>
-        <url>https://github.com/Paladins-Inn/kp-commons</url>
-        <connection>scm:git:git://github.com/Paladins-Inn/kp-commons.git</connection>
-        <developerConnection>scm:git:git@github.com:Paladins-Inn/kp-commons.git</developerConnection>
+        <url>https://github.com/KaiserpfalzEDV/kp-commons</url>
+        <connection>scm:git:git://github.com/KaiserpfalzEDV/kp-commons.git</connection>
+        <developerConnection>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
@@ -59,7 +56,7 @@
         <repository>
             <id>kp-commons</id>
             <name>GitHub Packages for kp-commons</name>
-            <url>https://maven.pkg.github.com/Paladins-Inn/kp-commons</url>
+            <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
         </repository>
     </distributionManagement>
 
@@ -76,7 +73,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/Paladins-Inn/kp-commons</url>
+                    <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
                 </repository>
             </distributionManagement>
         </profile>

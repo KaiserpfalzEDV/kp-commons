@@ -16,7 +16,7 @@ public class AvatarOptions {
 	 * Specifies a custom base URI for HTTP use. The default is to use the
 	 * official libravatar HTTP server. If you *really* wanted to use a non-free
 	 * server, you could set this to "http://gravatar.com/avatar/", but why
-	 * would you d/home/rlichti/Documents/github/paladins-inn/kp-commons/kp-commons-core/src/main/java/de/kaiserpfalzedv/commons/core/libravataro such a thing?
+	 * would you do such a thing?
 	 */
 	protected final String baseUri = "http://cdn.libravatar.org/avatar/";
 

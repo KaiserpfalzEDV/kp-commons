@@ -31,7 +31,7 @@
 
     <name>KP Commons :: Parent</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
-    <url>https://paladins-inn.github.io/kp-commons</url>
+    <url>https://kaiserpfalzedv.github.io/kp-commons</url>
 
     <inceptionYear>2001</inceptionYear>
 
@@ -73,7 +73,7 @@
     </developers>
 
     <issueManagement>
-        <url>https://github.com/Paladins-Inn/kp-commons/issues</url>
+        <url>https://github.com/KaiserpfalzEDV/kp-commons/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
