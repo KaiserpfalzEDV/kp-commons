@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.i18n;
+package de.kaiserpfalzedv.commons.api.i18n;
 
 import java.util.Locale;
 

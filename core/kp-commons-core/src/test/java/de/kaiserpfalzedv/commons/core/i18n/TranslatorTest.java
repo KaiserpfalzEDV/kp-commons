@@ -17,7 +17,6 @@
 
 package de.kaiserpfalzedv.commons.core.i18n;
 
-import de.kaiserpfalzedv.commons.api.i18n.Translator;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,14 +38,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 @Slf4j
 class TranslatorTest extends AbstractTestBase {
-    private static final List<Locale> supportedLocales = Arrays.asList(Locale.GERMAN, Locale.ENGLISH);
-    private static final Locale DEFAULT_LOCALE = Locale.GERMAN;
+    private static final List<Locale> supportedLocales = Arrays.asList(
+            Locale.forLanguageTag("de"),
+            Locale.forLanguageTag("en"),
+            Locale.forLanguageTag("fr"),
+            Locale.forLanguageTag("nl"),
+            Locale.forLanguageTag("es")
+    );
+    private static final Locale DEFAULT_LOCALE = Locale.forLanguageTag("de");
 
 
     /**
      * Service under test.
      */
-    private Translator sut;
+    private ResourceBundleTranslator sut;
 
 
     public TranslatorTest() {
@@ -63,7 +68,10 @@ class TranslatorTest extends AbstractTestBase {
         List<Locale> result = sut.getProvidedLocales();
         log.debug("result: {}", result.toArray());
 
-        assertArrayEquals(supportedLocales.toArray(new Locale[]{}), result.toArray(new Locale[]{}), "The supported locals do not equal the expected ones.");
+        assertArrayEquals(
+                supportedLocales.toArray(new Locale[]{}),
+                result.toArray(new Locale[]{}),
+                "The supported locals do not equal the expected ones.");
     }
 
     @Test
@@ -168,5 +176,9 @@ class TranslatorTest extends AbstractTestBase {
     @BeforeEach
     void setUp() {
         sut = new ResourceBundleTranslator("test-messages");
+
+        sut.setDefaultLocale(DEFAULT_LOCALE.getLanguage());
+        sut.setConfiguredLanguages(Arrays.asList("de", "en", "fr", "nl", "es"));
+        log.trace("Supported locales. default='{}', list={}", sut.defaultLocale, sut.configuredLanguages);
     }
 }

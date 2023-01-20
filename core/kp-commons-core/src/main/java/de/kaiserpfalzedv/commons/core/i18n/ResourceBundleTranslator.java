@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.core.i18n;
 import de.kaiserpfalzedv.commons.api.i18n.MessageSource;
 import de.kaiserpfalzedv.commons.api.i18n.NoSuchMessageException;
 import de.kaiserpfalzedv.commons.api.i18n.Translator;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -31,6 +32,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Translator -- Provides a nice way to read translations from Resource bundles.
@@ -42,16 +44,25 @@ import java.util.*;
 @Slf4j
 public class ResourceBundleTranslator implements Translator, MessageSource {
     /**
-     * The languages this class provides
+     * The languages this class provides. To enable testing, a setter is provided. Normally it will be configured via
+     * {@link ConfigProperty} "quarkus.locales" with a default of "de,en,fr,nl,es,it".
      */
-    private static final List<Locale> PROVIDED_LANGUAGES = Arrays.asList(Locale.GERMAN, Locale.ENGLISH);
+    @ConfigProperty(name = "quarkus.locales", defaultValue = "de,en,fr,nl,es,it")
+    @Setter
+    List<String> configuredLanguages;
 
     /**
      * Default bundle to use when no other bundle is selected.
      */
     private final String defaultBundle;
 
+    /**
+     * The default locale (used when no locale is specified in the translation call). To enable testing, a setter is
+     * provided. Normally it will be configured via {@link ConfigProperty} "quarkus.default-locale" with a default of
+     * "de".
+     */
     @ConfigProperty(name = "quarkus.default-locale", defaultValue = "de")
+    @Setter
     String defaultLocale;
 
     private final HashMap<String, HashMap<Locale, ResourceBundle>> bundles = new HashMap<>();
@@ -67,6 +78,7 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
     }
 
 
+    @SuppressWarnings("RedundantThrows")
     @Override
     public String getMessage(String key, Object[] params, Locale locale) throws NoSuchMessageException {
         return getTranslation(key, locale, params);
@@ -160,7 +172,10 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
 
     @Override
     public List<Locale> getProvidedLocales() {
-        return PROVIDED_LANGUAGES;
+        return configuredLanguages.stream()
+                .map(Locale::forLanguageTag)
+                .filter(d -> {log.trace("Mapped language. locale={}", d); return true;})
+                .collect(Collectors.toList());
     }
 
     /**
@@ -191,5 +206,4 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
             }
         }
     }
-
 }

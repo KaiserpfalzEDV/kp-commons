@@ -23,7 +23,7 @@
         <artifactId>kp-commons-parent</artifactId>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <version>3.0.0</version>
-        <relativePath>../../kp-commons-parent/pom.xml</relativePath>
+        <relativePath>../../core/kp-commons-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>kp-commons-vaadin</artifactId>
@@ -32,6 +32,7 @@
 
     <properties>
         <vaadin.version>23.3.4</vaadin.version>
+        <quarkus-test>true</quarkus-test>
     </properties>
 
 

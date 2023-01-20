@@ -8,12 +8,12 @@ target/
 .gradle/
 build/
 *.iml
-**/node_modules
+**/node_modules/
 dist
 yarn-error.log
 stats.json
 coverage
 storybook-static
 .env
-/rpg-bot/src/main/resources/static/
 http-client.private.env.json
+/modules/kp-commons-vaadin/frontend/

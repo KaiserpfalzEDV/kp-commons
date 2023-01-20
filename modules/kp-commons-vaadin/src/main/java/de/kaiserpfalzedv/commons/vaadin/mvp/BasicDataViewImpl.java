@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.nav;
+package de.kaiserpfalzedv.commons.vaadin.mvp;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -34,7 +34,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * BasicViewImpl -- Basis for the concrete views.
+ * BasicDataViewImpl -- Basis for the concrete views.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-12-30
@@ -45,7 +45,7 @@ import java.util.HashMap;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Slf4j
-public abstract class BasicViewImpl<T extends Serializable> extends Div implements BasicView<T> {
+public abstract class BasicDataViewImpl<T extends Serializable> extends Div implements BasicDataView<T> {
     protected final BasicPresenter<T> presenter;
 
     @EqualsAndHashCode.Include
@@ -57,7 +57,7 @@ public abstract class BasicViewImpl<T extends Serializable> extends Div implemen
     private final HashMap<String, Registration>  busRegistration = new HashMap<>(4);
 
 
-    public BasicViewImpl(final BasicPresenter<T> presenter, final BasicDataForm<T> form) {
+    public BasicDataViewImpl(final BasicPresenter<T> presenter, final BasicDataForm<T> form) {
         this.presenter = presenter;
         this.form = form;
 

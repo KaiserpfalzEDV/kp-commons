@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin;
+package de.kaiserpfalzedv.commons.vaadin.nav;
 
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;
+import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
-import com.vaadin.flow.theme.Theme;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
 /**
- * The entry point of the Spring Boot application.
+ * <p>The entry point of the Quarkus application.</p>
  *
- * Use the @PWA annotation make the application installable on phones, tablets
- * and some desktop browsers.
+ * <p>Use the @PWA annotation make the application installable on phones, tablets
+ * and some desktop browsers.</p>
  *
  */
 @ApplicationScoped
-@Theme(value = "dcis")
+@PWA(name = "TestApp", shortName = "Test")
 @NpmPackage(value = "line-awesome", version = "1.3.0")
 @NpmPackage(value = "@vaadin-component-factory/vcf-nav", version = "1.0.6")
 public class Application implements AppShellConfigurator {

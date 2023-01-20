@@ -74,7 +74,7 @@ public interface AvatarOptions extends de.kaiserpfalzedv.commons.api.libravatar.
 	 * URI for a default image, if no image is found for the user. This also
 	 * accepts any of the "special" values in AvatarDefaultImages
 	 */
-	@WithDefault("identitcon")
+	@WithDefault("identicon")
 	LibravatarDefaultImage defaultImage();
 
 	/**

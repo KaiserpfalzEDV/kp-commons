@@ -18,12 +18,6 @@
 package de.kaiserpfalzedv.commons.vaadin.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.kaiserpfalzedv.commons.api.resources.Metadata;
-import de.kaiserpfalzedv.commons.api.resources.Pointer;
-import de.kaiserpfalzedv.commons.api.resources.Resource;
-import de.kaiserpfalzedv.commons.api.resources.Status;
-import de.kaiserpfalzedv.commons.api.user.User;
-import de.kaiserpfalzedv.commons.api.user.UserData;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -48,7 +42,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Jacksonized
-public class FrontendUser implements User {
+public class FrontendUser {
     /** The name of the user. */
     @ToString.Include
     @EqualsAndHashCode.Include
@@ -65,7 +59,6 @@ public class FrontendUser implements User {
     private final Locale locale;
 
     /** This set contains all roles of this user. */
-    @ToString.Include
     @Builder.Default
     private final Set<String> roles = new HashSet<>();
 
@@ -88,35 +81,5 @@ public class FrontendUser implements User {
     @JsonIgnore
     public boolean isInRole(final Roles role) {
         return roles.contains(role.name());
-    }
-
-    @Override
-    public Metadata getMetadata() {
-        return null;
-    }
-
-    @Override
-    public Pointer toPointer() {
-        return null;
-    }
-
-    @Override
-    public String getSelfLink() {
-        return null;
-    }
-
-    @Override
-    public Resource<UserData> increaseGeneration() {
-        return null;
-    }
-
-    @Override
-    public UserData getSpec() {
-        return null;
-    }
-
-    @Override
-    public Status getStatus() {
-        return null;
     }
 }

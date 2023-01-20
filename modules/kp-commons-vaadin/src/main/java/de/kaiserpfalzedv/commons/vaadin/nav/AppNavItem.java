@@ -27,6 +27,7 @@ import com.vaadin.flow.internal.StateTree;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.Router;
 import com.vaadin.flow.server.VaadinService;
+import lombok.ToString;
 
 import java.util.Optional;
 
@@ -35,9 +36,14 @@ import java.util.Optional;
  * <p>
  * Can contain a label and/or an icon and links to a given {@code path}.
  */
+@ToString(onlyExplicitlyIncluded = true)
 @JsModule("@vaadin-component-factory/vcf-nav")
 @Tag("vcf-nav-item")
 public class AppNavItem extends Component {
+    @ToString.Include
+    private String label;
+    @ToString.Include
+    private String path;
 
     /**
      * Creates a menu item which does not link to any view but only shows the given
@@ -75,6 +81,7 @@ public class AppNavItem extends Component {
         setPath(view);
         setLabel(label);
     }
+
 
     /**
      * Creates a new menu item using the given label and icon that links to the
@@ -209,6 +216,8 @@ public class AppNavItem extends Component {
      */
     public AppNavItem setLabel(String label) {
         getLabelElement().setText(label);
+
+        this.label = label;
         return this;
     }
 
@@ -233,6 +242,8 @@ public class AppNavItem extends Component {
      */
     public AppNavItem setPath(String path) {
         getElement().setAttribute("path", path);
+
+        this.path = path;
         return this;
     }
 

@@ -15,12 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.nav;
+package de.kaiserpfalzedv.commons.vaadin.mvp;
 
 import de.kaiserpfalzedv.commons.vaadin.i18n.AutoPageTitle;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Basic Presenter -- Common API to every View.
@@ -28,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-12-29
  */
-public interface BasicView<T> extends AutoPageTitle {
+public interface BasicDataView<T extends Serializable> extends AutoPageTitle {
     /**
      * The data to handle in the view.
      *

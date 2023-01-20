@@ -17,39 +17,27 @@
 
 package de.kaiserpfalzedv.commons.vaadin.nav;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.quarkus.annotation.NormalUIScoped;
-import io.quarkus.arc.Unremovable;
-import io.quarkus.runtime.annotations.RegisterForReflection;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import de.kaiserpfalzedv.commons.vaadin.i18n.I18nTranslator;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.inject.Inject;
-import java.io.Serializable;
-import java.util.concurrent.ConcurrentSkipListSet;
+import javax.annotation.Priority;
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
+import java.util.Locale;
 
 /**
- * <p>RouteRegistry -- .</p>
+ * <p>TestI18nTranslator -- .</p>
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-20
  */
-@RegisterForReflection
-@Unremovable
-@NormalUIScoped
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
-@Slf4j
-public class RouteRegistry implements Serializable, AutoCloseable {
-    private final ConcurrentSkipListSet<Component> components = new ConcurrentSkipListSet<>();
-
-    @PostConstruct
-    public void init() {
-
-    }
-
-    @PreDestroy
-    public void close() {
+@Alternative
+@Priority(1)
+@Singleton
+public class TestI18nTranslator extends I18nTranslator {
+    @Produces
+    @Alternative
+    public Locale getLocale() {
+        return super.getLocale();
     }
 }

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.nav;
+package de.kaiserpfalzedv.commons.vaadin.mvp;
 
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
@@ -24,6 +24,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.data.binder.Binder;
+import de.kaiserpfalzedv.commons.vaadin.nav.MainLayout;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

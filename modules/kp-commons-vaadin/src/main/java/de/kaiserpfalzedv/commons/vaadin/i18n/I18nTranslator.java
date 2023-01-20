@@ -22,20 +22,54 @@ import com.vaadin.quarkus.annotation.VaadinServiceEnabled;
 import com.vaadin.quarkus.annotation.VaadinServiceScoped;
 import de.kaiserpfalzedv.commons.core.i18n.ResourceBundleTranslator;
 import io.quarkus.arc.Unremovable;
-import io.quarkus.runtime.annotations.RegisterForReflection;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import java.util.Locale;
 
 
-@RegisterForReflection
 @Unremovable
+@Default
 @VaadinServiceEnabled
 @VaadinServiceScoped
 @Slf4j
 public class I18nTranslator extends ResourceBundleTranslator implements I18NProvider {
-    public I18nTranslator() {
+    private static final String DEFAULT_LOCALE_CONFIG_ITEM = "quarkus.default-locale";
+    private static final String DEFAULT_LOCALE = "de";
+
+
+    private final String defaultLocale;
+
+    /**
+     * The locale. Unless it is set via {@link #setLocale(Locale)} it will default to the locale configured by
+     * {@link #defaultLocale} (which uses the configuration item {@value #DEFAULT_LOCALE_CONFIG_ITEM}) and if that is
+     * not configured, it falls back to {@value #DEFAULT_LOCALE} ({@link #DEFAULT_LOCALE}).
+     */
+    @Produces
+    @Setter(AccessLevel.PUBLIC)
+    @Getter(AccessLevel.PUBLIC)
+    private Locale locale;
+
+
+    @Inject
+    public I18nTranslator(
+            @ConfigProperty(name = DEFAULT_LOCALE_CONFIG_ITEM, defaultValue = DEFAULT_LOCALE)
+            String defaultLocale
+    ) {
         super("/messages/msg");
+
+        this.defaultLocale = defaultLocale;
+        this.locale = Locale.forLanguageTag(defaultLocale);
+    }
+
+    public I18nTranslator() {
+        this(DEFAULT_LOCALE);
     }
 
     /**

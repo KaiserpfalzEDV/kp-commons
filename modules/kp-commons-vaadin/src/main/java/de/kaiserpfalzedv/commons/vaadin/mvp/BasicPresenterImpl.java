@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.nav;
+package de.kaiserpfalzedv.commons.vaadin.mvp;
 
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import lombok.Data;
@@ -38,7 +38,7 @@ public abstract class BasicPresenterImpl<T extends Serializable> implements Basi
     protected T data;
 
     @ToString.Include
-    protected  BasicView<T> view;
+    protected BasicDataView<T> view;
 
     @ToString.Include
     protected BasicDataForm<T> form;
@@ -80,7 +80,7 @@ public abstract class BasicPresenterImpl<T extends Serializable> implements Basi
     }
 
     @Override
-    public <V extends BasicView<T>> void setView(@NotNull V view) {
+    public <V extends BasicDataView<T>> void setView(@NotNull V view) {
         this.view = view;
 
         if (data != null) {

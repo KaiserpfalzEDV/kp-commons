@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.nav;
+package de.kaiserpfalzedv.commons.vaadin.mvp;
 
-import de.kaiserpfalzedv.commons.vaadin.i18n.HasLocale;
+import de.kaiserpfalzedv.commons.api.i18n.HasLocale;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import de.kaiserpfalzedv.commons.vaadin.users.HasUser;
 
@@ -52,12 +52,12 @@ public interface BasicPresenter<T extends Serializable> extends HasUser, HasLoca
      *
      * @param view The basic view of this presenter.
      */
-    public <V extends BasicView<T>> void setView(@NotNull final V view);
+    public <V extends BasicDataView<T>> void setView(@NotNull final V view);
 
     /**
      * Reads the view this presenter works on.
      */
-    public <V extends BasicView<T>> V getView();
+    public <V extends BasicDataView<T>> V getView();
 
     public <F extends BasicDataForm<T>> void setForm(@NotNull final F form);
 

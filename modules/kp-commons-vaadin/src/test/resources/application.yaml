@@ -1,0 +1,12 @@
+---
+quarkus:
+  application:
+    name: quarkus-test-vaadin
+    version: 999-SNAPSHOT
+  locales:
+    - de
+    - en
+    - fr
+    - nl
+    - es
+  default-locale: de
