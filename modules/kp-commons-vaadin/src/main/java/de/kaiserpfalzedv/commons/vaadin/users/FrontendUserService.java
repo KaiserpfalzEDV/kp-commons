@@ -1,18 +1,28 @@
 /*
- * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * This is free and unencumbered software released into the public domain.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Anyone is free to copy, modify, publish, use, compile, sell, or
+ * distribute this software, either in source code form or as a compiled
+ * binary, for any purpose, commercial or non-commercial, and by any
+ * means.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * In jurisdictions that recognize copyright laws, the author or authors
+ * of this software dedicate any and all copyright interest in the
+ * software to the public domain. We make this dedication for the benefit
+ * of the public at large and to the detriment of our heirs and
+ * successors. We intend this dedication to be an overt act of
+ * relinquishment in perpetuity of all present and future rights to this
+ * software under copyright law.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * For more information, please refer to <http://unlicense.org/>
  */
 
 package de.kaiserpfalzedv.commons.vaadin.users;
@@ -33,11 +43,11 @@ import javax.inject.Inject;
 import java.util.Locale;
 
 /**
- * FrontendUserService -- The generator for the FrontendUser.
+ * <p>FrontendUserService -- The generator for the FrontendUser.</p>
  *
- * This service get the {@link SecurityIdentity} and the {@link JsonWebToken} to
+ * <p>This service get the {@link SecurityIdentity} and the {@link JsonWebToken} to
  * combine the information into the {@link FrontendUser} digested by all the Views on
- * this system.
+ * this system.</p>
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-12-29
@@ -65,6 +75,7 @@ public class FrontendUserService {
         log.trace("Credentials passed. credentials={}", identity.getCredentials());
     }
 
+    @SuppressWarnings("unused")
     public void setJsonWebToken(final JsonWebToken jwt) {
         log.debug("JWT loaded into FrontendUserService. jwt={}", jwt);
         this.jwt = jwt;
@@ -91,7 +102,7 @@ public class FrontendUserService {
                     .name(identity.getPrincipal().getName())
                     .email(jwt.getClaim("email"))
                     .avatar(avatarGenerator.generateUri(jwt.getClaim("email")))
-                    .locale(language == null ? Locale.forLanguageTag(language) : DEFAULT_LANGUAGE)
+                    .locale(language != null ? Locale.forLanguageTag(language) : DEFAULT_LANGUAGE)
 
                     .roles(identity.getRoles())
 
