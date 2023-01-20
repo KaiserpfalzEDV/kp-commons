@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
+ * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
 package de.kaiserpfalzedv.commons.rest.workflow;
 
 import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
-import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
@@ -52,7 +52,7 @@ public class WorkflowProvider {
     /**
      * Subclass of {@link ThreadLocal} to generate an initial {@link WorkflowInfo}.
      */
-    private class WorkflowInfoThreadLocal extends ThreadLocal<WorkflowInfo> {
+    private static class WorkflowInfoThreadLocal extends ThreadLocal<WorkflowInfo> {
         @Override
         public WorkflowInfo initialValue() {
             return WorkflowInfo.builder().build();
