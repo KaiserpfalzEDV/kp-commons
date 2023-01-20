@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2023 Kaiserpfalz EDV-Service, Roland T. Lichti.
+  ~ Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -31,18 +31,19 @@
     </description>
 
     <modules>
-        <module>kp-commons-parent</module>
-        <module>kp-commons-bom</module>
-        <module>kp-commons-core</module>
+        <module>core/kp-commons-parent</module>
+        <module>core/kp-commons-bom</module>
+        <module>core/kp-commons-api</module>
+        <module>core/kp-commons-core</module>
 
-        <module>kp-commons-modules/kp-commons-jpa</module>
-        <module>kp-commons-modules/kp-commons-rest</module>
-        <module>kp-commons-modules/kp-commons-quarkus</module>
-        <module>kp-commons-modules/kp-commons-vaadin</module>
+        <module>modules/kp-commons-jpa</module>
+        <module>modules/kp-commons-rest</module>
+        <module>modules/kp-commons-quarkus</module>
+        <module>modules/kp-commons-vaadin</module>
 
-        <module>kp-commons-modules/kp-commons-ean-search</module>
+        <module>services/kp-commons-ean-search</module>
 
-        <module>kp-commons-testsupport</module>
+        <module>testsupport</module>
     </modules>
 
     <scm>

@@ -12,9 +12,10 @@ So I assembled them in this library.
 
 
 ## License
-The license for the software is LGPL 3.0 or newer. 
+The license for the software is GPL 3.0 or newer. 
 Parts of the software may be licensed under other licences like MIT or Apache 2.0 - the files are marked appropriately. 
-libravatar is published unter MIT license from Alessandro Leite.
+
+* libravatar is published unter MIT license from Alessandro Leite.
 
 ## Architecture
 
@@ -33,15 +34,19 @@ Beat me.
 
 ## Included libraries
 
-* kp-commons-core
-* kp-commons-jpa
-* kp-commons-rest
-* kp-commons-quarkus
-* kp-commons-services
-  * kp-commons-userserver (WIP)
-  * kp-commons-events (planned)
-* kp-commons-ean-search
-* kp-commons-testsupport
+* core
+  * kp-commons-api
+  * kp-commons-core
+  * (kp-commons-bom)
+  * (kp-commons-parent)
+* modules
+  * kp-commons-jpa
+  * kp-commons-rest
+  * kp-commons-quarkus
+  * kp-commons-vaadin
+* services
+  * kp-commons-ean-search
+* testsupport
   * kp-core-testsupport
   * oauth2-testsupport (defunct)
 

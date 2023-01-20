@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>de.kaiserpfalz-edv.commons</groupId>
+        <artifactId>kp-commons-root</artifactId>
+        <version>3.0.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>kp-commons-bom</artifactId>
+    <name>KP Commons :: Core :: Bill of Materials</name>
+
+    <properties>
+        <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
+        <kp-commons.version>3.0.0</kp-commons.version>
+
+        <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>
+        <quarkus.group-id>io.quarkus.platform</quarkus.group-id>
+        <quarkus.version>2.15.3.Final</quarkus.version>
+
+        <surefire-plugin.version>2.22.1</surefire-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.36</version>
+            </dependency>
+
+            <!-- KP RPG modules -->
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-root</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-parent</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-bom</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-core</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-api</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-jpa</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-rest</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-quarkus</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-vaadin</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-ean-search</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}.services</groupId>
+                <artifactId>kp-commons-events</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}.services</groupId>
+                <artifactId>kp-commons-userserver</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${kp-commons.groupId}.test-support</groupId>
+                <artifactId>kp-core-testsupport</artifactId>
+                <version>${kp-commons.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>${kp-commons.groupId}.test-support</groupId>
+                <artifactId>oauth2-testsupport</artifactId>
+                <version>${kp-commons.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
+
+            <!-- quarkus -->
+            <dependency>
+                <groupId>${quarkus.group-id}</groupId>
+                <artifactId>${quarkus.artifact-id}</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>jsr250-api</artifactId>
+                <version>1.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- lombok - syntactical suggar -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.24</version>
+            </dependency>
+
+
+            <!-- Evaluate mathematical expressions -->
+            <dependency>
+                <groupId>net.objecthunter</groupId>
+                <artifactId>exp4j</artifactId>
+                <version>0.4.8</version>
+            </dependency>
+
+            <!-- MarkDown Library -->
+            <dependency>
+                <groupId>com.github.rjeschke</groupId>
+                <artifactId>txtmark</artifactId>
+                <version>0.13</version>
+            </dependency>
+
+            <!-- Snowflake-ID Generator -->
+            <dependency>
+                <groupId>cn.ipokerface</groupId>
+                <artifactId>snowflake-id-generator</artifactId>
+                <version>2.5.0</version>
+            </dependency>
+
+
+            <!-- Encryption -->
+            <dependency>
+                <groupId>org.connectbot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+
+            <!-- Bson management (for mongodb integration) -->
+            <dependency>
+                <groupId>io.github.cbartosiak</groupId>
+                <artifactId>bson-codecs-jsr310</artifactId>
+                <version>3.5.4</version>
+            </dependency>
+
+            <!-- Zalando Problem -->
+            <dependency>
+                <groupId>com.tietoevry.quarkus</groupId>
+                <artifactId>quarkus-resteasy-problem</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+
+
+
+            <!-- TODO 2021-05-11 rlichti API documentation, can't switch to 2.x since quarkus.io does not support it yet. -->
+            <dependency>
+                <groupId>org.eclipse.microprofile.openapi</groupId>
+                <artifactId>microprofile-openapi-api</artifactId>
+                <version>3.1</version>
+            </dependency>
+
+            <!-- testing -->
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.9.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.17.6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock-jre8</artifactId>
+                <version>2.35.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
