@@ -34,4 +34,3 @@ quarkus:
   quarkus:
     rest-client:
       "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *ean-search-api-mock
-"%dev": *test

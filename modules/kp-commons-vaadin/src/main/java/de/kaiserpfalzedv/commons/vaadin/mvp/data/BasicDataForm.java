@@ -35,10 +35,7 @@ import com.vaadin.flow.component.orderedlayout.ThemableLayout;
 import com.vaadin.flow.data.binder.Binder;
 import de.kaiserpfalzedv.commons.vaadin.mvp.nodata.BasicForm;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
@@ -47,15 +44,15 @@ import java.io.Serializable;
 @SuppressWarnings("unused")
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@Setter
 @Slf4j
 public abstract class BasicDataForm<T extends Serializable> extends BasicForm {
     @ToString.Include
     @EqualsAndHashCode.Include
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
+    @Setter(AccessLevel.PUBLIC)
     protected T data;
 
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     protected final Binder<T> binder;
 
 

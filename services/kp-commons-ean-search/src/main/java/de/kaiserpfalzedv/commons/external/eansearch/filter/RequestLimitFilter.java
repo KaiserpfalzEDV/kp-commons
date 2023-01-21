@@ -62,7 +62,6 @@ public class RequestLimitFilter implements ClientResponseFilter, ClientRequestFi
 
     @PostConstruct
     public void registerMetric() {
-        registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), remaining);
         requestCounter = registry.counter(API_REQUESTS_HANDLED_SINCE_START, Tags.empty());
     }
 
@@ -89,10 +88,13 @@ public class RequestLimitFilter implements ClientResponseFilter, ClientRequestFi
     public void filter(final ClientRequestContext requestContext, final ClientResponseContext responseContext) {
         String remaining = responseContext.getHeaderString(API_REMAINING_REQUEST_HEADER);
 
-        synchronized (this) {
-            this.remaining = Integer.valueOf(remaining, 10);
-            requestCounter.increment();
+        if (remaining != null) {
+            synchronized (this) {
+                this.remaining = Integer.valueOf(remaining, 10);
+                registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), this.remaining);
+            }
         }
+        requestCounter.increment();
 
         log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, requestCounter.count());
     }

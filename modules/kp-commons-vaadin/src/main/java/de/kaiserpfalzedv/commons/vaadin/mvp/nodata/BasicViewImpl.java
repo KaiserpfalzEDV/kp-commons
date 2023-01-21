@@ -16,7 +16,7 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT.
  * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
  * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
@@ -33,8 +33,6 @@ import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.shared.Registration;
-import de.kaiserpfalzedv.commons.vaadin.mvp.data.BasicDataForm;
-import de.kaiserpfalzedv.commons.vaadin.mvp.data.BasicDataPresenter;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,7 +40,6 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -55,8 +52,7 @@ import java.util.HashMap;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Slf4j
-public abstract class BasicViewImpl<T extends Serializable> extends Div implements BasicView {
-    @ToString.Include
+public abstract class BasicViewImpl extends Div implements BasicView {
     protected final BasicPresenter presenter;
 
     @ToString.Include
@@ -68,8 +64,10 @@ public abstract class BasicViewImpl<T extends Serializable> extends Div implemen
     @EqualsAndHashCode.Include
     protected FrontendUser user;
 
-    public BasicViewImpl(final BasicDataPresenter<T> presenter, final BasicDataForm<T> form) {
+    public BasicViewImpl(final BasicPresenter presenter, final BasicForm form) {
         this.presenter = presenter;
+        presenter.setView(this);
+        presenter.setForm(form);
         this.form = form;
     }
 

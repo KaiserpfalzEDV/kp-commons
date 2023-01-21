@@ -28,7 +28,6 @@
 package de.kaiserpfalzedv.commons.vaadin.mvp.nodata;
 
 import de.kaiserpfalzedv.commons.api.i18n.HasLocale;
-import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import de.kaiserpfalzedv.commons.vaadin.users.HasUser;
 
 import javax.validation.constraints.NotNull;
@@ -56,13 +55,6 @@ public interface BasicPresenter extends HasUser, HasLocale {
     <F extends BasicForm> void setForm(@NotNull final F form);
 
     <F extends BasicForm> F getForm();
-
-    /**
-     * Updates the logged-in user.
-     *
-     * @param identity The identity of the logged-in user.
-     */
-    void setUser(@NotNull final FrontendUser identity);
 
     default Locale getLocale() {
         return getUser().getLocale();

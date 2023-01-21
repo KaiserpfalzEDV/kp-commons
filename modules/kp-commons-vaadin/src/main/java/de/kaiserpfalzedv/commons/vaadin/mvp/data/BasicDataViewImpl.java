@@ -16,7 +16,7 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT.
  * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
  * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
@@ -47,9 +47,7 @@ import java.io.Serializable;
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Slf4j
-public abstract class BasicDataViewImpl<T extends Serializable> extends BasicViewImpl<T> implements BasicDataView<T> {
-
-
+public abstract class BasicDataViewImpl<T extends Serializable> extends BasicViewImpl implements BasicDataView<T> {
     public BasicDataViewImpl(final BasicDataPresenter<T> presenter, final BasicDataForm<T> form) {
         super(presenter, form);
     }

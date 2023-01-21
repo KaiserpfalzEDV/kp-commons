@@ -217,6 +217,8 @@ public class MainLayout extends AppLayout implements RouterLayout {
     protected void onAttach(AttachEvent event) {
         super.onAttach(event);
 
+        log.info("Attached layout. layout='{}'", this.getClass().getCanonicalName());
+
         ComponentUtil.addListener(
                 event.getUI(),
                 PageTitleUpdateEvent.class,

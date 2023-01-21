@@ -75,7 +75,7 @@ public class FrontendUserService {
         log.trace("Credentials passed. credentials={}", identity.getCredentials());
     }
 
-    @SuppressWarnings("unused")
+    @Inject
     public void setJsonWebToken(final JsonWebToken jwt) {
         log.debug("JWT loaded into FrontendUserService. jwt={}", jwt);
         this.jwt = jwt;

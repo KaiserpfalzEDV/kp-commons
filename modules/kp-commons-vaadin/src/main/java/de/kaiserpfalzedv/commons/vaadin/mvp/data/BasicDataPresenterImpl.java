@@ -19,6 +19,8 @@ package de.kaiserpfalzedv.commons.vaadin.mvp.data;
 
 import de.kaiserpfalzedv.commons.vaadin.mvp.nodata.BasicPresenterImpl;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +33,7 @@ import java.util.UUID;
 @Slf4j
 public abstract class BasicDataPresenterImpl<T extends Serializable> extends BasicPresenterImpl implements BasicDataPresenter<T> {
 
+    @Getter(AccessLevel.PUBLIC)
     @ToString.Include
     protected T data;
 

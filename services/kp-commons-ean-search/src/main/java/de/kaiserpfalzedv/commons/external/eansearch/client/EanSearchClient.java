@@ -27,6 +27,7 @@ import io.micrometer.core.annotation.Timed;
 import io.quarkus.cache.CacheResult;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import io.quarkus.rest.client.reactive.ClientQueryParams;
+import io.smallrye.faulttolerance.api.RateLimit;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
@@ -54,6 +55,7 @@ import java.util.Set;
         // the language according to https://www.ean-search.org/premium/ean-api.html#__RefHeading___Toc147_3132899627 Appendix B
         @ClientQueryParam(name = "language", value = "${ean_search.language}")
 })
+@RateLimit(value = 1)
 @Path("/api")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
