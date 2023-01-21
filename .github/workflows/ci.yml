@@ -8,7 +8,7 @@ on:
 
 jobs:
   java-build:
-    runs-on: [ java, self-hosted ]
+    runs-on: [ java ]
     steps:
       - name: Checkout sources
         id: checkout-sources
@@ -22,6 +22,6 @@ jobs:
 
       - name: Build
         id: build-java
-        run: mvn --batch-mode deploy -Pproduction,release
+        run: mvn deploy -U -B -Pproduction,release -DskipTests=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
