@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.vaadin.mvp;
+package de.kaiserpfalzedv.commons.vaadin.mvp.nodata;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
@@ -26,14 +26,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.Serializable;
-
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Data
 @Slf4j
-public abstract class BasicDataFormTab<T extends Serializable> extends Tab {
-    protected BasicDataForm<T> form;
+public abstract class BasicFormTab extends Tab {
+    protected BasicForm form;
 
     protected final FormLayout layout = new FormLayout();
 
@@ -41,7 +39,7 @@ public abstract class BasicDataFormTab<T extends Serializable> extends Tab {
     public abstract String getI18nKey();
 
 
-    public void setForm(BasicDataForm<T> form) {
+    public void setForm(BasicForm form) {
         this.form = form;
 
         layout.setResponsiveSteps(

@@ -1,21 +1,31 @@
 /*
- * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * This is free and unencumbered software released into the public domain.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Anyone is free to copy, modify, publish, use, compile, sell, or
+ * distribute this software, either in source code form or as a compiled
+ * binary, for any purpose, commercial or non-commercial, and by any
+ * means.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * In jurisdictions that recognize copyright laws, the author or authors
+ * of this software dedicate any and all copyright interest in the
+ * software to the public domain. We make this dedication for the benefit
+ * of the public at large and to the detriment of our heirs and
+ * successors. We intend this dedication to be an overt act of
+ * relinquishment in perpetuity of all present and future rights to this
+ * software under copyright law.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * For more information, please refer to <http://unlicense.org/>
  */
 
-package de.kaiserpfalzedv.commons.vaadin.mvp;
+package de.kaiserpfalzedv.commons.vaadin.mvp.nodata;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -23,6 +33,8 @@ import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.shared.Registration;
+import de.kaiserpfalzedv.commons.vaadin.mvp.data.BasicDataForm;
+import de.kaiserpfalzedv.commons.vaadin.mvp.data.BasicDataPresenter;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,51 +46,33 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * BasicDataViewImpl -- Basis for the concrete views.
+ * <p>BasicViewImpl -- .</p>
  *
- * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2.0.0  2022-12-30
- *
- * @param <T> The data to be displayed
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @since 1.0.0  2023-01-21
  */
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Slf4j
-public abstract class BasicDataViewImpl<T extends Serializable> extends Div implements BasicDataView<T> {
-    protected final BasicPresenter<T> presenter;
+public abstract class BasicViewImpl<T extends Serializable> extends Div implements BasicView {
+    @ToString.Include
+    protected final BasicPresenter presenter;
 
+    @ToString.Include
     @EqualsAndHashCode.Include
-    protected final BasicDataForm<T> form;
+    protected final BasicForm form;
+
+    protected final HashMap<String, Registration> busRegistration = new HashMap<>(4);
 
     @EqualsAndHashCode.Include
     protected FrontendUser user;
 
-    private final HashMap<String, Registration>  busRegistration = new HashMap<>(4);
-
-
-    public BasicDataViewImpl(final BasicPresenter<T> presenter, final BasicDataForm<T> form) {
+    public BasicViewImpl(final BasicDataPresenter<T> presenter, final BasicDataForm<T> form) {
         this.presenter = presenter;
         this.form = form;
-
-        presenter.setView(this);
-        presenter.setForm(form);
-
-        add(form);
     }
 
-    @Override
-    public void setData(T data) {
-        form.setData(data);
-
-        updateView();
-    }
-
-    public T getData() {
-        return form.getData();
-    }
-
-    @Override
     public void setFrontendUser(@NotNull final FrontendUser identity) {
         boolean update = false;
         if (user != null && identity.getName().equals(user.getName())) {
@@ -103,20 +97,18 @@ public abstract class BasicDataViewImpl<T extends Serializable> extends Div impl
      */
     protected abstract void updateView();
 
-
     @Override
     public void onAttach(final AttachEvent attachEvent) {
         log.trace("view attached. view={}, event={}", this, attachEvent);
         super.onAttach(attachEvent);
 
-        registerListener(BasicDataForm.SaveEvent.class, e -> presenter.save());
-        registerListener(BasicDataForm.DeleteEvent.class, e -> presenter.delete());
-        registerListener(BasicDataForm.CloseEvent.class, e-> presenter.close());
-        registerListener(BasicDataForm.ResetEvent.class, e-> presenter.reset());
+        registerListener(BasicForm.ExecuteEvent.class, e-> presenter.execute());
+        registerListener(BasicForm.CloseEvent.class, e -> presenter.close());
+        registerListener(BasicForm.ResetEvent.class, e -> presenter.reset());
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private void registerListener(Class eventTypeClass, ComponentEventListener<?> listener) {
+    protected void registerListener(Class eventTypeClass, ComponentEventListener<?> listener) {
         busRegistration.put(
                 eventTypeClass.getCanonicalName(),
                 ComponentUtil.addListener(form, eventTypeClass, listener)

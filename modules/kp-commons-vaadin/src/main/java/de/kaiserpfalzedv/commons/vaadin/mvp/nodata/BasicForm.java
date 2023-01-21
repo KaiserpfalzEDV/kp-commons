@@ -1,29 +1,40 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * This is free and unencumbered software released into the public domain.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Anyone is free to copy, modify, publish, use, compile, sell, or
+ * distribute this software, either in source code form or as a compiled
+ * binary, for any purpose, commercial or non-commercial, and by any
+ * means.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * In jurisdictions that recognize copyright laws, the author or authors
+ * of this software dedicate any and all copyright interest in the
+ * software to the public domain. We make this dedication for the benefit
+ * of the public at large and to the detriment of our heirs and
+ * successors. We intend this dedication to be an overt act of
+ * relinquishment in perpetuity of all present and future rights to this
+ * software under copyright law.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * For more information, please refer to <http://unlicense.org/>
  */
 
-package de.kaiserpfalzedv.commons.vaadin.mvp;
+package de.kaiserpfalzedv.commons.vaadin.mvp.nodata;
 
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.ThemableLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
-import com.vaadin.flow.data.binder.Binder;
+import de.kaiserpfalzedv.commons.vaadin.InvalidComponentTypeException;
 import de.kaiserpfalzedv.commons.vaadin.nav.MainLayout;
 import de.kaiserpfalzedv.commons.vaadin.users.FrontendUser;
 import lombok.EqualsAndHashCode;
@@ -35,40 +46,30 @@ import lombok.extern.slf4j.Slf4j;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Setter
 @Slf4j
-public abstract class BasicDataForm<T extends Serializable> extends FormLayout {
+public abstract class BasicForm extends FormLayout {
     @ToString.Include
     @EqualsAndHashCode.Include
     @Getter
     protected final FrontendUser user;
 
-    @ToString.Include
-    @EqualsAndHashCode.Include
-    @Getter
-    protected T data;
-
-    @Getter
-    protected final Binder<T> binder;
-
 
     @Getter
     protected TabSheet tabs;
-    protected Component buttonBar;
+    protected ThemableLayout buttonBar;
 
-    protected Button save;
+    protected Button execute;
     protected Button reset;
-    protected Button delete;
     protected Button close;
 
-    public BasicDataForm(
-            @NotNull final FrontendUser user,
-            @NotNull final Binder<T> binder
+    public BasicForm(
+            @NotNull final FrontendUser user
     ) {
         this.user = user;
-        this.binder = binder;
 
         setResponsiveSteps(
                 new ResponsiveStep("200px", 1),
@@ -78,8 +79,6 @@ public abstract class BasicDataForm<T extends Serializable> extends FormLayout {
         tabs = createTabs();
         buttonBar = createButtonsLayout();
     }
-
-    protected abstract void bind();
 
     private TabSheet createTabs() {
         TabSheet result = new TabSheet();
@@ -93,7 +92,7 @@ public abstract class BasicDataForm<T extends Serializable> extends FormLayout {
     }
 
 
-    protected void addTab(final BasicDataFormTab<T> tab) {
+    protected void addTab(final BasicFormTab tab) {
         log.trace("Adding tab to form. form={}, tab={}", this, tab);
         tabs.add(getTranslation(tab.getI18nKey() + ".caption"), tab);
     }
@@ -113,32 +112,31 @@ public abstract class BasicDataForm<T extends Serializable> extends FormLayout {
         return "";
     }
 
-    private Component createButtonsLayout() {
-        save = new Button(getTranslation("buttons.save.caption"));
-        save.setTooltipText(getTranslation("buttons.save.help"));
+    private ThemableLayout createButtonsLayout() {
+        execute = new Button(getTranslation("buttons.execute.caption"));
+        execute.setTooltipText(getTranslation("buttons.execute.help"));
         reset = new Button(getTranslation("buttons.reset.caption"));
         reset.setTooltipText(getTranslation("buttons.reset.help"));
-        delete = new Button(getTranslation("buttons.delete.caption"));
-        delete.setTooltipText(getTranslation("buttons.delete.help"));
         close = new Button(getTranslation("buttons.cancel.caption"));
         close.setTooltipText(getTranslation("buttons.cancel.help"));
 
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        execute.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         reset.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        save.addClickShortcut(Key.ENTER);
+        execute.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
-        save.addClickListener(event -> fireEvent(new SaveEvent(this, data)));
+        execute.addClickListener(event -> fireEvent(new ExecuteEvent(this)));
         reset.addClickListener(event -> fireEvent(new ResetEvent(this)));
-        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, data)));
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
-        return new HorizontalLayout(save, reset, delete, close);
+        return createButtons();
     }
 
+    protected ThemableLayout createButtons() {
+        return new HorizontalLayout(execute, reset, close);
+    }
 
     @Override
     public void onAttach(AttachEvent attachEvent) {
@@ -149,7 +147,15 @@ public abstract class BasicDataForm<T extends Serializable> extends FormLayout {
 
         tabs = createTabs();
         add(tabs, 3);
-        add(buttonBar, 3);
+
+        try {
+            add((Component) buttonBar, 3);
+        } catch (ClassCastException e) {
+            log.error("The generated button bar is not of type 'Component' ('{}').",
+                    buttonBar.getClass().getSimpleName());
+
+            throw new InvalidComponentTypeException(Component.class, buttonBar.getClass(), e);
+        }
 
 
         ComponentUtil.fireEvent(UI.getCurrent(), new MainLayout.PageTitleUpdateEvent(this, false));
@@ -182,74 +188,51 @@ public abstract class BasicDataForm<T extends Serializable> extends FormLayout {
 
 
     @Getter
-    public static abstract class DataFormEvent<T extends Serializable> extends ComponentEvent<BasicDataForm<T>> {
-        private final T data;
-
+    public static abstract class FormEvent extends ComponentEvent<BasicForm> {
         /**
          * Creates a new event using the given source and indicator whether the
          * event originated from the client side or the server side.
          *
          * @param source the source component
-         * @param data   the current data
          */
-        public DataFormEvent(BasicDataForm<T> source, T data) {
+        public FormEvent(BasicForm source) {
             super(source, false);
-
-            this.data = data;
         }
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static class SaveEvent extends DataFormEvent {
-        /**
-         * Creates a new event using the given source and indicator whether the
-         * event originated from the client side or the server side.
-         *
-         * @param source the source component
-         * @param data   the current data
-         */
-        public <T extends Serializable> SaveEvent(BasicDataForm<T> source, T data) {
-            super(source, data);
-        }
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static class DeleteEvent extends DataFormEvent {
-        /**
-         * Creates a new event using the given source and indicator whether the
-         * event originated from the client side or the server side.
-         *
-         * @param source the source component
-         * @param data   the current data
-         */
-        public <T extends Serializable> DeleteEvent(BasicDataForm<T> source, T data) {
-            super(source, data);
-        }
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static class CloseEvent extends DataFormEvent {
+    public static class ExecuteEvent extends FormEvent {
         /**
          * Creates a new event using the given source and indicator whether the
          * event originated from the client side or the server side.
          *
          * @param source the source component
          */
-        public <T extends Serializable> CloseEvent(BasicDataForm<T> source) {
-            super(source, source.getData());
+        public <T extends Serializable> ExecuteEvent(BasicForm source) {
+            super(source);
         }
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static class ResetEvent extends DataFormEvent {
+    public static class CloseEvent extends FormEvent {
         /**
          * Creates a new event using the given source and indicator whether the
          * event originated from the client side or the server side.
          *
          * @param source the source component
          */
-        public <T extends Serializable> ResetEvent(BasicDataForm<T> source) {
-            super(source, source.getData());
+        public <T extends Serializable> CloseEvent(BasicForm source) {
+            super(source);
+        }
+    }
+
+    public static class ResetEvent extends FormEvent {
+        /**
+         * Creates a new event using the given source and indicator whether the
+         * event originated from the client side or the server side.
+         *
+         * @param source the source component
+         */
+        public <T extends Serializable> ResetEvent(BasicForm source) {
+            super(source);
         }
     }
 
