@@ -1,0 +1,40 @@
+###
+GET https://{{host}}/api/balance
+Accept: application/json
+Content-Type: application/json
+Authorization: basic {{token}}
+###
+GET https://{{host}}/api/pricing?country=de
+Accept: application/json
+Content-Type: application/json
+Authorization: basic {{token}}
+###
+GET https://{{host}}/api/lookup?type=format&json=1&number=0176-6328604,0176-6328604
+Accept: application/json
+Content-Type: application/json
+Authorization: basic {{token}}
+###
+POST https://{{host}}/api/lookup
+Authorization: basic {{token}}
+Accept: application/json
+Content-type: application/json
+
+{
+  "type": "format",
+  "number": "0171-2185927,0176-6328604"
+}
+
+###
+
+# @no-redirect
+GET https://{{host}}/api/sms
+Authorization: basic {{token}}
+Accept: application/json
+Content-type: application/json
+
+{
+  "to": ["491712185927"],
+  "from": "D12",
+  "foreign_id": "000c89ee-e270-467b-931a-8169ee8dc833",
+  "flash": 1
+}

@@ -42,6 +42,7 @@
         <module>modules/kp-commons-vaadin</module>
 
         <module>services/kp-commons-ean-search</module>
+        <module>services/kp-commons-sms77</module>
 
         <module>testsupport</module>
     </modules>
