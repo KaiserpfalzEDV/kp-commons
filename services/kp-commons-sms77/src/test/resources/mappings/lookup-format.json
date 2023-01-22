@@ -5,8 +5,8 @@
         "method": "GET",
         "urlPath": "/api/lookup",
         "headers": {
-          "Authorization": {
-            "matches": "basic .+$"
+          "X-Api-Key": {
+            "matches": "^.+$"
           },
           "Accept": {
             "equalTo": "application/json"
@@ -52,8 +52,8 @@
         "method": "GET",
         "urlPath": "/api/lookup",
         "headers": {
-          "Authorization": {
-            "matches": "basic .+$"
+          "X-Api-Key": {
+            "matches": "^.+$"
           },
           "Accept": {
             "equalTo": "application/json"

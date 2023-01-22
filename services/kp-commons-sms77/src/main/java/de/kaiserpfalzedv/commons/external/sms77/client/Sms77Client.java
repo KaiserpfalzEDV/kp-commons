@@ -58,7 +58,7 @@ import java.util.Set;
         @ClientQueryParam(name = "json", value = "1"),
 })
 @ClientHeaderParams({
-        @ClientHeaderParam(name = "Authorization", value = "basic ${sms77.token}")
+        @ClientHeaderParam(name = "X-Api-Key", value = "${sms77.token}")
 })
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

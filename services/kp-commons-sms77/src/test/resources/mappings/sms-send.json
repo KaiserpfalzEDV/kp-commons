@@ -5,8 +5,8 @@
         "method": "POST",
         "urlPath": "/api/sms",
         "headers": {
-          "Authorization": {
-            "matches": "basic .+$"
+          "X-Api-Key": {
+            "matches": "^.+$"
           },
           "Accept": {
             "equalTo": "application/json"
@@ -71,8 +71,8 @@
         "method": "POST",
         "urlPath": "/api/sms",
         "headers": {
-          "Authorization": {
-            "matches": "basic .+$"
+          "X-Api-Key": {
+            "matches": "^.+$"
           },
           "Accept": {
             "equalTo": "application/json"

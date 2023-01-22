@@ -28,7 +28,7 @@ Content-type: application/json
 
 # @no-redirect
 GET https://{{host}}/api/sms
-Authorization: basic {{token}}
+X-Api-Key: {{token}}
 Accept: application/json
 Content-type: application/json
 
