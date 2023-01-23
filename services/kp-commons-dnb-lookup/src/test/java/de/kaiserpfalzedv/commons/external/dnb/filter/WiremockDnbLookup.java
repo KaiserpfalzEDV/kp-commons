@@ -15,31 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.external.sms77;
+package de.kaiserpfalzedv.commons.external.dnb.filter;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.http.Request;
+import com.github.tomakehurst.wiremock.http.Response;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
 @Slf4j
-public class WiremockSms77 implements QuarkusTestResourceLifecycleManager {
+public class WiremockDnbLookup implements QuarkusTestResourceLifecycleManager {
 
     private WireMockServer server;
 
     @Override
     public Map<String, String> start() {
-        server = new WireMockServer(new WireMockConfiguration().dynamicPort());
+        server = new WireMockServer();
         server.start();
+        server.addMockServiceRequestListener(WiremockDnbLookup::logMocking);
 
-        log.info("Stubs registered. url='{}', stubs={}", server.baseUrl(), server.listAllStubMappings().getMappings());
+        log.info("Stubs registered. stubs={}", server.listAllStubMappings().getMappings());
 
         return Map.of(
-                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.sms77.client.Sms77Client\".url", server.baseUrl(),
-                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.sms77.client.Sms77Client\".scope", "javax.inject.Singleton"
+                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient\".url", server.baseUrl(),
+                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient\".scope", "javax.inject.Singleton"
         );
+    }
+
+    protected static void logMocking(Request in, Response out) {
+        log.info("Wiremock received request.\n-----8<-----8<-----8<-----\nUrl: {}\n--------------------------\nHeaders:\n{}\n-----8<-----8<-----8<-----\n", in.getAbsoluteUrl(), in.getHeaders());
+        log.info("Wiremock answered.\n-----8<-----8<-----8<-----\nHeaders:\n{}\n--------------------------\nBody:\n{}\n-----8<-----8<-----8<-----\n", out.getHeaders(), out.getBodyAsString());
     }
 
     @Override

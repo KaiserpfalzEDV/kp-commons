@@ -43,6 +43,7 @@
 
         <module>services/kp-commons-ean-search</module>
         <module>services/kp-commons-sms77</module>
+        <module>services/kp-commons-dnb-lookup</module>
 
         <module>testsupport</module>
     </modules>

@@ -1,2 +1,5 @@
 ###
-GET {{host}}/api?token={{token}}&op=barcode-lookup&format=json&language=3&ean=4002998017271
+GET https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE=9783958672567
+
+###
+GET https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml
