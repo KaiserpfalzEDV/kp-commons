@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.external.dnb.client;
 
-import de.kaiserpfalzedv.commons.external.dnb.marcxml.model.SearchRetrieveResponse;
+import de.kaiserpfalzedv.commons.external.dnb.model.Book;
 import de.kaiserpfalzedv.commons.external.dnb.model.DnbLookupException;
 import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
@@ -34,6 +34,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.TEXT_XML;
 
@@ -45,7 +46,7 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
  */
 @RegisterRestClient
 @RegisterProvider(value = ResponseErrorMapper.class, priority = 11)
-@RegisterProvider(value = DnbLookupReplaceContentTypeFilter.class, priority = 1000)
+@RegisterProvider(value = DnbConvertMarc21StreamFilter.class, priority = 10)
 @RegisterProvider(value = DnbLookupCounterFilter.class, priority = 9)
 @RateLimit(value = 1)
 @Path("/sru")
@@ -80,7 +81,7 @@ public interface DnbLookupClient {
     @ClientQueryParams({
             @ClientQueryParam(name = "version", value = "1.1"),
             @ClientQueryParam(name = "operation", value = "searchRetrieve"),
-            @ClientQueryParam(name = "recordSchema", value = "rdf")
+            @ClientQueryParam(name = "recordSchema", value = "MARC21-xml")
     })
-    SearchRetrieveResponse dnbLookup(@QueryParam("query") final String query);
+    List<Book> dnbLookup(@QueryParam("query") final String query);
 }

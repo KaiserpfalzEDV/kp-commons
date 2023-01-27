@@ -17,6 +17,8 @@
 
 package de.kaiserpfalzedv.commons.external.dnb.client;
 
+import de.kaiserpfalzedv.commons.external.dnb.marcxml.MarcConverter;
+import de.kaiserpfalzedv.commons.external.dnb.model.Book;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,10 +29,11 @@ import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
- * <p>DnbLookupReplaceContentTypeFilter -- Reports the usage of the DNB lookup API.</p>
+ * <p>DnbConvertMarc21StreamFilter -- Converts the MARC21-xml into a {@link List}&lt;{@link Book}&gt; json list.</p>
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-22
@@ -38,12 +41,20 @@ import java.util.List;
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Slf4j
-public class DnbLookupReplaceContentTypeFilter implements ClientResponseFilter {
+public class DnbConvertMarc21StreamFilter implements ClientResponseFilter {
+
+    private final MarcConverter converter;
 
     @Override
     public void filter(ClientRequestContext request, ClientResponseContext response) throws IOException {
-        log.info("Replacing content type. old={}, new='{}'", response.getHeaderString("Content-Type"), MediaType.APPLICATION_XML);
+        InputStream orig = response.getEntityStream();
 
-        response.getHeaders().replace("Content-Type", List.of(MediaType.APPLICATION_XML));
+        List<Book> books = converter.convert(orig);
+        log.debug("Books retrieved. count={}", books.size());
+
+        response.getHeaders().replace("Content-Type", List.of(MediaType.APPLICATION_JSON));
+        try (InputStream is = converter.convert(books)) {
+            response.setEntityStream(is);
+        }
     }
 }

@@ -26,9 +26,7 @@ quarkus:
   rest-client:
     "de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient": *dnb-lookup
 
-
-
-"%test": &test
+"%test":
   quarkus:
     rest-client:
       "de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient": *dnb-lookup-mock

@@ -41,35 +41,45 @@ import java.util.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class Book {
-    String ean;
+    @ToString.Include
+    private String ean;
+    @ToString.Include
     @Builder.Default
-    List<String> isbns = new ArrayList<>();
-    @Size(max = 1024)
-    String title;
-    @Size(max = 1024)
-    String remainderOfTitle;
+    private List<String> isbns = new ArrayList<>();
 
-    @Builder.Default
-    List<String> authors = new ArrayList<>();
+    @ToString.Include
+    @Size(max = 1024)
+    private String title;
+    @ToString.Include
+    @Size(max = 1024)
+    private String subTitle;
+    @Size(max = 1024)
+    private String remainderOfTitle;
 
-    String publisher;
-    String placeOfPublication;
-    LocalDate dateOfPublication;
+    @ToString.Include
+    @Builder.Default
+    private List<String> authors = new ArrayList<>();
+
+    @ToString.Include
+    private String publisher;
+    private String placeOfPublication;
+    private LocalDate dateOfPublication;
 
     @Size(max = 1024)
-    String physicalDescription;
-    String termsOfAvailability;
-    String series;
-    String edition;
-    String formOfProduct;
+    private String physicalDescription;
+    private String termsOfAvailability;
+    @ToString.Include
+    private String series;
+    private String edition;
+    private String formOfProduct;
     @Builder.Default
-    List<String> bibliographyNumbers = new ArrayList<>();
+    private List<String> bibliographyNumbers = new ArrayList<>();
     @Builder.Default
-    List<String> formKeywords = new ArrayList<>();
+    private List<String> formKeywords = new ArrayList<>();
     @Builder.Default
-    Set<String> deweyDecimalClassifications = new HashSet<>();
-    Boolean containedInInventory;
-    String source;
+    private Set<String> deweyDecimalClassifications = new HashSet<>();
+    private Boolean containedInInventory;
+    private String source;
     @Builder.Default
-    Map<String, String> inventoryUris = new HashMap<>();
+    private Map<String, String> inventoryUris = new HashMap<>();
 }

@@ -5,36 +5,36 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import javax.xml.bind.annotation.*;
-import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>SearchRetrieveResponse -- .</p>
+ * <p>Record -- .</p>
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0  2023-01-23
+ * @since 1.0.0  2023-01-27
  */
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@XmlRootElement(name = "searchRetrieveResponse", namespace = "http://www.loc.gov/zing/srw/")
+@XmlType(name = "record", namespace = "http://www.loc.gov/zing/srw/")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SearchRetrieveResponse {
+public class Record {
     @XmlElement
-    private String version;
+    private String recordSchema;
     @XmlElement
-    private int numberOfRecords;
-
-    @XmlElementWrapper(name = "records")
-    @XmlElement(name = "record")
-    List<Record> records;
+    private String recordPacking;
 
     @XmlElement
-    SearchRetrieveRequest echoedSearchRetrieveRequest;
+    private RecordData recordData;
+
+    @XmlElement
+    private int recordPosition;
 }

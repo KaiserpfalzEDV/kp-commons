@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.commons.external.dnb.filter;
 
 import de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient;
 import de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupCounterFilter;
-import de.kaiserpfalzedv.commons.external.dnb.marcxml.model.SearchRetrieveResponse;
+import de.kaiserpfalzedv.commons.external.dnb.model.Book;
 import de.kaiserpfalzedv.commons.external.dnb.model.DnbLookupException;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,10 +52,10 @@ public class DnbLookupClientTest {
    @Test
    void shouldIncrementTheCounterInFilterWhenRequestIsDone() {
       try {
-        SearchRetrieveResponse result = sut.dnbLookup("WOE=978-5-01234-678-9");
+        List<Book> result = sut.dnbLookup("WOE=978-5-01234-678-9");
          log.info("Result. result={}", result);
 
-         assertEquals(1, result.getNumberOfRecords());
+         assertEquals(1, result.size());
       } catch (DnbLookupException e) {
          Assertions.fail(e);
       }

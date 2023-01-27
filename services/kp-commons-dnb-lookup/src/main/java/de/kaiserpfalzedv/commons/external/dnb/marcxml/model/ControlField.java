@@ -1,40 +1,37 @@
 package de.kaiserpfalzedv.commons.external.dnb.marcxml.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.xml.bind.annotation.*;
-import java.util.List;
 
 /**
- * <p>SearchRetrieveResponse -- .</p>
+ * <p>ControlField -- .</p>
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0  2023-01-23
+ * @since 1.0.0  2023-01-27
  */
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@XmlRootElement(name = "searchRetrieveResponse", namespace = "http://www.loc.gov/zing/srw/")
+@XmlType(namespace = "http://www.loc.gov/MARC21/slim")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SearchRetrieveResponse {
-    @XmlElement
-    private String version;
-    @XmlElement
-    private int numberOfRecords;
+public class ControlField {
+    @ToString.Include
+    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
+    private String tag;
 
-    @XmlElementWrapper(name = "records")
-    @XmlElement(name = "record")
-    List<Record> records;
-
-    @XmlElement
-    SearchRetrieveRequest echoedSearchRetrieveRequest;
+    @JacksonXmlText
+    @XmlValue
+    private String content;
 }
