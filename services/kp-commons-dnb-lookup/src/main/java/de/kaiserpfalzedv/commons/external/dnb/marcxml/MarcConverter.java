@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>MarcXmlConverter -- .</p>
@@ -91,6 +92,7 @@ public class MarcConverter {
                     break;
 
                 case "020":
+                    isbns.add(getSubField(d, "a"));
                     isbns.add(getSubField(d, "9"));
                     break;
 
@@ -122,20 +124,20 @@ public class MarcConverter {
             }
         }
 
-        result.authors(authors);
-        result.isbns(isbns);
+        result.authors(authors.stream().filter(f -> !f.isBlank()).collect(Collectors.toList()));
+        result.isbns(isbns.stream().filter(f -> !f.isBlank()).collect(Collectors.toList()));
 
         return result.build();
     }
 
     private String getSubField(DataField data, @NotBlank final String code) {
-        String result = data.getSubfield().stream()
+        List<String> result = data.getSubfield().stream()
                 .map(f -> retrieveSubField(f, code))
                 .filter(s -> !s.isBlank())
-                .toList().get(0);
+                .toList();
 
-        if (! result.isBlank()) {
-            return result;
+        if (! result.isEmpty()) {
+            return result.get(0);
         }
 
         return "";
@@ -154,7 +156,7 @@ public class MarcConverter {
         try {
             return convert(mapper.readValue(is, SearchRetrieveResponse.class));
         } catch (IOException e) {
-            throw new DnbLookupMarc21MappingException(e);
+            throw new LibraryLookupMarc21MappingException(e);
         }
     }
 
@@ -162,7 +164,7 @@ public class MarcConverter {
         try {
             return IOUtils.toInputStream(mapper.writeValueAsString(books));
         } catch (IOException e) {
-            throw new DnbLookupMarc21MappingException(e);
+            throw new LibraryLookupMarc21MappingException(e);
         }
     }
 
@@ -170,7 +172,7 @@ public class MarcConverter {
         try {
             return IOUtils.toInputStream(new String(jsonMapper.writeValueAsBytes(books)), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new DnbLookupMarc21MappingException(e);
+            throw new LibraryLookupMarc21MappingException(e);
         }
     }
 }

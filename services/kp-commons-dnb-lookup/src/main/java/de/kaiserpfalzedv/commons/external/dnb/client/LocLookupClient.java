@@ -30,10 +30,7 @@ import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import java.util.List;
 
 import static javax.ws.rs.core.MediaType.TEXT_XML;
@@ -49,8 +46,8 @@ import static javax.ws.rs.core.MediaType.TEXT_XML;
 @RegisterProvider(value = DnbConvertMarc21StreamFilter.class, priority = 10)
 @RegisterProvider(value = DnbLookupCounterFilter.class, priority = 9)
 @RateLimit(value = 1)
-@Path("/sru/dnb")
-public interface DnbLookupClient {
+@Path("/lcdb")
+public interface LocLookupClient {
     String CACHE_NAME = "dnb-lookup";
     long CACHE_LOCK_TIMEOUT = 10L;
 
@@ -63,8 +60,8 @@ public interface DnbLookupClient {
      * @param query The query to be sent. It has to contain the index followed by a '='. The nicest index is 'WOE'.
      * @return A set of Books.
      */
-    @Timed("library.dnb.lookup.time")
-    @Counted("library.dnb.lookup.count")
+    @Timed("library.loc.lookup.time")
+    @Counted("library.loc.lookup.count")
     @Retry(
             delay = 2000,
             maxDuration = 6000,
@@ -80,7 +77,7 @@ public interface DnbLookupClient {
     @ClientQueryParams({
             @ClientQueryParam(name = "version", value = "1.1"),
             @ClientQueryParam(name = "operation", value = "searchRetrieve"),
-            @ClientQueryParam(name = "recordSchema", value = "MARC21-xml")
+            @ClientQueryParam(name = "recordSchema", value = "marcxml")
     })
-    List<Book> lookup(@QueryParam("query") final String query);
+    List<Book> lookup(@QueryParam("query") final String query, @QueryParam("startRecord") @DefaultValue("1") final int startRecord, @QueryParam("maximumRecords") @DefaultValue("10") final int maximumRecords);
 }

@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.external.dnb.client;
 
-import de.kaiserpfalzedv.commons.external.dnb.model.DnbLookupException;
+import de.kaiserpfalzedv.commons.external.dnb.model.LibraryLookupException;
 import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -30,9 +30,9 @@ import javax.ws.rs.ext.Provider;
  * @since 3.0.0  2023-01-22
  */
 @Provider
-public class ResponseErrorMapper implements ResponseExceptionMapper<DnbLookupException> {
+public class ResponseErrorMapper implements ResponseExceptionMapper<LibraryLookupException> {
     @Override
-    public DnbLookupException toThrowable(final Response response) {
+    public LibraryLookupException toThrowable(final Response response) {
         return null;
     }
 }

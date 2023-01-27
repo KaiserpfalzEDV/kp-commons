@@ -21,16 +21,16 @@ import de.kaiserpfalzedv.commons.api.BaseSystemException;
 import lombok.Getter;
 
 /**
- * DnbLookupException --
+ * LibraryLookupException --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
  */
 @Getter
-public abstract class DnbLookupException extends BaseSystemException {
+public abstract class LibraryLookupException extends BaseSystemException {
     private final int code;
 
-    public DnbLookupException(final int code, final String message) {
+    public LibraryLookupException(final int code, final String message) {
         super(message);
 
         this.code = code;

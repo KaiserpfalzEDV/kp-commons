@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "record", namespace = "http://www.loc.gov/zing/srw/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Record {
+
     @XmlElement
     private String recordSchema;
     @XmlElement

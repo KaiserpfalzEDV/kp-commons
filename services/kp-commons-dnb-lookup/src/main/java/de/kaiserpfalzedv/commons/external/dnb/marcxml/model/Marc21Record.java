@@ -7,10 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
@@ -30,6 +27,8 @@ import java.util.List;
 @XmlType(namespace = "http://www.loc.gov/MARC21/slim")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Marc21Record {
+    @XmlAttribute
+    private String type;
     @XmlElement
     private String leader;
     @JacksonXmlProperty(localName = "controlfield")

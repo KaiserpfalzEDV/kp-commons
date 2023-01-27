@@ -36,7 +36,7 @@
 
         <quarkus.artifact-id>quarkus-bom</quarkus.artifact-id>
         <quarkus.group-id>io.quarkus.platform</quarkus.group-id>
-        <quarkus.version>2.16.0.Final</quarkus.version>
+        <quarkus.version>2.15.3.Final</quarkus.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
@@ -98,6 +98,16 @@
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-ean-search</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-dnb-lookup</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-sms77</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>
             <dependency>

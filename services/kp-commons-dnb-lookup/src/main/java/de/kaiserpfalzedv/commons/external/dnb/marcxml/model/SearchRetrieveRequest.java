@@ -31,8 +31,17 @@ public class SearchRetrieveRequest {
     private String version;
     @XmlElement
     private String query;
+
+    @XmlElement
+    private int startRecord;
+    @XmlElement
+    private int maximumRecords;
+
+    @XmlElement
+    private String recordPacking;
     @XmlElement
     private String recordSchema;
+
     @XmlElement
     private XQuery xQuery;
 }

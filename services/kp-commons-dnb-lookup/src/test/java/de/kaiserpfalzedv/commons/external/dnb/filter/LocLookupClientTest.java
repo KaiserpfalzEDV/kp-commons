@@ -17,8 +17,8 @@
 
 package de.kaiserpfalzedv.commons.external.dnb.filter;
 
-import de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient;
 import de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupCounterFilter;
+import de.kaiserpfalzedv.commons.external.dnb.client.LocLookupClient;
 import de.kaiserpfalzedv.commons.external.dnb.model.Book;
 import de.kaiserpfalzedv.commons.external.dnb.model.LibraryLookupException;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
@@ -45,23 +45,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @QuarkusTestResource(value = WiremockDnbLookup.class, parallel = true)
 @Slf4j
-public class DnbLookupClientTest extends AbstractTestBase {
+public class LocLookupClientTest extends AbstractTestBase {
 
    @RestClient
    @Inject
-   DnbLookupClient sut;
+   LocLookupClient sut;
 
-   @PostConstruct
-   public void init() {
-       super.setLog(log);
-       super.setTestSuite("library-lookup");
-   }
+    @PostConstruct
+    public void init() {
+        super.setLog(log);
+        super.setTestSuite("library-lookup");
+    }
 
-   @Test
+    @Test
    void shouldReturnABookOfListsWhenIsbnIsLookedUp() {
-       startTest("dnb-lookup", "WOE=978-5-01234-678-9");
+       startTest("loc-lookup", "9782351250839");
       try {
-        List<Book> result = sut.lookup("WOE=978-5-01234-678-9");
+        List<Book> result = sut.lookup("9782351250839", 1, 100);
          log.info("Result. result={}", result);
 
          assertEquals(1, result.size());

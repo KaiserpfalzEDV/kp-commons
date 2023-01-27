@@ -7,7 +7,7 @@
             <recordSchema>MARC21-xml</recordSchema>
             <recordPacking>xml</recordPacking>
             <recordData>
-                <record xmlns="http://www.loc.gov/MARC21/slim">
+                <record xmlns="http://www.loc.gov/MARC21/slim" type="Bibliographic">
                     <leader>00000nam a22000008c 4500</leader>
                     <controlfield tag="001">1270617494</controlfield>
                     <controlfield tag="003">DE-101</controlfield>

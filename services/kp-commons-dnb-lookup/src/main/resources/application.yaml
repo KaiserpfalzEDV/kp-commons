@@ -14,19 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-dnb-lookup-api: &dnb-lookup
-  url: ${EAN_SEARCH_API_URL}
-  scope: javax.inject.Singleton
-
-dnb-lookup-mock: &dnb-lookup-mock
-  url: http://localhost:9084/
-  scope: javax.inject.Singleton
+library:
+  dnbDefaultUri: https://services.dnb.de/
+  locDefaultUri: http://lx2.loc.gov:210
 
 quarkus:
   rest-client:
-    "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *dnb-lookup
-
-"%test": &test
-  quarkus:
-    rest-client:
-      "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *dnb-lookup-mock
+    "de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient":
+      url: ${DBN_API_URL:${library.dnbDefaultUri}}
+      scope: javax.inject.Singleton
+    "de.kaiserpfalzedv.commons.external.dnb.client.LocLookupClient":
+      url: ${LOC_API_URL:${library.locDefaultUri}}
+      scope: javax.inject.Singleton

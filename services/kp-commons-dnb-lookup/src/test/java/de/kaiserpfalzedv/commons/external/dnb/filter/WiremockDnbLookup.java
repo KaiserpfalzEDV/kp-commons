@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.external.dnb.filter;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
@@ -32,7 +33,7 @@ public class WiremockDnbLookup implements QuarkusTestResourceLifecycleManager {
 
     @Override
     public Map<String, String> start() {
-        server = new WireMockServer();
+        server = new WireMockServer(WireMockConfiguration.options().dynamicPort());
         server.start();
         server.addMockServiceRequestListener(WiremockDnbLookup::logMocking);
 
@@ -40,7 +41,9 @@ public class WiremockDnbLookup implements QuarkusTestResourceLifecycleManager {
 
         return Map.of(
                 "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient\".url", server.baseUrl(),
-                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient\".scope", "javax.inject.Singleton"
+                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient\".scope", "javax.inject.Singleton",
+                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.LocLookupClient\".url", server.baseUrl(),
+                "quarkus.rest-client.\"de.kaiserpfalzedv.commons.external.dnb.client.LocLookupClient\".scope", "javax.inject.Singleton"
         );
     }
 
