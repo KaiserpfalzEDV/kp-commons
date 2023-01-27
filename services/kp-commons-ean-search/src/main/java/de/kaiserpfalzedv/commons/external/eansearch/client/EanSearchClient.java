@@ -28,6 +28,7 @@ import io.quarkus.cache.CacheResult;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import io.quarkus.rest.client.reactive.ClientQueryParams;
 import io.smallrye.faulttolerance.api.RateLimit;
+import io.smallrye.faulttolerance.api.RateLimitException;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
@@ -68,7 +69,7 @@ public interface EanSearchClient {
     @Retry(
             delay = 2000,
             maxDuration = 6000,
-            retryOn = {EanSearchTooManyRequestsException.class},
+            retryOn = {EanSearchTooManyRequestsException.class, RateLimitException.class},
             abortOn = EanSearchException.class
     )
     @CircuitBreaker(
@@ -85,7 +86,7 @@ public interface EanSearchClient {
     @Retry(
             delay = 2000,
             maxDuration = 6000,
-            retryOn = {EanSearchTooManyRequestsException.class},
+            retryOn = {EanSearchTooManyRequestsException.class, RateLimitException.class},
             abortOn = EanSearchException.class
     )
     @CircuitBreaker(
@@ -102,7 +103,7 @@ public interface EanSearchClient {
     @Retry(
             delay = 2000,
             maxDuration = 6000,
-            retryOn = {EanSearchTooManyRequestsException.class},
+            retryOn = {EanSearchTooManyRequestsException.class, RateLimitException.class},
             abortOn = EanSearchException.class
     )
     @CircuitBreaker(
@@ -119,7 +120,7 @@ public interface EanSearchClient {
     @Retry(
             delay = 2000,
             maxDuration = 6000,
-            retryOn = {EanSearchTooManyRequestsException.class},
+            retryOn = {EanSearchTooManyRequestsException.class, RateLimitException.class},
             abortOn = EanSearchException.class
     )
     @CircuitBreaker(
