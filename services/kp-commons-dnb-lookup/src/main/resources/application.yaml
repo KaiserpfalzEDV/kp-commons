@@ -14,26 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-sms77_io: &sms77_io-api
-  url: ${SMS77_API_URL:${sms77.uri}}
+dnb-lookup-api: &dnb-lookup
+  url: ${EAN_SEARCH_API_URL}
   scope: javax.inject.Singleton
 
-sms77_io-mock: &sms77_io-api-mock
-  url: https://localhost:9083/
+dnb-lookup-mock: &dnb-lookup-mock
+  url: http://localhost:9084/
   scope: javax.inject.Singleton
-
-sms77:
-  uri: https://gateway.sms77.io/
-  token: ${SMS77_API_KEY:please_set_SMS77_API_KEY_env_variable}
 
 quarkus:
   rest-client:
-    "de.kaiserpfalzedv.commons.external.sms77.client.Sms77Client": *sms77_io-api
+    "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *dnb-lookup
 
-  http:
-    test-port: 9083
-
-"%test":
+"%test": &test
   quarkus:
     rest-client:
-      "de.kaiserpfalzedv.commons.external.sms77.client.Sms77Client": *sms77_io-api-mock
+      "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *dnb-lookup-mock

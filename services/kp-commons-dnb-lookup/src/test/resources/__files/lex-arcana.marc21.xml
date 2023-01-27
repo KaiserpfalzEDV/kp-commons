@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/">
+    <version>1.1</version>
+    <numberOfRecords>1</numberOfRecords>
+    <records>
+        <record>
+            <recordSchema>MARC21-xml</recordSchema>
+            <recordPacking>xml</recordPacking>
+            <recordData>
+                <record xmlns="http://www.loc.gov/MARC21/slim">
+                    <leader>00000nam a22000008c 4500</leader>
+                    <controlfield tag="001">1270617494</controlfield>
+                    <controlfield tag="003">DE-101</controlfield>
+                    <controlfield tag="005">20221026220556.0</controlfield>
+                    <controlfield tag="007">tu</controlfield>
+                    <controlfield tag="008">221019s2022 gw ||||| |||| 00||||ger</controlfield>
+                    <datafield tag="015" ind1=" " ind2=" ">
+                        <subfield code="a">22,N43</subfield>
+                        <subfield code="2">dnb</subfield>
+                    </datafield>
+                    <datafield tag="016" ind1="7" ind2=" ">
+                        <subfield code="2">DE-101</subfield>
+                        <subfield code="a">1270617494</subfield>
+                    </datafield>
+                    <datafield tag="020" ind1=" " ind2=" ">
+                        <subfield code="a">9783958672567</subfield>
+                        <subfield code="c">: EUR 59.95 (DE), EUR 61.70 (AT)</subfield>
+                        <subfield code="9">978-3-95867-256-7</subfield>
+                    </datafield>
+                    <datafield tag="020" ind1=" " ind2=" ">
+                        <subfield code="a">3958672566</subfield>
+                        <subfield code="9">3-95867-256-6</subfield>
+                    </datafield>
+                    <datafield tag="024" ind1="3" ind2=" ">
+                        <subfield code="a">9783958672567</subfield>
+                    </datafield>
+                    <datafield tag="028" ind1="5" ind2="2">
+                        <subfield code="a">Bestellnummer: 8300</subfield>
+                    </datafield>
+                    <datafield tag="035" ind1=" " ind2=" ">
+                        <subfield code="a">(DE-599)DNB1270617494</subfield>
+                    </datafield>
+                    <datafield tag="035" ind1=" " ind2=" ">
+                        <subfield code="a">(OCoLC)1348876715</subfield>
+                    </datafield>
+                    <datafield tag="040" ind1=" " ind2=" ">
+                        <subfield code="a">1145</subfield>
+                        <subfield code="b">ger</subfield>
+                        <subfield code="c">DE-101</subfield>
+                        <subfield code="d">9999</subfield>
+                    </datafield>
+                    <datafield tag="041" ind1=" " ind2=" ">
+                        <subfield code="a">ger</subfield>
+                    </datafield>
+                    <datafield tag="044" ind1=" " ind2=" ">
+                        <subfield code="c">XA-DE-NW</subfield>
+                    </datafield>
+                    <datafield tag="082" ind1="7" ind2="4">
+                        <subfield code="8">4\p</subfield>
+                        <subfield code="a">830</subfield>
+                        <subfield code="a">B</subfield>
+                        <subfield code="q">DE-101</subfield>
+                        <subfield code="2">23sdnb</subfield>
+                    </datafield>
+                    <datafield tag="100" ind1="1" ind2=" ">
+                        <subfield code="8">1\p</subfield>
+                        <subfield code="a">Maggi, Marco</subfield>
+                        <subfield code="e">Verfasser</subfield>
+                        <subfield code="4">aut</subfield>
+                    </datafield>
+                    <datafield tag="245" ind1="1" ind2="0">
+                        <subfield code="a">Lex Arcana Grundregelwerk</subfield>
+                        <subfield code="b">Das ewige Kaiserreich</subfield>
+                        <subfield code="c">Marco Maggi, Franscesco Nepitello</subfield>
+                    </datafield>
+                    <datafield tag="250" ind1=" " ind2=" ">
+                        <subfield code="a">Auflage</subfield>
+                    </datafield>
+                    <datafield tag="263" ind1=" " ind2=" ">
+                        <subfield code="a">202212</subfield>
+                    </datafield>
+                    <datafield tag="264" ind1=" " ind2="1">
+                        <subfield code="a">Köln</subfield>
+                        <subfield code="b">Uhrwerk-Verlag</subfield>
+                        <subfield code="c">2022</subfield>
+                    </datafield>
+                    <datafield tag="300" ind1=" " ind2=" ">
+                        <subfield code="a">308 Seiten</subfield>
+                        <subfield code="c">29.7 cm x 21 cm</subfield>
+                    </datafield>
+                    <datafield tag="336" ind1=" " ind2=" ">
+                        <subfield code="a">Text</subfield>
+                        <subfield code="b">txt</subfield>
+                        <subfield code="2">rdacontent</subfield>
+                    </datafield>
+                    <datafield tag="337" ind1=" " ind2=" ">
+                        <subfield code="a">ohne Hilfsmittel zu benutzen</subfield>
+                        <subfield code="b">n</subfield>
+                        <subfield code="2">rdamedia</subfield>
+                    </datafield>
+                    <datafield tag="338" ind1=" " ind2=" ">
+                        <subfield code="a">Band</subfield>
+                        <subfield code="b">nc</subfield>
+                        <subfield code="2">rdacarrier</subfield>
+                    </datafield>
+                    <datafield tag="490" ind1="0" ind2=" ">
+                        <subfield code="a">Lex Arcana</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">(Produktform)Hardback</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">(Produktform (spezifisch))A4</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">Pen &amp; Paper</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">Römisches Reich</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">D&amp;D</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">Lex Arcana</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">Antike</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">Fantasy</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">Rollenspiel</subfield>
+                    </datafield>
+                    <datafield tag="653" ind1=" " ind2=" ">
+                        <subfield code="a">(VLB-WN)1132: Hardcover, Softcover / Belletristik/Fantasy</subfield>
+                    </datafield>
+                    <datafield tag="655" ind1=" " ind2="7">
+                        <subfield code="0">(DE-101)1010885626</subfield>
+                        <subfield code="a">Fantasy</subfield>
+                        <subfield code="2">gatbeg</subfield>
+                    </datafield>
+                    <datafield tag="700" ind1="1" ind2=" ">
+                        <subfield code="8">2\p</subfield>
+                        <subfield code="a">Nepitello, Franscesco</subfield>
+                        <subfield code="e">Verfasser</subfield>
+                        <subfield code="4">aut</subfield>
+                    </datafield>
+                    <datafield tag="710" ind1="2" ind2=" ">
+                        <subfield code="8">3\p</subfield>
+                        <subfield code="0">(DE-588)1064129315</subfield>
+                        <subfield code="0">https://d-nb.info/gnd/1064129315</subfield>
+                        <subfield code="0">(DE-101)1064129315</subfield>
+                        <subfield code="a">Uhrwerk Verlag</subfield>
+                        <subfield code="e">Verlag</subfield>
+                        <subfield code="4">pbl</subfield>
+                        <subfield code="2">gnd</subfield>
+                    </datafield>
+                    <datafield tag="883" ind1="1" ind2=" ">
+                        <subfield code="8">1\p</subfield>
+                        <subfield code="a">vlb</subfield>
+                        <subfield code="d">20221019</subfield>
+                        <subfield code="q">DE-101</subfield>
+                        <subfield code="u">https://d-nb.info/provenance/plan#vlb</subfield>
+                    </datafield>
+                    <datafield tag="883" ind1="1" ind2=" ">
+                        <subfield code="8">2\p</subfield>
+                        <subfield code="a">vlb</subfield>
+                        <subfield code="d">20221019</subfield>
+                        <subfield code="q">DE-101</subfield>
+                        <subfield code="u">https://d-nb.info/provenance/plan#vlb</subfield>
+                    </datafield>
+                    <datafield tag="883" ind1="1" ind2=" ">
+                        <subfield code="8">3\p</subfield>
+                        <subfield code="a">adb</subfield>
+                        <subfield code="d">20221019</subfield>
+                        <subfield code="q">DE-101</subfield>
+                        <subfield code="u">https://d-nb.info/provenance/plan#adb</subfield>
+                    </datafield>
+                    <datafield tag="883" ind1="1" ind2=" ">
+                        <subfield code="8">4\p</subfield>
+                        <subfield code="a">vlb</subfield>
+                        <subfield code="d">20221019</subfield>
+                        <subfield code="q">DE-101</subfield>
+                        <subfield code="u">https://d-nb.info/provenance/plan#vlb</subfield>
+                    </datafield>
+                    <datafield tag="925" ind1="w" ind2=" ">
+                        <subfield code="a">c</subfield>
+                    </datafield>
+                    <datafield tag="926" ind1="1" ind2=" ">
+                        <subfield code="a">W</subfield>
+                        <subfield code="o">93</subfield>
+                        <subfield code="q">Publisher</subfield>
+                        <subfield code="v">1.5</subfield>
+                        <subfield code="x">Lifestyle, Hobbys und Freizeit</subfield>
+                    </datafield>
+                </record>
+            </recordData>
+            <recordPosition>1</recordPosition>
+        </record>
+    </records>
+    <echoedSearchRetrieveRequest>
+        <version>1.1</version>
+        <query>WOE=9783958672567</query>
+        <xQuery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        <recordSchema>MARC21-xml</recordSchema>
+    </echoedSearchRetrieveRequest>
+</searchRetrieveResponse>
