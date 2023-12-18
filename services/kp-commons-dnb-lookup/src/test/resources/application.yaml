@@ -14,22 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-dnb-lookup-api: &dnb-lookup
-  url: ${EAN_SEARCH_API_URL}
-  scope: javax.inject.Singleton
+#dnb-lookup-api: &dnb-lookup
+#  url: ${EAN_SEARCH_API_URL}
+#  scope: javax.inject.Singleton
 
-dnb-lookup-mock: &dnb-lookup-mock
-  url: http://localhost:9084/
-  scope: javax.inject.Singleton
-
-quarkus:
-  rest-client:
-    "de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient": *dnb-lookup
-
-"%test":
-  quarkus:
-    rest-client:
-      "de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient": *dnb-lookup-mock
-      logging:
-        scope: request-response
-        body-limit: 10000
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          dnb-lookup:
+            connect-timeout: 5000
+            read-timeout: 10000
+            follow-redirects: true
+            micrometer:
+              enabled: true
+            url: http://localhost:8089

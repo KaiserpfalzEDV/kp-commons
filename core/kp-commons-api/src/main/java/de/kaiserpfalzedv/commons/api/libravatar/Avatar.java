@@ -18,10 +18,10 @@
 package de.kaiserpfalzedv.commons.api.libravatar;
 
 /**
- * <p>Avatar -- .</p>
+ * <p>Avatar -- A single avatar to be displayed.</p>
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0  2023-01-19
+ * @since 3.0.0  2023-01-19
  */
 public interface Avatar {
     /***

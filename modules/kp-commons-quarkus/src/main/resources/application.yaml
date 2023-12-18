@@ -1,6 +1,0 @@
----
-quarkus:
-  index-dependencies:
-    "org.semver4j.Semver":
-      group-id=org.semver4j
-      artifact-id=semver4j

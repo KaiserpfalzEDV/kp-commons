@@ -18,11 +18,12 @@
 package de.kaiserpfalzedv.commons.core.libravatar;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.config.inject.ConfigProperties;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
+import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * <p>AvatarGenerator -- The service to generate libravatars with.</p>
@@ -31,10 +32,9 @@ import javax.inject.Inject;
  * @since 1.0.0  2023-01-19
  */
 @ApplicationScoped
+@EnableConfigurationProperties(AvatarOptions.class)
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@Slf4j
 public class AvatarGenerator {
-    @ConfigProperties
     private final AvatarOptions options;
 
     public String generateUri(String email) {

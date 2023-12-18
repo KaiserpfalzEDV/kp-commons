@@ -23,5 +23,5 @@ package de.kaiserpfalzedv.commons.api.resources;
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2023-01-06
  */
-public interface Persisted extends HasId, HasRevision, Cloneable {
+public interface Persisted extends HasRevision, Cloneable {
 }

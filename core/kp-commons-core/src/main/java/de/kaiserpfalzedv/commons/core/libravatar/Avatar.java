@@ -27,15 +27,16 @@ package de.kaiserpfalzedv.commons.core.libravatar;
 import de.kaiserpfalzedv.commons.api.libravatar.AvatarException;
 import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
 import de.kaiserpfalzedv.commons.api.libravatar.LibravatarDefaultImage;
+import jakarta.inject.Inject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -43,6 +44,7 @@ import java.net.URL;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Accessors(chain = true, fluent = false)
 @Slf4j
 public class Avatar implements de.kaiserpfalzedv.commons.api.libravatar.Avatar {
 	@ToString.Include

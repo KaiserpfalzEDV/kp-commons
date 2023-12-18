@@ -17,18 +17,28 @@
 
 package de.kaiserpfalzedv.commons.jpa;
 
-import de.kaiserpfalzedv.commons.api.resources.HasId;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import java.time.OffsetDateTime;
+import java.util.Objects;
+import java.util.UUID;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.UUID;
+import de.kaiserpfalzedv.commons.api.resources.HasId;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @SuperBuilder(toBuilder = true)
@@ -37,15 +47,15 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
-public abstract class AbstractJPAEntity implements HasId, Serializable, Cloneable {
+public abstract class AbstractJPAEntity implements HasId, Cloneable {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(generator = "uuid2")
-    @org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
     @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
     @ToString.Include
     protected UUID id;
 
+    @NonNull
     @Version
     @Column(name = "VERSION", nullable = false)
     @Builder.Default
@@ -54,10 +64,16 @@ public abstract class AbstractJPAEntity implements HasId, Serializable, Cloneabl
 
     @CreationTimestamp
     @Column(name = "CREATED", nullable = false, updatable = false)
+    @NonNull
     protected OffsetDateTime created;
+
     @UpdateTimestamp
-    @Column(name = "MODIFIED")
+    @Column(name = "MODIFIED", nullable = false)
+    @NonNull
     protected OffsetDateTime modified;
+    
+    @Column(name = "DELETED", insertable = false)
+    protected OffsetDateTime deleted;
 
 
     @Override

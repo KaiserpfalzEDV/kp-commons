@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.libravatar;
 
+import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +33,7 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class AvatarGeneratorTest extends AbstractTestBase {
     private static final String DEFAULT_EMAIL = "support@kaiserpfalz-edv.de";
-    private static final TestAvatarOptions DEFAULT_OPTIONS = TestAvatarOptions.builder().build();
+    private static final AvatarOptions DEFAULT_OPTIONS = AvatarOptions.builder().build();
     private static final String DEFAULT_HTTPS_MD5_URI =
             "https://seccdn.libravatar.org/avatar/1798b62948dc167ccab6d89b8f4d3e82"
             + "?s=" + DEFAULT_OPTIONS.imageSize()

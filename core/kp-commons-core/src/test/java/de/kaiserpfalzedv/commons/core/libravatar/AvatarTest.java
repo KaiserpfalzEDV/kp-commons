@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.core.libravatar;
 
+import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
 import de.kaiserpfalzedv.commons.api.libravatar.LibravatarDefaultImage;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class AvatarTest extends AbstractTestBase {
     private static final String DEFAULT_EMAIL = "support@kaiserpfalz-edv.de";
-    private static final TestAvatarOptions DEFAULT_OPTIONS = TestAvatarOptions.builder().build();
+    private static final AvatarOptions DEFAULT_OPTIONS = AvatarOptions.builder().build();
 
     private static final String DEFAULT_HTTPS_MD5_URI = "https://seccdn.libravatar.org/avatar/1798b62948dc167ccab6d89b8f4d3e82"
             + "?s=" + DEFAULT_OPTIONS.imageSize()
@@ -76,7 +77,7 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpsUriWithSize100WhenUsingTheImageSize100() {
-        TestAvatarOptions options = DEFAULT_OPTIONS.toBuilder().imageSize(100).build();
+        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().imageSize(100).build();
         startTest("https-100", DEFAULT_EMAIL, options);
 
         String result = sut.buildUrl(options);
@@ -88,7 +89,7 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpsUriWithRetroDefaultWhenUsingTheRetroDefaultIsSelected() {
-        TestAvatarOptions options = DEFAULT_OPTIONS.toBuilder().defaultImage(LibravatarDefaultImage.RETRO).build();
+        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().defaultImage(LibravatarDefaultImage.RETRO).build();
         startTest("https-retro", DEFAULT_EMAIL, options);
 
         String result = sut.buildUrl(options);
@@ -100,7 +101,7 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpUriWhenUsingHttpInsteadOfHttps() {
-        TestAvatarOptions options = DEFAULT_OPTIONS.toBuilder().useHttps(false).build();
+        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().useHttps(false).build();
         startTest("http", DEFAULT_EMAIL, options);
 
         String result = sut.buildUrl(options);
@@ -112,7 +113,7 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpUriWithoutDefaultConfigUsingWhenDefaultImageIsConfiguredAsDefault() {
-        TestAvatarOptions options = DEFAULT_OPTIONS.toBuilder()
+        AvatarOptions options = DEFAULT_OPTIONS.toBuilder()
                 .useHttps(false)
                 .defaultImage(LibravatarDefaultImage.DEFAULT)
                 .build();
@@ -125,7 +126,7 @@ public class AvatarTest extends AbstractTestBase {
     }
     @Test
     void shouldReturnSha256UriWhenUsingSha256() {
-        TestAvatarOptions options = DEFAULT_OPTIONS.toBuilder().useSHA256(true).build();
+        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().useSHA256(true).build();
         startTest("https-sha256", DEFAULT_EMAIL, options);
 
         String result = sut.buildUrl(options);

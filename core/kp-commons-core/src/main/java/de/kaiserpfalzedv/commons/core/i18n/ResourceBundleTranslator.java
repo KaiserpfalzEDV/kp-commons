@@ -22,9 +22,7 @@ import de.kaiserpfalzedv.commons.api.i18n.NoSuchMessageException;
 import de.kaiserpfalzedv.commons.api.i18n.Translator;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.inject.Singleton;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -40,16 +38,14 @@ import java.util.stream.Collectors;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 0.1.0  2021-03-27
  */
-@Singleton
 @Slf4j
 public class ResourceBundleTranslator implements Translator, MessageSource {
     /**
      * The languages this class provides. To enable testing, a setter is provided. Normally it will be configured via
-     * {@link ConfigProperty} "quarkus.locales" with a default of "de,en,fr,nl,es,it".
+     * property with a default of "de,en,fr,nl,es,it".
      */
-    @ConfigProperty(name = "quarkus.locales", defaultValue = "de,en,fr,nl,es,it")
     @Setter
-    List<String> configuredLanguages;
+    List<String> configuredLanguages = List.of("de","en","fr","nl","es","it");
 
     /**
      * Default bundle to use when no other bundle is selected.
@@ -58,17 +54,14 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
 
     /**
      * The default locale (used when no locale is specified in the translation call). To enable testing, a setter is
-     * provided. Normally it will be configured via {@link ConfigProperty} "quarkus.default-locale" with a default of
-     * "de".
+     * provided. Normally it will be configured via property "default-locale" with a default of "de".
      */
-    @ConfigProperty(name = "quarkus.default-locale", defaultValue = "de")
     @Setter
-    String defaultLocale;
+    String defaultLocale = "de";
 
     private final HashMap<String, HashMap<Locale, ResourceBundle>> bundles = new HashMap<>();
 
 
-    @SuppressWarnings("unused")
     public ResourceBundleTranslator() {
         this("messages");
     }
@@ -93,7 +86,7 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
     public String getTranslation(final Object bundleObject, final String key, final Locale locale, final Object... arguments) {
         String bundleName = bundleObject.getClass().getCanonicalName()
                 .replace(".", "/")
-                .replace("_Subclass", ""); // get around Quarkus.io or lombok or both or so. :-(
+                .replace("_Subclass", ""); // get around for lombok or both or so. :-(
 
         return getTranslation(bundleName, key, locale, arguments);
     }

@@ -20,9 +20,9 @@ library:
 
 quarkus:
   rest-client:
-    "de.kaiserpfalzedv.commons.external.dnb.client.DnbLookupClient":
+    "de.kaiserpfalzedv.services.dnb.client.DnbLookupClient":
       url: ${DBN_API_URL:${library.dnbDefaultUri}}
       scope: javax.inject.Singleton
-    "de.kaiserpfalzedv.commons.external.dnb.client.LocLookupClient":
+    "de.kaiserpfalzedv.services.dnb.client.LocLookupClient":
       url: ${LOC_API_URL:${library.locDefaultUri}}
       scope: javax.inject.Singleton

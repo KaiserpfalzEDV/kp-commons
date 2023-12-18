@@ -28,7 +28,6 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@SuppressWarnings("unused")
 @Getter
 @ToString(callSuper = true)
 public abstract class BaseSystemException extends RuntimeException {

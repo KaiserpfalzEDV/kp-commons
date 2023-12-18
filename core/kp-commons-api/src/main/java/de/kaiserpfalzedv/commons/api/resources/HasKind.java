@@ -19,8 +19,8 @@ package de.kaiserpfalzedv.commons.api.resources;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * HasKind -- The object has a kind.
