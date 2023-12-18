@@ -31,7 +31,7 @@
     <description>The vaadin part of kp-commons.</description>
 
     <properties>
-        <vaadin.version>23.3.6</vaadin.version>
+        <vaadin.version>24.0.0</vaadin.version>
         <quarkus-test>true</quarkus-test>
     </properties>
 
