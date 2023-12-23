@@ -15,7 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 sms77_io: &sms77_io-api
-  url: ${SMS77_API_URL}
+  url: ${SMS77_API_URL:${sms77.uri}}
   scope: javax.inject.Singleton
 
 sms77_io-mock: &sms77_io-api-mock
@@ -23,16 +23,5 @@ sms77_io-mock: &sms77_io-api-mock
   scope: javax.inject.Singleton
 
 sms77:
-  token: ${SMS77_API_KEY:this is an invalid token}
-
-quarkus:
-  rest-client:
-    "de.kaiserpfalzedv.commons.external.sms77.client.Sms77Client": *sms77_io-api
-
-  http:
-    test-port: 9083
-
-"%test":
-  quarkus:
-    rest-client:
-      "de.kaiserpfalzedv.commons.external.sms77.client.Sms77Client": *sms77_io-api-mock
+  uri: https://gateway.sms77.io/
+  token: ${SMS77_API_KEY:please_set_SMS77_API_KEY_env_variable}

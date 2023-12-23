@@ -21,12 +21,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @MappedSuperclass
@@ -44,7 +45,8 @@ public abstract class AbstractRevisionedJPAEntity extends AbstractJPAEntity {
     protected int revId;
 
     @RevisionTimestamp
-    @Column(name = "REVISIONED")
+    @Column(name = "REVISIONED", insertable = true, updatable = false)
+    @NonNull
     protected OffsetDateTime revisioned;
 
 

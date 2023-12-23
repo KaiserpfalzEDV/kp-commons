@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.api.i18n;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Locale;
 
 /**

@@ -1,5 +1,5 @@
 .DS_Store
-.idea/
+public/
 docs/generated/
 resources/static/
 **/src/app/generated/
@@ -17,3 +17,6 @@ storybook-static
 .env
 http-client.private.env.json
 /modules/kp-commons-vaadin/frontend/
+.vscode/temp.sql
+resources/_gen/
+.hugo_build.lock

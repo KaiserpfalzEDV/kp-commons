@@ -34,6 +34,6 @@ public class SerializableList<T extends Serializable> extends ArrayList<T> imple
     @SuppressWarnings("unchecked")
     @Override
     public SerializableList<T> clone() {
-        return (SerializableList) super.clone();
+        return (SerializableList<T>) super.clone();
     }
 }

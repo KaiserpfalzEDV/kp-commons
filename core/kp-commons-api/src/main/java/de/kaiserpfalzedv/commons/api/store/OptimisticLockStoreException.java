@@ -47,16 +47,14 @@ public class OptimisticLockStoreException extends BaseSystemException {
     /**
      * @return the generation stored in the data store.
      */
-    @SuppressWarnings("unused")
     public long getStoredGeneration() {
-        return storedGeneration;
+        return this.storedGeneration;
     }
 
     /**
      * @return the generation that should be saved.
      */
-    @SuppressWarnings("unused")
     public long getSaveGeneration() {
-        return saveGeneration;
+        return this.saveGeneration;
     }
 }

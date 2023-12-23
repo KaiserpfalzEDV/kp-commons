@@ -19,22 +19,71 @@ package de.kaiserpfalzedv.commons.api.libravatar;
 
 import java.io.Serializable;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
+
 /**
- * <p>AvatarOptions -- .</p>
+ * <p>AvatarOptions -- The configuration for libravatar.</p>
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 1.0.0  2023-01-19
+ * @since 3.0.0  2023-01-19
  */
-public interface AvatarOptions extends Serializable {
-    String baseUri();
+@ConfigurationProperties("libravatar")
+@SuperBuilder(toBuilder = true)
+@RequiredArgsConstructor
+@Data
+@Accessors(fluent = true, chain = true)
+public class AvatarOptions implements Serializable {
 
-    String secureBaseUri();
+	/**
+	 * Specifies a custom base URI for HTTP use. The default is to use the
+	 * official libravatar HTTP server. If you *really* wanted to use a non-free
+	 * server, you could set this to "http://gravatar.com/avatar/", but why
+	 * would you do such a thing?
+	 */
+    @Builder.Default
+    private String baseUri = "http://cdn.libravatar.org/avatar/";
 
-    boolean useHttps();
+	/**
+	 * Specifies a custom base URI for HTTPS use. The default is to use the
+	 * official libravatar HTTPS server.
+	 */
+    @Builder.Default
+    private String secureBaseUri = "https://seccdn.libravatar.org/avatar/";
 
-    boolean useSHA256();
+	/**
+	 * Produce https:// URIs where possible. This avoids mixed-content warnings
+	 * in browsers when using libravatar-sharp from within a page served via
+	 * HTTPS.
+	 **/
+    @Builder.Default
+    private boolean useHttps = true;
 
-    LibravatarDefaultImage defaultImage();
+	/**
+	 * Use the SHA256 hash algorithm, rather than MD5. SHA256 is significantly
+	 * stronger, but is not supported by Gravatar, so libravatar's fallback to
+	 * Gravatar for missing images will not work. Note that using
+	 * Avatar.FromOpenID implicitly uses SHA256.
+	 */
+    @Builder.Default
+    private boolean useSHA256 = false;
 
-    Integer imageSize();
+	/**
+	 * URI for a default image, if no image is found for the user. This also
+	 * accepts any of the "special" values in AvatarDefaultImages
+	 */
+    @Builder.Default
+    private LibravatarDefaultImage defaultImage =  LibravatarDefaultImage.IDENTICON;
+
+    /**
+	 * Size of the image requested. Valid values are between 1 and 512 pixels.
+	 * The default size is 80 pixels.
+	 */
+    @Builder.Default
+    private Integer imageSize = 80;
 }

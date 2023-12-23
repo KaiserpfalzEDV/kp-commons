@@ -25,6 +25,7 @@
         }
       },
       "response": {
+        "fixedDelayMilliseconds": 1000,
         "status": 200,
         "headers": {
           "Content-Type": "application/json",
@@ -67,6 +68,7 @@
       },
       "response": {
         "status": 200,
+        "fixedDelayMilliseconds": 1000,
         "headers": {
           "Content-Type": "application/json",
           "X-Credits-Remaining": "0"
@@ -108,6 +110,7 @@
       },
       "response": {
         "status": 402,
+        "fixedDelayMilliseconds": 1000,
         "headers": {
           "Content-Type": "application/json",
           "X-Credits-Remaining": "0"

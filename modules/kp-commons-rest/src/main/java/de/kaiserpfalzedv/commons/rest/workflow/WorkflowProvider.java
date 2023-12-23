@@ -17,13 +17,12 @@
 
 package de.kaiserpfalzedv.commons.rest.workflow;
 
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.validation.constraints.NotNull;
 import java.util.Optional;
+
+import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Singleton;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * WorkflowProvider -- Provides the workflow data of the current request.
@@ -31,8 +30,7 @@ import java.util.Optional;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2022-01-04
  */
-@ApplicationScoped
-@Slf4j
+@Singleton
 public class WorkflowProvider {
     private final ThreadLocal<WorkflowInfo> infos = new WorkflowInfoThreadLocal();
 

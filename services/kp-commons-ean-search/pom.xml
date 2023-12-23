@@ -1,71 +1,32 @@
 <?xml version="1.0"?>
 <!--
-  ~ Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
-  ~
-  ~ This program is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
+    Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-
     <parent>
-        <artifactId>kp-commons-parent</artifactId>
-        <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <version>3.0.0</version>
-        <relativePath>../../core/kp-commons-parent/pom.xml</relativePath>
+        <artifactId>kp-commons-services-root</artifactId>
+        <groupId>de.kaiserpfalz-edv.commons.services</groupId>
+        <version>3.2.1</version>
     </parent>
 
     <artifactId>kp-commons-ean-search</artifactId>
     <name>KP Commons :: Services :: EAN-Search</name>
     <description>Library to access the (non-free) service of https://www.ean-search.org.</description>
-
-    <properties>
-        <activate.jcenter>true</activate.jcenter>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.commons</groupId>
-            <artifactId>kp-commons-rest</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.smallrye</groupId>
-            <artifactId>smallrye-fault-tolerance</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-opentelemetry</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-micrometer</artifactId>
-        </dependency>
-    </dependencies>
 </project>

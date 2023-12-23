@@ -28,9 +28,9 @@ ean_search:
 
 quarkus:
   rest-client:
-    "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *ean-search-api
+    "de.kaiserpfalzedv.services.eansearch.client.EanSearchClient": *ean-search-api
 
 "%test": &test
   quarkus:
     rest-client:
-      "de.kaiserpfalzedv.commons.external.eansearch.client.EanSearchClient": *ean-search-api-mock
+      "de.kaiserpfalzedv.services.eansearch.client.EanSearchClient": *ean-search-api-mock

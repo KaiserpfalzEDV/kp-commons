@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This is the actual answer to a request on the DNB service.
+
+  Roland Lichti, 2023-01-22
+-->
+<searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/">
+    <version>1.1</version>
+    <numberOfRecords>1</numberOfRecords>
+    <records>
+        <record>
+            <recordSchema>RDFxml</recordSchema>
+            <recordPacking>xml</recordPacking>
+            <recordData>
+                <rdf:RDF xmlns:schema="http://schema.org/" xmlns:gndo="https://d-nb.info/standards/elementset/gnd#"
+                         xmlns:lib="http://purl.org/library/" xmlns:owl="http://www.w3.org/2002/07/owl#"
+                         xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+                         xmlns:editeur="https://ns.editeur.org/thema/" xmlns:geo="http://www.opengis.net/ont/geosparql#"
+                         xmlns:umbel="http://umbel.org/umbel#" xmlns:rdau="http://rdaregistry.info/Elements/u/"
+                         xmlns:sf="http://www.opengis.net/ont/sf#" xmlns:bflc="http://id.loc.gov/ontologies/bflc/"
+                         xmlns:dcterms="http://purl.org/dc/terms/"
+                         xmlns:isbd="http://iflastandards.info/ns/isbd/elements/"
+                         xmlns:mesh="http://id.nlm.nih.gov/mesh/vocab#" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+                         xmlns:mo="http://purl.org/ontology/mo/" xmlns:marcRole="http://id.loc.gov/vocabulary/relators/"
+                         xmlns:agrelon="https://d-nb.info/standards/elementset/agrelon#"
+                         xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:dbp="http://dbpedia.org/property/"
+                         xmlns:dnbt="https://d-nb.info/standards/elementset/dnb#"
+                         xmlns:madsrdf="http://www.loc.gov/mads/rdf/v1#" xmlns:dnb_intern="http://dnb.de/"
+                         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                         xmlns:v="http://www.w3.org/2006/vcard/ns#" xmlns:cidoc="http://www.cidoc-crm.org/cidoc-crm/"
+                         xmlns:wdrs="http://www.w3.org/2007/05/powder-s#"
+                         xmlns:ebu="http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#"
+                         xmlns:bibo="http://purl.org/ontology/bibo/" xmlns:gbv="http://purl.org/ontology/gbv/"
+                         xmlns:dc="http://purl.org/dc/elements/1.1/"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <rdf:Description rdf:about="https://d-nb.info/1270617494">
+                        <rdf:type rdf:resource="http://purl.org/ontology/bibo/Document"/>
+                        <dcterms:medium rdf:resource="http://rdaregistry.info/termList/RDACarrierType/1044"/>
+                        <rdau:P60049 rdf:resource="http://rdaregistry.info/termList/RDAContentType/1020"/>
+                        <rdau:P60050 rdf:resource="http://rdaregistry.info/termList/RDAMediaType/1007"/>
+                        <rdau:P60048 rdf:resource="http://rdaregistry.info/termList/RDACarrierType/1049"/>
+                        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(DE-101)1270617494
+                        </dc:identifier>
+                        <bibo:isbn13 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">9783958672567</bibo:isbn13>
+                        <rdau:P60521 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">: EUR 59.95 (DE), EUR 61.70
+                            (AT)
+                        </rdau:P60521>
+                        <bibo:isbn10 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3958672566</bibo:isbn10>
+                        <bibo:gtin14 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">9783958672567</bibo:gtin14>
+                        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(OCoLC)1348876715
+                        </dc:identifier>
+                        <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/ger"/>
+                        <bflc:projectedProvisionDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-12-31
+                        </bflc:projectedProvisionDate>
+                        <rdau:P60327 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Marco Maggi, Franscesco
+                            Nepitello
+                        </rdau:P60327>
+                        <dc:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lex Arcana Grundregelwerk
+                        </dc:title>
+                        <marcRole:aut>
+                            <rdf:Description rdf:nodeID="node1gmjb4j47x3106578">
+                                <gndo:preferredName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maggi,
+                                    Marco
+                                </gndo:preferredName>
+                            </rdf:Description>
+                        </marcRole:aut>
+                        <dcterms:creator>
+                            <rdf:Description rdf:nodeID="node1gmjb4j47x3106579">
+                                <gndo:preferredName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maggi,
+                                    Marco
+                                </gndo:preferredName>
+                            </rdf:Description>
+                        </dcterms:creator>
+                        <marcRole:aut>
+                            <rdf:Description rdf:nodeID="node1gmjb4j47x3106580">
+                                <gndo:preferredName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nepitello,
+                                    Franscesco
+                                </gndo:preferredName>
+                            </rdf:Description>
+                        </marcRole:aut>
+                        <marcRole:pbl rdf:resource="https://d-nb.info/gnd/1064129315"/>
+                        <bibo:edition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Auflage</bibo:edition>
+                        <dc:publisher rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Uhrwerk-Verlag
+                        </dc:publisher>
+                        <rdau:P60163 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Köln</rdau:P60163>
+                        <rdau:P60333 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Köln : Uhrwerk-Verlag
+                        </rdau:P60333>
+                        <rdau:P60539 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">29.7 cm x 21 cm
+                        </rdau:P60539>
+                        <dcterms:isPartOf rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lex Arcana
+                        </dcterms:isPartOf>
+                        <schema:genre>
+                            <rdf:Description rdf:nodeID="node1gmjb4j47x3106581">
+                                <skos:notation
+                                        rdf:datatype="https://d-nb.info/standards/elementset/dnb#literary-genre-notation">
+                                    132
+                                </skos:notation>
+                                <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+                                <skos:prefLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fantasy
+                                </skos:prefLabel>
+                            </rdf:Description>
+                        </schema:genre>
+                        <dcterms:subject rdf:resource="https://ns.editeur.org/thema/W"/>
+                        <wdrs:describedby>
+                            <rdf:Description rdf:about="https://d-nb.info/1270617494/about">
+                                <dcterms:license rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/"/>
+                                <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">
+                                    2022-10-26T22:05:56.000
+                                </dcterms:modified>
+                            </rdf:Description>
+                        </wdrs:describedby>
+                        <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2022</dcterms:issued>
+                        <rdau:P60493 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das ewige Kaiserreich
+                        </rdau:P60493>
+                        <isbd:P1053 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">308 Seiten</isbd:P1053>
+                        <owl:sameAs rdf:resource="http://hub.culturegraph.org/resource/DNB-1270617494"/>
+                    </rdf:Description>
+
+                </rdf:RDF>
+            </recordData>
+            <recordPosition>1</recordPosition>
+        </record>
+    </records>
+    <echoedSearchRetrieveRequest>
+        <version>1.1</version>
+        <query>WOE=9783958672567</query>
+        <xQuery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+    </echoedSearchRetrieveRequest>
+</searchRetrieveResponse>

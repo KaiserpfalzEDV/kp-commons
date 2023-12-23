@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.kaiserpfalz-edv.commons</groupId>
+        <artifactId>kp-commons-parent</artifactId>
+        <version>3.2.1</version>
+	<relativePath>../kp-commons-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+    <artifactId>kp-commons-modules-root</artifactId>
+    <packaging>pom</packaging>
+
+    <name>KP Commons :: Modules :: Root</name>
+    <description>
+        The specialized modules for JPA, REST, ...
+    </description>
+
+    <modules>
+        <module>kp-commons-jackson</module>
+        <module>kp-commons-jpa</module>
+        <module>kp-commons-rest</module>
+    </modules>
+</project>

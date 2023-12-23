@@ -47,16 +47,14 @@ public class DuplicateStoreException extends BaseSystemException {
     /**
      * @return the generation stored in the data store.
      */
-    @SuppressWarnings("unused")
     public Pointer getStoredGeneration() {
-        return stored;
+        return this.stored;
     }
 
     /**
      * @return the generation that should be saved.
      */
-    @SuppressWarnings("unused")
     public Pointer getSaveGeneration() {
-        return duplicate;
+        return this.duplicate;
     }
 }

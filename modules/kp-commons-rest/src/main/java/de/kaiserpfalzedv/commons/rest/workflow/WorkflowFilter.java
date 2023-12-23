@@ -17,26 +17,29 @@
 
 package de.kaiserpfalzedv.commons.rest.workflow;
 
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowDetailInfo;
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jboss.logging.MDC;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.Produces;
-import javax.ws.rs.client.ClientRequestContext;
-import javax.ws.rs.client.ClientResponseContext;
-import javax.ws.rs.client.ClientResponseFilter;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAmount;
+
+import org.slf4j.MDC;
+
+import de.kaiserpfalzedv.commons.core.workflow.WorkflowDetailInfo;
+import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>WorkflowFilter -- Handles the WorkflowInfo for REST requests.</p>
@@ -45,10 +48,9 @@ import java.time.temporal.TemporalAmount;
  * @since 2.0.0  2022-01-04
  */
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@Produces
-@ApplicationScoped
+@Singleton
 @Slf4j
-public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFilter {
+public class WorkflowFilter implements Filter {
     public static final String WORKFLOW_DATA = "de.kaiserpfalzedv.commons.core.workflow.data";
 
     private static final String WORKFLOW_USER = "X-wf-user";
@@ -66,11 +68,36 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
     private final WorkflowProvider provider;
 
     @Override
-    public void filter(ContainerRequestContext context) {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = checkForHttpServletRequestOrThrowException(request);
+        HttpServletResponse res = checkForHttpServletResponseOrThrowException(response);
+
+        filter(req);
+        chain.doFilter(request, response);
+        filter(req, res);
+    }
+
+    private HttpServletRequest checkForHttpServletRequestOrThrowException(ServletRequest request) throws ServletException {
+        if (! (request instanceof HttpServletRequest)) {
+            throw new ServletException("Wrong servlet type. This filter only works on HTTP servlets.");
+        }
+
+        return (HttpServletRequest) request;
+    }
+
+    private HttpServletResponse checkForHttpServletResponseOrThrowException(ServletResponse response) throws ServletException {
+        if (! (response instanceof HttpServletResponse)) {
+            throw new ServletException("Wrong servlet type. This filter only works on HTTP servlets.");
+        }
+
+        return (HttpServletResponse) response;
+    }
+
+    private void filter(HttpServletRequest context) {
         WorkflowInfo info = getWorkflowInfo(context);
         prepareMDC(info);
 
-        context.setProperty(WORKFLOW_DATA, info);
+        context.setAttribute(WORKFLOW_DATA, info);
         provider.registerWorkflowInfo(info);
 
         log.trace(
@@ -82,23 +109,23 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
         );
     }
 
-    private WorkflowInfo getWorkflowInfo(final ContainerRequestContext context) {
+    private WorkflowInfo getWorkflowInfo(final HttpServletRequest context) {
         return WorkflowInfo.builder()
-                .user(checkValidHeader(context.getHeaderString(WORKFLOW_USER)))
+                .user(checkValidHeader(context.getHeader(WORKFLOW_USER)))
                 .workflow(getWorkflowInfoDetail(context, WORKFLOW_PREFIX))
                 .action(getWorkflowInfoDetail(context, ACTION_PREFIX))
                 .call(getWorkflowInfoDetail(context, CALL_PREFIX))
                 .build();
     }
 
-    private WorkflowDetailInfo getWorkflowInfoDetail(final ContainerRequestContext context, final String prefix) {
-        String name = checkValidHeader(context.getHeaderString(prefix + NAME));
-        String id = checkValidHeader(context.getHeaderString(prefix + ID));
-        String response = checkValidHeader(context.getHeaderString(prefix + RESPONSE));
+    private WorkflowDetailInfo getWorkflowInfoDetail(final HttpServletRequest context, final String prefix) {
+        String name = checkValidHeader(context.getHeader(prefix + NAME));
+        String id = checkValidHeader(context.getHeader(prefix + ID));
+        String response = checkValidHeader(context.getHeader(prefix + RESPONSE));
 
         WorkflowDetailInfo.WorkflowDetailInfoBuilder result = WorkflowDetailInfo.builder()
-                .created(checkValidTimeHeader(context.getHeaderString(prefix + CREATED), Duration.ofMillis(0)))
-                .ttl(checkValidTimeHeader(context.getHeaderString(prefix + TTL), Duration.of(10, ChronoUnit.YEARS)));
+                .created(checkValidTimeHeader(context.getHeader(prefix + CREATED), Duration.ofMillis(0)))
+                .ttl(checkValidTimeHeader(context.getHeader(prefix + TTL), Duration.of(10, ChronoUnit.YEARS)));
 
         if (name != null) result.name(name);
         if (id != null) result.id(id);
@@ -141,35 +168,30 @@ public class WorkflowFilter implements ContainerRequestFilter, ClientResponseFil
     }
 
 
-    @Override
-    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) {
-        WorkflowInfo info = getWorkflowInfoFromContext(requestContext);
-
-        if (info == null) {
-            log.trace("There is no workflow data on this request.");
-            return;
-        }
-
-        log.trace(
-                "Removing workflow data from request. workflow='{}', action='{}', call='{}', user='{}'",
-                info.getWorkflow().getId(),
-                info.getAction().getId(),
-                info.getCall().getId(),
-                info.getUser()
+    private void filter(HttpServletRequest request, HttpServletResponse context) {
+        provider.getWorkflowInfo().ifPresentOrElse(
+            info -> {
+                log.trace(
+                    "Removing workflow data from request. workflow='{}', action='{}', call='{}', user='{}'",
+                    info.getWorkflow().getId(),
+                    info.getAction().getId(),
+                    info.getCall().getId(),
+                    info.getUser()
+                );
+        
+                unsetWorkflowInfoInContext(request);
+                provider.unregisterWorkflowInfo();
+        
+                removeMDC();
+            }, 
+            () -> {
+                log.trace("No workflow data to remove from request.");
+            }
         );
-
-        unsetWorkflowInfoInContext(requestContext);
-        provider.unregisterWorkflowInfo();
-
-        removeMDC();
     }
 
-    private WorkflowInfo getWorkflowInfoFromContext(ClientRequestContext requestContext) {
-        return (WorkflowInfo) requestContext.getProperty(WORKFLOW_DATA);
-    }
-
-    private void unsetWorkflowInfoInContext(ClientRequestContext requestContext) {
-        requestContext.setProperty(WORKFLOW_DATA, null);
+    private void unsetWorkflowInfoInContext(HttpServletRequest requestContext) {
+        requestContext.setAttribute(WORKFLOW_DATA, null);
     }
 
     private void removeMDC() {

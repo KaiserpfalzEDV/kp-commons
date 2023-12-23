@@ -18,21 +18,18 @@
 package de.kaiserpfalzedv.commons.api.i18n;
 
 import de.kaiserpfalzedv.commons.api.BaseException;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author rlichti
  * @version 1.2.0 2021-09-08
  * @since 1.2.0 2021-09-08
  */
-@Slf4j
 public class NoSuchMessageException extends BaseException {
-
-    public NoSuchMessageException(String message) {
+    public NoSuchMessageException(final String message) {
         super(message);
     }
 
-    public NoSuchMessageException(String message, Throwable cause) {
+    public NoSuchMessageException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

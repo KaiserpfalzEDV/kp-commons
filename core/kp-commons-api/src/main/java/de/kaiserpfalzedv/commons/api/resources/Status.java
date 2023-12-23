@@ -17,13 +17,14 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
 /**
  * <p>Status -- .</p>
@@ -39,7 +40,6 @@ public interface Status extends Serializable, Cloneable {
      * @param message The generic message for this history entry.
      * @return TRUE if the history could be added.
      */
-    @SuppressWarnings("unused")
     Status addHistory(String status, String message);
 
     @Schema(
