@@ -35,7 +35,10 @@
         to the data in Germany.
     </description>
 
-    <properties>
-        <activate.jcenter>true</activate.jcenter>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+    </dependencies>
 </project>
