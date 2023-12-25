@@ -320,8 +320,7 @@
                     </executions>
                     <configuration>
                         <systemPropertyVariables>
-                            <!--suppress
-                            UnresolvedMavenProperty -->
+                            <!--suppress UnresolvedMavenProperty -->
                             <maven.home>${maven.home}</maven.home>
                         </systemPropertyVariables>
                         <trimStackTrace>false</trimStackTrace>
