@@ -17,16 +17,16 @@
 
 package de.kaiserpfalzedv.commons.core.store;
 
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.UUID;
+
 import de.kaiserpfalzedv.commons.api.resources.Resource;
 import de.kaiserpfalzedv.commons.api.store.OptimisticLockStoreException;
 import de.kaiserpfalzedv.commons.api.store.StoreService;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * GenericStoreService -- an ephemeral store for Resources.
@@ -54,14 +54,14 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
 
     @Override
     public Optional<T> findByNameSpaceAndName(final String nameSpace, final String name) {
-        String key = generateStoreKey(nameSpace, name);
+        final String key = this.generateStoreKey(nameSpace, name);
 
-        return Optional.ofNullable(namedStore.get(key));
+        return Optional.ofNullable(this.namedStore.get(key));
     }
 
     @Override
     public Optional<T> findByUid(final UUID uid) {
-        return Optional.ofNullable(uidStore.get(uid));
+        return Optional.ofNullable(this.uidStore.get(uid));
     }
 
     private String generateStoreKey(final String nameSpace, final String name) {
@@ -72,56 +72,57 @@ public abstract class GenericStoreService<T extends Resource<?>> implements Stor
     public T save(final T object) throws OptimisticLockStoreException {
         log.trace("Saving: {}", object);
 
-        String key = generateStoreKey(object.getNameSpace(), object.getName());
+        final String key = this.generateStoreKey(object.getNameSpace(), object.getName());
 
-        //noinspection unchecked
-        T data = (!namedStore.containsKey(key))
+        @SuppressWarnings("unchecked")
+        final
+        T data = (!this.namedStore.containsKey(key))
                 ? object
                 : (T) object.increaseGeneration();
 
 
-        checkOptimisticLocking(key, data);
+        this.checkOptimisticLocking(key, data);
 
-        namedStore.put(key, data);
-        uidStore.put(object.getUid(), data);
+        this.namedStore.put(key, data);
+        this.uidStore.put(object.getUid(), data);
         return data;
     }
 
     private void checkOptimisticLocking(final String key, final T object) {
         if (
-                namedStore.containsKey(key)
-                        && (namedStore.get(key).getGeneration() >= object.getGeneration())
+                this.namedStore.containsKey(key)
+                        && (this.namedStore.get(key).getGeneration() >= object.getGeneration())
         ) {
-            throw new OptimisticLockStoreException(namedStore.get(key).getGeneration(), object.getGeneration());
+            throw new OptimisticLockStoreException(this.namedStore.get(key).getGeneration(), object.getGeneration());
         }
     }
 
     @Override
     public void remove(final T object) {
-        String key = generateStoreKey(object.getNameSpace(), object.getName());
+        final String key = this.generateStoreKey(object.getNameSpace(), object.getName());
 
-        namedStore.remove(key);
-        uidStore.remove(object.getUid());
+        this.namedStore.remove(key);
+        this.uidStore.remove(object.getUid());
     }
 
     @Override
     public void remove(final String nameSpace, final String name) {
-        String key = generateStoreKey(nameSpace, name);
+        final String key = this.generateStoreKey(nameSpace, name);
 
-        if (namedStore.containsKey(key)) {
-            uidStore.remove(namedStore.get(key).getUid());
-            namedStore.remove(key);
+        if (this.namedStore.containsKey(key)) {
+            this.uidStore.remove(this.namedStore.get(key).getUid());
+            this.namedStore.remove(key);
         }
     }
 
     @Override
     public void remove(final UUID uid) {
-        if (uidStore.containsKey(uid)) {
-            T data = uidStore.get(uid);
-            String key = generateStoreKey(data.getNameSpace(), data.getName());
+        if (this.uidStore.containsKey(uid)) {
+            final T data = this.uidStore.get(uid);
+            final String key = this.generateStoreKey(data.getNameSpace(), data.getName());
 
-            namedStore.remove(key);
-            uidStore.remove(uid);
+            this.namedStore.remove(key);
+            this.uidStore.remove(uid);
         }
     }
 }

@@ -17,15 +17,21 @@
 
 package de.kaiserpfalzedv.commons.core.workflow;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import lombok.extern.jackson.Jacksonized;
-import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * WorkflowDetailInfo -- The details of a workflow, action and call.
@@ -40,7 +46,6 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @Getter
-@Slf4j
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(
         name = "WorkflowDetailInfo",
@@ -68,7 +73,7 @@ public class WorkflowDetailInfo implements de.kaiserpfalzedv.commons.api.workflo
             maxLength = 100
     )
     @Builder.Default
-    private String id = UUID.randomUUID().toString();
+    private final String id = UUID.randomUUID().toString();
 
     @Schema(
             description = "The creation time.",
@@ -77,7 +82,7 @@ public class WorkflowDetailInfo implements de.kaiserpfalzedv.commons.api.workflo
             required = true
     )
     @Builder.Default
-    private OffsetDateTime created = OffsetDateTime.now(ZoneId.of("UTC"));
+    private final OffsetDateTime created = OffsetDateTime.now(ZoneId.of("UTC"));
 
 
     @Schema(
@@ -87,7 +92,7 @@ public class WorkflowDetailInfo implements de.kaiserpfalzedv.commons.api.workflo
             required = true
     )
     @Builder.Default
-    private OffsetDateTime ttl = OffsetDateTime.now(ZoneId.of("UTC")).plusYears(10);
+    private final OffsetDateTime ttl = OffsetDateTime.now(ZoneId.of("UTC")).plusYears(10);
 
 
     @Schema(
