@@ -39,5 +39,6 @@
         <module>kp-commons-jackson</module>
         <module>kp-commons-jpa</module>
         <module>kp-commons-rest</module>
+        <module>kp-commons-vaadin</module>
     </modules>
 </project>
