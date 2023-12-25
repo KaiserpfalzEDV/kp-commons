@@ -149,6 +149,13 @@
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.18.30</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
                     <executions>
                         <execution>
@@ -313,13 +320,14 @@
                     </executions>
                     <configuration>
                         <systemPropertyVariables>
-                            <!--suppress UnresolvedMavenProperty -->
+                            <!--suppress
+                            UnresolvedMavenProperty -->
                             <maven.home>${maven.home}</maven.home>
                         </systemPropertyVariables>
                         <trimStackTrace>false</trimStackTrace>
                         <enableAssertions>true</enableAssertions>
                     </configuration>
-            </plugin>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
