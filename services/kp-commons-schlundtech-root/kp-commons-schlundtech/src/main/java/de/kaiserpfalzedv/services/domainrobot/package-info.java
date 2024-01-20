@@ -17,16 +17,11 @@
  */
 
 /**
- * <p>sms77.io Library for sending SMS.</p>>
+ * <p>Library to connect to the Schlundtech Domain Robot.</p>>
  *
- * <p>This is the client for the Webservice https://sms77.io.</p>
- *
- * <p>It is a paid service to send SMS messages.</p>
- *
- * <p>Kaiserpfalt EDV-Service or Roland Lichti is not affiliated with sms77.io. We just needed a service to send SMS
- * messages.</p>
+ * <p>Kaiserpfalz EDV-Service or Roland Lichti is not affiliated with Schlundtech. We just needed a service for domain handling.</p>
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-21
  */
-package de.kaiserpfalzedv.services.sms77;
+package de.kaiserpfalzedv.services.domainrobot;

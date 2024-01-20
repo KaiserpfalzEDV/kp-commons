@@ -15,15 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.services.sms77.client;
+package de.kaiserpfalzedv.services.domainrobot.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Set;
-
-import de.kaiserpfalzedv.services.domainrobot.client.DomainRobotClient;
-import de.kaiserpfalzedv.services.domainrobot.client.DomainRobotClientConfig;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -35,7 +30,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 
