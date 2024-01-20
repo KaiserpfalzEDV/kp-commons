@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>kp-commons-schlundtech-root</artifactId>
+        <groupId>de.kaiserpfalz-edv.commons.services</groupId>
+        <version>3.2.2</version>
+    </parent>
+
+    <artifactId>schlundtech-domainrobot-models</artifactId>
+    <name>KP Commons :: Services :: Internet :: Schlundtech :: Domainrobot Domain Model</name>
+    <description>Library to access the API of Schlundtech based on https://github.com/InterNetX/java-domainrobot-sdk.</description>
+
+    <dependencies>
+        <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+    </dependencies>
+
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/openapi</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>io.swagger</groupId>
+										<artifactId>swagger-codegen-maven-plugin</artifactId>
+										<versionRange>[2.2.3,)</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+	<profiles>
+		<profile>
+			<id>java-with-swagger</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>2.2</version>
+
+						<executions>
+							<execution>
+								<id>before-swagger</id>
+								<configuration>
+									<filesets>
+
+										<fileset>
+											<directory>${basedir}/target/generated-sources/openapi/org/domainrobot/models/generated</directory>
+											<includes>
+												<include>**</include>
+											</includes>
+											<followSymlinks>false</followSymlinks>
+										</fileset>
+									</filesets>
+								</configuration>
+								<goals>
+									<goal>clean</goal>
+								</goals>
+								<phase>clean</phase>
+							</execution>
+
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>io.swagger</groupId>
+						<artifactId>swagger-codegen-maven-plugin</artifactId>
+						<version>2.4.10</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<inputSpec>https://raw.githubusercontent.com/InterNetX/internetx-swagger-files/master/src/domainrobot.json</inputSpec>
+									<language>java</language>
+									<output>target/generated-sources/openapi</output>
+									<addCompileSourceRoot>false</addCompileSourceRoot>
+									<generateApis>false</generateApis>
+									<generateApiTests>false</generateApiTests>
+									<generateApiDocumentation>false</generateApiDocumentation>
+									<generateModels>true</generateModels>
+									<generateModelTests>false</generateModelTests>
+									<generateModelDocumentation>false</generateModelDocumentation>
+									<generateSupportingFiles>false</generateSupportingFiles>
+									<modelPackage>org.domainrobot.sdk.models.generated</modelPackage>
+									<apiPackage>org.domainrobot</apiPackage>
+									<library>feign</library>
+									<configOptions>
+										<sourceFolder>/</sourceFolder>
+										<useBeanValidation>true</useBeanValidation>
+										<groupId>org.domainrobot</groupId>
+										<dateLibrary>legacy</dateLibrary>
+									</configOptions>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

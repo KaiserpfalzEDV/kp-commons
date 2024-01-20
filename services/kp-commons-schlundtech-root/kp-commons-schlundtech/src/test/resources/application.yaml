@@ -18,15 +18,24 @@
 #  url: ${EAN_SEARCH_API_URL}
 #  scope: javax.inject.Singleton
 
-spring:
-  security:
-    oauth2:
-      client:
-        registration: 
-          google: 
-            client-id: <client-id>
-            client-secret: <secret>
+domainrobot:
+  token: abcd1234
 
-logging:
-  level:
-    org.springframework.web.client.RestTemplate: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          domainrobot:
+            connect-timeout: 5000
+            read-timeout: 10000
+            follow-redirects: true
+            micrometer:
+              enabled: true
+            url: http://localhost:8089

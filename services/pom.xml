@@ -39,6 +39,7 @@
         <module>kp-commons-dnb-lookup</module>
         <module>kp-commons-sms77</module>
         <module>kp-commons-ean-search</module>
+	<module>kp-commons-schlundtech-root</module>
     </modules>
 
     <dependencyManagement>

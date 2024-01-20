@@ -14,19 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-#dnb-lookup-api: &dnb-lookup
-#  url: ${EAN_SEARCH_API_URL}
-#  scope: javax.inject.Singleton
+domainrobot-api: &domainrobot-api
+  url: ${DOMAINROBOT_API_URL:${domainrobot.uri}}
+  scope: javax.inject.Singleton
 
-spring:
-  security:
-    oauth2:
-      client:
-        registration: 
-          google: 
-            client-id: <client-id>
-            client-secret: <secret>
+domainrobot-mock: &domainrobot-api-mock
+  url: https://localhost:9084/
+  scope: javax.inject.Singleton
 
-logging:
-  level:
-    org.springframework.web.client.RestTemplate: DEBUG
+domainrobot:
+  uri: https://gateway.sms77.io/
+  token: ${DOMAINROBOT_API_KEY:please_set_DOMAINROBOT_API_KEY_env_variable}

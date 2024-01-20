@@ -17,6 +17,12 @@
  */
 package de.kaiserpfalzedv.commons.vaadin.security.security;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * 
@@ -24,17 +30,28 @@ package de.kaiserpfalzedv.commons.vaadin.security.security;
  * @version 1.0.0
  * @since 2023-12-25
  */
+@Configuration
 @EnableWebSecurity
 public class AuthorityMapper {
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
+        http
+            .logout(Customizer.withDefaults())
+            .oauth2Login(Customizer.withDefaults())
 
-        http.authorizeRequests(authorizeRequests -> authorizeRequests
-                .mvcMatchers("/my-endpoint")
-                    .hasAuthority("SCOPE_openid")
+            .oidcLogout(Customizer.withDefaults())
+
+            .csrf(Customizer.withDefaults())
+
+            .authorizeHttpRequests(r -> r
+                .requestMatchers("/actuator/**").authenticated()
+                .requestMatchers("/").hasAuthority("SCOPE_openid")
                 .anyRequest().authenticated()
-            );
-
+            )
+            
+            .sessionManagement(Customizer.withDefaults())
+            ;
+    
         return http.build();
     }
 }
