@@ -111,12 +111,12 @@
         <war.output.directory>undefined</war.output.directory>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.2.1</spring-boot.version>
+        <spring-boot.version>3.2.2</spring-boot.version>
     </properties>
 
     <reporting>
@@ -528,30 +528,6 @@
                     <testResource>
                         <filtering>true</filtering>
                         <directory>src/test/resources</directory>
-                        <excludes>
-                            <exclude>**/*.docx</exclude>
-                            <exclude>**/*.xlsx</exclude>
-                            <exclude>**/*.zip</exclude>
-                            <exclude>**/*.tgz</exclude>
-                            <exclude>**/*.png</exclude>
-                            <exclude>**/*.jpg</exclude>
-                            <exclude>**/*.gpg</exclude>
-                            <exclude>**/*.license</exclude>
-                        </excludes>
-                    </testResource>
-                    <testResource>
-                        <filtering>false</filtering>
-                        <directory>src/test/resources</directory>
-                        <includes>
-                            <include>**/*.docx</include>
-                            <include>**/*.xlsx</include>
-                            <include>**/*.zip</include>
-                            <include>**/*.tgz</include>
-                            <include>**/*.png</include>
-                            <include>**/*.jpg</include>
-                            <include>**/*.gpg</include>
-                            <include>**/*.license</include>
-                        </includes>
                     </testResource>
                 </testResources>
             </build>

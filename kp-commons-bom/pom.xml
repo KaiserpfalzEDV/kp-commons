@@ -34,7 +34,7 @@
         <kp-commons.version>3.2.2</kp-commons.version>
 
         <spring-boot.version>3.2.2</spring-boot.version>
-        <springframework.version>6.1.2</springframework.version>
+        <springframework.version>6.1.3</springframework.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
