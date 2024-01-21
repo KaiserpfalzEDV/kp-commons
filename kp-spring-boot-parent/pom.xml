@@ -22,19 +22,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <artifactId>kp-commons-root</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-parent</artifactId>
         <version>3.2.2</version>
+        <relativePath/>
     </parent>
 
-    <artifactId>kp-commons-parent</artifactId>
+    <groupId>de.kaiserpfalz-edv.commons</groupId>
+    <artifactId>kp-spring-boot-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Parent</name>
+    <name>KP Commons :: Spring Boot Parent</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
     <url>https://kaiserpfalzedv.github.io/kp-commons</url>
 
-    <inceptionYear>2001</inceptionYear>
+    <inceptionYear>2024</inceptionYear>
 
     <licenses>
         <license>
@@ -500,30 +502,6 @@
                     <testResource>
                         <filtering>true</filtering>
                         <directory>src/test/resources</directory>
-                        <excludes>
-                            <exclude>**/*.docx</exclude>
-                            <exclude>**/*.xlsx</exclude>
-                            <exclude>**/*.zip</exclude>
-                            <exclude>**/*.tgz</exclude>
-                            <exclude>**/*.png</exclude>
-                            <exclude>**/*.jpg</exclude>
-                            <exclude>**/*.gpg</exclude>
-                            <exclude>**/*.license</exclude>
-                        </excludes>
-                    </testResource>
-                    <testResource>
-                        <filtering>false</filtering>
-                        <directory>src/test/resources</directory>
-                        <includes>
-                            <include>**/*.docx</include>
-                            <include>**/*.xlsx</include>
-                            <include>**/*.zip</include>
-                            <include>**/*.tgz</include>
-                            <include>**/*.png</include>
-                            <include>**/*.jpg</include>
-                            <include>**/*.gpg</include>
-                            <include>**/*.license</include>
-                        </includes>
                     </testResource>
                 </testResources>
             </build>
@@ -762,7 +740,6 @@
                 </dependency>
             </dependencies>
         </profile>
-
 
         <profile>
             <id>helm</id>

@@ -33,8 +33,8 @@
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
         <kp-commons.version>3.2.1</kp-commons.version>
 
-        <spring-boot.version>3.2.1</spring-boot.version>
-        <springframework.version>6.1.2</springframework.version>
+        <spring-boot.version>3.2.2</spring-boot.version>
+        <springframework.version>6.1.3</springframework.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
