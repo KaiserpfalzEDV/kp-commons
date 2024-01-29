@@ -22,15 +22,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <artifactId>kp-commons-root</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-parent</artifactId>
         <version>3.2.2</version>
+        <relativePath/>
     </parent>
 
-    <artifactId>kp-commons-parent</artifactId>
+    <groupId>de.kaiserpfalz-edv.commons</groupId>
+    <artifactId>kp-spring-boot-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Parent</name>
+    <name>KP Commons :: Spring Boot Parent</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
     <url>https://kaiserpfalzedv.github.io/kp-commons</url>
 
@@ -114,7 +116,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.2.2</spring-boot.version>
+        <spring-boot.version>3.2.1</spring-boot.version>
     </properties>
 
     <reporting>
@@ -362,6 +364,10 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -464,10 +470,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>

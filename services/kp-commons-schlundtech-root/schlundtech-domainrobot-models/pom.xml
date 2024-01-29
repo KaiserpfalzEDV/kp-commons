@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>schlundtech-domainrobot-models</artifactId>
-    <name>KP Commons :: Services :: Internet :: Schlundtech :: Domainrobot Domain Model</name>
+    <name>KP Commons :: Services :: Schlundtech :: Domainrobot Domain Model</name>
     <description>Library to access the API of Schlundtech based on https://github.com/InterNetX/java-domainrobot-sdk.</description>
 
     <dependencies>
