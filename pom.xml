@@ -38,6 +38,7 @@
         <module>core</module>
         <module>modules</module>
         <module>services</module>
+        <module>kp-spring-boot-parent</module>
     </modules>
 
     <scm>

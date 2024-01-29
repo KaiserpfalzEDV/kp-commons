@@ -20,25 +20,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <artifactId>kp-commons-parent</artifactId>
+        <groupId>de.kaiserpfalz-edv.commons.services</groupId>
+        <artifactId>kp-commons-services-root</artifactId>
         <version>3.2.2</version>
-	<relativePath>../kp-commons-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
-    <artifactId>kp-commons-modules-root</artifactId>
+    <groupId>de.kaiserpfalz-edv.commons.services</groupId>
+    <artifactId>kp-commons-schlundtech-root</artifactId>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Modules :: Root</name>
+    <name>KP Commons :: Services :: Schlundtech :: Root</name>
     <description>
-        The specialized modules for JPA, REST, ...
+        A library to use the domainrobot of Schlundtech.
     </description>
 
     <modules>
-        <module>kp-commons-jackson</module>
-        <module>kp-commons-jpa</module>
-        <module>kp-commons-rest</module>
-        <module>kp-commons-vaadin</module>
+        <module>schlundtech-domainrobot-models</module>
+        <module>kp-commons-schlundtech</module>
     </modules>
 </project>

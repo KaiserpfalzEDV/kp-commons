@@ -1,0 +1,111 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/lookup",
+        "headers": {
+          "X-Api-Key": {
+            "matches": "^.+$"
+          },
+          "Accept": {
+            "equalTo": "application/json"
+          },
+          "Content-type": {
+            "equalTo": "application/json"
+          }
+        },
+        "queryParameters": {
+          "number": {
+            "equalTo": "491234567890"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Date": "Sun, 22 Jan 2023 00:38:50 GMT",
+          "Server": "Apache",
+          "X-sms77-trace-id": "669343382",
+          "Upgrade": "h2",
+          "Connection": "Upgrade, Keep-Alive",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Keep-Alive": "timeout=30, max=500",
+          "Transfer-Encoding": "chunked",
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "success": true,
+          "national": "0123 4567890",
+          "international": "+491234567890",
+          "international_formatted": "+49 123 4567890",
+          "country_name": "Germany",
+          "country_code": "49",
+          "country_iso": "DE",
+          "carrier": "T-Mobile",
+          "network_type": "mobile"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/lookup",
+        "headers": {
+          "X-Api-Key": {
+            "matches": "^.+$"
+          },
+          "Accept": {
+            "equalTo": "application/json"
+          },
+          "Content-type": {
+            "equalTo": "application/json"
+          }
+        },
+        "queryParameters": {
+          "number": {
+            "equalTo": "491234567890,492345678901"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Date": "Sun, 22 Jan 2023 00:38:50 GMT",
+          "Server": "Apache",
+          "X-sms77-trace-id": "669343382",
+          "Upgrade": "h2",
+          "Connection": "Upgrade, Keep-Alive",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Keep-Alive": "timeout=30, max=500",
+          "Transfer-Encoding": "chunked",
+          "Content-Type": "application/json"
+        },
+        "jsonBody": [
+          {
+            "success": true,
+            "national": "0123 4567890",
+            "international": "+491234567890",
+            "international_formatted": "+49 123 4567890",
+            "country_name": "Germany",
+            "country_code": "49",
+            "country_iso": "DE",
+            "carrier": "T-Mobile",
+            "network_type": "mobile"
+          },
+          {
+            "success": true,
+            "national": "0234 5678901",
+            "international": "+492345678901",
+            "international_formatted": "+49 234 5678901",
+            "country_name": "Germany",
+            "country_code": "49",
+            "country_iso": "DE",
+            "carrier": "O2",
+            "network_type": "mobile"
+          }
+        ]
+      }
+    }
+  ]
+}

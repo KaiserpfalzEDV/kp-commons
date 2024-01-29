@@ -17,18 +17,23 @@
 
 package de.kaiserpfalzedv.commons.jpa;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.NonNull;
-import lombok.experimental.SuperBuilder;
+import java.time.OffsetDateTime;
+
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
-import jakarta.persistence.*;
-import java.time.OffsetDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.SequenceGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @RevisionEntity
@@ -52,13 +57,10 @@ public abstract class AbstractRevisionedJPAEntity extends AbstractJPAEntity {
 
     @Override
     public AbstractRevisionedJPAEntity clone() throws CloneNotSupportedException {
-        AbstractRevisionedJPAEntity result = (AbstractRevisionedJPAEntity) super.clone();
+        final AbstractRevisionedJPAEntity result = (AbstractRevisionedJPAEntity) super.clone();
 
-        result.revId = revId;
-
-        if (revisioned != null) {
-            result.revisioned = OffsetDateTime.from(revisioned);
-        }
+        result.revId = this.revId;
+        result.revisioned = this.revisioned;
 
         return result;
     }

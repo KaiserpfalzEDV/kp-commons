@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/">
+    <zs:version>1.1</zs:version>
+    <zs:numberOfRecords>1</zs:numberOfRecords>
+    <zs:records>
+        <zs:record>
+            <zs:recordSchema>marcxml</zs:recordSchema>
+            <zs:recordPacking>xml</zs:recordPacking>
+            <zs:recordData>
+                <record xmlns="http://www.loc.gov/MARC21/slim">
+                    <leader>03674cam a2200373 a 4500</leader>
+                    <controlfield tag="001">16668644</controlfield>
+                    <controlfield tag="005">20140227165037.0</controlfield>
+                    <controlfield tag="008">101116s2010 fr a b l000 0 fre</controlfield>
+                    <datafield tag="906" ind1=" " ind2=" ">
+                        <subfield code="a">7</subfield>
+                        <subfield code="b">cbc</subfield>
+                        <subfield code="c">origres</subfield>
+                        <subfield code="d">3</subfield>
+                        <subfield code="e">ncip</subfield>
+                        <subfield code="f">20</subfield>
+                        <subfield code="g">y-gencatlg</subfield>
+                    </datafield>
+                    <datafield tag="925" ind1="0" ind2=" ">
+                        <subfield code="a">acquire</subfield>
+                        <subfield code="b">1 shelf copy</subfield>
+                        <subfield code="x">policy default</subfield>
+                    </datafield>
+                    <datafield tag="955" ind1=" " ind2=" ">
+                        <subfield code="b">bd10 2011-03-04</subfield>
+                        <subfield code="a">bd 26 2011-03-09</subfield>
+                        <subfield code="b">th05 2011-05-07</subfield>
+                        <subfield code="c">th05 2011-05-07 to subj.</subfield>
+                        <subfield code="d">bd15 2011-05-09 to BCCD</subfield>
+                    </datafield>
+                    <datafield tag="010" ind1=" " ind2=" ">
+                        <subfield code="a">2011371698</subfield>
+                    </datafield>
+                    <datafield tag="020" ind1=" " ind2=" ">
+                        <subfield code="a">9782351250839</subfield>
+                    </datafield>
+                    <datafield tag="040" ind1=" " ind2=" ">
+                        <subfield code="a">DLC</subfield>
+                        <subfield code="c">DLC</subfield>
+                        <subfield code="d">DLC</subfield>
+                    </datafield>
+                    <datafield tag="042" ind1=" " ind2=" ">
+                        <subfield code="a">pcc</subfield>
+                    </datafield>
+                    <datafield tag="043" ind1=" " ind2=" ">
+                        <subfield code="a">e-fr---</subfield>
+                    </datafield>
+                    <datafield tag="050" ind1="0" ind2="0">
+                        <subfield code="a">NE650.W44</subfield>
+                        <subfield code="b">A4 2010</subfield>
+                    </datafield>
+                    <datafield tag="245" ind1="0" ind2="0">
+                        <subfield code="a">Des mondes de papier :</subfield>
+                        <subfield code="b">l'imagerie populaire de Wissembourg : Muse&#x301;es de la Ville de
+                            Strasbourg, 16. oct. 2010-31. jan. 2011
+                        </subfield>
+                    </datafield>
+                    <datafield tag="260" ind1=" " ind2=" ">
+                        <subfield code="a">Strasbourg :</subfield>
+                        <subfield code="b">Muse&#x301;es de la ville de Strasbourg,</subfield>
+                        <subfield code="c">[2010]</subfield>
+                    </datafield>
+                    <datafield tag="300" ind1=" " ind2=" ">
+                        <subfield code="a">301, [3] p. :</subfield>
+                        <subfield code="b">ill. (chiefly col.) ;</subfield>
+                        <subfield code="c">30 cm.</subfield>
+                    </datafield>
+                    <datafield tag="500" ind1=" " ind2=" ">
+                        <subfield code="a">Published on the occasion of an exhibition organized by the Muse&#x301;e
+                            alsacien at the Galerie Heitz, Palais Rohan, Strasbourg, France.
+                        </subfield>
+                    </datafield>
+                    <datafield tag="504" ind1=" " ind2=" ">
+                        <subfield code="a">Includes bibliographical references (p. 299-[302]).</subfield>
+                    </datafield>
+                    <datafield tag="505" ind1="0" ind2=" ">
+                        <subfield code="a">Entre France et Allemagne, une histoire et une historiographie : l'imagerie
+                            Wentzel de Wissembourg / Konrad Vanja et Dominique Lerch -- Les principaux centres de
+                            production d'imagerie populaire imprime&#x301;e en Europe / Konrad Vanja -- Carte: la
+                            production imagie&#x300;re en Europe -- Wissembourg, une cite&#x301; imagie&#x300;re? /
+                            Dominique Lerch -- L'histoire de l'imagerie Wentzel (et successeurs) de Wissembourg / Serge
+                            Burger -- Le colportage d'images en Alsace au XIXe sie&#x300;cle : histoire e&#x301;conomique,
+                            histoire religieuse, histoire culturelle, histoire des mentalite&#x301;s? / Dominique Lerch
+                            -- Les recueils d'images du muse&#x301;e Westercamp, de Wissembourg / Carine Schutz -- La
+                            diffusion de l'image populaire d'E&#x301;pinal: regards croise&#x301;s avec celle de l'image
+                            Wentzel / Isabelle Chave -- Carte : l'espace commercial de l'imagerie Wentzel -- Imprimer
+                            des images au XIXe sie&#x300;cle / Alexandre Tourscher -- Chronologie / Serge Burger --
+                            Iconographie -- Les images arabes de Wissembourg / Malou Schneider -- Les vues de ville dans
+                            l'imagerie de Wissembourg / Anny-Claire Haus -- La collection d'images militaires de
+                            Wissembourg dans les Muse&#x301;es de Strasbourg /
+                        </subfield>
+                        <subfield code="r">Monique Fuchs -- Au coeur de la guerre, les Constructions / Anne Cable&#x301;
+                            -- Les maquettes a&#x300; de&#x301;couper de Jean Fre&#x301;de&#x301;ric Wentzel et de ses
+                            successeurs / Dieter Nievergelt -- Les tableaux pour "l'instruction de la jeunesse" /
+                        </subfield>
+                        <subfield code="r">Josie Lichti --</subfield>
+                        <subfield code="t">La le&#x301;gende Genevie&#x300;ve de Brabant dans l'imagerie populaire de
+                            France et d'Allemagne /
+                        </subfield>
+                        <subfield code="r">Konrad Vanja --</subfield>
+                        <subfield code="t">Les figures grandeur nature /</subfield>
+                        <subfield code="r">Florian Siffer --</subfield>
+                        <subfield code="t">Catalogue : Les religions --</subfield>
+                        <subfield code="t">Les a&#x302;ges de la vie --</subfield>
+                        <subfield code="t">Les images de&#x301;coratives --</subfield>
+                        <subfield code="t">Les affiches --</subfield>
+                        <subfield code="t">Les images grandeur nature --</subfield>
+                        <subfield code="t">Les petits soldats --</subfield>
+                        <subfield code="t">Les pantins et les de&#x301;coupages --</subfield>
+                        <subfield code="t">Les constructions --</subfield>
+                        <subfield code="t">Les jeux et les jouets optiques --</subfield>
+                        <subfield code="t">Les jeux de parcours --</subfield>
+                        <subfield code="t">Les tableaux pe&#x301;dagogiques --</subfield>
+                        <subfield code="t">Les petites images --</subfield>
+                        <subfield code="t">Les histoires en quatre e&#x301;pisodes --</subfield>
+                        <subfield code="t">Les contes et le&#x301;gendes --</subfield>
+                        <subfield code="t">Le petit the&#x301;a&#x302;tre</subfield>
+                    </datafield>
+                    <datafield tag="600" ind1="1" ind2="0">
+                        <subfield code="a">Wentzel, Jean-Fre&#x301;de&#x301;ric,</subfield>
+                        <subfield code="d">1807-1869</subfield>
+                        <subfield code="v">Exhibitions.</subfield>
+                    </datafield>
+                    <datafield tag="650" ind1=" " ind2="0">
+                        <subfield code="a">Chromolithography</subfield>
+                        <subfield code="z">France</subfield>
+                        <subfield code="z">Wissembourg</subfield>
+                        <subfield code="x">History</subfield>
+                        <subfield code="y">19th century</subfield>
+                        <subfield code="v">Exhibitions.</subfield>
+                    </datafield>
+                    <datafield tag="650" ind1=" " ind2="0">
+                        <subfield code="a">Holy cards</subfield>
+                        <subfield code="z">France</subfield>
+                        <subfield code="z">Wissembourg</subfield>
+                        <subfield code="x">History</subfield>
+                        <subfield code="y">19th century</subfield>
+                        <subfield code="v">Exhibitions.</subfield>
+                    </datafield>
+                    <datafield tag="650" ind1=" " ind2="0">
+                        <subfield code="a">Popular culture</subfield>
+                        <subfield code="z">France</subfield>
+                        <subfield code="z">Wissembourg</subfield>
+                        <subfield code="x">History</subfield>
+                        <subfield code="y">19th century</subfield>
+                        <subfield code="v">Exhibitions.</subfield>
+                    </datafield>
+                    <datafield tag="650" ind1=" " ind2="0">
+                        <subfield code="a">Popular culture</subfield>
+                        <subfield code="z">Europe</subfield>
+                        <subfield code="x">History</subfield>
+                        <subfield code="y">19th century</subfield>
+                        <subfield code="v">Exhibitions.</subfield>
+                    </datafield>
+                    <datafield tag="650" ind1=" " ind2="7">
+                        <subfield code="a">Bilderbogen</subfield>
+                        <subfield code="y">1800-1900.</subfield>
+                        <subfield code="2">gmgpc</subfield>
+                    </datafield>
+                    <datafield tag="710" ind1="2" ind2=" ">
+                        <subfield code="a">Muse&#x301;e alsacien.</subfield>
+                    </datafield>
+                    <datafield tag="710" ind1="2" ind2=" ">
+                        <subfield code="a">Galerie Heitz (Strasbourg, France)</subfield>
+                    </datafield>
+                    <datafield tag="710" ind1="2" ind2=" ">
+                        <subfield code="a">Muse&#x301;es de Strasbourg.</subfield>
+                    </datafield>
+                    <datafield tag="923" ind1=" " ind2=" ">
+                        <subfield code="d">20101210</subfield>
+                        <subfield code="n">B00112582</subfield>
+                        <subfield code="s">93001875</subfield>
+                    </datafield>
+                    <datafield tag="991" ind1=" " ind2=" ">
+                        <subfield code="b">r-P&amp;PRef</subfield>
+                        <subfield code="t">Copy 2</subfield>
+                    </datafield>
+                </record>
+            </zs:recordData>
+            <zs:recordPosition>1</zs:recordPosition>
+        </zs:record>
+    </zs:records>
+    <zs:echoedSearchRetrieveRequest>
+        <zs:version>1.1</zs:version>
+        <zs:query>9782351250839</zs:query>
+        <zs:startRecord>1</zs:startRecord>
+        <zs:maximumRecords>5</zs:maximumRecords>
+        <zs:recordPacking>xml</zs:recordPacking>
+        <zs:recordSchema>marcxml</zs:recordSchema>
+    </zs:echoedSearchRetrieveRequest>
+</zs:searchRetrieveResponse>

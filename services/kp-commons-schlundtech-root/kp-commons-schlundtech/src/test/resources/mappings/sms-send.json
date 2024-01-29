@@ -1,0 +1,143 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "POST",
+        "urlPath": "/api/sms",
+        "headers": {
+          "X-Api-Key": {
+            "matches": "^.+$"
+          },
+          "Accept": {
+            "equalTo": "application/json"
+          },
+          "Content-type": {
+            "equalTo": "application/json"
+          }
+        },
+        "bodyPatterns": [{
+            "equalToJson": {
+              "to": ["491234567890"],
+              "text": "T01",
+              "no_reload": 1,
+              "flash": 0,
+              "ttl": "60",
+              "return_msg_id": 1,
+              "foreign_id": "9272baaa-18a5-4db1-ac23-d03e477a0ebf"
+            }
+          }]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Date": "Sun, 22 Jan 2023 00:38:50 GMT",
+          "Server": "Apache",
+          "X-sms77-trace-id": "669343382",
+          "Upgrade": "h2",
+          "Connection": "Upgrade, Keep-Alive",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Keep-Alive": "timeout=30, max=500",
+          "Transfer-Encoding": "chunked",
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "success": "100",
+          "total_price": 0.075,
+          "balance": 0.125,
+          "debug": "false",
+          "sms_type": "direct",
+          "messages": [
+            {
+              "id": "77196885479",
+              "sender": "D12",
+              "recipient": "491712185927",
+              "text": "Hallo, dies ist eine Test-SMS",
+              "encoding": "gsm",
+              "label": null,
+              "parts": 1,
+              "udh": null,
+              "is_binary": false,
+              "price": 0.075,
+              "success": true,
+              "error": null,
+              "error_text": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "urlPath": "/api/sms",
+        "headers": {
+          "X-Api-Key": {
+            "matches": "^.+$"
+          },
+          "Accept": {
+            "equalTo": "application/json"
+          },
+          "Content-type": {
+            "equalTo": "application/json"
+          }
+        },
+        "bodyPatterns": [{
+            "equalToJson": { "to": ["491234567890", "492345678901"] }
+          }]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Date": "Sun, 22 Jan 2023 00:38:50 GMT",
+          "Server": "Apache",
+          "X-sms77-trace-id": "669343382",
+          "Upgrade": "h2",
+          "Connection": "Upgrade, Keep-Alive",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Keep-Alive": "timeout=30, max=500",
+          "Transfer-Encoding": "chunked",
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "success": "100",
+          "total_price": 0.075,
+          "balance": 0.125,
+          "debug": "false",
+          "sms_type": "direct",
+          "messages": [
+            {
+              "id": "77196885479",
+              "sender": "D12",
+              "recipient": "491234567890",
+              "text": "T02",
+              "encoding": "gsm",
+              "label": null,
+              "parts": 1,
+              "udh": null,
+              "is_binary": false,
+              "price": 0.075,
+              "success": true,
+              "error": null,
+              "error_text": null
+            },
+            {
+              "id": "77196885479",
+              "sender": "D12",
+              "recipient": "492345678901",
+              "text": "T02",
+              "encoding": "gsm",
+              "label": null,
+              "parts": 1,
+              "udh": null,
+              "is_binary": false,
+              "price": 0.075,
+              "success": true,
+              "error": null,
+              "error_text": null
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

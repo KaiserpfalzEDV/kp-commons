@@ -31,7 +31,7 @@
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>3.2.1</kp-commons.version>
+        <kp-commons.version>3.2.2</kp-commons.version>
 
         <spring-boot.version>3.2.2</spring-boot.version>
         <springframework.version>6.1.3</springframework.version>
