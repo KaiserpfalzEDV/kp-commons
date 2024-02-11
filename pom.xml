@@ -31,13 +31,13 @@
     </description>
 
     <modules>
-        <module>kp-commons-parent</module>
-        <module>kp-spring-boot-parent</module>
         <module>kp-commons-bom</module>
+        <module>kp-commons-parent</module>
         
         <module>core</module>
         <module>modules</module>
         <module>services</module>
+        <module>kp-spring-boot-parent</module>
     </modules>
 
     <scm>
