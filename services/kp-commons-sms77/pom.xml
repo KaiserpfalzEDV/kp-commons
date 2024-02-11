@@ -23,7 +23,7 @@
     <parent>
         <artifactId>kp-commons-services-root</artifactId>
         <groupId>de.kaiserpfalz-edv.commons.services</groupId>
-        <version>3.2.2-3-SNAPSHOT</version>
+        <version>3.2.2-3</version>
     </parent>
 
     <artifactId>kp-commons-sms77</artifactId>
