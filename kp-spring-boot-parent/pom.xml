@@ -30,7 +30,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-spring-boot-parent</artifactId>
-    <version>3.2.2-3-SNAPSHOT</version>
+    <version>3.2.2-3</version>
     <packaging>pom</packaging>
 
     <name>KP Commons :: Spring Boot Parent</name>
