@@ -227,6 +227,20 @@
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
+                        <delimiters>
+                            <delimiter>@</delimiter>
+                        </delimiters>
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>docx</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>tgz</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>gpg</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>license</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
                     </configuration>
                     <executions>
                         <execution>
@@ -306,8 +320,7 @@
                     </executions>
                     <configuration>
                         <systemPropertyVariables>
-                            <!--suppress
-                            UnresolvedMavenProperty -->
+                            <!--suppress UnresolvedMavenProperty -->
                             <maven.home>${maven.home}</maven.home>
                         </systemPropertyVariables>
                         <trimStackTrace>false</trimStackTrace>
