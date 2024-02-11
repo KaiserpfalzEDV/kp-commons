@@ -22,13 +22,13 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.2.2-2-SNAPSHOT</version>
+        <version>3.2.2-3-SNAPSHOT</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
     <groupId>de.kaiserpfalz-edv.commons.core</groupId>
     <artifactId>kp-commons-core-root</artifactId>
-    <version>3.2.2-2-SNAPSHOT</version>
+    <version>3.2.2-3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>KP Commons :: Core :: Root</name>
