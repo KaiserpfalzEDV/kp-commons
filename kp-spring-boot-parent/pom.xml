@@ -82,6 +82,11 @@
     </issueManagement>
 
     <distributionManagement>
+        <site>
+            <id>github</id>
+            <name>Kaiserpfalz EDV-Service -- KP-COMMONS</name>
+            <url>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</url>
+        </site>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>

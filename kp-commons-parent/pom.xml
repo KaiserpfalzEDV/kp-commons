@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-1</version>
+        <version>3.2.2-2-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
@@ -79,6 +79,11 @@
     </issueManagement>
 
     <distributionManagement>
+        <site>
+            <id>github</id>
+            <name>Kaiserpfalz EDV-Service -- KP-COMMONS</name>
+            <url>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</url>
+        </site>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
@@ -295,11 +300,18 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>4.0.0-M13</version>
+                    <version>3.12.1</version>
                     <configuration>
                         <skip>${skip.site}</skip>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

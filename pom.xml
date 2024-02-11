@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.2.2-1</version>
+    <version>3.2.2-2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>KP Commons</name>
@@ -42,16 +42,69 @@
 
     <scm>
         <url>https://github.com/KaiserpfalzEDV/kp-commons</url>
-        <connection>scm:git:git://github.com/KaiserpfalzEDV/kp-commons.git</connection>
-        <developerConnection>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</developerConnection>
+        <connection>scm:git:git://github.com/KaiserpfalzEDV/kp-commons</connection>
+        <developerConnection>scm:git:git@github.com:KaiserpfalzEDV/kp-commons</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
+        <site>
+            <id>github</id>
+            <name>Kaiserpfalz EDV-Service -- KP-COMMONS</name>
+            <url>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</url>
+        </site>
         <repository>
             <id>kp-commons</id>
             <name>GitHub Packages for kp-commons</name>
             <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
         </repository>
     </distributionManagement>
+
+    <properties>
+        <skipTests>false</skipTests>
+        <skip.jar>false</skip.jar>
+        <skip.javadoc>false</skip.javadoc>
+        <skip.source>false</skip.source>
+        <skip.site>false</skip.site>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.12.1</version>
+                    <configuration>
+                        <skip>${skip.site}</skip>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.5.0</version>
+                    <configuration>
+                        <skip>${skip.site}</skip>
+                    </configuration>
+                </plugin>                
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>                
+        </plugins>
+    </build>
 </project>
