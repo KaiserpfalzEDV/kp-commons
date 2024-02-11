@@ -27,7 +27,6 @@ package de.kaiserpfalzedv.commons.core.libravatar;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
@@ -56,7 +55,7 @@ public class Avatar implements de.kaiserpfalzedv.commons.api.libravatar.Avatar {
 
     @Override
     public byte[] download(final de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions options) {
-        try (InputStream is = URL.of(URI.create(this.buildUrl(options)), null).openStream()) {
+        try (InputStream is = URI.create(this.buildUrl(options)).toURL().openStream()) {
             return IOUtils.toByteArray(is);
         } catch (final IOException e) {
             throw new AvatarException(e);
