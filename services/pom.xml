@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.2-1</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
@@ -65,13 +65,18 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
+            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <artifactId>kp-commons-rest</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <artifactId>kp-commons-jackson</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
         </dependency>
 
         <dependency>
@@ -83,27 +88,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
-            <artifactId>kp-commons-jackson</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr353</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-spring-boot3</artifactId>

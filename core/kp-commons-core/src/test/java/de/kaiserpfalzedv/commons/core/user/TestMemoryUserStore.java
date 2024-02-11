@@ -17,23 +17,27 @@
 
 package de.kaiserpfalzedv.commons.core.user;
 
-import de.kaiserpfalzedv.commons.api.store.OptimisticLockStoreException;
-import de.kaiserpfalzedv.commons.api.user.UserStoreService;
-import de.kaiserpfalzedv.commons.core.resources.Metadata;
-import de.kaiserpfalzedv.commons.core.resources.Pointer;
-import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import jakarta.validation.constraints.NotNull;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import de.kaiserpfalzedv.commons.api.store.OptimisticLockStoreException;
+import de.kaiserpfalzedv.commons.api.user.UserStoreService;
+import de.kaiserpfalzedv.commons.core.resources.Metadata;
+import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import jakarta.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TestMemoryUserStore -- checks if the memory store behaves correctly.
@@ -47,13 +51,10 @@ public class TestMemoryUserStore extends AbstractTestBase {
     private static final String DATA_NAMESPACE = "testNS";
     private static final String DATA_NAME = "testName";
     private static final OffsetDateTime DATA_CREATED = OffsetDateTime.now(Clock.systemUTC());
-    private static final String DATA_API_KEY = "test-api-key";
 
     private static final UUID OTHER_UID = UUID.randomUUID();
-    private static final String OTHER_NAMESPACE = "otherNS";
     private static final String OTHER_NAME = "otherName";
     private static final OffsetDateTime OTHER_CREATED = OffsetDateTime.now(Clock.systemUTC());
-    private static final String OTHER_API_KEY = "other-api-key";
 
     private static final User DATA = User.builder()
             .metadata(
@@ -87,24 +88,24 @@ public class TestMemoryUserStore extends AbstractTestBase {
 
 
     public TestMemoryUserStore() {
-        setTestSuite(getClass().getSimpleName());
-        setLog(log);
+        this.setTestSuite(this.getClass().getSimpleName());
+        this.setLog(log);
     }
 
     @Test
     void shouldBeAMemoryUserStoreService() {
-        startTest("store-is-memory-based");
+        this.startTest("store-is-memory-based");
 
-        assertTrue(sut instanceof MemoryUserStore);
+        assertTrue(this.sut instanceof MemoryUserStore);
     }
 
     @Test
     void shouldSaveNewDataWhenDataIsNotStoredYet() {
-        startTest("store-new-data");
+        this.startTest("store-new-data");
 
-        sut.save(DATA);
+        this.sut.save(DATA);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
         assertTrue(result.isPresent(), "The data should have been stored!");
@@ -113,13 +114,13 @@ public class TestMemoryUserStore extends AbstractTestBase {
 
     @Test
     void shouldSaveNewDataWhenDataIsAlreadyStoredYet() {
-        startTest("update-stored-data");
+        this.startTest("update-stored-data");
 
-        sut.save(DATA); // store data first time
+        this.sut.save(DATA); // store data first time
 
-        sut.save(DATA); // update data
+        this.sut.save(DATA); // update data
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByNameSpaceAndName(DATA_NAMESPACE, DATA_NAME);
         log.trace("result: {}", result);
 
         assertTrue(result.isPresent(), "The data should have been stored!");
@@ -153,13 +154,13 @@ public class TestMemoryUserStore extends AbstractTestBase {
 
     @Test
     public void shouldSaveOtherDataSetsWhenDataIsAlreadyStored() {
-        startTest("save-other-data");
+        this.startTest("save-other-data");
 
-        sut.save(DATA);
+        this.sut.save(DATA);
 
-        sut.save(OTHER);
+        this.sut.save(OTHER);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(OTHER_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(OTHER_UID);
 
         assertTrue(result.isPresent(), "there should be a user resource defined by this UID!");
         assertEquals(OTHER, result.get());
@@ -167,72 +168,72 @@ public class TestMemoryUserStore extends AbstractTestBase {
 
     @Test
     public void shouldDeleteByNameWhenTheDataExists() {
-        startTest("delete-existing-by-name");
+        this.startTest("delete-existing-by-name");
 
-        sut.save(DATA);
-        sut.remove(DATA_NAMESPACE, DATA_NAME);
+        this.sut.save(DATA);
+        this.sut.remove(DATA_NAMESPACE, DATA_NAME);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(DATA_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByUidWhenTheDataExists() {
-        startTest("delete-existing-by-uid");
+        this.startTest("delete-existing-by-uid");
 
-        sut.save(DATA);
-        sut.remove(DATA_UID);
+        this.sut.save(DATA);
+        this.sut.remove(DATA_UID);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(DATA_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByObjectWhenTheDataExists() {
-        startTest("delete-existing-by-uid");
+        this.startTest("delete-existing-by-uid");
 
-        sut.save(DATA);
-        sut.remove(DATA);
+        this.sut.save(DATA);
+        this.sut.remove(DATA);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(DATA_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
     @Test
     public void shouldDeleteByNameWhenTheDataDoesNotExists() {
-        startTest("delete-non-existing-by-name");
+        this.startTest("delete-non-existing-by-name");
 
-        sut.remove(DATA_NAMESPACE, DATA_NAME);
+        this.sut.remove(DATA_NAMESPACE, DATA_NAME);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(DATA_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByUidWhenTheDataDoesNotExists() {
-        startTest("delete-non-existing-by-uid");
+        this.startTest("delete-non-existing-by-uid");
 
-        sut.remove(DATA_UID);
+        this.sut.remove(DATA_UID);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(DATA_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
     @Test
     public void shouldDeleteByObjectWhenTheDataDoesNotExists() {
-        startTest("delete-non-existing-by-uid");
+        this.startTest("delete-non-existing-by-uid");
 
-        sut.remove(DATA);
+        this.sut.remove(DATA);
 
-        Optional<de.kaiserpfalzedv.commons.api.user.User> result = sut.findByUid(DATA_UID);
+        final Optional<de.kaiserpfalzedv.commons.api.user.User> result = this.sut.findByUid(DATA_UID);
         assertFalse(result.isPresent(), "Data should have been deleted!");
     }
 
 
     @Test
     void shouldThrowOptimisticLockExceptionWhenTheNewGenerationIsNotHighEnough() {
-        startTest("throw-optimistic-lock-exception");
+        this.startTest("throw-optimistic-lock-exception");
 
-        sut.save(
+        this.sut.save(
                 DATA.toBuilder()
                         .metadata(
                                 ((Metadata)DATA.getMetadata()).toBuilder()
@@ -243,10 +244,10 @@ public class TestMemoryUserStore extends AbstractTestBase {
         );
 
         try {
-            sut.save(DATA);
+            this.sut.save(DATA);
 
             fail("There should have been an OptimisticLockStoreException!");
-        } catch (OptimisticLockStoreException e) {
+        } catch (final OptimisticLockStoreException e) {
             // every thing is fine. We wanted this exception
         }
     }

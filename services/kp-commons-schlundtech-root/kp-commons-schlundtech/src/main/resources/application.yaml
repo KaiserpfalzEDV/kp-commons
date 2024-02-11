@@ -1,0 +1,27 @@
+#
+# Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+domainrobot-api: &domainrobot-api
+  url: ${DOMAINROBOT_API_URL:${domainrobot.uri}}
+  scope: javax.inject.Singleton
+
+domainrobot-mock: &domainrobot-api-mock
+  url: https://localhost:9084/
+  scope: javax.inject.Singleton
+
+domainrobot:
+  uri: https://gateway.sms77.io/
+  token: ${DOMAINROBOT_API_KEY:please_set_DOMAINROBOT_API_KEY_env_variable}

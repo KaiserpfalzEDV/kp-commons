@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.2-1</version>
 	<relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
@@ -39,5 +39,6 @@
         <module>kp-commons-jackson</module>
         <module>kp-commons-jpa</module>
         <module>kp-commons-rest</module>
+        <module>kp-commons-vaadin</module>
     </modules>
 </project>
