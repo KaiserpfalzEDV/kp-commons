@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.2.2</version>
+    <version>3.2.2-1</version>
     <packaging>pom</packaging>
 
     <name>KP Commons</name>
@@ -38,7 +38,6 @@
         <module>core</module>
         <module>modules</module>
         <module>services</module>
-        <module>kp-spring-boot-parent</module>
     </modules>
 
     <scm>
