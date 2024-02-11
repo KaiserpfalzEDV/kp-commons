@@ -24,8 +24,8 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
-      - name: Publish pages
+      - name: Compile stuff
         id: build-java
-        run: mvn test -U --batch-mode
+        run: mvn test -U --batch-mode --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
