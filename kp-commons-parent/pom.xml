@@ -87,7 +87,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
+            <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons/kp-spring-boot-parent</url>
         </repository>
     </distributionManagement>
 
