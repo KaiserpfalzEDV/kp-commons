@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+        name="KP-COMMONS">
+
+    <publishDate position="right" />
+    <version position="right"/>
+
+    <bannerLeft>
+        <name>KP-COMMONS</name>
+        <href>https://github.com/KaiserpfalzEDV/kp-commons/</href>
+    </bannerLeft>
+
+    <bannerRight>
+        <name>Kaiserpfalz EDV-Service</name>
+        <href>https://www.kaiserpfalz-edv.de/</href>
+    </bannerRight>
+
+    <body>
+        <links>
+            <item name="Quellcode" href="https://www.github.com/KaiserpfalzEDV/kp-commons/"/>
+            <item name="Kaiserpfalz EDV-Service" href="https://www.kaiserpfalz-edv.de/"/>
+        </links>
+
+        <breadcrumbs>
+            <item name="kp-commons" href="./" />
+        </breadcrumbs>
+
+        <menu ref="parent" />
+
+        <menu ref="modules" />
+
+        <menu ref="reports"/>
+
+        <menu name="Links">
+            <item name="Kaiserpfalz EDV-Servie" href="https://www.kaiserpfalz-edv.de/" />
+            <item name="Paladins Inn" href="https://paladins-inn.de/" />
+            <item name="Roland T. Lichti" href="https://lichti.de/" />
+        </menu>
+    </body>
+</project>

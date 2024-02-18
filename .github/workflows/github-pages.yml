@@ -23,4 +23,4 @@ jobs:
 
       - name: Build
         id: build-java
-        run: mvn --batch-mode --no-transfer-progress deploy site site:stage scm-publish:publish-scm -Dscmpublish.scm.branch=gh-pages -Pproduction,site,release -DskipTests=true -Dskip.javadoc=true
+        run: mvn --batch-mode --no-transfer-progress deploy site site:stage scm-publish:publish-scm -Dscmpublish.scm.branch=gh-pages -Pproduction,release

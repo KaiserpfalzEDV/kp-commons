@@ -18,27 +18,14 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <artifactId>kp-commons-parent</artifactId>
+        <artifactId>kp-commons-root</artifactId>
         <version>3.2.2-4-SNAPSHOT</version>
-	<relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
-    <artifactId>kp-commons-modules-root</artifactId>
-    <packaging>pom</packaging>
-
-    <name>KP Commons :: Modules :: Root</name>
-    <description>
-        The specialized modules for JPA, REST, ...
-    </description>
-
-    <modules>
-        <module>kp-commons-jackson</module>
-        <module>kp-commons-jpa</module>
-        <module>kp-commons-rest</module>
-        <module>kp-commons-vaadin</module>
-    </modules>
+    <artifactId>kp-checkstyle</artifactId>
+    <name>KP Commons :: Checkstyle Configuration</name>
 </project>
