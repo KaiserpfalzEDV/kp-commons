@@ -24,12 +24,12 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.2.2-4-SNAPSHOT</version>
+        <version>3.2.2-4</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>kp-spring-boot-parent</artifactId>
-    <version>3.2.2-4-SNAPSHOT</version>
+    <version>3.2.2-4</version>
     <packaging>pom</packaging>
 
     <name>KP Commons :: Spring Boot Parent</name>
