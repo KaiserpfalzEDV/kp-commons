@@ -2,34 +2,7 @@
 <project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
         name="KP-COMMONS">
-
-    <publishDate position="right" />
-    <version position="right"/>
-
-    <bannerLeft>
-        <name>KP-COMMONS</name>
-        <href>https://github.com/KaiserpfalzEDV/kp-commons/</href>
-    </bannerLeft>
-
-    <bannerRight>
-        <name>Kaiserpfalz EDV-Service</name>
-        <href>https://www.kaiserpfalz-edv.de/</href>
-    </bannerRight>
-
     <body>
-        <links>
-            <item name="Quellcode" href="https://www.github.com/KaiserpfalzEDV/kp-commons/"/>
-            <item name="Kaiserpfalz EDV-Service" href="https://www.kaiserpfalz-edv.de/"/>
-        </links>
-
-        <breadcrumbs>
-            <item name="kp-commons" href="./" />
-        </breadcrumbs>
-
-        <menu inherit="true">
-            <item name="Read Me" href="./readme.html" />
-        </menu>
-
         <menu ref="parent" inherit="true" />
 
         <menu ref="modules"  inherit="true" />
