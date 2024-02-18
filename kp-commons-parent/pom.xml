@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-4-SNAPSHOT</version>
+        <version>3.2.2-4</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
@@ -211,7 +211,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.2.3</version>
+                    <version>3.2.5</version>
                     <executions>
                         <execution>
                             <goals>
@@ -543,7 +543,7 @@
                 <dependency>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-starter-contract-stub-runner</artifactId>
-                    <version>4.1.0</version>
+                    <version>4.1.1</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
