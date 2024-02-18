@@ -23,16 +23,21 @@
         </links>
 
         <breadcrumbs>
-            <item name="kp-commons" href="./" />
+            <item name="kp-commons" href="./index.html" />
         </breadcrumbs>
 
-        <menu inherit="true">
-            <item name="Read Me" href="./readme.html" />
+        <menu name="Base" inherit="true">
+            <item name="BOM" href="./kp-commons-bom/index.html" />
+            <item name="Parent" href="./kp-commons-parent/index.html" />
+            <item name="Spring Boot-Parent" href="./kp-commons-parent/kp-spring-boot-parent/index.html" />
+            <item name="Checkstyle" href="./kp-checkstyle/index.html" />
         </menu>
 
-        <menu ref="parent" inherit="true" />
-
-        <menu ref="modules"  inherit="true" />
+        <menu name="Modules" inherit="true">
+            <item name="Core" href="./kp-commons-parent/kp-commons-core-root/index.html" />
+            <item name="Modules" href="./kp-commons-parent/kp-commons-modules-root/index.html" />
+            <item name="Services" href="./kp-commons-parent/kp-commons-services-root/index.html" />
+        </menu>
 
         <menu ref="reports" inherit="true" />
 
