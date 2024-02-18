@@ -1,16 +1,16 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.observability,MetricsAnnotationsConfiguration,13,0,0,0,3,0,3,0,3,0
-KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.i18n,ResourceBundleTranslator,29,218,3,3,7,46,5,9,2,9
-KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.i18n,ResourceBundleTranslator.UnicodeResourceBundleControl,0,45,0,2,0,9,0,2,0,1
-KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.libravatar,Avatar,20,78,0,6,4,14,1,5,1,2
+KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.i18n,ResourceBundleTranslator,29,218,3,3,9,45,5,9,2,9
+KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.i18n,ResourceBundleTranslator.UnicodeResourceBundleControl,0,43,0,2,0,9,0,2,0,1
+KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.libravatar,Avatar,18,78,0,6,4,14,1,5,1,2
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.libravatar,AvatarGenerator,8,8,0,0,1,1,1,1,1,1
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,Metadata,25,11,0,0,11,3,4,1,4,1
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,History,4,0,0,0,1,0,1,0,1,0
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,Paging,2,89,1,5,1,20,1,8,0,6
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,Pointer,4,0,0,0,1,0,1,0,1,0
-KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,DefaultResourceSpec,64,0,4,0,15,0,6,0,4,0
+KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,DefaultResourceSpec,65,0,4,0,15,0,6,0,4,0
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,Resource,39,24,0,0,12,7,7,5,7,5
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.resources,Status,19,0,0,0,8,0,2,0,2,0
-KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.store,GenericStoreService,23,166,1,9,4,32,1,14,0,10
-KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.user,UserData,2,12,0,0,1,4,1,1,1,1
+KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.store,GenericStoreService,23,166,1,9,4,33,1,14,0,10
+KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.user,UserData,2,12,0,0,1,1,1,1,1,1
 KP Commons :: Core :: Implementation,de.kaiserpfalzedv.commons.core.user,MemoryUserStore,0,3,0,0,0,1,0,1,0,1

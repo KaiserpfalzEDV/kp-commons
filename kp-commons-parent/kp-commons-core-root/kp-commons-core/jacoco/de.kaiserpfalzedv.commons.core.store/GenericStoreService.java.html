@@ -89,7 +89,7 @@ import lombok.extern.slf4j.Slf4j;
     }
 
     private void checkOptimisticLocking(final String key, final T object) {
-        if (
+<span class="fc" id="L92">        if (</span>
 <span class="fc bfc" id="L93" title="All 2 branches covered.">                this.namedStore.containsKey(key)</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">                        &amp;&amp; (this.namedStore.get(key).getGeneration() &gt;= object.getGeneration())</span>
         ) {

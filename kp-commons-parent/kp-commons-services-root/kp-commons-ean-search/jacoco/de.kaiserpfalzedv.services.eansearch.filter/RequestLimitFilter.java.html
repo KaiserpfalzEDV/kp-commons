@@ -51,7 +51,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RequestLimitFilter implements RequestInterceptor, ResponseInterceptor {
     private static final String API_REMAINING_REQUEST_HEADER = &quot;X-Credits-Remaining&quot;;
     private static final String API_REMAINING_METRICS_NAME = &quot;ean-search.credits.remaining&quot;;
-<span class="fc" id="L54">    private static final String API_REQUESTS_HANDLED_SINCE_START = &quot;ean-search.credits.used-since-start&quot;;</span>
+    private static final String API_REQUESTS_HANDLED_SINCE_START = &quot;ean-search.credits.used-since-start&quot;;
 
     private final MeterRegistry registry;
     private Counter requestCounter;
@@ -95,7 +95,7 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
 <span class="fc" id="L95">            synchronized (this) {</span>
 <span class="fc" id="L96">                this.remaining = Integer.valueOf(remaining, 10);</span>
 <span class="fc" id="L97">                this.registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), this.remaining);</span>
-            }
+<span class="fc" id="L98">            }</span>
         }
 <span class="fc" id="L100">        this.requestCounter.increment();</span>
 
@@ -112,8 +112,8 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
      */
     @Override
     public void apply(final RequestTemplate request) throws EanSearchException {
-        if (
-<span class="fc bfc" id="L116" title="All 2 branches covered.">                this.remaining == 0</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (</span>
+                this.remaining == 0
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">                &amp;&amp; this.lastRequestWasToday()</span>
         ) {
 <span class="fc" id="L119">            log.error(&quot;Can't search for EAN any more. There is no remaining credit left. lastRequest='{}',&quot;, this.lastRequest);</span>
@@ -123,7 +123,7 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
 
 <span class="fc" id="L124">        synchronized (this) {</span>
 <span class="fc" id="L125">            this.lastRequest = OffsetDateTime.now(ZoneOffset.UTC);</span>
-        }
+<span class="fc" id="L126">        }</span>
 <span class="fc" id="L127">    }</span>
 
     private boolean lastRequestWasToday() {

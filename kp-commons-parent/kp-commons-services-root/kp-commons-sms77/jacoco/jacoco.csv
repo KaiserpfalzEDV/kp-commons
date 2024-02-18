@@ -9,4 +9,4 @@ KP Commons :: Services :: SMS :: sms77.io,de.kaiserpfalzedv.services.sms77.mappe
 KP Commons :: Services :: SMS :: sms77.io,de.kaiserpfalzedv.services.sms77.mapper,Sms77Exception,7,0,0,0,3,0,1,0,1,0
 KP Commons :: Services :: SMS :: sms77.io,de.kaiserpfalzedv.services.sms77.mapper,Sms77SendingFailedException,5,0,0,0,2,0,1,0,1,0
 KP Commons :: Services :: SMS :: sms77.io,de.kaiserpfalzedv.services.sms77.filter,Sms77RequestReportFilter,0,19,0,0,0,6,0,3,0,3
-KP Commons :: Services :: SMS :: sms77.io,de.kaiserpfalzedv.services.sms77.client,Sms77ClientConfig,0,32,0,0,0,5,0,3,0,3
+KP Commons :: Services :: SMS :: sms77.io,de.kaiserpfalzedv.services.sms77.client,Sms77ClientConfig,0,33,0,0,0,5,0,3,0,3

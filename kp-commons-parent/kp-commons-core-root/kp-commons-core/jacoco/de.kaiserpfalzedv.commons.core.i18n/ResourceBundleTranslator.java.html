@@ -44,7 +44,7 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      * The languages this class provides. To enable testing, a setter is provided. Normally it will be configured via
      * property with a default of &quot;de,en,fr,nl,es,it&quot;.
      */
-    @Setter
+<span class="fc" id="L47">    @Setter</span>
 <span class="fc" id="L48">    List&lt;String&gt; configuredLanguages = List.of(&quot;de&quot;,&quot;en&quot;,&quot;fr&quot;,&quot;nl&quot;,&quot;es&quot;,&quot;it&quot;);</span>
 
     /**
@@ -56,8 +56,8 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      * The default locale (used when no locale is specified in the translation call). To enable testing, a setter is
      * provided. Normally it will be configured via property &quot;default-locale&quot; with a default of &quot;de&quot;.
      */
-    @Setter
-<span class="fc" id="L60">    String defaultLocale = &quot;de&quot;;</span>
+<span class="fc" id="L59">    @Setter</span>
+    String defaultLocale = &quot;de&quot;;
 
 <span class="fc" id="L62">    private final HashMap&lt;String, HashMap&lt;Locale, ResourceBundle&gt;&gt; bundles = new HashMap&lt;&gt;();</span>
 
@@ -101,8 +101,8 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
 <span class="fc" id="L101">            return format.format(arguments);</span>
 <span class="fc" id="L102">        } catch (NullPointerException | MissingResourceException ex) {</span>
 <span class="fc" id="L103">            log.warn(</span>
-<span class="fc" id="L104">                    &quot;Translation failed. bundle={}, locale={}, key={}&quot;,</span>
-<span class="fc" id="L105">                    bundleName, locale, key</span>
+                    &quot;Translation failed. bundle={}, locale={}, key={}&quot;,
+                    bundleName, locale, key
             );
 <span class="fc" id="L107">            return &quot;!&quot; + key;</span>
         }
@@ -140,19 +140,19 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
 <span class="fc" id="L140">                        bundleName, l, locale, e.getMessage());</span>
                 try {
 <span class="nc" id="L142">                    bundle = ResourceBundle.getBundle(bundleName, l, new UnicodeResourceBundleControl());</span>
-<span class="pc" id="L143">                } catch (NullPointerException | MissingResourceException e1) {</span>
+<span class="fc" id="L143">                } catch (NullPointerException | MissingResourceException e1) {</span>
 <span class="fc" id="L144">                    log.warn(&quot;Translator did not find the wanted bundle. Using default bundle. bundle={}, error='{}'&quot;, bundleName, e1.getMessage());</span>
 
                     try {
 <span class="fc" id="L147">                        bundle = ResourceBundle.getBundle(defaultBundle, Locale.forLanguageTag(defaultLocale),</span>
-<span class="fc" id="L148">                                new UnicodeResourceBundleControl());</span>
-<span class="pc" id="L149">                    } catch (NullPointerException | MissingResourceException e2) {</span>
+                                new UnicodeResourceBundleControl());
+<span class="nc" id="L149">                    } catch (NullPointerException | MissingResourceException e2) {</span>
 <span class="nc" id="L150">                        log.error(&quot;Resource bundle can't be read. error='{}'&quot;, e2.getMessage());</span>
 
 <span class="nc" id="L152">                        return;</span>
-                    }
-                }
-            }
+<span class="fc" id="L153">                    }</span>
+<span class="nc" id="L154">                }</span>
+<span class="fc" id="L155">            }</span>
 <span class="fc" id="L156">            bundles.get(bundleName).put(locale, bundle);</span>
         }
 <span class="fc" id="L158">    }</span>
