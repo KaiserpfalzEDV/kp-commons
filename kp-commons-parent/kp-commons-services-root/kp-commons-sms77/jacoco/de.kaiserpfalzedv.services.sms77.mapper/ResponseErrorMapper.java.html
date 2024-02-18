@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResponseErrorMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KP Commons :: Services :: SMS :: sms77.io</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.services.sms77.mapper</a> &gt; <span class="el_source">ResponseErrorMapper.java</span></div><h1>ResponseErrorMapper.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.services.sms77.mapper;
+
+import org.springframework.stereotype.Service;
+
+import feign.Response;
+import feign.codec.ErrorDecoder;
+
+/**
+ * &lt;p&gt;ResponseErrorMapper -- Filters for HTTP Status codes of the API&lt;/p&gt;
+ *
+ * &lt;p&gt;The status codes are documented in the
+ * &lt;a href=&quot;https://www.ean-search.org/premium/ean-api.html#__RefHeading___Toc147_3132899627&quot;&gt;EAN-Search documentation,
+ * Appendix A&lt;/a&gt;. This mapper maps them to the runtime exceptions for a better handling.&lt;/p&gt;
+ *
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 3.0.0  2023-01-17
+ */
+@Service
+<span class="fc" id="L36">public class ResponseErrorMapper implements ErrorDecoder {</span>
+    public static final int SMS_FAILED_FOR_AT_LEAST_ONE_RECIPIENT = 101;
+    public static final int INVALID_FROM = 201;
+    public static final int INVALID_TO = 202;
+    public static final int NO_TO = 301;
+    public static final int NO_TEXT = 305;
+    public static final int TEXT_TOO_LONG = 401;
+    public static final int RELOAD_DETECTED = 402;
+    public static final int MAX_DAILY_LIMIT_FOR_NUMBER = 403;
+    public static final int NO_CREDITS_LEFT = 500;
+    public static final int CARRIER_TRANSFER_FAILED = 600;
+    public static final int AUTHENTICATION_FAILED = 900;
+    public static final int SIGNATURE_CHECK_FAILED = 901;
+    public static final int API_KEY_NOT_AUTHORIZED = 902;
+    public static final int WRONG_SERVER_IP = 903;
+
+    @Override
+    public Exception decode(final String methodKey, final Response response) {
+<span class="nc bnc" id="L54" title="All 15 branches missed.">        return switch (response.status()) {</span>
+<span class="nc" id="L55">            case SMS_FAILED_FOR_AT_LEAST_ONE_RECIPIENT -&gt; new Sms77SendingFailedException(101, &quot;At least one recipient did not get the SMS.&quot;);</span>
+<span class="nc" id="L56">            case INVALID_FROM -&gt; new Sms77SendingFailedException(201, &quot;Invalid sender given.&quot;);</span>
+<span class="nc" id="L57">            case INVALID_TO -&gt; new Sms77SendingFailedException(202, &quot;Invalid recipient given.&quot;);</span>
+<span class="nc" id="L58">            case NO_TO -&gt; new Sms77SendingFailedException(301, &quot;No recipient specified.&quot;);</span>
+<span class="nc" id="L59">            case NO_TEXT -&gt; new Sms77SendingFailedException(305, &quot;No text specified.&quot;);</span>
+<span class="nc" id="L60">            case TEXT_TOO_LONG -&gt; new Sms77SendingFailedException(401, &quot;Text too long.&quot;);</span>
+<span class="nc" id="L61">            case CARRIER_TRANSFER_FAILED -&gt; new Sms77SendingFailedException(500, &quot;Carrier transfer failed.&quot;);</span>
+
+<span class="nc" id="L63">            case RELOAD_DETECTED -&gt; new Sms77ReloadException();</span>
+<span class="nc" id="L64">            case MAX_DAILY_LIMIT_FOR_NUMBER -&gt; new Sms77TooManyDailyCallsForThisNumberException();</span>
+<span class="nc" id="L65">            case NO_CREDITS_LEFT -&gt; new Sms77NotEnoughCreditsException();</span>
+
+<span class="nc" id="L67">            case AUTHENTICATION_FAILED -&gt; new Sms77InvalidAuthException(&quot;Invalid API key.&quot;);</span>
+<span class="nc" id="L68">            case SIGNATURE_CHECK_FAILED -&gt; new Sms77InvalidAuthException(&quot;Signature does not match.&quot;);</span>
+<span class="nc" id="L69">            case API_KEY_NOT_AUTHORIZED -&gt; new Sms77InvalidAuthException(&quot;API key not valid for this endpoint.&quot;);</span>
+<span class="nc" id="L70">            case WRONG_SERVER_IP -&gt; new Sms77InvalidAuthException(&quot;Wrong server IP address.&quot;);</span>
+
+<span class="nc" id="L72">            default -&gt; null;</span>
+        };
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

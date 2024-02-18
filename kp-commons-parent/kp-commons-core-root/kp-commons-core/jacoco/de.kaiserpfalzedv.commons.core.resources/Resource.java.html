@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Resource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KP Commons :: Core :: Implementation</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.resources</a> &gt; <span class="el_source">Resource.java</span></div><h1>Resource.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.resources;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import de.kaiserpfalzedv.commons.api.resources.Metadata;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * Resource -- A generic resource holding a single data set.
+ *
+ * @param &lt;D&gt; The data set provided by this resource.
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @version 3.0.0  2023-01-07
+ * @version 2.1.0  2022-01-16
+ * @since 2.0.0  2021-05-24
+ */
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonPropertyOrder({&quot;metadata&quot;, &quot;spec&quot;, &quot;status&quot;})
+public class Resource&lt;D extends Serializable&gt; implements de.kaiserpfalzedv.commons.api.resources.Resource&lt;D&gt; {
+    @Schema(
+            name = &quot;metadata&quot;,
+            description = &quot;Technical data to the resource.&quot;,
+            required = true
+    )
+    @NotNull
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    protected Metadata metadata;
+
+
+    @Schema(
+            name = &quot;spec&quot;,
+            description = &quot;The resource data itself.&quot;,
+            required = true
+    )
+    @Builder.Default
+    protected D spec = null;
+
+
+    @Schema(
+            name = &quot;status&quot;,
+            description = &quot;The status of the resource (containing the history).&quot;,
+            nullable = true
+    )
+    @Builder.Default
+    protected Status status = null;
+
+
+    @Override
+    @JsonIgnore
+    public Pointer toPointer() {
+<span class="nc" id="L85">        return Pointer.builder()</span>
+<span class="nc" id="L86">                .kind(getKind())</span>
+<span class="nc" id="L87">                .apiVersion(getApiVersion())</span>
+<span class="nc" id="L88">                .nameSpace(getNameSpace())</span>
+<span class="nc" id="L89">                .nameSpace(getName())</span>
+<span class="nc" id="L90">                .build();</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public String getKind() {
+<span class="nc" id="L96">        return getMetadata().getKind();</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public String getApiVersion() {
+<span class="nc" id="L102">        return getMetadata().getApiVersion();</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public String getNameSpace() {
+<span class="fc" id="L108">        return getMetadata().getNameSpace();</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public String getName() {
+<span class="fc" id="L114">        return getMetadata().getName();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public UUID getUid() {
+<span class="fc" id="L120">        return metadata.getUid();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public Integer getGeneration() {
+<span class="fc" id="L126">        return metadata.getGeneration();</span>
+    }
+
+
+    @JsonIgnore
+    public Optional&lt;D&gt; getData() {
+<span class="nc" id="L132">        return Optional.ofNullable(spec);</span>
+    }
+
+    @JsonIgnore
+    public Optional&lt;Status&gt; getState() {
+<span class="nc" id="L137">        return Optional.ofNullable(status);</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public String getSelfLink() {
+<span class="nc" id="L143">        return getMetadata().getSelfLink();</span>
+    }
+
+
+    @Override
+    synchronized public Resource&lt;D&gt; increaseGeneration() {
+<span class="fc" id="L149">        return toBuilder()</span>
+<span class="fc" id="L150">                .metadata(getMetadata().increaseGeneration())</span>
+<span class="fc" id="L151">                .build();</span>
+    }
+
+
+    @SuppressWarnings(&quot;MethodDoesntCallSuperMethod&quot;)
+    @Override
+    public Resource&lt;D&gt; clone() {
+<span class="nc" id="L158">        return toBuilder().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

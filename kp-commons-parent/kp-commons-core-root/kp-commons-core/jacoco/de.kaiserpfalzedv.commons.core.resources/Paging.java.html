@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Paging.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KP Commons :: Core :: Implementation</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.resources</a> &gt; <span class="el_source">Paging.java</span></div><h1>Paging.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.resources;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+import lombok.extern.jackson.Jacksonized;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+/**
+ * DispatchmentFile contains all data to a single dispatchment
+ *
+ * @author klenkes {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 2.0.0  2023-01-06
+ */
+@Schema(
+        description = &quot;Paging data including calculating next/previous and first/last pages available.&quot;,
+        example = &quot;{\n&quot; +
+                &quot;  \&quot;start\&quot;: 0, \n&quot; +
+                &quot;  \&quot;size\&quot;: 100, \n&quot; +
+                &quot;  \&quot;count\&quot;: 83, \n&quot; +
+                &quot;  \&quot;total\&quot;: 83,\n&quot; +
+                &quot;}&quot;,
+        title = &quot;Pagination data for transfer lists&quot;
+)
+@Jacksonized
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
+public class Paging implements de.kaiserpfalzedv.commons.api.resources.Paging {
+    @Builder.Default
+    private final long start = 0;
+
+    @Builder.Default
+    private final long size = 20;
+
+    private final long count;
+
+    private final long total;
+
+    @Override
+    @JsonIgnore
+    @Schema(hidden = true)
+    public de.kaiserpfalzedv.commons.api.resources.Paging firstPage() {
+<span class="fc" id="L64">        return toBuilder()</span>
+<span class="fc" id="L65">                .start(0)</span>
+<span class="fc" id="L66">                .count(calculatePageSize(0))</span>
+<span class="fc" id="L67">                .build();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    @Schema(hidden = true)
+    public de.kaiserpfalzedv.commons.api.resources.Paging previousPage() {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (start - size &lt;= 0) {</span>
+<span class="fc" id="L75">            return firstPage();</span>
+        }
+
+<span class="fc" id="L78">        return toBuilder()</span>
+<span class="fc" id="L79">                .start(start - size)</span>
+<span class="fc" id="L80">                .count(calculatePageSize(start - size))</span>
+<span class="fc" id="L81">                .build();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    @Schema(hidden = true)
+    public de.kaiserpfalzedv.commons.api.resources.Paging nextPage() {
+<span class="fc" id="L88">        return calculateNextPage(start + size);</span>
+    }
+
+    @Override
+    @JsonIgnore
+    @Schema(hidden = true)
+    public de.kaiserpfalzedv.commons.api.resources.Paging lastPage() {
+<span class="fc" id="L95">        return calculateNextPage(total / size * size);</span>
+    }
+
+    private long calculatePageSize(final long start) {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (start &gt;= total) {</span>
+<span class="nc" id="L100">            return 0;</span>
+        }
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (start + size &gt;= total) {</span>
+<span class="fc" id="L104">            return total - start;</span>
+        }
+
+<span class="fc" id="L107">        return  size;</span>
+    }
+
+    private de.kaiserpfalzedv.commons.api.resources.Paging calculateNextPage(final long start) {
+<span class="fc" id="L111">        return toBuilder()</span>
+<span class="fc" id="L112">                .start(start)</span>
+<span class="fc" id="L113">                .count(calculatePageSize(start))</span>
+<span class="fc" id="L114">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

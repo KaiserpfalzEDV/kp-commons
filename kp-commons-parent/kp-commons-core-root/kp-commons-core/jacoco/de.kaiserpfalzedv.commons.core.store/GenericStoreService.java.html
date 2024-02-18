@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenericStoreService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KP Commons :: Core :: Implementation</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.store</a> &gt; <span class="el_source">GenericStoreService.java</span></div><h1>GenericStoreService.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.store;
+
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.UUID;
+
+import de.kaiserpfalzedv.commons.api.resources.Resource;
+import de.kaiserpfalzedv.commons.api.store.OptimisticLockStoreException;
+import de.kaiserpfalzedv.commons.api.store.StoreService;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * GenericStoreService -- an ephemeral store for Resources.
+ * &lt;p&gt;
+ * This is a memory alternative for a persistent data store.
+ *
+ * @param &lt;T&gt; The resource to be stored inside the data store.
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 2.0.0  2021-05-24
+ */
+@ToString
+@EqualsAndHashCode
+<span class="fc" id="L42">@Slf4j</span>
+<span class="fc" id="L43">public abstract class GenericStoreService&lt;T extends Resource&lt;?&gt;&gt; implements StoreService&lt;T&gt; {</span>
+    /**
+     * The name based memory store for guilds.
+     */
+<span class="fc" id="L47">    private final HashMap&lt;String, T&gt; namedStore = new HashMap&lt;&gt;(10);</span>
+
+    /**
+     * The uid based memory store for guilds.
+     */
+<span class="fc" id="L52">    private final HashMap&lt;UUID, T&gt; uidStore = new HashMap&lt;&gt;(10);</span>
+
+
+    @Override
+    public Optional&lt;T&gt; findByNameSpaceAndName(final String nameSpace, final String name) {
+<span class="fc" id="L57">        final String key = this.generateStoreKey(nameSpace, name);</span>
+
+<span class="fc" id="L59">        return Optional.ofNullable(this.namedStore.get(key));</span>
+    }
+
+    @Override
+    public Optional&lt;T&gt; findByUid(final UUID uid) {
+<span class="fc" id="L64">        return Optional.ofNullable(this.uidStore.get(uid));</span>
+    }
+
+    private String generateStoreKey(final String nameSpace, final String name) {
+<span class="fc" id="L68">        return nameSpace + &quot;-&quot; + name;</span>
+    }
+
+    @Override
+    public T save(final T object) throws OptimisticLockStoreException {
+<span class="fc" id="L73">        log.trace(&quot;Saving: {}&quot;, object);</span>
+
+<span class="fc" id="L75">        final String key = this.generateStoreKey(object.getNameSpace(), object.getName());</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        final
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        T data = (!this.namedStore.containsKey(key))</span>
+<span class="fc" id="L80">                ? object</span>
+<span class="fc" id="L81">                : (T) object.increaseGeneration();</span>
+
+
+<span class="fc" id="L84">        this.checkOptimisticLocking(key, data);</span>
+
+<span class="fc" id="L86">        this.namedStore.put(key, data);</span>
+<span class="fc" id="L87">        this.uidStore.put(object.getUid(), data);</span>
+<span class="fc" id="L88">        return data;</span>
+    }
+
+    private void checkOptimisticLocking(final String key, final T object) {
+        if (
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                this.namedStore.containsKey(key)</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                        &amp;&amp; (this.namedStore.get(key).getGeneration() &gt;= object.getGeneration())</span>
+        ) {
+<span class="fc" id="L96">            throw new OptimisticLockStoreException(this.namedStore.get(key).getGeneration(), object.getGeneration());</span>
+        }
+<span class="fc" id="L98">    }</span>
+
+    @Override
+    public void remove(final T object) {
+<span class="fc" id="L102">        final String key = this.generateStoreKey(object.getNameSpace(), object.getName());</span>
+
+<span class="fc" id="L104">        this.namedStore.remove(key);</span>
+<span class="fc" id="L105">        this.uidStore.remove(object.getUid());</span>
+<span class="fc" id="L106">    }</span>
+
+    @Override
+    public void remove(final String nameSpace, final String name) {
+<span class="fc" id="L110">        final String key = this.generateStoreKey(nameSpace, name);</span>
+
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (this.namedStore.containsKey(key)) {</span>
+<span class="fc" id="L113">            this.uidStore.remove(this.namedStore.get(key).getUid());</span>
+<span class="fc" id="L114">            this.namedStore.remove(key);</span>
+        }
+<span class="fc" id="L116">    }</span>
+
+    @Override
+    public void remove(final UUID uid) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (this.uidStore.containsKey(uid)) {</span>
+<span class="nc" id="L121">            final T data = this.uidStore.get(uid);</span>
+<span class="nc" id="L122">            final String key = this.generateStoreKey(data.getNameSpace(), data.getName());</span>
+
+<span class="nc" id="L124">            this.namedStore.remove(key);</span>
+<span class="nc" id="L125">            this.uidStore.remove(uid);</span>
+        }
+<span class="fc" id="L127">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

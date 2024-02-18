@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>History.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KP Commons :: Core :: Implementation</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.resources</a> &gt; <span class="el_source">History.java</span></div><h1>History.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.resources;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import de.kaiserpfalzedv.commons.api.resources.HasName;
+import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
+import lombok.*;
+import lombok.extern.jackson.Jacksonized;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
+
+/**
+ * A single history entry. Basic data is the timestamp, the status and the message.
+ *
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 2.0.0  2021-05-24
+ */
+@Jacksonized
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@Schema(
+        name = &quot;History&quot;,
+        description = &quot;A single history entry of a change.&quot;
+)
+public class History implements de.kaiserpfalzedv.commons.api.resources.History {
+    @Schema(
+            name = &quot;TimeStamp&quot;,
+            description = &quot;The timestamp of the change.&quot;,
+            required = true,
+            defaultValue = &quot;now&quot;,
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
+    )
+    @Builder.Default
+    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
+    private final OffsetDateTime timeStamp = OffsetDateTime.now(ZoneOffset.UTC);
+
+    @Schema(
+            name = &quot;Status&quot;,
+            description = &quot;The resource status after the change.&quot;,
+            required = true,
+            defaultValue = &quot;not-specified&quot;,
+            example = HasName.VALID_NAME_EXAMPLE,
+            pattern = HasName.VALID_NAME_PATTERN,
+            minLength = HasName.VALID_NAME_MIN_LENGTH,
+            maxLength = HasName.VALID_NAME_MAX_LENGTH
+    )
+    @Builder.Default
+    @Size(min = HasName.VALID_NAME_MIN_LENGTH, max = HasName.VALID_NAME_MAX_LENGTH, message = HasName.VALID_NAME_LENGTH_MSG)
+    @Pattern(regexp = HasName.VALID_NAME_PATTERN, message = HasName.VALID_NAME_PATTERN_MSG)
+    private final String status = &quot;not-specified&quot;;
+
+    @Schema(
+            name = &quot;Message&quot;,
+            description = &quot;The human readable description of the change.&quot;,
+            nullable = true
+    )
+    @Builder.Default
+    private final String message = null;
+
+
+    @SuppressWarnings(&quot;MethodDoesntCallSuperMethod&quot;)
+    @Override
+    public de.kaiserpfalzedv.commons.api.resources.History clone() {
+<span class="nc" id="L92">        return toBuilder().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResponseErrorMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KP Commons :: Services :: EAN-Search</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.services.eansearch.mapper</a> &gt; <span class="el_source">ResponseErrorMapper.java</span></div><h1>ResponseErrorMapper.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.services.eansearch.mapper;
+
+import org.springframework.stereotype.Service;
+
+import feign.Response;
+import feign.codec.ErrorDecoder;
+
+/**
+ * &lt;p&gt;ResponseErrorMapper -- Filters for HTTP Status codes of the API&lt;/p&gt;
+ *
+ * &lt;p&gt;The status codes are documented in the
+ * &lt;a href=&quot;https://www.ean-search.org/premium/ean-api.html#__RefHeading___Toc147_3132899627&quot;&gt;EAN-Search documentation,
+ * Appendix A&lt;/a&gt;. This mapper maps them to the runtime exceptions for a better handling.&lt;/p&gt;
+ *
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 3.0.0  2023-01-17
+ */
+@Service
+<span class="fc" id="L36">public class ResponseErrorMapper implements ErrorDecoder {</span>
+    public static final int INVALID_OPERATION = 400;
+    public static final int INVALID_ACCESS_TOKEN = 401;
+    public static final int REQUEST_LIMIT_REACHED = 402;
+    public static final int INVALID_HTTP_METHOD = 405;
+    public static final int RATE_LIMIT_REACHED = 429;
+
+    @Override
+    public EanSearchException decode(final String methodKey, final Response response) {
+<span class="pc bpc" id="L45" title="5 of 6 branches missed.">        return switch (response.status()) {</span>
+<span class="nc" id="L46">            case INVALID_OPERATION -&gt; new EanSearchInvalidOperationException();</span>
+<span class="nc" id="L47">            case INVALID_ACCESS_TOKEN -&gt; new EanSearchInvalidAccessTokenException();</span>
+<span class="fc" id="L48">            case REQUEST_LIMIT_REACHED -&gt; new EanSearchRequestLimitReachedException();</span>
+<span class="nc" id="L49">            case INVALID_HTTP_METHOD -&gt; new EanSearchWrongHTTPMethodException();</span>
+<span class="nc" id="L50">            case RATE_LIMIT_REACHED -&gt; new EanSearchTooManyRequestsException();</span>
+<span class="nc" id="L51">            default -&gt; null;</span>
+        };
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
