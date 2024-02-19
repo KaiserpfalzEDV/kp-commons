@@ -66,7 +66,7 @@
         <maven-common-artifact-filters.version>3.3.2</maven-common-artifact-filters.version>
         <maven-invoker.version>3.2.0</maven-invoker.version>
         <maven-plugin-tools.version>3.9.0</maven-plugin-tools.version>
-        <maven-resolver.version>1.9.14</maven-resolver.version>
+        <maven-resolver.version>1.9.18</maven-resolver.version>
         <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
         <micrometer-context-propagation.version>1.0.5</micrometer-context-propagation.version>
         <mockk.version>1.13.5</mockk.version>
