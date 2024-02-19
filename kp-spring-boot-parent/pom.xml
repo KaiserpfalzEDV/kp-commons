@@ -62,7 +62,7 @@
         <jline.version>2.11</jline.version>
         <jna.version>5.13.0</jna.version>
         <jopt-simple.version>5.0.4</jopt-simple.version>
-        <maven.version>3.9.4</maven.version>
+        <maven.version>3.9.6</maven.version>
         <maven-common-artifact-filters.version>3.3.2</maven-common-artifact-filters.version>
         <maven-invoker.version>3.2.0</maven-invoker.version>
         <maven-plugin-tools.version>3.9.0</maven-plugin-tools.version>
