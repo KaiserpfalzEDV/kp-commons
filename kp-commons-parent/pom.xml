@@ -465,6 +465,7 @@
                             <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                             <failOnError>true</failOnError>
                             <nvdServerId>nvdApi</nvdServerId>
+                            <verbose>false</verbose>
                         </configuration>
                         <executions>
                             <execution>
@@ -533,6 +534,7 @@
                             <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <nvdApiServerId>nvdApi</nvdApiServerId>
+                            <verbose>false</verbose>
                         </configuration>
                         <reportSets>
                             <reportSet>

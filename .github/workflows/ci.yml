@@ -24,6 +24,13 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
+      - name: Set up Maven
+        id: setup-maven
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
+
       - name: Compile stuff
         id: build-java
         run: mvn test -U --batch-mode --no-transfer-progress
