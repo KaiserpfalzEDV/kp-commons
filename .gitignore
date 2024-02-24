@@ -5,6 +5,7 @@ resources/static/
 **/src/app/generated/
 **/npm/cache/
 target/
+!**/target/site/**/target/
 .gradle/
 build/
 *.iml

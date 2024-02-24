@@ -98,6 +98,7 @@
                 <artifactId>urm-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>i18n</id>
                         <phase>process-classes</phase>
                         <goals>
@@ -111,6 +112,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>libravatar</id>
                         <phase>process-classes</phase>
                         <goals>
@@ -124,6 +126,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>observability</id>
                         <phase>process-classes</phase>
                         <goals>
@@ -137,6 +140,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>resources</id>
                         <phase>process-classes</phase>
                         <goals>
@@ -150,6 +154,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>store</id>
                         <phase>process-classes</phase>
                         <goals>
@@ -163,6 +168,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>user</id>
                         <phase>process-classes</phase>
                         <goals>
@@ -176,6 +182,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
                         <id>workflow</id>
                         <phase>process-classes</phase>
                         <goals>

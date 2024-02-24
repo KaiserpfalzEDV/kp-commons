@@ -300,6 +300,7 @@
                     </configuration>
                     <executions>
                         <execution>
+                            <?m2e execute onConfiguration,onIncremental?>
                             <phase>process-classes</phase>
                             <goals>
                                 <goal>map</goal>
@@ -529,6 +530,7 @@
                             <suppressionFiles>
                                 <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
                             </suppressionFiles>
+                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <nvdApiServerId>nvdApi</nvdApiServerId>
                         </configuration>
