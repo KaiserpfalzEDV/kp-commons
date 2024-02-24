@@ -23,7 +23,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-1</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
@@ -31,7 +31,7 @@
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>3.2.2-1</kp-commons.version>
+        <kp-commons.version>3.2.2-5</kp-commons.version>
 
         <spring-boot.version>3.2.2</spring-boot.version>
         <springframework.version>6.1.3</springframework.version>
@@ -68,7 +68,7 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-bom</artifactId>
-                <version>13.1</version>
+                <version>13.2.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -110,6 +110,11 @@
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-bom</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.commons</groupId>
+                <artifactId>kp-checkstyle</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
@@ -259,7 +264,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.10.1</version>
+                <version>5.10.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

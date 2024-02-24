@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-1</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
@@ -33,58 +33,6 @@
     <name>KP Commons :: Parent</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
     <url>https://kaiserpfalzedv.github.io/kp-commons</url>
-
-    <inceptionYear>2001</inceptionYear>
-
-    <licenses>
-        <license>
-            <name>GNU GENERAL PUBLIC LICENSE</name>
-            <url>https://www.gnu.org/licenses/gpl-3.0.de.html</url>
-            <distribution>repo</distribution>
-            <comments>
-                The GNU General Public License is a free, copyleft license for software and other kinds of works.
-            </comments>
-        </license>
-    </licenses>
-
-    <organization>
-        <name>Kaiserpfalz EDV-Service</name>
-        <url>https://www.kaiserpfalz-edv.de</url>
-    </organization>
-
-    <developers>
-        <developer>
-            <id>klenkes74</id>
-            <name>Roland T. Lichti</name>
-            <email>rlichti@kaiserpfalz-edv.de</email>
-            <url>https://www.lichti.de</url>
-            <roles>
-                <role>Project Chair</role>
-                <role>Developer</role>
-                <role>sombody</role><!-- "'somebody' really should do ..." -->
-            </roles>
-            <properties>
-                <picUrl>https://secure.gravatar.com/avatar/3b5c4008dc30b266341632f9931aab56</picUrl>
-            </properties>
-
-            <organization>Kaiserpfalz EDV-Service</organization>
-            <organizationUrl>https://www.kaiserpfalz-edv.de</organizationUrl>
-            <timezone>Europe/Berlin</timezone>
-        </developer>
-    </developers>
-
-    <issueManagement>
-        <url>https://github.com/KaiserpfalzEDV/kp-commons/issues</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
-        </repository>
-    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -107,6 +55,9 @@
         <skip.site>false</skip.site>
 
         <war.output.directory>undefined</war.output.directory>
+        <delombok.output>target/delombok</delombok.output>
+
+        <uml-classes>de.kaiserpfalzedv</uml-classes>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>17</maven.compiler.source>
@@ -116,26 +67,6 @@
 
         <spring-boot.version>3.2.2</spring-boot.version>
     </properties>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.3</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.2.5</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.3.1</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <build>
         <pluginManagement>
@@ -192,6 +123,7 @@
                     <version>3.6.3</version>
                     <configuration>
                         <skip>${skip.javadoc}</skip>
+                        <sourcepath>${delombok.output}</sourcepath>
                         <doclint>none</doclint>
                     </configuration>
                     <executions>
@@ -202,7 +134,6 @@
                         </execution>
                     </executions>
                 </plugin>
-
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -220,41 +151,6 @@
                     </executions>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.3.1</version>
-                    <configuration>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
-                        <delimiters>
-                            <delimiter>@</delimiter>
-                        </delimiters>
-                        <useDefaultDelimiters>false</useDefaultDelimiters>
-                        <nonFilteredFileExtensions>
-                            <nonFilteredFileExtension>docx</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>zip</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>tgz</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>png</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>gpg</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>license</nonFilteredFileExtension>
-                        </nonFilteredFileExtensions>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>test-sources-generation</id>
-                            <phase>generate-test-resources</phase>
-                            <goals>
-                                <goal>testResources</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${skipTests}</skip>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -294,11 +190,19 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>4.0.0-M13</version>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.3.1</version>
                     <configuration>
-                        <skip>${skip.site}</skip>
+                        <configurationLocation>checkstyle.xml</configurationLocation>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>de.kaiserpfalz-edv.commons</groupId>
+                            <artifactId>kp-checkstyle</artifactId>
+                            <version>${project.version}</version>
+                            <scope>compile</scope>
+                        </dependency>
+                    </dependencies>                
                 </plugin>
 
                 <plugin>
@@ -309,7 +213,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.2.3</version>
+                    <version>3.2.5</version>
                     <executions>
                         <execution>
                             <goals>
@@ -326,6 +230,143 @@
                         <trimStackTrace>false</trimStackTrace>
                         <enableAssertions>true</enableAssertions>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.11</version>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-report</id>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-check</id>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>COMPLEXITY</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.10</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok-maven-plugin</artifactId>
+                    <version>1.18.20.0</version>
+                    <configuration>
+                        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                        <outputDirectory>${delombok.output}</outputDirectory>
+                        <addOutputDirectory>false</addOutputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>delombok</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.iluwatar.urm</groupId>
+                    <artifactId>urm-maven-plugin</artifactId>
+                    <version>2.1.1</version>
+                    <configuration>
+                        <includeMainDirectory>true</includeMainDirectory>
+                        <includeTestDirectory>false</includeTestDirectory>
+                        <presenter>plantuml</presenter>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <?m2e execute onConfiguration,onIncremental?>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>map</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.basedir}/target</outputDirectory>
+                                <packages>
+                                    <param>${uml-classes}</param>
+                                </packages>
+                            </configuration>
+                        </execution>
+                    </executions>
+            </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <executions>
+                        <execution>
+                            <phase>pre-site</phase>
+                            <goals>
+                                <goal>set-system-properties</goal>
+                            </goals>
+                            <configuration>
+                                <properties>
+                                    <property>
+                                        <name>PLANTUML_LIMIT_SIZE</name>
+                                        <value>10240</value>
+                                    </property>
+                                </properties>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.jeluard</groupId>
+                    <artifactId>plantuml-maven-plugin</artifactId>
+                    <version>1.2</version>
+                    <configuration>
+                        <sourceFiles>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>**/*.puml</include>
+                            </includes>
+                        </sourceFiles>
+                        <verbose>true</verbose>
+                        <outputDirectory>${basedir}/src/site/resources/images</outputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>uml</id>
+                            <phase>pre-site</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sourceforge.plantuml</groupId>
+                            <artifactId>plantuml</artifactId>
+                            <version>1.2024.3</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -344,71 +385,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>production</id>
-        </profile>
-
-        <profile>
-            <id>release</id>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>site</id>
-
-            <properties>
-                <maven.javadoc.skip>true</maven.javadoc.skip>
-            </properties>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-site-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-project-info-reports-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-report-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <skip>${maven.javadoc.skip}</skip>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <skip>${maven.javadoc.skip}</skip>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
-        </profile>
-
         <profile>
             <id>java</id>
 
@@ -459,10 +435,44 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.12.1</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.3.0</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.6.3</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.0</version>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.9</version>
+                        <configuration>
+                            <suppressionFiles>
+                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                            </suppressionFiles>
+                            <failBuildOnCVSS>8</failBuildOnCVSS>
+                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                            <failOnError>true</failOnError>
+                            <nvdServerId>nvdApi</nvdServerId>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -470,6 +480,74 @@
                     </plugin>
                 </plugins>
             </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.6.3</version>
+                        <configuration>
+                            <skip>${maven.javadoc.skip}</skip>
+                        </configuration>
+                        <reportSets>
+                            <reportSet>
+                                <id>aggregate</id>
+                                <inherited>false</inherited>
+                                <reports>
+                                    <report>aggregate</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.0</version>
+                    </plugin>
+        
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <version>3.2.5</version>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                    </plugin>
+        
+                    <plugin>
+                        <groupId>com.github.jeluard</groupId>
+                        <artifactId>plantuml-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.9</version>
+                        <configuration>
+                            <suppressionFiles>
+                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                            </suppressionFiles>
+                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                            <failBuildOnCVSS>8</failBuildOnCVSS>
+                            <nvdApiServerId>nvdApi</nvdApiServerId>
+                        </configuration>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>check</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
         </profile>
 
         <profile>
@@ -519,36 +597,16 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                    </plugin>
                 </plugins>
 
                 <testResources>
                     <testResource>
                         <filtering>true</filtering>
                         <directory>src/test/resources</directory>
-                        <excludes>
-                            <exclude>**/*.docx</exclude>
-                            <exclude>**/*.xlsx</exclude>
-                            <exclude>**/*.zip</exclude>
-                            <exclude>**/*.tgz</exclude>
-                            <exclude>**/*.png</exclude>
-                            <exclude>**/*.jpg</exclude>
-                            <exclude>**/*.gpg</exclude>
-                            <exclude>**/*.license</exclude>
-                        </excludes>
-                    </testResource>
-                    <testResource>
-                        <filtering>false</filtering>
-                        <directory>src/test/resources</directory>
-                        <includes>
-                            <include>**/*.docx</include>
-                            <include>**/*.xlsx</include>
-                            <include>**/*.zip</include>
-                            <include>**/*.tgz</include>
-                            <include>**/*.png</include>
-                            <include>**/*.jpg</include>
-                            <include>**/*.gpg</include>
-                            <include>**/*.license</include>
-                        </includes>
                     </testResource>
                 </testResources>
             </build>
@@ -623,7 +681,7 @@
                 <dependency>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-starter-contract-stub-runner</artifactId>
-                    <version>4.1.0</version>
+                    <version>4.1.1</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

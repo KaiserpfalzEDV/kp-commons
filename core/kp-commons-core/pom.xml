@@ -22,17 +22,26 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.core</groupId>
         <artifactId>kp-commons-core-root</artifactId>
-        <version>3.2.2-1</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-core</artifactId>
-    <name>KP Commons :: Core :: Implementation</name>
     <description>The services used by almost all role playing systems.</description>
+
+    <properties>
+        <uml-classes>de.kaiserpfalzedv.commons.core</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons.core</groupId>
             <artifactId>kp-commons-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.commons.core</groupId>
+            <artifactId>kp-commons-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -56,7 +65,7 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.16.0</version>
+            <version>1.16.1</version>
         </dependency>
 
         <dependency>
@@ -81,4 +90,124 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.iluwatar.urm</groupId>
+                <artifactId>urm-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>i18n</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/i18n</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.i18n</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>libravatar</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/libravatar</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.libravatar</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>observability</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/observability</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.observability</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/resources</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.resources</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>store</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/store</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.store</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>user</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/user</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.user</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <?m2e execute onConfiguration,onIncremental?>
+                        <id>workflow</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/workflow</outputDirectory>
+                            <packages>
+                                <param>${uml-classes}.workflow</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>

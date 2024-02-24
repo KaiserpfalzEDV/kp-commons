@@ -22,12 +22,11 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.2.2-1</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-rest</artifactId>
-    <name>KP Commons :: Modules :: REST</name>
-    <description>The JPA part of kp-commons.</description>
+    <description>The REST part of kp-commons.</description>
 
     <dependencies>
         <dependency>
