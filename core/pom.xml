@@ -22,16 +22,15 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.2.2-4</version>
+        <version>3.2.2-5</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
     <groupId>de.kaiserpfalz-edv.commons.core</groupId>
     <artifactId>kp-commons-core-root</artifactId>
-    <version>3.2.2-4</version>
+    <version>3.2.2-5</version>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Core :: Root</name>
     <description>
         The core modules of KP-COMMONS.
     </description>

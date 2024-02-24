@@ -24,11 +24,10 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.2.2-4</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-jackson</artifactId>
-    <name>KP Commons :: Modules :: Jackson</name>
     <description>Helper for handling Json via Jackson.</description>
 
     <dependencies>

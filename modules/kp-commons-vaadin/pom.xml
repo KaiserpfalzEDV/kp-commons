@@ -22,11 +22,10 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.2.2-4</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-vaadin</artifactId>
-    <name>KP Commons :: Modules :: Vaadin UI</name>
     <description>Integration of Vaadin including OpenIDConnect authentication with spring-security.</description>
 
     <dependencies>

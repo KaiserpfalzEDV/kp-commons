@@ -24,12 +24,15 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.core</groupId>
         <artifactId>kp-commons-core-root</artifactId>
-        <version>3.2.2-4</version>
+        <version>3.2.2-5</version>
     </parent>
 
     <artifactId>kp-commons-test</artifactId>
-    <name>KP Commons :: Core :: Testsupport</name>
     <description>Helpers for doing the testing ...</description>
+
+    <properties>
+        <uml-classes>de.kaiserpfalzedv.commons.test</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>

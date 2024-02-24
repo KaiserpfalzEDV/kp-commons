@@ -35,9 +35,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
@@ -77,30 +77,30 @@ public abstract class AbstractJPAEntity implements HasId, Cloneable {
 
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractJPAEntity entity)) return false;
-        return id.equals(entity.getId());
+        if (!(o instanceof final AbstractJPAEntity entity)) return false;
+        return this.id.equals(entity.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(this.getId());
     }
 
     @Override
     protected AbstractJPAEntity clone() throws CloneNotSupportedException {
-        AbstractJPAEntity result = (AbstractJPAEntity) super.clone();
+        final AbstractJPAEntity result = (AbstractJPAEntity) super.clone();
 
-        result.id = id;
-        result.version = version;
+        result.id = this.id;
+        result.version = this.version;
 
-        if (created != null) {
-            result.created = created;
+        if (this.created != null) {
+            result.created = this.created;
         }
 
-        if (modified != null) {
-            result.modified = modified;
+        if (this.modified != null) {
+            result.modified = this.modified;
         }
 
         return result;
