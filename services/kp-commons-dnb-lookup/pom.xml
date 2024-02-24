@@ -25,15 +25,18 @@
     <parent>
         <artifactId>kp-commons-services-root</artifactId>
         <groupId>de.kaiserpfalz-edv.commons.services</groupId>
-        <version>3.2.2-4</version>
+        <version>3.2.2-5-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-dnb-lookup</artifactId>
-    <name>KP Commons :: Services :: DNB Lookup</name>
     <description>
         Library to access the (free) service of the Deutsche Nationalbibliothek for looking for book data. It is limted
         to the data in Germany.
     </description>
+
+    <properties>
+        <uml-classes>de.kaiserpfalzedv.services.dnb</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -41,4 +44,51 @@
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.iluwatar.urm</groupId>
+                <artifactId>urm-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>model</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/model</outputDirectory>
+                            <packages>
+                                <param>de.kaiserpfalzedv.services.dnb.model</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>marc21</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/uml/marc21</outputDirectory>
+                            <packages>
+                                <param>de.kaiserpfalzedv.services.dnb.marcxml</param>
+                            </packages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
