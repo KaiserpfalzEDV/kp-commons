@@ -1,12 +1,12 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.filter,RequestLimitFilter,0,113,2,4,0,29,2,8,0,7
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.client,EanSearchClientConfig,0,44,0,0,0,7,0,4,0,4
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.model,VerifyChecksumResponse.Product,9,0,2,0,1,0,2,0,1,0
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.model,VerifyChecksumResponse,8,0,0,0,2,0,2,0,2,0
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchWrongHTTPMethodException,5,0,0,0,2,0,1,0,1,0
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchInvalidAccessTokenException,5,0,0,0,2,0,1,0,1,0
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchInvalidOperationException,5,0,0,0,2,0,1,0,1,0
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,ResponseErrorMapper,17,11,5,1,5,3,5,2,0,2
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchException,0,7,0,0,0,3,0,1,0,1
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchRequestLimitReachedException,0,5,0,0,0,2,0,1,0,1
-KP Commons :: Services :: EAN-Search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchTooManyRequestsException,0,5,0,0,0,2,0,1,0,1
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.filter,RequestLimitFilter,0,113,2,4,0,29,2,8,0,7
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.client,EanSearchClientConfig,0,44,0,0,0,7,0,4,0,4
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.model,VerifyChecksumResponse.Product,9,0,2,0,1,0,2,0,1,0
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.model,VerifyChecksumResponse,8,0,0,0,2,0,2,0,2,0
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchWrongHTTPMethodException,5,0,0,0,2,0,1,0,1,0
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchInvalidAccessTokenException,5,0,0,0,2,0,1,0,1,0
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchInvalidOperationException,5,0,0,0,2,0,1,0,1,0
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,ResponseErrorMapper,17,11,5,1,5,3,5,2,0,2
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchException,0,7,0,0,0,3,0,1,0,1
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchRequestLimitReachedException,0,5,0,0,0,2,0,1,0,1
+kp-commons-ean-search,de.kaiserpfalzedv.services.eansearch.mapper,EanSearchTooManyRequestsException,0,5,0,0,0,2,0,1,0,1
