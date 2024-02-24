@@ -30,7 +30,6 @@
     <artifactId>kp-commons-services-root</artifactId>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Services :: Root</name>
     <description>
         The specialized modules for JPA, REST, ...
     </description>

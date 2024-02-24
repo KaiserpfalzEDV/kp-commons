@@ -28,7 +28,6 @@
     </parent>
 
     <artifactId>kp-commons-jackson</artifactId>
-    <name>KP Commons :: Modules :: Jackson</name>
     <description>Helper for handling Json via Jackson.</description>
 
     <dependencies>

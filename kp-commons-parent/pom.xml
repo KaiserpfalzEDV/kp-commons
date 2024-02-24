@@ -451,6 +451,28 @@
                         <artifactId>maven-source-plugin</artifactId>
                         <version>3.3.0</version>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.9</version>
+                        <configuration>
+                            <suppressionFiles>
+                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                            </suppressionFiles>
+                            <failBuildOnCVSS>8</failBuildOnCVSS>
+                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                            <failOnError>true</failOnError>
+                            <nvdServerId>nvdApi</nvdServerId>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
 
@@ -497,6 +519,26 @@
                     <plugin>
                         <groupId>com.github.jeluard</groupId>
                         <artifactId>plantuml-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.9</version>
+                        <configuration>
+                            <suppressionFiles>
+                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                            </suppressionFiles>
+                            <failBuildOnCVSS>8</failBuildOnCVSS>
+                            <nvdApiServerId>nvdApi</nvdApiServerId>
+                        </configuration>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>check</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
                     </plugin>
                 </plugins>
             </reporting>

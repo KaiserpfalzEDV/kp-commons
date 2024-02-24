@@ -39,6 +39,12 @@
         </dependency>
 
         <dependency>
+            <groupId>de.kaiserpfalz-edv.commons.core</groupId>
+            <artifactId>kp-commons-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
         </dependency>
@@ -194,6 +200,7 @@
                 <groupId>com.github.jeluard</groupId>
                 <artifactId>plantuml-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
 </project>

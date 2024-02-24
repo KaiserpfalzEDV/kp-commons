@@ -317,7 +317,28 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-            </plugin>    
+            </plugin>
+
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>9.0.9</version>
+                <configuration>
+                    <suppressionFiles>
+                        <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                    </suppressionFiles>
+                    <failBuildOnCVSS>8</failBuildOnCVSS>
+                    <nvdApiServerId>nvdApi</nvdApiServerId>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>        
 </project>

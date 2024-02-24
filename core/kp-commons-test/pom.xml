@@ -28,8 +28,11 @@
     </parent>
 
     <artifactId>kp-commons-test</artifactId>
-    <name>KP Commons :: Core :: Testsupport</name>
     <description>Helpers for doing the testing ...</description>
+
+    <properties>
+        <uml-classes>de.kaiserpfalzedv.commons.test</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -43,4 +46,23 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.iluwatar.urm</groupId>
+                <artifactId>urm-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

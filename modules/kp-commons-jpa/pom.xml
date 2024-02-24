@@ -26,8 +26,10 @@
     </parent>
 
     <artifactId>kp-commons-jpa</artifactId>
-    <name>KP Commons :: Modules :: JPA</name>
-    <description>The JPA part of kp-commons.</description>
+
+    <properties>
+        <uml-classes>de.kaiserpfalzedv.commons.jpa</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -40,4 +42,23 @@
             <artifactId>spring-data-jpa</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.iluwatar.urm</groupId>
+                <artifactId>urm-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

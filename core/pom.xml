@@ -31,7 +31,6 @@
     <version>3.2.2-5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Core :: Root</name>
     <description>
         The core modules of KP-COMMONS.
     </description>
