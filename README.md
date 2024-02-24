@@ -4,7 +4,7 @@
 >
 > -- @blue_eyed_darkness on TikTok
 
-![Maven](https://github.com/KaiserpfalzEDV/kp-commons/workflows/CI/badge.svg)
+[![CI](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/ci.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/ci.yml)
 
 ## Abstract
 
