@@ -28,6 +28,7 @@
             <item name="Risks and Technical Debt" href="11-risks-and-technical-debt.html" />
             <item name="Glossary" href="12-glossary.html" />
         </menu>
+
         <menu name="Modules" inherit="true">
             <item name="Core" href="../../kp-commons-core-root/index.html" />
             <item name="Modules" href="../../kp-commons-modules-root/index.html" />
