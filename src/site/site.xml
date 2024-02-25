@@ -17,11 +17,6 @@
     </bannerRight>
 
     <body>
-        <head>
-            <![CDATA[<script src="./mermaid/mermaid.js" type="text/javascript" />]]>
-            <![CDATA[<link rel="stylesheet" href="./mermaid/mermaid.css" />]]>
-        </head>
-    
         <links>
             <item name="Quellcode" href="https://www.github.com/KaiserpfalzEDV/kp-commons/"/>
             <item name="Kaiserpfalz EDV-Service" href="https://www.kaiserpfalz-edv.de/"/>
@@ -66,5 +61,14 @@
             <item name="Paladins Inn" href="https://paladins-inn.de/" />
             <item name="Roland T. Lichti" href="https://lichti.de/" />
         </menu>
+
+        <footer>
+            <![CDATA[<script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+                mermaid.initialize({ startOnLoad: false, suppressError: false });
+                await mermaid.run({ querySelector: '.language-mermaid' })
+            </script>]]>
+        </footer>
     </body>
 </project>
