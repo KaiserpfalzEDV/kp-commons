@@ -25,7 +25,7 @@
     <parent>
         <artifactId>kp-commons-services-root</artifactId>
         <groupId>de.kaiserpfalz-edv.commons.services</groupId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-dnb-lookup</artifactId>
@@ -36,6 +36,7 @@
 
     <properties>
         <uml-classes>de.kaiserpfalzedv.services.dnb</uml-classes>
+        <main.basedir>${project.basedir}/../..</main.basedir>
     </properties>
 
     <dependencies>

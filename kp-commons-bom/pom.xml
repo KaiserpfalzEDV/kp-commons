@@ -23,18 +23,19 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
-    <name>KP Commons :: Bill of Materials</name>
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>3.2.2-5</kp-commons.version>
+        <kp-commons.version>3.2.3-1-SNAPSHOT</kp-commons.version>
 
-        <spring-boot.version>3.2.2</spring-boot.version>
-        <springframework.version>6.1.3</springframework.version>
+        <main.basedir>${project.basedir}/..</main.basedir>
+
+        <spring-boot.version>3.2.3</spring-boot.version>
+        <springframework.version>6.1.4</springframework.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>

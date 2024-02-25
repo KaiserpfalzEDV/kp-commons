@@ -22,11 +22,16 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-vaadin</artifactId>
     <description>Integration of Vaadin including OpenIDConnect authentication with spring-security.</description>
+
+    <properties>
+        <main.basedir>${project.basedir}/../..</main.basedir>
+        <uml-classes>de.kaiserpfalzedv.commons.vaadin</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>

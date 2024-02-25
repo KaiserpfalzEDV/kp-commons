@@ -23,12 +23,16 @@
     <parent>
 			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
 			<artifactId>kp-commons-schlundtech-root</artifactId>
-			<version>3.2.2</version>
+			<version>3.2.3-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-schlundtech</artifactId>
-    <name>KP Commons :: Services :: Schlundtech :: Domainrobot Library</name>
     <description>Library to access the API of Schlundtech based on https://github.com/InterNetX/java-domainrobot-sdk.</description>
+
+    <properties>
+        <main.basedir>${project.basedir}/../../..</main.basedir>
+        <uml-classes>de.kaiserpfalzedv.services.domainrobot</uml-classes>
+    </properties>
 
     <dependencies>
         <dependency>

@@ -24,13 +24,12 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Parent</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
     <url>https://kaiserpfalzedv.github.io/kp-commons</url>
 
@@ -58,6 +57,7 @@
         <delombok.output>target/delombok</delombok.output>
 
         <uml-classes>de.kaiserpfalzedv</uml-classes>
+        <main.basedir>${project.basedir}/..</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>17</maven.compiler.source>
@@ -65,7 +65,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.2.2</spring-boot.version>
+        <spring-boot.version>3.2.3</spring-boot.version>
     </properties>
 
     <build>
@@ -459,7 +459,7 @@
                         <version>9.0.9</version>
                         <configuration>
                             <suppressionFiles>
-                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                                <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
                             </suppressionFiles>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
@@ -529,7 +529,7 @@
                         <version>9.0.9</version>
                         <configuration>
                             <suppressionFiles>
-                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                                <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
                             </suppressionFiles>
                             <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                             <failBuildOnCVSS>8</failBuildOnCVSS>

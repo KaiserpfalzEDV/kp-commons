@@ -17,6 +17,11 @@
     </bannerRight>
 
     <body>
+        <head>
+            <![CDATA[<script src="./mermaid/mermaid.js" type="text/javascript" />]]>
+            <![CDATA[<link rel="stylesheet" href="./mermaid/mermaid.css" />]]>
+        </head>
+    
         <links>
             <item name="Quellcode" href="https://www.github.com/KaiserpfalzEDV/kp-commons/"/>
             <item name="Kaiserpfalz EDV-Service" href="https://www.kaiserpfalz-edv.de/"/>
@@ -37,6 +42,21 @@
             <item name="Core" href="./kp-commons-parent/kp-commons-core-root/index.html" />
             <item name="Modules" href="./kp-commons-parent/kp-commons-modules-root/index.html" />
             <item name="Services" href="./kp-commons-parent/kp-commons-services-root/index.html" />
+        </menu>
+
+        <menu name="Architecture">
+            <item name="Introduction and Goals" href="01-introduction.html" />
+            <item name="Constraints" href="02-constraints.html" />
+            <item name="Context and Scope" href="03-context.html" />
+            <item name="Solution Strategy" href="04-solution-strategy.html" />
+            <item name="Building Block View" href="05-building-block-view.html" />
+            <item name="Runtime View" href="06-runtime-view.html" />
+            <item name="Deployment View" href="07-deployment-view.html" />
+            <item name="Crosscutting Concepts" href="08-crosscutting-concepts.html" />
+            <item name="Architecture Decisions" href="09-architecture-decisions.html" />
+            <item name="Quality" href="10-quality.html" />
+            <item name="Risks and Technical Debt" href="11-risks-and-technical-debt.html" />
+            <item name="Glossary" href="12-glossary.html" />
         </menu>
 
         <menu ref="reports" inherit="true" />

@@ -39,4 +39,8 @@
         <module>schlundtech-domainrobot-models</module>
         <module>kp-commons-schlundtech</module>
     </modules>
+
+    <properties>
+        <main.basedir>${project.basedir}/../..</main.basedir>
+    </properties>
 </project>
