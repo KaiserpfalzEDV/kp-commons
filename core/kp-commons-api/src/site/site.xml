@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
-        name="KP-COMMONS -- kp-commons-api">
+        name="kp-commons-api">
     <body>
-        <breadcrumbs>
-            <item name="Commons API" href="./index.html" />
-        </breadcrumbs>
-
         <menu name="Base" inherit="true">
             <item name="BOM" href="../../../kp-commons-bom/index.html" />
             <item name="Parent" href="../../../kp-commons-parent/index.html" />

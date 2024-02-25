@@ -5,7 +5,7 @@
     <body>
 
         <breadcrumbs>
-            <item name="services" href="./index.html" />
+            <item name="KP-COMMONS" href="./index.html" />
         </breadcrumbs>
 
         <menu name="Base" inherit="true">

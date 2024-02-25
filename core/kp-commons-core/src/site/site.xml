@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
-        name="KP-COMMONS -- kp-commons-core">
+        name="kp-commons-core">
     <body>
-        <breadcrumbs>
-            <item name="Commons API" href="./index.html" />
-        </breadcrumbs>
-
         <menu name="Base" inherit="true">
             <item name="BOM" href="../../../kp-commons-bom/index.html" />
             <item name="Parent" href="../../../kp-commons-parent/index.html" />
@@ -14,7 +10,13 @@
             <item name="Checkstyle" href="../../../kp-checkstyle/index.html" />
         </menu>
 
-        <menu name="Architecture">
+        <menu name="Modules" inherit="true">
+            <item name="Core" href="../../kp-commons-core-root/index.html" />
+            <item name="Modules" href="../../kp-commons-modules-root/index.html" />
+            <item name="Services" href="../../kp-commons-services-root/index.html" />
+        </menu>
+
+        <menu name="Architecture" inherit="false">
             <item name="Introduction and Goals" href="01-introduction.html" />
             <item name="Constraints" href="02-constraints.html" />
             <item name="Context and Scope" href="03-context.html" />
@@ -27,12 +29,6 @@
             <item name="Quality" href="10-quality.html" />
             <item name="Risks and Technical Debt" href="11-risks-and-technical-debt.html" />
             <item name="Glossary" href="12-glossary.html" />
-        </menu>
-
-        <menu name="Modules" inherit="true">
-            <item name="Core" href="../../kp-commons-core-root/index.html" />
-            <item name="Modules" href="../../kp-commons-modules-root/index.html" />
-            <item name="Services" href="../../kp-commons-services-root/index.html" />
         </menu>
 
         <menu ref="reports" inherit="true" />
