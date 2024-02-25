@@ -193,8 +193,16 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.3.1</version>
                     <configuration>
-                        <configurationLocation>checkstyle.xml</configurationLocation>
+                        <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <dependencies>
                         <dependency>
                             <groupId>de.kaiserpfalz-edv.commons</groupId>
@@ -202,7 +210,7 @@
                             <version>${project.version}</version>
                             <scope>compile</scope>
                         </dependency>
-                    </dependencies>                
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -313,7 +321,7 @@
                             </configuration>
                         </execution>
                     </executions>
-            </plugin>
+                </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -522,6 +530,16 @@
                         <groupId>com.github.jeluard</groupId>
                         <artifactId>plantuml-maven-plugin</artifactId>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <configuration>
+                            <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
+                        </configuration>
+                    </plugin>
+    
 
                     <plugin>
                         <groupId>org.owasp</groupId>
