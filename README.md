@@ -8,13 +8,13 @@
 
 ## Abstract
 
-This is a library of software artifacts I found useful in a number of projects. 
+This is a library of software artifacts I found useful in a number of projects.
 So I assembled them in this library.
 
 ## License
 
 The license for the software is GPL 3.0 or newer.
-Parts of the software may be licensed under other licences like MIT or Apache 2.0 - the files are marked appropriately. 
+Parts of the software may be licensed under other licences like MIT or Apache 2.0 - these files are marked appropriately.
 
 * _libravatar_ is published under MIT license from Alessandro Leite.
 * Parts of kp-commons-vaadin are published under the [Unlicense](https://unlicense.org).
@@ -34,7 +34,7 @@ Parts of the software may be licensed under other licences like MIT or Apache 2.
 
   as laid out on https://unlicense.org.
 * Parts of kp-commons-dnb-lookup are [published under MIT license from Technische Informationsbibliothek (TIB), Hannover](https://github.com/TIBHannover/library-profile-service)
-  This is the package _de.kaiserpfalzedv.services.dnb.marcxml_ which does the heavy lifting of converting the MARC-XML data into our own internal model. 
+  This is the package _de.kaiserpfalzedv.services.dnb.marcxml_ which does the heavy lifting of converting the MARC-XML data into our own internal model.
   Of course, I changed it to use our model and not the model of TIB.
 
 ## Architecture
@@ -54,12 +54,15 @@ Beat me.
 
 ## Included libraries
 
+* base
+  * kp-commons-bom
+  * kp-commons-parent
+  * kp-spring-boot-parent
+  * kp-checkstyle
 * core
   * kp-commons-api
   * kp-commons-core
   * kp-commons-test
-  * (kp-commons-bom)
-  * (kp-commons-parent)
 * modules
   * kp-commons-jpa
   * kp-commons-rest

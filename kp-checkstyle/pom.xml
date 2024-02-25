@@ -23,9 +23,12 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-checkstyle</artifactId>
-    <name>KP Commons :: Checkstyle Configuration</name>
+
+    <properties>
+        <main.basedir>${project.basedir}/..</main.basedir>
+    </properties>
 </project>

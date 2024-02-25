@@ -21,10 +21,9 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.2.2-5</version>
+    <version>3.2.3-1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>KP Commons</name>
     <description>
         The kp-commons is a library that is used by the Kaiserpfalz EDV-Service for base integrations and common
         definitions like API base elements.
@@ -113,6 +112,7 @@
         <skip.site>false</skip.site>
 
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
+        <main.basedir>${project.basedir}</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>17</maven.compiler.source>
@@ -325,7 +325,7 @@
                 <version>9.0.9</version>
                 <configuration>
                     <suppressionFiles>
-                        <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                        <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
                     </suppressionFiles>
                     <failBuildOnCVSS>8</failBuildOnCVSS>
                     <nvdApiServerId>nvdApi</nvdApiServerId>
