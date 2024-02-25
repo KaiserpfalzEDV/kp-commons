@@ -177,7 +177,7 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.3.1</version>
                     <configuration>
-                        <configurationLocation>checkstyle.xml</configurationLocation>
+                        <configLocation>checkstyle.xml</configLocation>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -227,7 +227,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.3.1</version>
                 <configuration>
-                    <configurationLocation>checkstyle.xml</configurationLocation>
+                    <configLocation>checkstyle.xml</configLocation>
                 </configuration>
                 <reportSets>
                     <reportSet>
