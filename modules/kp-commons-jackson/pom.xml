@@ -24,11 +24,16 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1</version>
     </parent>
 
     <artifactId>kp-commons-jackson</artifactId>
     <description>Helper for handling Json via Jackson.</description>
+
+    <properties>
+        <uml-classes>de.kaiserpfalzedv.commons.jackson</uml-classes>
+        <main.basedir>${project.basedir}/../..</main.basedir>
+    </properties>
 
     <dependencies>
         <dependency>

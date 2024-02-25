@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+        name="kp-checkstyle">
+    <body>
+        <menu ref="parent" inherit="true" />
+
+        <menu ref="modules"  inherit="true" />
+
+        <menu ref="reports" inherit="true" />
+
+        <menu name="Links" inherit="true" >
+            <item name="Kaiserpfalz EDV-Servie" href="https://www.kaiserpfalz-edv.de/" />
+            <item name="Paladins Inn" href="https://paladins-inn.de/" />
+            <item name="Roland T. Lichti" href="https://lichti.de/" />
+        </menu>
+
+        <footer>
+            <![CDATA[<script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+                mermaid.initialize({ startOnLoad: false, suppressError: false });
+                await mermaid.run({ querySelector: '.language-mermaid' })
+            </script>]]>
+        </footer>
+    </body>
+</project>

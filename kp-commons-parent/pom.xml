@@ -24,13 +24,12 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>KP Commons :: Parent</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
     <url>https://kaiserpfalzedv.github.io/kp-commons</url>
 
@@ -58,6 +57,7 @@
         <delombok.output>target/delombok</delombok.output>
 
         <uml-classes>de.kaiserpfalzedv</uml-classes>
+        <main.basedir>${project.basedir}/..</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>17</maven.compiler.source>
@@ -65,7 +65,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.2.2</spring-boot.version>
+        <spring-boot.version>3.2.3</spring-boot.version>
     </properties>
 
     <build>
@@ -145,7 +145,7 @@
                     <executions>
                         <execution>
                             <goals>
-                                <goal>jar</goal>
+                                <goal>jar-no-fork</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -193,8 +193,16 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.3.1</version>
                     <configuration>
-                        <configurationLocation>checkstyle.xml</configurationLocation>
+                        <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <dependencies>
                         <dependency>
                             <groupId>de.kaiserpfalz-edv.commons</groupId>
@@ -202,7 +210,7 @@
                             <version>${project.version}</version>
                             <scope>compile</scope>
                         </dependency>
-                    </dependencies>                
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -313,7 +321,7 @@
                             </configuration>
                         </execution>
                     </executions>
-            </plugin>
+                </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -478,6 +486,37 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>9.0.9</version>
+                        <configuration>
+                            <suppressionFiles>
+                                <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
+                            </suppressionFiles>
+                            <failBuildOnCVSS>8</failBuildOnCVSS>
+                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                            <failOnError>true</failOnError>
+                            <nvdServerId>nvdApi</nvdServerId>
+                            <verbose>false</verbose>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
 
@@ -503,12 +542,6 @@
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.3.0</version>
-                    </plugin>
-        
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
                         <version>3.2.5</version>
                         <configuration>
@@ -527,16 +560,26 @@
                     </plugin>
 
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <configuration>
+                            <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
+                        </configuration>
+                    </plugin>
+    
+                    <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
                         <version>9.0.9</version>
                         <configuration>
                             <suppressionFiles>
-                                <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
+                                <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
                             </suppressionFiles>
                             <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                             <failBuildOnCVSS>8</failBuildOnCVSS>
                             <nvdApiServerId>nvdApi</nvdApiServerId>
+                            <verbose>false</verbose>
                         </configuration>
                         <reportSets>
                             <reportSet>
@@ -545,6 +588,17 @@
                                 </reports>
                             </reportSet>
                         </reportSets>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>4.8.3.0</version>
+                        <configuration>
+                            <effort>Max</effort>
+                            <threshold>Low</threshold>
+                            <xmlOutput>true</xmlOutput>
+                        </configuration>
                     </plugin>
                 </plugins>
             </reporting>

@@ -20,7 +20,16 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
+      - name: Set up Maven
+        id: setup-maven
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
 
       - name: Build
         id: build-java
-        run: mvn --batch-mode --no-transfer-progress deploy site site:stage scm-publish:publish-scm
+        run: mvn --batch-mode --no-transfer-progress install deploy
+      - name: site
+        id: build-site
+        run: mvn --batch-mode --no-transfer-progress site site:stage scm-publish:publish-scm

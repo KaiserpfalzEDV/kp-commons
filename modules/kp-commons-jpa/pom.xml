@@ -22,13 +22,14 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.2.2-5</version>
+        <version>3.2.3-1</version>
     </parent>
 
     <artifactId>kp-commons-jpa</artifactId>
 
     <properties>
         <uml-classes>de.kaiserpfalzedv.commons.jpa</uml-classes>
+        <main.basedir>${project.basedir}/../..</main.basedir>
     </properties>
 
     <dependencies>

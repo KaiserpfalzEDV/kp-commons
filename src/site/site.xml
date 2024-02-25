@@ -39,6 +39,21 @@
             <item name="Services" href="./kp-commons-parent/kp-commons-services-root/index.html" />
         </menu>
 
+        <menu name="Architecture">
+            <item name="Introduction and Goals" href="01-introduction.html" />
+            <item name="Constraints" href="02-constraints.html" />
+            <item name="Context and Scope" href="03-context.html" />
+            <item name="Solution Strategy" href="04-solution-strategy.html" />
+            <item name="Building Block View" href="05-building-block-view.html" />
+            <item name="Runtime View" href="06-runtime-view.html" />
+            <item name="Deployment View" href="07-deployment-view.html" />
+            <item name="Crosscutting Concepts" href="08-crosscutting-concepts.html" />
+            <item name="Architecture Decisions" href="09-architecture-decisions.html" />
+            <item name="Quality" href="10-quality.html" />
+            <item name="Risks and Technical Debt" href="11-risks-and-technical-debt.html" />
+            <item name="Glossary" href="12-glossary.html" />
+        </menu>
+
         <menu ref="reports" inherit="true" />
 
         <menu name="Links" inherit="true" >
@@ -46,5 +61,14 @@
             <item name="Paladins Inn" href="https://paladins-inn.de/" />
             <item name="Roland T. Lichti" href="https://lichti.de/" />
         </menu>
+
+        <footer>
+            <![CDATA[<script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+                mermaid.initialize({ startOnLoad: false, suppressError: false });
+                await mermaid.run({ querySelector: '.language-mermaid' })
+            </script>]]>
+        </footer>
     </body>
 </project>
