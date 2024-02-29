@@ -69,7 +69,7 @@
         <maven-resolver.version>1.9.18</maven-resolver.version>
         <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
         <micrometer-context-propagation.version>1.0.5</micrometer-context-propagation.version>
-        <mockk.version>1.13.5</mockk.version>
+        <mockk.version>1.13.10</mockk.version>
         <native-gradle-plugin.version>0.9.28</native-gradle-plugin.version>
         <plexus-build-api.version>0.0.7</plexus-build-api.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
