@@ -37,7 +37,9 @@
         <spring-boot.version>3.2.3</spring-boot.version>
         <springframework.version>6.1.4</springframework.version>
 
-        <surefire-plugin.version>2.22.1</surefire-plugin.version>
+        <spring-boot.version>3.2.3</spring-boot.version>
+        <springframework.version>6.1.4</springframework.version>
+        <jackson-bom.version>2.16.0</jackson-bom.version>
     </properties>
 
     <dependencyManagement>
@@ -77,7 +79,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>2.16.1</version>
+                <version>${jackson-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
