@@ -9,23 +9,24 @@ q --> e[Extendability]
 q --> p[Performance]
 q --> o[Observability]
 
-s --> sd[Dependency Vulnerability]
-sd --> sd01[SD01 Build Time Scanning]
-sd --> sd02[SD02 Run Time Scanning]
 s --> sa[Authentication and Authorization]
 sa --> sa01[SA01 OpenID Connect Integration]
 sa --> sa02[SA02 UME Integration]
 sa --> sa03[SA03 mTLS]
+s --> sd[Dependency Vulnerability]
+sd --> sd01[SD01 Build Time Scanning]
+sd --> sd02[SD02 Run Time Scanning]
 s --> sb[Bugs and secure coding]
-sb --> sb01[SB01 Secure Design]
 sb --> sd01
 sb --> sd02
+sb --> sb01[SB01 Secure Design]
 
 u --> ud[Dependency Management]
 ud --> ab01
 u --> uc[Code organization]
 u --> us[Replaceable External Services]
 
+e --> a
 e --> em[Modularization]
 e --> es[Common Approach for External Services]
 
@@ -36,36 +37,33 @@ p --> ps[External Services]
 o --> ol[Logging]
 ol --> ol01[OL01 Central Log Collection]
 o --> or[Reporting]
-or --> or01[OR01 Interval Reporting]
 or --> or02[OR02 Dashboarding]
+or --> or01[OR01 Interval Reporting]
 o --> om[Monitoring]
-om --> om01[OM01 Metrics]
-om01 --> or01
-om01 --> or02
-om --> om02[OM02 Alerting]
 om --> or01
-om --> or02
+om --> om01[OM01 Metrics]
+om01 --> or
+om --> om02[OM02 Alerting]
 
 s --> a[Automation]
 u --> a
-e --> a
 
 a --> ab[Build Automation]
 ab --> ab01[AB01 Maven]
 ab --> ab03[AB03 OCI Container]
-ab --> ab04[AB04 Helm Charts]
 ab --> as01
-a --> ai[Continuous Integration]
-ai --> ai01[AI01 Github Actions]
-ai --> ai02[AI02 Quay.IO]
+ab --> ab04[AB04 Helm Charts]
+a --> as[Security Scanning]
+as --> as01[AS01 OWASP Scan]
 a --> ad[Continuous Deployment]
 ad --> ab04
 ad --> ad01[AD01 ArgoCD]
 ad --> ad02[AD02 Maven Repository]
 ad --> ad03[AD03 Kubernetes]
 ad --> ai02
-a --> as[Security Scanning]
-as --> as01[AS01 OWASP Scan]
+a --> ai[Continuous Integration]
+ai --> ai02[AI02 Quay.IO]
+ai --> ai01[AI01 Github Actions]
 ```
 
 ## Quality Requirements
