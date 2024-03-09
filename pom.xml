@@ -120,6 +120,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <jackson-bom.version>2.16.0</jackson-bom.version>
+        <jackson-version>${jackson-bom.version}</jackson-version>
+        <jackson.version>${jackson-bom.version}</jackson.version>
     </properties>
 
     <build>

@@ -61,6 +61,7 @@
         <jline.version>2.11</jline.version>
         <jna.version>5.14.0</jna.version>
         <jopt-simple.version>5.0.4</jopt-simple.version>
+        <jackson-bom.version>2.16.0</jackson-bom.version>
 
         <maven.version>3.9.6</maven.version>
         <maven-common-artifact-filters.version>3.3.2</maven-common-artifact-filters.version>
