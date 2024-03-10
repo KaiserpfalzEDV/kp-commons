@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings("unused")
-public class SerializableList<T extends Serializable> extends ArrayList<T> implements Cloneable {
+public class SerializableList<T extends Serializable> extends ArrayList<T> implements Serializable, Cloneable {
     private static final long serialVersionUID = 0L;
 
     @SuppressWarnings("unchecked")
