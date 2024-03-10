@@ -17,14 +17,19 @@
 
 package de.kaiserpfalzedv.commons.core.user;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import de.kaiserpfalzedv.commons.api.user.User;
+import de.kaiserpfalzedv.commons.api.user.UserData;
+import de.kaiserpfalzedv.commons.core.resources.ResourceImpl;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -34,6 +39,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "User", description = "a user of the tomb system.")
-public class User extends de.kaiserpfalzedv.commons.core.resources.Resource<de.kaiserpfalzedv.commons.api.user.UserData> implements de.kaiserpfalzedv.commons.api.user.User {
-    private de.kaiserpfalzedv.commons.core.user.UserData spec;
+public class UserImpl extends ResourceImpl<UserData> implements User {
+    private static final long serialVersionUID = 0L;
+
+    private UserDataImpl spec;
 }

@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchException;
 import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchTooManyRequestsException;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import feign.InvocationContext;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -45,6 +46,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-17
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "lombok created constructor used.")
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -73,9 +75,11 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     /**
      * Resets the counter and enables new requests, that would otherwise being blocked by this filter.
      */
-    public synchronized void reset() {
-        this.remaining = -1;
-        log.info("EAN Search credit reporter reset. Requests should now result in requests to the API.");
+    public void reset() {
+        synchronized(this) {
+            this.remaining = -1;
+            log.info("EAN Search credit reporter reset. Requests should now result in requests to the API.");
+        }
     }
 
 
@@ -97,7 +101,10 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
                 this.registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), this.remaining);
             }
         }
-        this.requestCounter.increment();
+
+        synchronized(this) {
+            this.requestCounter.increment();
+        }
 
         log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
         return chain.next(context);

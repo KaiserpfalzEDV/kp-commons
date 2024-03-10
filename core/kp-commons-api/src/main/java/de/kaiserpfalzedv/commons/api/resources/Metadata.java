@@ -17,16 +17,19 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.constraints.NotNull;
 
 /**
  * <p>Metadata -- .</p>
@@ -54,8 +57,8 @@ public interface Metadata extends Serializable, Cloneable {
     @JsonProperty(value = "selfLink", access = JsonProperty.Access.READ_ONLY)
     default String getSelfLink() {
         return String.format("/api/%s/%s/%s/%s",
-                getKind().toLowerCase(), getApiVersion().toLowerCase(),
-                getNameSpace(), getName()
+                this.getKind().toLowerCase(Locale.getDefault()), this.getApiVersion().toLowerCase(Locale.getDefault()),
+                this.getNameSpace(), this.getName()
         );
     }
 
@@ -72,8 +75,8 @@ public interface Metadata extends Serializable, Cloneable {
      * @return If there is an annotation for this name.
      */
     @JsonIgnore
-    default boolean isAnnotated(@NotNull String name) {
-        return getAnnotations().containsKey(name);
+    default boolean isAnnotated(@NotNull final String name) {
+        return this.getAnnotations().containsKey(name);
     }
 
     /**
@@ -83,8 +86,8 @@ public interface Metadata extends Serializable, Cloneable {
      * @return The value of the annotation.
      */
     @JsonIgnore
-    default Optional<String> getAnnotation(@NotNull String name) {
-        return Optional.ofNullable(getAnnotations().get(name));
+    default Optional<String> getAnnotation(@NotNull final String name) {
+        return Optional.ofNullable(this.getAnnotations().get(name));
     }
 
     /**
@@ -94,8 +97,8 @@ public interface Metadata extends Serializable, Cloneable {
      * @return If the label is there.
      */
     @JsonIgnore
-    default boolean isLabeled(String name) {
-        return getLabels().containsKey(name);
+    default boolean isLabeled(final String name) {
+        return this.getLabels().containsKey(name);
     }
 
     /**
@@ -106,30 +109,30 @@ public interface Metadata extends Serializable, Cloneable {
      */
 
     @JsonIgnore
-    default Optional<String> getLabel(@NotNull String name) {
-        return Optional.ofNullable(getLabels().get(name));
+    default Optional<String> getLabel(@NotNull final String name) {
+        return Optional.ofNullable(this.getLabels().get(name));
     }
 
     Metadata increaseGeneration();
 
     @JsonIgnore
     default String getKind() {
-        return getIdentity().getKind();
+        return this.getIdentity().getKind();
     }
 
     @JsonIgnore
     default String getApiVersion() {
-        return getIdentity().getApiVersion();
+        return this.getIdentity().getApiVersion();
     }
 
     @JsonIgnore
     default String getNameSpace() {
-        return getIdentity().getNameSpace();
+        return this.getIdentity().getNameSpace();
     }
 
     @JsonIgnore
     default String getName() {
-        return getIdentity().getName();
+        return this.getIdentity().getName();
     }
 
     Pointer getIdentity();

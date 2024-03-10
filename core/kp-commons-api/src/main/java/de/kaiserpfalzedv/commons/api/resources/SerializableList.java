@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.api.resources;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ResourceList -- A serializable implementation of the List.
@@ -29,7 +28,8 @@ import java.util.List;
  * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings("unused")
-public class SerializableList<T extends Serializable> extends ArrayList<T> implements List<T>, Serializable, Cloneable {
+public class SerializableList<T extends Serializable> extends ArrayList<T> implements Serializable, Cloneable {
+    private static final long serialVersionUID = 0L;
 
     @SuppressWarnings("unchecked")
     @Override

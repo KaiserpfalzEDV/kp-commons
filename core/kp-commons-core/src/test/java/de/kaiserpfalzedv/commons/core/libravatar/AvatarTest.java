@@ -17,13 +17,14 @@
 
 package de.kaiserpfalzedv.commons.core.libravatar;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
 import de.kaiserpfalzedv.commons.api.libravatar.LibravatarDefaultImage;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 /**
  * <p>AvatarTest -- .</p>
@@ -58,18 +59,18 @@ public class AvatarTest extends AbstractTestBase {
     private static final String DEFAULT_HTTP_MD5_DEFAULT_URI = "http://cdn.libravatar.org/avatar/1798b62948dc167ccab6d89b8f4d3e82"
             + "?s=" + DEFAULT_OPTIONS.imageSize();
 
-    private Avatar sut;
+    private AvatarImpl sut;
 
     public AvatarTest() {
-        setTestSuite(getClass().getSimpleName());
-        setLog(log);
+        this.setTestSuite(this.getClass().getSimpleName());
+        this.setLog(log);
     }
 
     @Test
     void shouldReturnTheHttpsUriWhenUsingDefaultConfiguration() {
-        startTest("https", DEFAULT_EMAIL, DEFAULT_OPTIONS);
+        this.startTest("https", DEFAULT_EMAIL, DEFAULT_OPTIONS);
 
-        String result = sut.buildUrl(DEFAULT_OPTIONS);
+        final String result = this.sut.buildUrl(DEFAULT_OPTIONS);
         log.debug("result. data='{}'", result);
 
         Assertions.assertEquals(DEFAULT_HTTPS_MD5_URI, result);
@@ -77,10 +78,10 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpsUriWithSize100WhenUsingTheImageSize100() {
-        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().imageSize(100).build();
-        startTest("https-100", DEFAULT_EMAIL, options);
+        final AvatarOptions options = DEFAULT_OPTIONS.toBuilder().imageSize(100).build();
+        this.startTest("https-100", DEFAULT_EMAIL, options);
 
-        String result = sut.buildUrl(options);
+        final String result = this.sut.buildUrl(options);
         log.debug("result. data='{}'", result);
 
         Assertions.assertEquals(DEFAULT_HTTPS_MD5_100_URI, result);
@@ -89,10 +90,10 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpsUriWithRetroDefaultWhenUsingTheRetroDefaultIsSelected() {
-        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().defaultImage(LibravatarDefaultImage.RETRO).build();
-        startTest("https-retro", DEFAULT_EMAIL, options);
+        final AvatarOptions options = DEFAULT_OPTIONS.toBuilder().defaultImage(LibravatarDefaultImage.RETRO).build();
+        this.startTest("https-retro", DEFAULT_EMAIL, options);
 
-        String result = sut.buildUrl(options);
+        final String result = this.sut.buildUrl(options);
         log.debug("result. data='{}'", result);
 
         Assertions.assertEquals(DEFAULT_HTTPS_MD5_RETRO_URI, result);
@@ -101,10 +102,10 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpUriWhenUsingHttpInsteadOfHttps() {
-        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().useHttps(false).build();
-        startTest("http", DEFAULT_EMAIL, options);
+        final AvatarOptions options = DEFAULT_OPTIONS.toBuilder().useHttps(false).build();
+        this.startTest("http", DEFAULT_EMAIL, options);
 
-        String result = sut.buildUrl(options);
+        final String result = this.sut.buildUrl(options);
         log.debug("result. data='{}'", result);
 
         Assertions.assertEquals(DEFAULT_HTTP_MD5_URI, result);
@@ -113,23 +114,23 @@ public class AvatarTest extends AbstractTestBase {
 
     @Test
     void shouldReturnTheHttpUriWithoutDefaultConfigUsingWhenDefaultImageIsConfiguredAsDefault() {
-        AvatarOptions options = DEFAULT_OPTIONS.toBuilder()
+        final AvatarOptions options = DEFAULT_OPTIONS.toBuilder()
                 .useHttps(false)
                 .defaultImage(LibravatarDefaultImage.DEFAULT)
                 .build();
-        startTest("http-default-image", DEFAULT_EMAIL, options);
+        this.startTest("http-default-image", DEFAULT_EMAIL, options);
 
-        String result = sut.buildUrl(options);
+        final String result = this.sut.buildUrl(options);
         log.debug("result. data='{}'", result);
 
         Assertions.assertEquals(DEFAULT_HTTP_MD5_DEFAULT_URI, result);
     }
     @Test
     void shouldReturnSha256UriWhenUsingSha256() {
-        AvatarOptions options = DEFAULT_OPTIONS.toBuilder().useSHA256(true).build();
-        startTest("https-sha256", DEFAULT_EMAIL, options);
+        final AvatarOptions options = DEFAULT_OPTIONS.toBuilder().useSHA256(true).build();
+        this.startTest("https-sha256", DEFAULT_EMAIL, options);
 
-        String result = sut.buildUrl(options);
+        final String result = this.sut.buildUrl(options);
         log.debug("result. data='{}'", result);
 
         Assertions.assertEquals(DEFAULT_HTTPS_SHA256_URI, result);
@@ -138,6 +139,6 @@ public class AvatarTest extends AbstractTestBase {
 
     @BeforeEach
     void setUp() {
-        sut = new Avatar(DEFAULT_EMAIL);
+        this.sut = new AvatarImpl(DEFAULT_EMAIL);
     }
 }

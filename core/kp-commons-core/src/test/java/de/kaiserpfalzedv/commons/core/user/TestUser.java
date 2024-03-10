@@ -17,8 +17,8 @@
 
 package de.kaiserpfalzedv.commons.core.user;
 
-import de.kaiserpfalzedv.commons.core.resources.Metadata;
-import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.core.resources.MetadataImpl;
+import de.kaiserpfalzedv.commons.core.resources.PointerImpl;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -46,16 +46,16 @@ public class TestUser extends AbstractTestBase {
     private static final String SUBJECT = "subject";
 
     private static final Map<String, String> DATA_PROPERTIES = Map.of(
-            UserData.ISSUER, ISSUER,
-            UserData.SUBJECT, SUBJECT
+            UserDataImpl.ISSUER, ISSUER,
+            UserDataImpl.SUBJECT, SUBJECT
     );
 
-    private static final User DATA = User.builder()
+    private static final UserImpl DATA = UserImpl.builder()
             .metadata(
                     generateMetadata(DATA_CREATED)
             )
             .spec(
-                    UserData.builder()
+                    UserDataImpl.builder()
                             .name(DATA_NAME)
                             .properties(DATA_PROPERTIES)
                             .build()
@@ -74,7 +74,7 @@ public class TestUser extends AbstractTestBase {
      * @return The generated metadata
      */
     @SuppressWarnings("SameParameterValue")
-    private static Metadata generateMetadata(
+    private static MetadataImpl generateMetadata(
             final OffsetDateTime created
     ) {
         HashMap<String, String> annotations = new HashMap<>(1);
@@ -82,14 +82,14 @@ public class TestUser extends AbstractTestBase {
 
         Map<String, String> labels = Map.of(
                 "test", "valid",
-                UserData.ISSUER, ISSUER,
-                UserData.SUBJECT, SUBJECT
+                UserDataImpl.ISSUER, ISSUER,
+                UserDataImpl.SUBJECT, SUBJECT
         );
 
-        return Metadata.builder()
-                .identity(Pointer.builder()
-                        .kind(User.KIND)
-                        .apiVersion(User.API_VERSION)
+        return MetadataImpl.builder()
+                .identity(PointerImpl.builder()
+                        .kind(UserImpl.KIND)
+                        .apiVersion(UserImpl.API_VERSION)
                         .nameSpace(DATA_NAMESPACE)
                         .name(DATA_NAME)
                         .build()
@@ -107,8 +107,8 @@ public class TestUser extends AbstractTestBase {
     void shouldReturnCorrectIssuerAndSubject() {
         startTest("read-issuer-and-subject");
 
-        Assertions.assertEquals(ISSUER, DATA.getMetadata().getLabel(UserData.ISSUER).orElseThrow());
-        Assertions.assertEquals(SUBJECT, DATA.getMetadata().getLabel(UserData.SUBJECT).orElseThrow());
+        Assertions.assertEquals(ISSUER, DATA.getMetadata().getLabel(UserDataImpl.ISSUER).orElseThrow());
+        Assertions.assertEquals(SUBJECT, DATA.getMetadata().getLabel(UserDataImpl.SUBJECT).orElseThrow());
     }
 
     @Test

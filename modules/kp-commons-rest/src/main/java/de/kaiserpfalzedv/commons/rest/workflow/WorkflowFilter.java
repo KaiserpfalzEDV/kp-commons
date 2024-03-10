@@ -27,8 +27,8 @@ import java.time.temporal.TemporalAmount;
 
 import org.slf4j.MDC;
 
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowDetailInfo;
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
+import de.kaiserpfalzedv.commons.core.workflow.WorkflowDetailInfoImpl;
+import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfoImpl;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.servlet.Filter;
@@ -68,37 +68,37 @@ public class WorkflowFilter implements Filter {
     private final WorkflowProvider provider;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = checkForHttpServletRequestOrThrowException(request);
-        HttpServletResponse res = checkForHttpServletResponseOrThrowException(response);
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+        final HttpServletRequest req = this.checkForHttpServletRequestOrThrowException(request);
+        final HttpServletResponse res = this.checkForHttpServletResponseOrThrowException(response);
 
-        filter(req);
+        this.filter(req);
         chain.doFilter(request, response);
-        filter(req, res);
+        this.filter(req, res);
     }
 
-    private HttpServletRequest checkForHttpServletRequestOrThrowException(ServletRequest request) throws ServletException {
+    private HttpServletRequest checkForHttpServletRequestOrThrowException(final ServletRequest request) throws ServletException {
         if (! (request instanceof HttpServletRequest)) {
-            throw new ServletException("Wrong servlet type. This filter only works on HTTP servlets.");
+            throw new ServletException("Wrong servlet type. This filter only works on HTTP servlet.");
         }
 
         return (HttpServletRequest) request;
     }
 
-    private HttpServletResponse checkForHttpServletResponseOrThrowException(ServletResponse response) throws ServletException {
+    private HttpServletResponse checkForHttpServletResponseOrThrowException(final ServletResponse response) throws ServletException {
         if (! (response instanceof HttpServletResponse)) {
-            throw new ServletException("Wrong servlet type. This filter only works on HTTP servlets.");
+            throw new ServletException("Wrong servlet type. This filter only works on HTTP servlet.");
         }
 
         return (HttpServletResponse) response;
     }
 
-    private void filter(HttpServletRequest context) {
-        WorkflowInfo info = getWorkflowInfo(context);
-        prepareMDC(info);
+    private void filter(final HttpServletRequest context) {
+        final WorkflowInfoImpl info = this.getWorkflowInfo(context);
+        this.prepareMDC(info);
 
         context.setAttribute(WORKFLOW_DATA, info);
-        provider.registerWorkflowInfo(info);
+        this.provider.registerWorkflowInfo(info);
 
         log.trace(
                 "Created the workflow info. workflow='{}', action='{}', call='{}', user='{}'",
@@ -109,23 +109,23 @@ public class WorkflowFilter implements Filter {
         );
     }
 
-    private WorkflowInfo getWorkflowInfo(final HttpServletRequest context) {
-        return WorkflowInfo.builder()
-                .user(checkValidHeader(context.getHeader(WORKFLOW_USER)))
-                .workflow(getWorkflowInfoDetail(context, WORKFLOW_PREFIX))
-                .action(getWorkflowInfoDetail(context, ACTION_PREFIX))
-                .call(getWorkflowInfoDetail(context, CALL_PREFIX))
+    private WorkflowInfoImpl getWorkflowInfo(final HttpServletRequest context) {
+        return WorkflowInfoImpl.builder()
+                .user(this.checkValidHeader(context.getHeader(WORKFLOW_USER)))
+                .workflow(this.getWorkflowInfoDetail(context, WORKFLOW_PREFIX))
+                .action(this.getWorkflowInfoDetail(context, ACTION_PREFIX))
+                .call(this.getWorkflowInfoDetail(context, CALL_PREFIX))
                 .build();
     }
 
-    private WorkflowDetailInfo getWorkflowInfoDetail(final HttpServletRequest context, final String prefix) {
-        String name = checkValidHeader(context.getHeader(prefix + NAME));
-        String id = checkValidHeader(context.getHeader(prefix + ID));
-        String response = checkValidHeader(context.getHeader(prefix + RESPONSE));
+    private WorkflowDetailInfoImpl getWorkflowInfoDetail(final HttpServletRequest context, final String prefix) {
+        final String name = this.checkValidHeader(context.getHeader(prefix + NAME));
+        final String id = this.checkValidHeader(context.getHeader(prefix + ID));
+        final String response = this.checkValidHeader(context.getHeader(prefix + RESPONSE));
 
-        WorkflowDetailInfo.WorkflowDetailInfoBuilder result = WorkflowDetailInfo.builder()
-                .created(checkValidTimeHeader(context.getHeader(prefix + CREATED), Duration.ofMillis(0)))
-                .ttl(checkValidTimeHeader(context.getHeader(prefix + TTL), Duration.of(10, ChronoUnit.YEARS)));
+        final WorkflowDetailInfoImpl.WorkflowDetailInfoImplBuilder result = WorkflowDetailInfoImpl.builder()
+                .created(this.checkValidTimeHeader(context.getHeader(prefix + CREATED), Duration.ofMillis(0)))
+                .ttl(this.checkValidTimeHeader(context.getHeader(prefix + TTL), Duration.of(10, ChronoUnit.YEARS)));
 
         if (name != null) result.name(name);
         if (id != null) result.id(id);
@@ -142,24 +142,24 @@ public class WorkflowFilter implements Filter {
         return value;
     }
 
-    private OffsetDateTime checkValidTimeHeader(final String value, TemporalAmount futureOffset) {
+    private OffsetDateTime checkValidTimeHeader(final String value, final TemporalAmount futureOffset) {
         try {
             return OffsetDateTime.parse(value);
-        } catch (DateTimeParseException e) {
+        } catch (final DateTimeParseException e) {
             return OffsetDateTime.now(ZoneId.of("UTC")).plus(futureOffset);
         }
     }
 
 
-    private void prepareMDC(final WorkflowInfo info) {
+    private void prepareMDC(final WorkflowInfoImpl info) {
         MDC.put(WORKFLOW_USER, info.getUser());
 
-        putMDC(info.getWorkflow(), WORKFLOW_PREFIX);
-        putMDC(info.getAction(), ACTION_PREFIX);
-        putMDC(info.getCall(), CALL_PREFIX);
+        this.putMDC(info.getWorkflow(), WORKFLOW_PREFIX);
+        this.putMDC(info.getAction(), ACTION_PREFIX);
+        this.putMDC(info.getCall(), CALL_PREFIX);
     }
 
-    private void putMDC(WorkflowDetailInfo info, String workflowPrefix) {
+    private void putMDC(final WorkflowDetailInfoImpl info, final String workflowPrefix) {
         MDC.put(workflowPrefix + NAME, info.getName());
         MDC.put(workflowPrefix + ID, info.getId());
         MDC.put(workflowPrefix + CREATED, info.getCreated().toString());
@@ -168,8 +168,8 @@ public class WorkflowFilter implements Filter {
     }
 
 
-    private void filter(HttpServletRequest request, HttpServletResponse context) {
-        provider.getWorkflowInfo().ifPresentOrElse(
+    private void filter(final HttpServletRequest request, final HttpServletResponse context) {
+        this.provider.getWorkflowInfo().ifPresentOrElse(
             info -> {
                 log.trace(
                     "Removing workflow data from request. workflow='{}', action='{}', call='{}', user='{}'",
@@ -179,10 +179,10 @@ public class WorkflowFilter implements Filter {
                     info.getUser()
                 );
         
-                unsetWorkflowInfoInContext(request);
-                provider.unregisterWorkflowInfo();
+                this.unsetWorkflowInfoInContext(request);
+                this.provider.unregisterWorkflowInfo();
         
-                removeMDC();
+                this.removeMDC();
             }, 
             () -> {
                 log.trace("No workflow data to remove from request.");
@@ -190,15 +190,15 @@ public class WorkflowFilter implements Filter {
         );
     }
 
-    private void unsetWorkflowInfoInContext(HttpServletRequest requestContext) {
+    private void unsetWorkflowInfoInContext(final HttpServletRequest requestContext) {
         requestContext.setAttribute(WORKFLOW_DATA, null);
     }
 
     private void removeMDC() {
         MDC.remove(WORKFLOW_USER);
-        removeMDC(WORKFLOW_PREFIX);
-        removeMDC(ACTION_PREFIX);
-        removeMDC(CALL_PREFIX);
+        this.removeMDC(WORKFLOW_PREFIX);
+        this.removeMDC(ACTION_PREFIX);
+        this.removeMDC(CALL_PREFIX);
     }
 
     private void removeMDC(final String prefix) {

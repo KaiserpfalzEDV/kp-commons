@@ -17,16 +17,24 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.*;
-import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import de.kaiserpfalzedv.commons.api.resources.Status;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * ResourceStatus -- The state of the managed resource.
@@ -43,22 +51,24 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"observedGeneration,history"})
 @Schema(name = "ResourceStatus", description = "The status of a resource.")
-public class Status implements de.kaiserpfalzedv.commons.api.resources.Status {
+public class StatusImpl implements Status {
+    private static final long serialVersionUID = 0L;
 
     @Builder.Default
     @ToString.Include
-    private Integer observedGeneration = 0;
+    private final Integer observedGeneration = 0;
 
 
     @Builder.Default
     @ToString.Include
-    List<History> history = new ArrayList<>();
+    @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
+    List<HistoryImpl> history = new ArrayList<>();
 
     @Override
     @SuppressWarnings("unused")
-    public Status addHistory(final String status, final String message) {
-        getHistory().add(
-                History.builder()
+    public StatusImpl addHistory(final String status, final String message) {
+        this.getHistory().add(
+                HistoryImpl.builder()
                         .status(status)
                         .timeStamp(OffsetDateTime.now(ZoneOffset.UTC))
                         .message(message)
@@ -69,8 +79,9 @@ public class Status implements de.kaiserpfalzedv.commons.api.resources.Status {
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
-    public Status clone() {
-        return toBuilder().build();
+    public StatusImpl clone() {
+        return this.toBuilder().build();
     }
 }

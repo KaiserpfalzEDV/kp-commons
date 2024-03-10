@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PagingTest {
-    private static final Paging BASEPAGE = Paging.builder()
+    private static final PagingImpl BASEPAGE = PagingImpl.builder()
             .start(100)
             .size(15)
             .count(15)
@@ -31,11 +31,11 @@ public class PagingTest {
 
     @Test
     public void shouldReturnTheNextPageWhenThereAreEnoughElements() {
-        de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE;
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE;
 
-        de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
+        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging expected = Paging.builder()
+        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
                 .start(115)
                 .size(15)
                 .count(15)
@@ -47,11 +47,11 @@ public class PagingTest {
 
     @Test
     public void shouldReturnIncompletePageWhenThereAreNotEnoughElementsForTheNextPage() {
-        de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().total(123).build();
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().total(123).build();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
+        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging expected = Paging.builder()
+        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
                 .start(115)
                 .size(15)
                 .count(8)
@@ -64,11 +64,11 @@ public class PagingTest {
 
     @Test
     public void shouldReturnLastPageWhenRequested() {
-        de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().total(123).build();
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().total(123).build();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging result = sut.lastPage();
+        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.lastPage();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging expected = Paging.builder()
+        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
                 .start(120)
                 .size(15)
                 .count(3)
@@ -80,11 +80,11 @@ public class PagingTest {
 
     @Test
     public void shouldReturnThePreviousPageWhenThereAreEnoughElements() {
-        de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE;
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE;
 
-        de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
+        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging expected = Paging.builder()
+        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
                 .start(85)
                 .size(15)
                 .count(15)
@@ -97,11 +97,11 @@ public class PagingTest {
 
     @Test
     public void shouldReturnFirstPageWhenRequested() {
-        de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().build();
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().build();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging result = sut.firstPage();
+        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.firstPage();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging expected = Paging.builder()
+        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
                 .start(0)
                 .size(15)
                 .count(15)
@@ -112,11 +112,11 @@ public class PagingTest {
     }
     @Test
     public void shouldReturnFirstPageWhenThereAreNotEnoughElementsForThePreviousPage() {
-        de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().size(300).build();
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().size(300).build();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
+        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
 
-        de.kaiserpfalzedv.commons.api.resources.Paging expected = Paging.builder()
+        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
                 .start(0)
                 .size(300)
                 .count(200)

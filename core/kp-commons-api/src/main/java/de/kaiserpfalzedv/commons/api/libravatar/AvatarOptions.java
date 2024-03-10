@@ -39,6 +39,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @Accessors(fluent = true, chain = true)
 public class AvatarOptions implements Serializable {
+	private static final long serialVersionUID = 0L;
 
 	/**
 	 * Specifies a custom base URI for HTTP use. The default is to use the

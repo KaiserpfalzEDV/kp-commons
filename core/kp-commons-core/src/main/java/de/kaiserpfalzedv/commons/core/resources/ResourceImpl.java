@@ -17,19 +17,28 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import de.kaiserpfalzedv.commons.api.resources.Metadata;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import de.kaiserpfalzedv.commons.api.resources.Metadata;
+import de.kaiserpfalzedv.commons.api.resources.Resource;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Resource -- A generic resource holding a single data set.
@@ -49,7 +58,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"metadata", "spec", "status"})
-public class Resource<D extends Serializable> implements de.kaiserpfalzedv.commons.api.resources.Resource<D> {
+public class ResourceImpl<D extends Serializable> implements Resource<D> {
     @Schema(
             name = "metadata",
             description = "Technical data to the resource.",
@@ -76,85 +85,87 @@ public class Resource<D extends Serializable> implements de.kaiserpfalzedv.commo
             nullable = true
     )
     @Builder.Default
-    protected Status status = null;
+    @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
+    protected StatusImpl status = null;
 
 
     @Override
     @JsonIgnore
-    public Pointer toPointer() {
-        return Pointer.builder()
-                .kind(getKind())
-                .apiVersion(getApiVersion())
-                .nameSpace(getNameSpace())
-                .nameSpace(getName())
+    public PointerImpl toPointer() {
+        return PointerImpl.builder()
+                .kind(this.getKind())
+                .apiVersion(this.getApiVersion())
+                .nameSpace(this.getNameSpace())
+                .nameSpace(this.getName())
                 .build();
     }
 
     @JsonIgnore
     @Override
     public String getKind() {
-        return getMetadata().getKind();
+        return this.getMetadata().getKind();
     }
 
     @JsonIgnore
     @Override
     public String getApiVersion() {
-        return getMetadata().getApiVersion();
+        return this.getMetadata().getApiVersion();
     }
 
     @JsonIgnore
     @Override
     public String getNameSpace() {
-        return getMetadata().getNameSpace();
+        return this.getMetadata().getNameSpace();
     }
 
     @JsonIgnore
     @Override
     public String getName() {
-        return getMetadata().getName();
+        return this.getMetadata().getName();
     }
 
     @Override
     @JsonIgnore
     public UUID getUid() {
-        return metadata.getUid();
+        return this.metadata.getUid();
     }
 
     @Override
     @JsonIgnore
     public Integer getGeneration() {
-        return metadata.getGeneration();
+        return this.metadata.getGeneration();
     }
 
 
     @JsonIgnore
     public Optional<D> getData() {
-        return Optional.ofNullable(spec);
+        return Optional.ofNullable(this.spec);
     }
 
     @JsonIgnore
-    public Optional<Status> getState() {
-        return Optional.ofNullable(status);
+    public Optional<StatusImpl> getState() {
+        return Optional.ofNullable(this.status);
     }
 
     @Override
     @JsonIgnore
     public String getSelfLink() {
-        return getMetadata().getSelfLink();
+        return this.getMetadata().getSelfLink();
     }
 
 
     @Override
-    synchronized public Resource<D> increaseGeneration() {
-        return toBuilder()
-                .metadata(getMetadata().increaseGeneration())
+    synchronized public ResourceImpl<D> increaseGeneration() {
+        return this.toBuilder()
+                .metadata(this.getMetadata().increaseGeneration())
                 .build();
     }
 
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
-    public Resource<D> clone() {
-        return toBuilder().build();
+    public ResourceImpl<D> clone() {
+        return this.toBuilder().build();
     }
 }

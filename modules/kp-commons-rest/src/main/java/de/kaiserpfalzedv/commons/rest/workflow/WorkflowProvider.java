@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.commons.rest.workflow;
 
 import java.util.Optional;
 
-import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfo;
+import de.kaiserpfalzedv.commons.core.workflow.WorkflowInfoImpl;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotNull;
@@ -32,28 +32,28 @@ import jakarta.validation.constraints.NotNull;
  */
 @Singleton
 public class WorkflowProvider {
-    private final ThreadLocal<WorkflowInfo> infos = new WorkflowInfoThreadLocal();
+    private final ThreadLocal<WorkflowInfoImpl> infos = new WorkflowInfoThreadLocal();
 
     @Produces
-    public Optional<WorkflowInfo> getWorkflowInfo() {
-        return Optional.ofNullable(infos.get());
+    public Optional<WorkflowInfoImpl> getWorkflowInfo() {
+        return Optional.ofNullable(this.infos.get());
     }
 
-    public void registerWorkflowInfo(@NotNull final WorkflowInfo context) {
-        infos.set(context);
+    public void registerWorkflowInfo(@NotNull final WorkflowInfoImpl context) {
+        this.infos.set(context);
     }
 
     public void unregisterWorkflowInfo() {
-        infos.remove();
+        this.infos.remove();
     }
 
     /**
-     * Subclass of {@link ThreadLocal} to generate an initial {@link WorkflowInfo}.
+     * Subclass of {@link ThreadLocal} to generate an initial {@link WorkflowInfoImpl}.
      */
-    private static class WorkflowInfoThreadLocal extends ThreadLocal<WorkflowInfo> {
+    private static class WorkflowInfoThreadLocal extends ThreadLocal<WorkflowInfoImpl> {
         @Override
-        public WorkflowInfo initialValue() {
-            return WorkflowInfo.builder().build();
+        public WorkflowInfoImpl initialValue() {
+            return WorkflowInfoImpl.builder().build();
         }
     }
 }
