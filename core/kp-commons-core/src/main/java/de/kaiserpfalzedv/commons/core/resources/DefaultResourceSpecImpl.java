@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.core.resources;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -33,7 +34,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
@@ -46,16 +46,17 @@ import lombok.extern.jackson.Jacksonized;
  * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings({"unused"})
+@SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "DefaultResourceSpec", description = "A standardized resource.")
 public class DefaultResourceSpecImpl implements DefaultResourceSpec {
+    /** serial version of this class. */
     private static final long serialVersionUID = 0L;
 
     @SuppressWarnings("FieldMayBeFinal")
@@ -67,8 +68,13 @@ public class DefaultResourceSpecImpl implements DefaultResourceSpec {
     private Map<String, String> properties = new HashMap<>();
 
     @Override
+    public Map<String, String> getProperties() {
+        return Collections.unmodifiableMap(this.properties);
+    }
+
+    @Override
     @JsonIgnore
-    public de.kaiserpfalzedv.commons.api.resources.Pointer convertStringToResourcePointer(final String property) {
+    public Pointer convertStringToResourcePointer(final String property) {
         final String[] data = property.split("/", 4);
         if (data.length != 5) {
             throw new IllegalStateException("Invalid property for resource pointers: " + property);

@@ -58,7 +58,7 @@ import lombok.extern.jackson.Jacksonized;
  * @since 2.0.0  2021-05-24
  * @version 2.0.2 2022-01-04
  */
-@SuppressWarnings("unused")
+@SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Jacksonized
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -73,6 +73,7 @@ import lombok.extern.jackson.Jacksonized;
         description = "The metadata of a resource."
 )
 public class MetadataImpl implements Metadata {
+    /** serial class version */
     private static final long serialVersionUID = 0L;
 
     @Schema(

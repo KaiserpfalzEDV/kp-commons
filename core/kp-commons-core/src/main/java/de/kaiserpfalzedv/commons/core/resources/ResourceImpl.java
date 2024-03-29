@@ -49,6 +49,7 @@ import lombok.extern.jackson.Jacksonized;
  * @version 2.1.0  2022-01-16
  * @since 2.0.0  2021-05-24
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
@@ -59,6 +60,9 @@ import lombok.extern.jackson.Jacksonized;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"metadata", "spec", "status"})
 public class ResourceImpl<D extends Serializable> implements Resource<D> {
+    /** serial class version */
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             name = "metadata",
             description = "Technical data to the resource.",

@@ -45,6 +45,7 @@ import de.kaiserpfalzedv.services.dnb.marcxml.model.Record;
 import de.kaiserpfalzedv.services.dnb.marcxml.model.SearchRetrieveResponse;
 import de.kaiserpfalzedv.services.dnb.marcxml.model.SubField;
 import de.kaiserpfalzedv.services.dnb.model.Book;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -58,13 +59,14 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0  2023-01-22
  */
 @Service
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "it*s a lombok generated constructor")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@SuppressWarnings("unused")
 @Slf4j
 public class MarcConverter {
     private final XmlMapper mapper = new XmlMapper();
     private final ObjectMapper jsonMapper;
 
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Nothing get's stored here.")
     public List<Book> convert(final SearchRetrieveResponse response) {
         log.info("Converting response. query='{}', count={}",
                 response.getEchoedSearchRetrieveRequest().getQuery(), response.getNumberOfRecords());
@@ -74,6 +76,7 @@ public class MarcConverter {
                 .toList();
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private Book mapRecordToBook(final Record record) {
         final Book.BookBuilder result = Book.builder();
 
@@ -173,7 +176,7 @@ public class MarcConverter {
 
     public InputStream convert(final List<Book> books) {
         try {
-            return IOUtils.toInputStream(new String(this.jsonMapper.writeValueAsBytes(books)), StandardCharsets.UTF_8);
+            return IOUtils.toInputStream(new String(this.jsonMapper.writeValueAsBytes(books), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (final IOException e) {
             throw new LibraryLookupMarc21MappingException(e);
         }

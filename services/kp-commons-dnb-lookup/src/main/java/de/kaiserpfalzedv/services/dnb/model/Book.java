@@ -17,14 +17,26 @@
 
 package de.kaiserpfalzedv.services.dnb.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-
-import jakarta.validation.constraints.Size;
-import java.time.LocalDate;
-import java.util.*;
 
 /**
  * <p>Book -- The data set returned by www.ean-search.org</p>
@@ -32,6 +44,7 @@ import java.util.*;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
  */
+@SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor

@@ -43,6 +43,7 @@ import lombok.extern.jackson.Jacksonized;
  * @since 2.0.0  2021-05-24
  */
 @Jacksonized
+@SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor

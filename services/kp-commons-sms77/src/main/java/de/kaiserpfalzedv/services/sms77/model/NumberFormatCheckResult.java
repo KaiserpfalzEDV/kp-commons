@@ -44,6 +44,8 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class NumberFormatCheckResult implements Serializable {
+    private static final long serialVersionUID = 0L;
+
     private boolean success;
 
     private String national;

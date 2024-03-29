@@ -36,7 +36,6 @@ import io.micrometer.core.instrument.Tags;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,7 +57,7 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     private final MeterRegistry registry;
     private Counter requestCounter;
 
-    @Getter
+    // No lombok generateion to make it synchronized
     private int remaining = -1;
     private OffsetDateTime lastRequest = OffsetDateTime.now(ZoneOffset.UTC).minus(1, ChronoUnit.DAYS);
 
@@ -70,6 +69,10 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     @PreDestroy
     public void unregisterMetrics() {
         this.requestCounter.close();
+    }
+
+    public synchronized int getRemaining() {
+        return this.remaining;
     }
 
     /**
@@ -90,23 +93,19 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
      * @param requestContext  request context.
      * @param responseContext response context.
      */
-
     @Override
     public Object intercept(final InvocationContext context, final Chain chain) throws Exception {
         final String remaining = context.response().headers().get(API_REMAINING_REQUEST_HEADER).stream().findFirst().orElse(null);
 
-        if (remaining != null) {
-            synchronized (this) {
+        synchronized (this) {
+            if (remaining != null) {
                 this.remaining = Integer.valueOf(remaining, 10);
                 this.registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), this.remaining);
             }
+
+            log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
         }
 
-        synchronized(this) {
-            this.requestCounter.increment();
-        }
-
-        log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
         return chain.next(context);
     }
 

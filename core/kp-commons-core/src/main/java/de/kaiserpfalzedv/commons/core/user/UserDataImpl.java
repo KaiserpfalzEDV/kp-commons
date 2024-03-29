@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import de.kaiserpfalzedv.commons.api.user.UserData;
 import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpecImpl;
 import de.kaiserpfalzedv.commons.core.resources.PointerImpl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -65,6 +66,7 @@ public class UserDataImpl extends DefaultResourceSpecImpl implements UserData {
     @Builder.Default
     private PointerImpl picture = null;
 
+    @SuppressFBWarnings(value = "EI_EXPOSE_REF", justification = "It's the API design.")
     @JsonIgnore
     @Override
     public String[] getDefaultProperties() {

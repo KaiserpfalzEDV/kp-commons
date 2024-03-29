@@ -65,6 +65,9 @@ import lombok.extern.jackson.Jacksonized;
                 }"""
 )
 public class PointerImpl implements Pointer {
+    /** serial class version */
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             name = "kind",
             description = "The type of the resource",

@@ -56,6 +56,9 @@ import lombok.extern.jackson.Jacksonized;
         description = "A single history entry of a change."
 )
 public class HistoryImpl implements History {
+    /** serial version of this class. */
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             name = "TimeStamp",
             description = "The timestamp of the change.",

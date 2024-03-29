@@ -46,6 +46,8 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class Balance implements Serializable {
+    private static final long serialVersionUID = 0L;
+
     @Size(max = 5)
     private String currency;
 

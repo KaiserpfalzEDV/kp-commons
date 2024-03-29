@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.services.sms77.filter;
 
 import de.kaiserpfalzedv.services.sms77.mapper.Sms77Exception;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import feign.InvocationContext;
 import feign.ResponseInterceptor;
 import io.micrometer.core.instrument.Counter;
@@ -35,6 +36,7 @@ import lombok.RequiredArgsConstructor;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-22
  */
+@SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class Sms77RequestReportFilter implements ResponseInterceptor {
@@ -48,8 +50,11 @@ public class Sms77RequestReportFilter implements ResponseInterceptor {
         this.requestCounter = this.registry.counter(API_REQUESTS_HANDLED_SINCE_START, Tags.empty());
     }
 
+    @SuppressFBWarnings(value = "UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR", justification = "The field is set in the PostConstruct method of this class.")
     @PreDestroy
     public void unregisterMetrics() {
+        assert this.registry != null;
+
         this.requestCounter.close();
     }
 
@@ -61,8 +66,11 @@ public class Sms77RequestReportFilter implements ResponseInterceptor {
      *                                               credits remaining.
      */
 
+    @SuppressFBWarnings(value = "UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR", justification = "The field is set in the PostConstruct method of this class.")
     @Override
     public Object intercept(final InvocationContext invocationContext, final Chain chain) throws Exception {
+        assert this.registry != null;
+
         this.requestCounter.increment();
 
         return chain.next(invocationContext);
