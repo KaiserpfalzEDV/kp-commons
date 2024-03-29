@@ -106,10 +106,6 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
             log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
         }
 
-        synchronized(this) {
-            this.requestCounter.increment();
-        }
-
         return chain.next(context);
     }
 

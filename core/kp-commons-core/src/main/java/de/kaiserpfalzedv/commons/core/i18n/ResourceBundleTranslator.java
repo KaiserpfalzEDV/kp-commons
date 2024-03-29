@@ -104,7 +104,6 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
     @Override
     public String getTranslation(final String bundleName, final String key, final Locale locale, final Object... arguments) {
         this.loadBundle(bundleName, locale);
-
         try {
             final String pattern = this.bundles.get(bundleName).get(locale).getString(key);
             final MessageFormat format = new MessageFormat(pattern, locale);
