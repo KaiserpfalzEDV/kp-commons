@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.2.3-2-SNAPSHOT</version>
+        <version>3.2.4-1-SNAPSHOT</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
@@ -50,7 +50,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.2.3</spring-boot.version>
+        <jackson.version>2.17.0</jackson.version>
+        <spring-boot.version>3.2.4</spring-boot.version>
         <android-json.version>0.0.20131108.vaadin1</android-json.version>
         <api-guardian.version>1.1.2</api-guardian.version>
         <c3p0.version>0.10.0-pre7</c3p0.version>
@@ -61,7 +62,6 @@
         <jline.version>2.14.6</jline.version>
         <jna.version>5.14.0</jna.version>
         <jopt-simple.version>5.0.4</jopt-simple.version>
-        <jackson-bom.version>2.16.0</jackson-bom.version>
 
         <maven.version>3.9.6</maven.version>
         <maven-common-artifact-filters.version>3.3.2</maven-common-artifact-filters.version>
@@ -270,7 +270,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.2.2</version>
+                <version>3.2.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
