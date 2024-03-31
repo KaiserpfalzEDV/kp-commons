@@ -121,9 +121,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jackson-bom.version>2.16.0</jackson-bom.version>
-        <jackson-version>${jackson-bom.version}</jackson-version>
-        <jackson.version>${jackson-bom.version}</jackson.version>
+        <kp-commons.version>3.2.4-1</kp-commons.version>
     </properties>
 
     <build>
@@ -187,7 +185,7 @@
                         <dependency>
                             <groupId>de.kaiserpfalz-edv.commons</groupId>
                             <artifactId>kp-checkstyle</artifactId>
-                            <version>${project.version}</version>
+                            <version>${kp-commons.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
