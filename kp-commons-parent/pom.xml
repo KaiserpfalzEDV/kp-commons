@@ -797,10 +797,6 @@
                     <scope>runtime</scope>
                 </dependency>
 
-                <dependency>
-                    <groupId>org.zalando</groupId>
-                    <artifactId>problem-spring-web-starter</artifactId>
-                </dependency>
 
                 <!-- testing -->
                 <dependency>
