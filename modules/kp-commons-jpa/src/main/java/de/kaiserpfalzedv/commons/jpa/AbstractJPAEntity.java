@@ -73,7 +73,7 @@ public abstract class AbstractJPAEntity implements HasId, Cloneable {
     @Column(name = "MODIFIED", nullable = false)
     @NonNull
     protected OffsetDateTime modified;
-    
+
     @Column(name = "DELETED", insertable = false)
     protected OffsetDateTime deleted;
 

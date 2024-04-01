@@ -524,7 +524,7 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
                     </plugin>
-        
+
                     <plugin>
                         <groupId>com.github.jeluard</groupId>
                         <artifactId>plantuml-maven-plugin</artifactId>
@@ -538,7 +538,7 @@
                             <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
                         </configuration>
                     </plugin>
-    
+
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
@@ -560,7 +560,7 @@
                             </reportSet>
                         </reportSets>
                     </plugin>
-                    
+
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>

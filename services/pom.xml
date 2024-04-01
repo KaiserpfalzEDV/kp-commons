@@ -76,7 +76,7 @@
             <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
             <artifactId>kp-commons-jackson</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

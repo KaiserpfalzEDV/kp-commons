@@ -178,12 +178,12 @@ public class WorkflowFilter implements Filter {
                     info.getCall().getId(),
                     info.getUser()
                 );
-        
+
                 this.unsetWorkflowInfoInContext(request);
                 this.provider.unregisterWorkflowInfo();
-        
+
                 this.removeMDC();
-            }, 
+            },
             () -> {
                 log.trace("No workflow data to remove from request.");
             }

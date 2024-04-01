@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -40,8 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 public class JsonAutowiringConfiguration {
     /** @return the Jackson2ObjectMapperBuilder that enables the {@link Autowired} annotation in Jackson deserialized objects. */
     @Bean
-    public Jackson2ObjectMapperBuilder objectMapperBuilder(HandlerInstantiator handlerInstantiator) {
-        Jackson2ObjectMapperBuilder result = new Jackson2ObjectMapperBuilder();
+    public Jackson2ObjectMapperBuilder objectMapperBuilder(final HandlerInstantiator handlerInstantiator) {
+        final Jackson2ObjectMapperBuilder result = new Jackson2ObjectMapperBuilder();
         result.handlerInstantiator(handlerInstantiator);
 
         log.debug("Created modified Jackson ObjectMapperBuilder. builder={}", result);
@@ -51,7 +51,7 @@ public class JsonAutowiringConfiguration {
 
     /** @return The HandlerInstantiator needed by the {@link #objectMapperBuilder(HandlerInstantiator)} */
     @Bean
-    public HandlerInstantiator handlerInstantiator(ApplicationContext applicationContext) {
+    public HandlerInstantiator handlerInstantiator(final ApplicationContext applicationContext) {
         return new SpringHandlerInstantiator(applicationContext.getAutowireCapableBeanFactory());
     }
 }

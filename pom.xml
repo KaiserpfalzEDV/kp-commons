@@ -34,7 +34,7 @@
         <module>kp-checkstyle</module>
         <module>kp-commons-parent</module>
         <module>kp-spring-boot-parent</module>
-        
+
         <module>core</module>
         <module>modules</module>
         <module>services</module>
@@ -171,7 +171,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.5.0</version>    
+                    <version>3.5.0</version>
                 </plugin>
 
                 <plugin>
@@ -189,7 +189,7 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-            </plugins>   
+            </plugins>
         </pluginManagement>
     </build>
 
@@ -331,7 +331,7 @@
                     </suppressionFiles>
                     <failBuildOnCVSS>8</failBuildOnCVSS>
                     <nvdApiServerId>nvdApi</nvdApiServerId>
-                    
+
                 </configuration>
                 <reportSets>
                     <reportSet>
@@ -343,5 +343,5 @@
                 </reportSets>
             </plugin>
         </plugins>
-    </reporting>        
+    </reporting>
 </project>

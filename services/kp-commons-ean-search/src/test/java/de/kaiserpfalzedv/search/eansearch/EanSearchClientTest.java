@@ -52,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 3.0.0 2023-01-17
  */
 @SpringBootTest(
-    webEnvironment = WebEnvironment.DEFINED_PORT, 
+    webEnvironment = WebEnvironment.DEFINED_PORT,
     classes = {
         EanSearchClient.class,
         EanSearchClientConfig.class,
