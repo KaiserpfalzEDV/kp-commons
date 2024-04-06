@@ -106,7 +106,7 @@ public interface Sms77Client {
 
     /**
      * Sends the given text to the numbers specified.
-     * 
+     *
      * @param number A set of destinations for the SMS.
      * @param text   The text of the SMS.
      * @return

@@ -29,7 +29,7 @@ import lombok.Getter;
 public enum LibravatarDefaultImage {
 
 	DEFAULT(""),
-	
+
 	MM("mm"),
 
 	IDENTICON("identicon"),
@@ -45,7 +45,7 @@ public enum LibravatarDefaultImage {
 	@Getter
 	private final String code;
 
-	LibravatarDefaultImage(String code) {
+	LibravatarDefaultImage(final String code) {
 		this.code = code;
 	}
 }

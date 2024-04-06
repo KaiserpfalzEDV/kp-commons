@@ -31,10 +31,12 @@ import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import de.kaiserpfalzedv.commons.api.resources.Metadata;
 import de.kaiserpfalzedv.commons.api.store.OptimisticLockStoreException;
+import de.kaiserpfalzedv.commons.api.user.User;
 import de.kaiserpfalzedv.commons.api.user.UserStoreService;
-import de.kaiserpfalzedv.commons.core.resources.Metadata;
-import de.kaiserpfalzedv.commons.core.resources.Pointer;
+import de.kaiserpfalzedv.commons.core.resources.MetadataImpl;
+import de.kaiserpfalzedv.commons.core.resources.PointerImpl;
 import de.kaiserpfalzedv.commons.test.AbstractTestBase;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
@@ -56,24 +58,24 @@ public class TestMemoryUserStore extends AbstractTestBase {
     private static final String OTHER_NAME = "otherName";
     private static final OffsetDateTime OTHER_CREATED = OffsetDateTime.now(Clock.systemUTC());
 
-    private static final User DATA = User.builder()
+    private static final User DATA = UserImpl.builder()
             .metadata(
                     generateMetadata(DATA_CREATED, null)
             )
             .spec(
-                    UserData.builder()
+                    UserDataImpl.builder()
                             .name(DATA_NAME)
                             .properties(new HashMap<>())
                             .build()
             )
             .build();
 
-    private static final User OTHER = User.builder()
+    private static final UserImpl OTHER = UserImpl.builder()
                     .metadata(
                             generateMetadata(OTHER_CREATED, null)
                     )
                     .spec(
-                            UserData.builder()
+                            UserDataImpl.builder()
                                     .name(OTHER_NAME)
                                     .properties(new HashMap<>())
                                     .build()
@@ -138,10 +140,10 @@ public class TestMemoryUserStore extends AbstractTestBase {
             @NotNull final OffsetDateTime created,
             @SuppressWarnings("SameParameterValue") final OffsetDateTime deleted
     ) {
-        return de.kaiserpfalzedv.commons.core.resources.Metadata.builder()
-                .identity(Pointer.builder()
-                        .kind(User.KIND)
-                        .apiVersion(User.API_VERSION)
+        return de.kaiserpfalzedv.commons.core.resources.MetadataImpl.builder()
+                .identity(PointerImpl.builder()
+                        .kind(UserImpl.KIND)
+                        .apiVersion(UserImpl.API_VERSION)
                         .nameSpace(DATA_NAMESPACE)
                         .name(DATA_NAME)
                         .build()
@@ -234,12 +236,12 @@ public class TestMemoryUserStore extends AbstractTestBase {
         this.startTest("throw-optimistic-lock-exception");
 
         this.sut.save(
-                DATA.toBuilder()
+                ((UserImpl)DATA).toBuilder()
                         .metadata(
-                                ((Metadata)DATA.getMetadata()).toBuilder()
+                                ((MetadataImpl)(((MetadataImpl)DATA.getMetadata()).toBuilder()
                                         .generation(100)
                                         .build()
-                        )
+                        )))
                         .build()
         );
 

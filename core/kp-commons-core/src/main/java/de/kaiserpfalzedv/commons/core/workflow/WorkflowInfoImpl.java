@@ -23,6 +23,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import de.kaiserpfalzedv.commons.api.workflow.WorkflowInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -49,9 +50,11 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "WorkflowInfo", description = "Information of a workflow call.")
-public class WorkflowInfo implements de.kaiserpfalzedv.commons.api.workflow.WorkflowInfo {
+public class WorkflowInfoImpl implements WorkflowInfo {
+        private static final long serialVersionUID = 0L;
+
     @Builder.Default
-    private final WorkflowDetailInfo workflow = WorkflowDetailInfo.builder().build();
+    private final WorkflowDetailInfoImpl workflow = WorkflowDetailInfoImpl.builder().build();
 
     @Schema(
             description = "The action within the workflow this call belongs to.",
@@ -59,7 +62,7 @@ public class WorkflowInfo implements de.kaiserpfalzedv.commons.api.workflow.Work
             example = "{\"name\": \"check-duplicate\", \"id\": \"81f76259-e9fa-4af2-bba7-255f7370fe41\", \"created\": \"2022-01-04T14:22:00.023000Z\", \"ttl\": \"2022-01-04T14:22:02.023000Z\"}"
     )
     @Builder.Default
-    private final WorkflowDetailInfo action = WorkflowDetailInfo.builder().build();
+    private final WorkflowDetailInfoImpl action = WorkflowDetailInfoImpl.builder().build();
 
     @Schema(
             description = "The actual service call.",
@@ -67,7 +70,7 @@ public class WorkflowInfo implements de.kaiserpfalzedv.commons.api.workflow.Work
             example = "{\"name\": \"get-user\", \"id\": \"69de33eb-6a9d-4010-9fb9-e35a4ac56eb8\", \"created\": \"2022-01-04T14:22:00.028000Z\", \"ttl\": \"2022-01-04T14:22:01.028000Z\"}"
     )
     @Builder.Default
-    private final WorkflowDetailInfo call = WorkflowDetailInfo.builder().build();
+    private final WorkflowDetailInfoImpl call = WorkflowDetailInfoImpl.builder().build();
 
     @Schema(
             description = "The owner of this request. Can be an ID, a name or anything else. Please keep GDPR in mind!",

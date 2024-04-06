@@ -17,17 +17,6 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import de.kaiserpfalzedv.commons.api.resources.HasId;
-import de.kaiserpfalzedv.commons.api.resources.Pointer;
-import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
-import lombok.*;
-import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.*;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
@@ -35,16 +24,40 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import de.kaiserpfalzedv.commons.api.resources.HasId;
+import de.kaiserpfalzedv.commons.api.resources.Metadata;
+import de.kaiserpfalzedv.commons.api.resources.Pointer;
+import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
+
 /**
  * Metadata -- common data for every resource of the system.
  * <p>
  * Default values for the lombok builder are set in {@link MetadataBuilder}.
  *
- * @author klenkes74 {@literal <rlichit@kaiserpfalz-edv.de>}
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  * @version 2.0.2 2022-01-04
  */
-@SuppressWarnings("unused")
+@SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Jacksonized
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -58,7 +71,10 @@ import java.util.UUID;
         name = "ResourceMetadata",
         description = "The metadata of a resource."
 )
-public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadata {
+public class MetadataImpl implements Metadata {
+    /** serial class version */
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             name = "identity",
             description = "This is the identity of the resource.",
@@ -67,7 +83,7 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
     @ToString.Include
     @EqualsAndHashCode.Include
     @NotNull
-    private de.kaiserpfalzedv.commons.core.resources.Pointer identity;
+    private de.kaiserpfalzedv.commons.core.resources.PointerImpl identity;
 
     @Schema(
             name = "uid",
@@ -83,7 +99,7 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
     @EqualsAndHashCode.Include
     @Builder.Default
     @NotNull
-    private UUID uid = UUID.randomUUID();
+    private final UUID uid = UUID.randomUUID();
 
     @Schema(
             name = "generation",
@@ -99,7 +115,7 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
     @NotNull
     @Min(value = 0, message = "The generation must be at least 0.")
     @Max(value = Integer.MAX_VALUE, message = "The generation must not be bigger than " + Integer.MAX_VALUE + ".")
-    private Integer generation = 0;
+    private final Integer generation = 0;
 
     @Schema(
             name = "owner",
@@ -108,7 +124,7 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
             implementation = Pointer.class
     )
     @Builder.Default
-    private de.kaiserpfalzedv.commons.core.resources.Pointer owner = null;
+    private final de.kaiserpfalzedv.commons.core.resources.PointerImpl owner = null;
 
     @Schema(
             name = "created",
@@ -151,7 +167,7 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
             maxLength = TimeStampPattern.VALID_LENGTH
     )
     @Builder.Default
-    private OffsetDateTime deleted = null;
+    private final OffsetDateTime deleted = null;
 
     @Schema(
             name = "annotations",
@@ -161,7 +177,8 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
             maxItems = 256
     )
     @Builder.Default
-    private Map<String, String> annotations = new HashMap<>();
+    @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
+    private final Map<String, String> annotations = new HashMap<>();
 
     @Schema(
             name = "labels",
@@ -171,25 +188,26 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
             maxItems = 256
     )
     @Builder.Default
-    private Map<String, String> labels = new HashMap<>();
+    @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
+    private final Map<String, String> labels = new HashMap<>();
 
 
     @Override
     @JsonIgnore
     public Optional<OffsetDateTime> getDeletionTimestamp() {
-        return Optional.ofNullable(deleted);
+        return Optional.ofNullable(this.deleted);
     }
 
     @Override
     @JsonIgnore
     public Optional<de.kaiserpfalzedv.commons.api.resources.Pointer> getOwningResource() {
-        return Optional.ofNullable(owner);
+        return Optional.ofNullable(this.owner);
     }
 
     @Override
-    public Metadata increaseGeneration() {
-        return toBuilder()
-                .generation(generation + 1)
+    public MetadataImpl increaseGeneration() {
+        return this.toBuilder()
+                .generation(this.generation + 1)
                 .build();
     }
 
@@ -203,15 +221,15 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
      * @param name       the name of the resource.
      * @return A metadata builder for adding the other metadata.
      */
-    public static MetadataBuilder of(
+    public static MetadataImplBuilder of(
             final String kind,
             final String apiVersion,
             final String nameSpace,
             final String name
     ) {
-        return Metadata.builder()
+        return MetadataImpl.builder()
                 .identity(
-                        de.kaiserpfalzedv.commons.core.resources.Pointer.builder()
+                        de.kaiserpfalzedv.commons.core.resources.PointerImpl.builder()
                                 .kind(kind)
                                 .apiVersion(apiVersion)
                                 .nameSpace(nameSpace)
@@ -222,8 +240,9 @@ public class Metadata implements de.kaiserpfalzedv.commons.api.resources.Metadat
 
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
-    public Metadata clone() {
-        return toBuilder().build();
+    public MetadataImpl clone() {
+        return this.toBuilder().build();
     }
 }

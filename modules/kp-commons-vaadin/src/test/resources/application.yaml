@@ -22,8 +22,8 @@ spring:
   security:
     oauth2:
       client:
-        registration: 
-          google: 
+        registration:
+          google:
             client-id: <client-id>
             client-secret: <secret>
 

@@ -23,23 +23,21 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.3-2-SNAPSHOT</version>
+        <version>3.2.4-1</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>3.2.3-2-SNAPSHOT</kp-commons.version>
+        <kp-commons.version>3.2.4-1</kp-commons.version>
 
         <main.basedir>${project.basedir}/..</main.basedir>
 
-        <spring-boot.version>3.2.3</spring-boot.version>
-        <springframework.version>6.1.4</springframework.version>
-
-        <spring-boot.version>3.2.3</spring-boot.version>
-        <springframework.version>6.1.4</springframework.version>
-        <jackson-bom.version>2.16.0</jackson-bom.version>
+        <jackson.version>2.17.0</jackson.version>
+        <spring-boot.version>3.2.4</spring-boot.version>
+        <springframework.version>6.1.5</springframework.version>
+        <jackson-bom.version>2.17.0</jackson-bom.version>
     </properties>
 
     <dependencyManagement>
@@ -244,14 +242,6 @@
             </dependency>
 
 
-            <!-- https://mvnrepository.com/artifact/org.zalando/problem-spring-web-starter -->
-            <dependency>
-                <groupId>org.zalando</groupId>
-                <artifactId>problem-spring-web-starter</artifactId>
-                <version>0.29.1</version>
-            </dependency>
-
-
             <dependency>
                 <groupId>org.eclipse.microprofile.config</groupId>
                 <artifactId>microprofile-config-api</artifactId>
@@ -274,7 +264,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.19.5</version>
+                <version>1.19.7</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

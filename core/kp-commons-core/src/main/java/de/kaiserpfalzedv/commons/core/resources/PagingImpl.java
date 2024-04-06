@@ -17,11 +17,18 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+
+import de.kaiserpfalzedv.commons.api.resources.Paging;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
  * DispatchmentFile contains all data to a single dispatchment
@@ -46,7 +53,9 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Paging implements de.kaiserpfalzedv.commons.api.resources.Paging {
+public class PagingImpl implements Paging {
+    private static final long serialVersionUID = 0L;
+
     @Builder.Default
     private final long start = 0;
 
@@ -60,57 +69,57 @@ public class Paging implements de.kaiserpfalzedv.commons.api.resources.Paging {
     @Override
     @JsonIgnore
     @Schema(hidden = true)
-    public de.kaiserpfalzedv.commons.api.resources.Paging firstPage() {
-        return toBuilder()
+    public Paging firstPage() {
+        return this.toBuilder()
                 .start(0)
-                .count(calculatePageSize(0))
+                .count(this.calculatePageSize(0))
                 .build();
     }
 
     @Override
     @JsonIgnore
     @Schema(hidden = true)
-    public de.kaiserpfalzedv.commons.api.resources.Paging previousPage() {
-        if (start - size <= 0) {
-            return firstPage();
+    public Paging previousPage() {
+        if (this.start - this.size <= 0) {
+            return this.firstPage();
         }
 
-        return toBuilder()
-                .start(start - size)
-                .count(calculatePageSize(start - size))
+        return this.toBuilder()
+                .start(this.start - this.size)
+                .count(this.calculatePageSize(this.start - this.size))
                 .build();
     }
 
     @Override
     @JsonIgnore
     @Schema(hidden = true)
-    public de.kaiserpfalzedv.commons.api.resources.Paging nextPage() {
-        return calculateNextPage(start + size);
+    public Paging nextPage() {
+        return this.calculateNextPage(this.start + this.size);
     }
 
     @Override
     @JsonIgnore
     @Schema(hidden = true)
-    public de.kaiserpfalzedv.commons.api.resources.Paging lastPage() {
-        return calculateNextPage(total / size * size);
+    public Paging lastPage() {
+        return this.calculateNextPage(this.total / this.size * this.size);
     }
 
     private long calculatePageSize(final long start) {
-        if (start >= total) {
+        if (start >= this.total) {
             return 0;
         }
 
-        if (start + size >= total) {
-            return total - start;
+        if (start + this.size >= this.total) {
+            return this.total - start;
         }
 
-        return  size;
+        return  this.size;
     }
 
-    private de.kaiserpfalzedv.commons.api.resources.Paging calculateNextPage(final long start) {
-        return toBuilder()
+    private Paging calculateNextPage(final long start) {
+        return this.toBuilder()
                 .start(start)
-                .count(calculatePageSize(start))
+                .count(this.calculatePageSize(start))
                 .build();
     }
 }

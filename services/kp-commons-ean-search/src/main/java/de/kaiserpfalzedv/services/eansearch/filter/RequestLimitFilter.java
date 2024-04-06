@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchException;
 import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchTooManyRequestsException;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import feign.InvocationContext;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -35,7 +36,6 @@ import io.micrometer.core.instrument.Tags;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-17
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "lombok created constructor used.")
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -56,7 +57,7 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     private final MeterRegistry registry;
     private Counter requestCounter;
 
-    @Getter
+    // No lombok generateion to make it synchronized
     private int remaining = -1;
     private OffsetDateTime lastRequest = OffsetDateTime.now(ZoneOffset.UTC).minus(1, ChronoUnit.DAYS);
 
@@ -70,12 +71,18 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
         this.requestCounter.close();
     }
 
+    public synchronized int getRemaining() {
+        return this.remaining;
+    }
+
     /**
      * Resets the counter and enables new requests, that would otherwise being blocked by this filter.
      */
-    public synchronized void reset() {
-        this.remaining = -1;
-        log.info("EAN Search credit reporter reset. Requests should now result in requests to the API.");
+    public void reset() {
+        synchronized(this) {
+            this.remaining = -1;
+            log.info("EAN Search credit reporter reset. Requests should now result in requests to the API.");
+        }
     }
 
 
@@ -86,20 +93,19 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
      * @param requestContext  request context.
      * @param responseContext response context.
      */
-
     @Override
     public Object intercept(final InvocationContext context, final Chain chain) throws Exception {
         final String remaining = context.response().headers().get(API_REMAINING_REQUEST_HEADER).stream().findFirst().orElse(null);
 
-        if (remaining != null) {
-            synchronized (this) {
+        synchronized (this) {
+            if (remaining != null) {
                 this.remaining = Integer.valueOf(remaining, 10);
                 this.registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), this.remaining);
             }
-        }
-        this.requestCounter.increment();
 
-        log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
+            log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
+        }
+
         return chain.next(context);
     }
 

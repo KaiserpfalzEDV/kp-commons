@@ -17,13 +17,12 @@
 
 package de.kaiserpfalzedv.commons.core.libravatar;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>AvatarGenerator -- The service to generate libravatars with.</p>
@@ -37,11 +36,11 @@ import jakarta.inject.Inject;
 public class AvatarGenerator {
     private final AvatarOptions options;
 
-    public String generateUri(String email) {
-        return new Avatar(email).buildUrl(options);
+    public String generateUri(final String email) {
+        return new AvatarImpl(email).buildUrl(this.options);
     }
 
-    public byte[] download(String email) {
-        return new Avatar(email).download(options);
+    public byte[] download(final String email) {
+        return new AvatarImpl(email).download(this.options);
     }
 }

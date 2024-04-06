@@ -17,18 +17,26 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import de.kaiserpfalzedv.commons.api.resources.HasApiVersion;
-import de.kaiserpfalzedv.commons.api.resources.HasName;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import de.kaiserpfalzedv.commons.api.resources.HasApiVersion;
+import de.kaiserpfalzedv.commons.api.resources.HasName;
+import de.kaiserpfalzedv.commons.api.resources.Pointer;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Pointer -- A single resource definition pointing to a unique resource on the server.
@@ -56,7 +64,10 @@ import jakarta.validation.constraints.Size;
                     "selfLink": "/api/v1/Resource/namespace/name"
                 }"""
 )
-public class Pointer implements de.kaiserpfalzedv.commons.api.resources.Pointer {
+public class PointerImpl implements Pointer {
+    /** serial class version */
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             name = "kind",
             description = "The type of the resource",
@@ -119,8 +130,9 @@ public class Pointer implements de.kaiserpfalzedv.commons.api.resources.Pointer 
 
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
-    public Pointer clone() {
-        return toBuilder().build();
+    public PointerImpl clone() {
+        return this.toBuilder().build();
     }
 }

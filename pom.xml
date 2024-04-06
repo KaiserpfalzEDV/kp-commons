@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.2.3-2-SNAPSHOT</version>
+    <version>3.2.4-1</version>
     <packaging>pom</packaging>
 
     <description>
@@ -34,7 +34,7 @@
         <module>kp-checkstyle</module>
         <module>kp-commons-parent</module>
         <module>kp-spring-boot-parent</module>
-        
+
         <module>core</module>
         <module>modules</module>
         <module>services</module>
@@ -121,9 +121,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jackson-bom.version>2.16.0</jackson-bom.version>
-        <jackson-version>${jackson-bom.version}</jackson-version>
-        <jackson.version>${jackson-bom.version}</jackson.version>
+        <kp-commons.version>3.2.4-1</kp-commons.version>
     </properties>
 
     <build>
@@ -173,7 +171,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.5.0</version>    
+                    <version>3.5.0</version>
                 </plugin>
 
                 <plugin>
@@ -187,11 +185,11 @@
                         <dependency>
                             <groupId>de.kaiserpfalz-edv.commons</groupId>
                             <artifactId>kp-checkstyle</artifactId>
-                            <version>${project.version}</version>
+                            <version>${kp-commons.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
-            </plugins>   
+            </plugins>
         </pluginManagement>
     </build>
 
@@ -333,7 +331,7 @@
                     </suppressionFiles>
                     <failBuildOnCVSS>8</failBuildOnCVSS>
                     <nvdApiServerId>nvdApi</nvdApiServerId>
-                    
+
                 </configuration>
                 <reportSets>
                     <reportSet>
@@ -345,5 +343,5 @@
                 </reportSets>
             </plugin>
         </plugins>
-    </reporting>        
+    </reporting>
 </project>

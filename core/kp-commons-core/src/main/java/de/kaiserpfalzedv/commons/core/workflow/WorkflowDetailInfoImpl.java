@@ -25,6 +25,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import de.kaiserpfalzedv.commons.api.workflow.WorkflowDetailInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -54,7 +55,9 @@ import lombok.extern.jackson.Jacksonized;
         example = "{\"name\": \"create-user\", \"id\": \"37625db0-f418-4695-9f03-ccea94234399\", \"created\": \"2022-01-04T14:22:00.000000Z\", \"ttl\": \"2022-01-04T14:25:00.000000Z\"}",
         defaultValue = "A workfow with random ID and current timestamps"
 )
-public class WorkflowDetailInfo implements de.kaiserpfalzedv.commons.api.workflow.WorkflowDetailInfo {
+public class WorkflowDetailInfoImpl implements WorkflowDetailInfo {
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             description = "A user understandable name.",
             example = "create-user",

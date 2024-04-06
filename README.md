@@ -21,7 +21,7 @@ Parts of the software may be licensed under other licences like MIT or Apache 2.
   This includes the packages:
   * _de.kaiserpfalzedv.commons.vaadin.nav_
   * _de.kaiserpfalzedv.commons.vaadin.users_
-  
+
   And of course every single source file with the unlicense as header.
   I value the decision of [Vaadin](https://vaadin.com) to use this way to sponsor code into the public domain and since I used that code, I use of course the same license for the derivative work.
   Pull requests for these parts need to be accompanied by the text

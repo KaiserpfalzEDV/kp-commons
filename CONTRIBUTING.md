@@ -86,18 +86,18 @@ There are three important things to know:
 
 ### Contributor License Agreement
 
-When you contribute (code, documentation, or anything else), you have to be aware that your contribution is covered by the 
+When you contribute (code, documentation, or anything else), you have to be aware that your contribution is covered by the
 same [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.txt) that is applied to kp-commons itself.
-If you want to contribute to parts not licensed on LGPL then you need to agree to the license given for that part of the 
+If you want to contribute to parts not licensed on LGPL then you need to agree to the license given for that part of the
 software. Please contact [Support](mailto:support@kaiserpfalz-edv.de) for this.
 In particular you need to agree to the Individual Contributor License Agreement,
 which can be [found here](https://gist.github.com/klenkes74/b76f623edb7830b4344ef2d5e373075e).
-(This applies to all contributors, including those contributing on behalf of a company). If you agree to its content, you 
+(This applies to all contributors, including those contributing on behalf of a company). If you agree to its content, you
 simply have to use the sign-off function of git as during the commit.
 
 #### Company Contributors
 
-If employees of a company contribute code, in **addition** to the individual agreement above, there needs to be one company 
+If employees of a company contribute code, in **addition** to the individual agreement above, there needs to be one company
 agreement submitted. This is mainly for the protection of the contributing employees.
 
 A company representative authorized to do so needs to download, fill, and print the
@@ -105,7 +105,7 @@ A company representative authorized to do so needs to download, fill, and print 
 form. Then either:
 
 - Scan it and e-mail it to [support@kaiserpfalz-edv.de](mailto:support@kaiserpfalz-edv.de)
-- Send it by traditional letter to: *Kaiserpfalz EDV-Service, Roland T. Lichti, Darmstädter Str. 12, 64625 Bensheim, 
+- Send it by traditional letter to: *Kaiserpfalz EDV-Service, Roland T. Lichti, Darmstädter Str. 12, 64625 Bensheim,
   GERMANY*
 
 
@@ -113,7 +113,7 @@ form. Then either:
 
 These are some of the rules we try to follow:
 
-- Apply a clean coding style adapted to the surrounding code, even though we are aware the existing code is not fully 
+- Apply a clean coding style adapted to the surrounding code, even though we are aware the existing code is not fully
   clean
 - Use (4)spaces for indentation (except if the modified file consistently uses tabs)
 - Use variable naming conventions like in the other files you are seeing (camelcase)
@@ -130,9 +130,9 @@ These are some of the rules we try to follow:
 3. Commit and push your changes on that branch
 4. In the commit message
  - Describe the problem you fix with this change.
- - Describe the effect that this change has from a user's point of view. App crashes and lockups are pretty convincing for 
+ - Describe the effect that this change has from a user's point of view. App crashes and lockups are pretty convincing for
    example, but not all bugs are that obvious and should be mentioned in the text.
- - Describe the technical details of what you changed. It is important to describe the change in a most understandable way 
+ - Describe the technical details of what you changed. It is important to describe the change in a most understandable way
    so the reviewer is able to verify that the code is behaving as you intend it to.
 5. If your change fixes an issue reported at GitHub, add the following line to the commit message:
   - ```Fixes #(issueNumber)```
@@ -140,7 +140,7 @@ These are some of the rules we try to follow:
 6. Create a Pull Request
 7. Follow the link posted by the kp-commons to your pull request and accept it, as described in detail above.
 8. Wait for our code review and approval, possibly enhancing your change on request
-  - Note that the kp-commons developers also have their regular duties, so depending on the required effort for reviewing, 
+  - Note that the kp-commons developers also have their regular duties, so depending on the required effort for reviewing,
     testing and clarification this may take a while
 
 9. Once the change has been approved we will inform you in a comment

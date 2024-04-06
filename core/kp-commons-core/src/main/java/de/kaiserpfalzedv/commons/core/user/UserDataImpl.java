@@ -17,14 +17,23 @@
 
 package de.kaiserpfalzedv.commons.core.user;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpec;
-import de.kaiserpfalzedv.commons.core.resources.Pointer;
-import lombok.*;
+
+import de.kaiserpfalzedv.commons.api.user.UserData;
+import de.kaiserpfalzedv.commons.core.resources.DefaultResourceSpecImpl;
+import de.kaiserpfalzedv.commons.core.resources.PointerImpl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
  * The basic data for every user.
@@ -41,9 +50,10 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "userData", description = "Registered User.")
-public class UserData extends DefaultResourceSpec implements de.kaiserpfalzedv.commons.api.user.UserData {
+public class UserDataImpl extends DefaultResourceSpecImpl implements UserData {
+    private static final long serialVersionUID = 0L;
 
-    public static String[] STRUCTURED_PROPERTIES = {
+    private static final String[] STRUCTURED_PROPERTIES = {
             ISSUER,
             SUBJECT
     };
@@ -54,9 +64,10 @@ public class UserData extends DefaultResourceSpec implements de.kaiserpfalzedv.c
     @Builder.Default
     private String description = null;
     @Builder.Default
-    private Pointer picture = null;
+    private PointerImpl picture = null;
 
-        @JsonIgnore
+    @SuppressFBWarnings(value = "EI_EXPOSE_REF", justification = "It's the API design.")
+    @JsonIgnore
     @Override
     public String[] getDefaultProperties() {
         return STRUCTURED_PROPERTIES;

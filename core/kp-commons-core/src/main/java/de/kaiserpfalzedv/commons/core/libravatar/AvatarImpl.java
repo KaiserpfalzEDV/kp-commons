@@ -27,10 +27,13 @@ package de.kaiserpfalzedv.commons.core.libravatar;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.charset.Charset;
+import java.util.Locale;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 
+import de.kaiserpfalzedv.commons.api.libravatar.Avatar;
 import de.kaiserpfalzedv.commons.api.libravatar.AvatarException;
 import de.kaiserpfalzedv.commons.api.libravatar.AvatarOptions;
 import de.kaiserpfalzedv.commons.api.libravatar.LibravatarDefaultImage;
@@ -47,7 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Accessors(chain = true, fluent = false)
 @Slf4j
-public class Avatar implements de.kaiserpfalzedv.commons.api.libravatar.Avatar {
+public class AvatarImpl implements Avatar {
     @ToString.Include
     @EqualsAndHashCode.Include
     @Getter
@@ -72,8 +75,8 @@ public class Avatar implements de.kaiserpfalzedv.commons.api.libravatar.Avatar {
                         : options.baseUri());
 
         sb.append(
-                options.useSHA256() ? DigestUtils.sha256Hex(this.email.toLowerCase().getBytes())
-                        : DigestUtils.md5Hex(this.email.toLowerCase().getBytes()));
+                options.useSHA256() ? DigestUtils.sha256Hex(this.email.toLowerCase(Locale.getDefault()).getBytes(Charset.defaultCharset()))
+                        : DigestUtils.md5Hex(this.email.toLowerCase(Locale.getDefault()).getBytes(Charset.defaultCharset())));
 
         sb.append("?s=").append(options.imageSize());
 

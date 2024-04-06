@@ -23,6 +23,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
@@ -42,6 +43,7 @@ import lombok.extern.jackson.Jacksonized;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-21
  */
+@SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
@@ -51,6 +53,8 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class Sms implements Serializable {
+    private static final long serialVersionUID = 0L;
+
     @Size(max = 11)
     private String from;
 

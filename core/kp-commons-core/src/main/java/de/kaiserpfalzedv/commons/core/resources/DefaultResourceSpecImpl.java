@@ -17,17 +17,27 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import de.kaiserpfalzedv.commons.api.resources.DefaultResourceSpec;
+import de.kaiserpfalzedv.commons.api.resources.Pointer;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * The basic data for every resource.
@@ -36,33 +46,41 @@ import java.util.StringJoiner;
  * @since 2.0.0  2021-05-24
  */
 @SuppressWarnings({"unused"})
+@SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "DefaultResourceSpec", description = "A standardized resource.")
-public class DefaultResourceSpec implements de.kaiserpfalzedv.commons.api.resources.DefaultResourceSpec {
+public class DefaultResourceSpecImpl implements DefaultResourceSpec {
+    /** serial version of this class. */
+    private static final long serialVersionUID = 0L;
+
     @SuppressWarnings("FieldMayBeFinal")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
     @Schema(name = "properties", description = "A map of plugin properties for spec.")
     @Builder.Default
     @ToString.Include
     @EqualsAndHashCode.Include
     private Map<String, String> properties = new HashMap<>();
 
+    @Override
+    public Map<String, String> getProperties() {
+        return Collections.unmodifiableMap(this.properties);
+    }
 
-
+    @Override
     @JsonIgnore
-    public de.kaiserpfalzedv.commons.api.resources.Pointer convertStringToResourcePointer(String property) {
-        String[] data = property.split("/", 4);
+    public Pointer convertStringToResourcePointer(final String property) {
+        final String[] data = property.split("/", 4);
         if (data.length != 5) {
             throw new IllegalStateException("Invalid property for resource pointers: " + property);
         }
 
-        return de.kaiserpfalzedv.commons.core.resources.Pointer.builder()
+        return PointerImpl.builder()
                 .kind(data[0])
                 .apiVersion(data[1])
 
@@ -72,20 +90,22 @@ public class DefaultResourceSpec implements de.kaiserpfalzedv.commons.api.resour
                 .build();
     }
 
+    @Override
     @JsonIgnore
-    public void saveResourcePointers(String key, Collection<de.kaiserpfalzedv.commons.api.resources.Pointer> pointers) {
+    public void saveResourcePointers(final String key, final Collection<Pointer> pointers) {
         if (pointers != null) {
-            StringJoiner data = new StringJoiner(",");
+            final StringJoiner data = new StringJoiner(",");
 
-            pointers.forEach(p -> data.add(convertResourcePointerToString(p)));
+            pointers.forEach(p -> data.add(this.convertResourcePointerToString(p)));
 
-            properties.put(key, data.toString());
+            this.properties.put(key, data.toString());
         }
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "We are using the lombok builder here.")
     @Override
-    public DefaultResourceSpec clone() {
-        return toBuilder().build();
+    public DefaultResourceSpecImpl clone() {
+        return this.toBuilder().build();
     }
 }

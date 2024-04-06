@@ -17,17 +17,25 @@
 
 package de.kaiserpfalzedv.commons.core.resources;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import de.kaiserpfalzedv.commons.api.resources.HasName;
-import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
-import lombok.*;
-import lombok.extern.jackson.Jacksonized;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import de.kaiserpfalzedv.commons.api.resources.HasName;
+import de.kaiserpfalzedv.commons.api.resources.History;
+import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
 
 
 /**
@@ -47,7 +55,10 @@ import java.time.ZoneOffset;
         name = "History",
         description = "A single history entry of a change."
 )
-public class History implements de.kaiserpfalzedv.commons.api.resources.History {
+public class HistoryImpl implements History {
+    /** serial version of this class. */
+    private static final long serialVersionUID = 0L;
+
     @Schema(
             name = "TimeStamp",
             description = "The timestamp of the change.",
@@ -88,7 +99,8 @@ public class History implements de.kaiserpfalzedv.commons.api.resources.History 
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public de.kaiserpfalzedv.commons.api.resources.History clone() {
-        return toBuilder().build();
+    @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
+    public History clone() {
+        return this.toBuilder().build();
     }
 }

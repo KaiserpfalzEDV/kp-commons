@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.3-2-SNAPSHOT</version>
+        <version>3.2.4-1</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
@@ -38,7 +38,7 @@
             <dependency>
                 <groupId>de.kaiserpfalz-edv.commons</groupId>
                 <artifactId>kp-commons-bom</artifactId>
-                <version>${project.version}</version>
+                <version>${kp-commons.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -65,10 +65,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.2.3</spring-boot.version>
-        <jackson-bom.version>2.16.0</jackson-bom.version>
-        <jackson-version>${jackson-bom.version}</jackson-version>
-        <jackson.version>${jackson-bom.version}</jackson.version>
+        <jackson.version>2.17.0</jackson.version>
+        <spring-boot.version>3.2.4</spring-boot.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
 
@@ -211,7 +209,7 @@
                         <dependency>
                             <groupId>de.kaiserpfalz-edv.commons</groupId>
                             <artifactId>kp-checkstyle</artifactId>
-                            <version>${project.version}</version>
+                            <version>${kp-commons.version}</version>
                             <scope>compile</scope>
                         </dependency>
                     </dependencies>
@@ -406,18 +404,6 @@
                 </file>
             </activation>
 
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.fasterxml.jackson</groupId>
-                        <artifactId>jackson-bom</artifactId>
-                        <version>${jackson-bom.version}</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-
             <dependencies>
                 <!-- Syntactic Sugar -->
                 <dependency>
@@ -451,6 +437,13 @@
                 <dependency>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-api</artifactId>
+                </dependency>
+
+                <!-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations -->
+                <dependency>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-annotations</artifactId>
+                    <version>4.8.3</version>
                 </dependency>
             </dependencies>
 
@@ -531,7 +524,7 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
                     </plugin>
-        
+
                     <plugin>
                         <groupId>com.github.jeluard</groupId>
                         <artifactId>plantuml-maven-plugin</artifactId>
@@ -545,7 +538,7 @@
                             <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
                         </configuration>
                     </plugin>
-    
+
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
@@ -567,7 +560,7 @@
                             </reportSet>
                         </reportSets>
                     </plugin>
-                    
+
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
@@ -804,10 +797,6 @@
                     <scope>runtime</scope>
                 </dependency>
 
-                <dependency>
-                    <groupId>org.zalando</groupId>
-                    <artifactId>problem-spring-web-starter</artifactId>
-                </dependency>
 
                 <!-- testing -->
                 <dependency>
