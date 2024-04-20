@@ -38,7 +38,7 @@
         <dependency>
 			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
 			<artifactId>schlundtech-domainrobot-models</artifactId>
-			<version>3.2.4-1</version>
+			<version>3.2.4-2-SNAPSHOT</version>
 		</dependency>
     </dependencies>
 </project>

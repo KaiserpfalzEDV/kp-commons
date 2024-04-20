@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.2.4-1</version>
+    <version>3.2.4-2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>
@@ -121,7 +121,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>3.2.4-1</kp-commons.version>
+        <kp-commons.version>3.2.4-2-SNAPSHOT</kp-commons.version>
     </properties>
 
     <build>
