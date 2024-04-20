@@ -29,6 +29,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * TranslatorTest -- Tests the common translator.
@@ -106,7 +107,7 @@ class TranslatorTest extends AbstractTestBase {
     }
 
     @Test
-    void shouldReturnTheStringWithParametersReplasedWhenCalledWithParamters() {
+    void shouldReturnTheStringWithParametersReplacedWhenCalledWithParameters() {
         startTest("adding-parameters-to-translation");
 
         UUID uuid = UUID.randomUUID();
@@ -119,7 +120,7 @@ class TranslatorTest extends AbstractTestBase {
     }
 
     @Test
-    void shouldReturnTheStringWithParametersReplasedWhenCalledWithTooFewParamters() {
+    void shouldReturnTheStringWithParametersReplacedWhenCalledWithTooFewParameters() {
         startTest("adding-too-few-parameters-to-translation");
 
         UUID uuid = UUID.randomUUID();
@@ -132,7 +133,7 @@ class TranslatorTest extends AbstractTestBase {
     }
 
     @Test
-    void shouldReturnTheStringWithTwoParametersReplasedWhenAllParametersAreGiven() {
+    void shouldReturnTheStringWithTwoParametersReplacedWhenAllParametersAreGiven() {
         startTest("adding-two-parameters-to-translation");
 
         UUID uuid = UUID.randomUUID();
@@ -169,7 +170,11 @@ class TranslatorTest extends AbstractTestBase {
 
     @Test
     void close() throws Exception {
-        sut.close();
+        try {
+            sut.close();
+        } catch (RuntimeException e) {
+            fail("close() should never throw an exception ...");
+        }
     }
 
 
@@ -179,6 +184,6 @@ class TranslatorTest extends AbstractTestBase {
 
         sut.setDefaultLocale(DEFAULT_LOCALE.getLanguage());
         sut.setConfiguredLanguages(Arrays.asList("de", "en", "fr", "nl", "es"));
-        log.trace("Supported locales. default='{}', list={}", sut.defaultLocale, sut.configuredLanguages);
+        log.trace("Supported locales. default='{}', list={}", sut.getDefaultLocale(), sut.getConfiguredLanguages());
     }
 }

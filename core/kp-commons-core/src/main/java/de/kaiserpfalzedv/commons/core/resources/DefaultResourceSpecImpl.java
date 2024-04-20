@@ -45,7 +45,6 @@ import lombok.extern.jackson.Jacksonized;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
  */
-@SuppressWarnings({"unused"})
 @SuppressFBWarnings(value = "EI_EXPOSE_REF2", justification = "Use of lombok provided builder.")
 @Jacksonized
 @SuperBuilder(toBuilder = true)

@@ -40,7 +40,7 @@ public class DnbLookupClientConfig {
 
 
     @Bean
-    public RequestInterceptor dnbDefaultParamters() {
+    public RequestInterceptor dnbDefaultParameters() {
         return requestTemplate -> requestTemplate
             .query("operation", OPERATION)
             .query("version", VERSION)

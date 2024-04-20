@@ -63,10 +63,9 @@ public class StatusImpl implements Status {
     @Builder.Default
     @ToString.Include
     @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
-    List<HistoryImpl> history = new ArrayList<>();
+    private List<HistoryImpl> history = new ArrayList<>();
 
     @Override
-    @SuppressWarnings("unused")
     public StatusImpl addHistory(final String status, final String message) {
         this.getHistory().add(
                 HistoryImpl.builder()

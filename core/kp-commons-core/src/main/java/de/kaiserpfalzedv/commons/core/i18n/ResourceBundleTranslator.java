@@ -35,6 +35,7 @@ import de.kaiserpfalzedv.commons.api.i18n.MessageSource;
 import de.kaiserpfalzedv.commons.api.i18n.NoSuchMessageException;
 import de.kaiserpfalzedv.commons.api.i18n.Translator;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +55,8 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "lombok generated setter")
     @Setter
-    List<String> configuredLanguages = List.of("de","en","fr","nl","es","it");
+    @Getter
+    private List<String> configuredLanguages = List.of("de","en","fr","nl","es","it");
 
     /**
      * Default bundle to use when no other bundle is selected.
@@ -66,9 +68,10 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      * provided. Normally it will be configured via property "default-locale" with a default of "de".
      */
     @Setter
-    String defaultLocale = "de";
+    @Getter
+    private String defaultLocale = "de";
 
-    private transient final HashMap<String, HashMap<Locale, ResourceBundle>> bundles = new HashMap<>();
+    private final transient HashMap<String, HashMap<Locale, ResourceBundle>> bundles = new HashMap<>();
 
 
     public ResourceBundleTranslator() {
