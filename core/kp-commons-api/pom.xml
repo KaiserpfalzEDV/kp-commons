@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.core</groupId>
         <artifactId>kp-commons-core-root</artifactId>
-        <version>3.2.4-2-SNAPSHOT</version>
+        <version>3.2.5-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-api</artifactId>

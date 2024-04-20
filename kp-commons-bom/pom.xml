@@ -23,20 +23,20 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.2.4-2-SNAPSHOT</version>
+        <version>3.2.5-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
 
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>3.2.4-2-SNAPSHOT</kp-commons.version>
+        <kp-commons.version>3.2.5-1-SNAPSHOT</kp-commons.version>
 
         <main.basedir>${project.basedir}/..</main.basedir>
 
         <jackson.version>2.17.0</jackson.version>
-        <spring-boot.version>3.2.4</spring-boot.version>
-        <springframework.version>6.1.5</springframework.version>
+        <spring-boot.version>3.2.5</spring-boot.version>
+        <springframework.version>6.1.6</springframework.version>
         <jackson-bom.version>2.17.0</jackson-bom.version>
     </properties>
 
