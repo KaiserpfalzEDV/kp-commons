@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.api.resources;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * HasId --
@@ -28,11 +27,12 @@ import java.util.UUID;
  * @since 0.1.0  2021-04-18
  */
 public interface HasId extends Serializable {
-    String VALID_UUID_PATTERN = "^[a-zA-Z0-9]{8}-([a-zA-Z0-9]{4}-){3}[a-zA-Z0-9]{12}$";
-    String VALID_UUID_PATTERN_MSG = "The UUID pattern must match '" + VALID_UUID_PATTERN + "'";
-    int VALID_UUID_LENGTH = 36;
-    String VALID_UUID_LENGTH_MSG = "The UUID must be exactely 36 characters long.";
-    String VALID_UUID_EXAMPLE = "caae022d-5728-4cb2-9245-b8c1ea03e380";
+    int MIN_LENGTH = 1;
+    int MAX_LENGTH = 20;
+    String VALID_ID_PATTERN = "^[0-9]{" + MIN_LENGTH + "," + MAX_LENGTH + "}";
+    String VALID_ID_PATTERN_MSG = "The ID pattern must match '" + VALID_ID_PATTERN + "'";
+    String VALID_ID_LENGTH_MSG = "The ID must be between one and 20 digits long.";
+    String VALID_ID_EXAMPLE = "4324324";
 
-    UUID getId();
+    Long getId();
 }

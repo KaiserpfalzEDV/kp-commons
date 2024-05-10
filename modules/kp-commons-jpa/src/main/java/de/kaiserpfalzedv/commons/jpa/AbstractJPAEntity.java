@@ -19,10 +19,8 @@ package de.kaiserpfalzedv.commons.jpa;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import de.kaiserpfalzedv.commons.api.resources.HasId;
@@ -51,11 +49,10 @@ import lombok.experimental.SuperBuilder;
 @ToString(onlyExplicitlyIncluded = true)
 public abstract class AbstractJPAEntity implements HasId, Cloneable {
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "ID", length = 36, nullable = false, updatable = false, unique = true)
+    @GeneratedValue
+    @Column(name = "ID", nullable = false, updatable = false, unique = true)
     @ToString.Include
-    protected UUID id;
+    protected Long id;
 
     @NonNull
     @Version

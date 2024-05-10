@@ -25,6 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.hibernate.boot.MetadataBuilder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -89,10 +90,10 @@ public class MetadataImpl implements Metadata {
             name = "uid",
             description = "The unique identifier of this resource",
             required = true,
-            minLength = HasId.VALID_UUID_LENGTH,
-            maxLength = HasId.VALID_UUID_LENGTH,
-            pattern = HasId.VALID_UUID_PATTERN,
-            example = HasId.VALID_UUID_EXAMPLE,
+            minLength = HasId.MIN_LENGTH,
+            maxLength = HasId.MAX_LENGTH,
+            pattern = HasId.VALID_ID_PATTERN,
+            example = HasId.VALID_ID_EXAMPLE,
             defaultValue = "random UUID"
     )
     @ToString.Include
