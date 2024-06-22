@@ -23,7 +23,7 @@
     <parent>
 			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
 			<artifactId>kp-commons-schlundtech-root</artifactId>
-			<version>3.3.0-1-SNAPSHOT</version>
+			<version>3.3.1-1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-schlundtech</artifactId>
@@ -38,7 +38,7 @@
         <dependency>
 			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
 			<artifactId>schlundtech-domainrobot-models</artifactId>
-			<version>3.3.0-1-SNAPSHOT</version>
+			<version>3.3.1-1-SNAPSHOT</version>
 		</dependency>
     </dependencies>
 </project>
