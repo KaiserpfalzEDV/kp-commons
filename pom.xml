@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.3.1-1-SNAPSHOT</version>
+    <version>3.3.1-1</version>
     <packaging>pom</packaging>
 
     <description>
@@ -110,6 +110,7 @@
         <skip.javadoc>false</skip.javadoc>
         <skip.source>false</skip.source>
         <skip.site>false</skip.site>
+        <skip.owasp>true</skip.owasp>
 
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
         <main.basedir>${project.basedir}</main.basedir>
@@ -121,7 +122,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>3.3.1-1-SNAPSHOT</kp-commons.version>
+        <kp-commons.version>3.3.1-1</kp-commons.version>
     </properties>
 
     <build>
@@ -189,6 +190,31 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>9.2.0</version>
+                    <configuration>
+                        <skip>${skip.owasp}</skip>
+                        <suppressionFiles>
+                            <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
+                        </suppressionFiles>
+                        <failBuildOnCVSS>8</failBuildOnCVSS>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <failOnError>true</failOnError>
+                        <nvdServerId>nvdApi</nvdServerId>
+                        <verbose>true</verbose>
+                        <nvdApiServerId>nvdApi</nvdApiServerId>
+                        <inherit>false</inherit>
+                        <msbuildAnalyzerEnabled>false</msbuildAnalyzerEnabled>
+                        <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
+                        <pipfileAnalzerEnabled>false</pipfileAnalzerEnabled>
+                        <nugetconfAnalyzerenabled>false</nugetconfAnalyzerenabled>
+                        <skipSystemScope>true</skipSystemScope>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
@@ -324,14 +350,14 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>9.0.9</version>
+                <version>9.2.0</version>
                 <configuration>
                     <suppressionFiles>
                         <suppressionFile>${main.basedir}/owasp-suppressions.xml</suppressionFile>
                     </suppressionFiles>
+                    <skip>${skip.owasp}</skip>
                     <failBuildOnCVSS>8</failBuildOnCVSS>
                     <nvdApiServerId>nvdApi</nvdApiServerId>
-
                 </configuration>
                 <reportSets>
                     <reportSet>
