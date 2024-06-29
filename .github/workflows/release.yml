@@ -26,7 +26,7 @@ jobs:
       - name: Prepare GPG signing
         id: install-gpg-key
         run: |
-          $(echo -en "${{ secrets.GPG_SIGNING_KEY }}") | gpg --batch --import
+          echo -en "${{ secrets.GPG_SIGNING_KEY }}\n" | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
 
       - name: Set up Maven
@@ -57,7 +57,5 @@ jobs:
           mvn \
             --batch-mode \
             --no-transfer-progress \
-            \
-            -Prelease
             \
             site site:stage scm-publish:publish-scm
