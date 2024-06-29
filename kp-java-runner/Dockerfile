@@ -25,5 +25,6 @@ RUN apk add --update --no-cache curl nss bash \
     && echo "set disable-completion on" >> /etc/inputrc
 
 USER 1000
+EXPOSE 8080 8081 8443
 
 CMD [ "/deployments/run-java.sh" ]

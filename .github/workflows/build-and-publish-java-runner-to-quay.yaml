@@ -1,4 +1,4 @@
-name: build-and-publish-java-runner-to-quay
+name: Java Runner OCI Image
 
 on:
   push:
