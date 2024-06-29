@@ -21,13 +21,15 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.3.1-1</version>
+    <version>3.3.1-2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>
         The kp-commons is a library that is used by the Kaiserpfalz EDV-Service for base integrations and common
         definitions like API base elements.
     </description>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <url>https://kaiserpfalzedv.github.io/kp-commons/</url>
 
     <modules>
         <module>kp-commons-bom</module>
@@ -93,12 +95,12 @@
 
     <distributionManagement>
         <site>
-            <id>github</id>
+            <id>gh-kaiserpfalzedv-kp-commons</id>
             <name>Kaiserpfalz EDV-Service -- KP-COMMONS</name>
             <url>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</url>
         </site>
         <repository>
-            <id>github</id>
+            <id>gh-kaiserpfalzedv-kp-commons</id>
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
         </repository>
@@ -116,18 +118,23 @@
         <main.basedir>${project.basedir}</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>3.3.1-1</kp-commons.version>
+        <kp-commons.version>3.3.1-2-SNAPSHOT</kp-commons.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
@@ -169,6 +176,7 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.12.1</version>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -214,7 +222,6 @@
                         <skipSystemScope>true</skipSystemScope>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
