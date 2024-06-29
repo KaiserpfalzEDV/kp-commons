@@ -34,7 +34,10 @@ jobs:
         uses: s4u/maven-settings-action@v3.0.0
         with:
           servers: |
-            [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
+            [
+              { "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"},
+              { "id": "central", "username": "${{ secrets.MVN_CENTRAL_USERNAME }}", "password": "${{ secrets.MVN_CENTRAL_PASSWORD }}"}
+            ]
 
       - name: Build
         id: build-java
