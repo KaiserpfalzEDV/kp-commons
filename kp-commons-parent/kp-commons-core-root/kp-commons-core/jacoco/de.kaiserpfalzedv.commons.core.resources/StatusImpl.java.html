@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatusImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">de.kaiserpfalz-edv.commons.core:kp-commons-core</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.resources</a> &gt; <span class="el_source">StatusImpl.java</span></div><h1>StatusImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.resources;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import de.kaiserpfalzedv.commons.api.resources.Status;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
+
+/**
+ * ResourceStatus -- The state of the managed resource.
+ *
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 2.0.0  2021-05-24
+ */
+@Jacksonized
+@SuppressFBWarnings(value = &quot;EI_EXPOSE_REF2&quot;, justification = &quot;Use of lombok provided builder.&quot;)
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@ToString(onlyExplicitlyIncluded = true)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonPropertyOrder({&quot;observedGeneration,history&quot;})
+@Schema(name = &quot;ResourceStatus&quot;, description = &quot;The status of a resource.&quot;)
+public class StatusImpl implements Status {
+    private static final long serialVersionUID = 0L;
+
+    @Builder.Default
+    @ToString.Include
+    private final Integer observedGeneration = 0;
+
+
+    @Builder.Default
+    @ToString.Include
+    @SuppressFBWarnings(value = {&quot;EI_EXPOSE_REP&quot;,&quot;EI_EXPOSE_REP2&quot;}, justification = &quot;lombok provided @Getter are created&quot;)
+    private List&lt;HistoryImpl&gt; history = new ArrayList&lt;&gt;();
+
+    @Override
+    public StatusImpl addHistory(final String status, final String message) {
+<span class="nc" id="L70">        this.getHistory().add(</span>
+<span class="nc" id="L71">                HistoryImpl.builder()</span>
+<span class="nc" id="L72">                        .status(status)</span>
+<span class="nc" id="L73">                        .timeStamp(OffsetDateTime.now(ZoneOffset.UTC))</span>
+<span class="nc" id="L74">                        .message(message)</span>
+<span class="nc" id="L75">                        .build()</span>
+        );
+
+<span class="nc" id="L78">        return this;</span>
+    }
+
+    @SuppressWarnings(&quot;MethodDoesntCallSuperMethod&quot;)
+    @SuppressFBWarnings(value = &quot;CN_IDIOM_NO_SUPER_CALL&quot;, justification = &quot;Using the lombok builder.&quot;)
+    @Override
+    public StatusImpl clone() {
+<span class="nc" id="L85">        return this.toBuilder().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

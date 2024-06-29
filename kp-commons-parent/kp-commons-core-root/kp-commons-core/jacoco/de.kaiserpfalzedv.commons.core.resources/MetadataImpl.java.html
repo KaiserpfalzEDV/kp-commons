@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MetadataImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">de.kaiserpfalz-edv.commons.core:kp-commons-core</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.resources</a> &gt; <span class="el_source">MetadataImpl.java</span></div><h1>MetadataImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.resources;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.hibernate.boot.MetadataBuilder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import de.kaiserpfalzedv.commons.api.resources.HasId;
+import de.kaiserpfalzedv.commons.api.resources.Metadata;
+import de.kaiserpfalzedv.commons.api.resources.Pointer;
+import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
+
+/**
+ * Metadata -- common data for every resource of the system.
+ * &lt;p&gt;
+ * Default values for the lombok builder are set in {@link MetadataBuilder}.
+ *
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 2.0.0  2021-05-24
+ * @version 2.0.2 2022-01-04
+ */
+@SuppressFBWarnings(value = &quot;EI_EXPOSE_REF2&quot;, justification = &quot;Use of lombok provided builder.&quot;)
+@Jacksonized
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonPropertyOrder({&quot;identity,uid,generation,owner,created,deleted,annotations,labels,selfLink&quot;})
+@Schema(
+        name = &quot;ResourceMetadata&quot;,
+        description = &quot;The metadata of a resource.&quot;
+)
+public class MetadataImpl implements Metadata {
+    /** serial class version */
+    private static final long serialVersionUID = 0L;
+
+    @Schema(
+            name = &quot;identity&quot;,
+            description = &quot;This is the identity of the resource.&quot;,
+            implementation = Pointer.class
+    )
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    @NotNull
+    private de.kaiserpfalzedv.commons.core.resources.PointerImpl identity;
+
+    @Schema(
+            name = &quot;uid&quot;,
+            description = &quot;The unique identifier of this resource&quot;,
+            required = true,
+            minLength = HasId.MIN_LENGTH,
+            maxLength = HasId.MAX_LENGTH,
+            pattern = HasId.VALID_ID_PATTERN,
+            example = HasId.VALID_ID_EXAMPLE,
+            defaultValue = &quot;random UUID&quot;
+    )
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    @Builder.Default
+    @NotNull
+    private final UUID uid = UUID.randomUUID();
+
+    @Schema(
+            name = &quot;generation&quot;,
+            description = &quot;The generation of this object. Every change adds 1.&quot;,
+            required = true,
+            example = &quot;0&quot;,
+            defaultValue = &quot;0&quot;,
+            minimum = &quot;0&quot;,
+            maxItems = Integer.MAX_VALUE
+    )
+    @ToString.Include
+    @Builder.Default
+    @NotNull
+    @Min(value = 0, message = &quot;The generation must be at least 0.&quot;)
+    @Max(value = Integer.MAX_VALUE, message = &quot;The generation must not be bigger than &quot; + Integer.MAX_VALUE + &quot;.&quot;)
+    private final Integer generation = 0;
+
+    @Schema(
+            name = &quot;owner&quot;,
+            description = &quot;The owning resource. This is a sub-resource or managed resource of the given address.&quot;,
+            nullable = true,
+            implementation = Pointer.class
+    )
+    @Builder.Default
+    private final de.kaiserpfalzedv.commons.core.resources.PointerImpl owner = null;
+
+    @Schema(
+            name = &quot;created&quot;,
+            description = &quot;The timestamp of resource creation.&quot;,
+            required = true,
+            defaultValue = &quot;now&quot;,
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
+    )
+    @Builder.Default
+    @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
+    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
+    protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
+
+    @Schema(
+            name = &quot;modified&quot;,
+            description = &quot;The timestamp of the last change.&quot;,
+            required = true,
+            defaultValue = &quot;now&quot;,
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
+    )
+    @Builder.Default
+    @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
+    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
+    protected OffsetDateTime modified = OffsetDateTime.now(ZoneOffset.UTC);
+
+    @Schema(
+            name = &quot;deleted&quot;,
+            description = &quot;The timestamp of object deletion. Marks an object to be deleted.&quot;,
+            nullable = true,
+            defaultValue = &quot;null&quot;,
+            example = TimeStampPattern.VALID_EXAMPLE,
+            pattern = TimeStampPattern.VALID_PATTERN,
+            minLength = TimeStampPattern.VALID_LENGTH,
+            maxLength = TimeStampPattern.VALID_LENGTH
+    )
+    @Builder.Default
+    private final OffsetDateTime deleted = null;
+
+    @Schema(
+            name = &quot;annotations&quot;,
+            description = &quot;A set of annotations to this resource.&quot;,
+            nullable = true,
+            minItems = 0,
+            maxItems = 256
+    )
+    @Builder.Default
+    @SuppressFBWarnings(value = {&quot;EI_EXPOSE_REP&quot;,&quot;EI_EXPOSE_REP2&quot;}, justification = &quot;lombok provided @Getter are created&quot;)
+    private final Map&lt;String, String&gt; annotations = new HashMap&lt;&gt;();
+
+    @Schema(
+            name = &quot;labels&quot;,
+            description = &quot;A set of labels to this resource.&quot;,
+            nullable = true,
+            minItems = 0,
+            maxItems = 256
+    )
+    @Builder.Default
+    @SuppressFBWarnings(value = {&quot;EI_EXPOSE_REP&quot;,&quot;EI_EXPOSE_REP2&quot;}, justification = &quot;lombok provided @Getter are created&quot;)
+    private final Map&lt;String, String&gt; labels = new HashMap&lt;&gt;();
+
+
+    @Override
+    @JsonIgnore
+    public Optional&lt;OffsetDateTime&gt; getDeletionTimestamp() {
+<span class="nc" id="L199">        return Optional.ofNullable(this.deleted);</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public Optional&lt;de.kaiserpfalzedv.commons.api.resources.Pointer&gt; getOwningResource() {
+<span class="nc" id="L205">        return Optional.ofNullable(this.owner);</span>
+    }
+
+    @Override
+    public MetadataImpl increaseGeneration() {
+<span class="fc" id="L210">        return this.toBuilder()</span>
+<span class="fc" id="L211">                .generation(this.generation + 1)</span>
+<span class="fc" id="L212">                .build();</span>
+    }
+
+
+    /**
+     * Generates a metadata builder with the given identity.
+     *
+     * @param kind       the kind of resource.
+     * @param apiVersion the api version of the resource.
+     * @param nameSpace  the namespace of the resource.
+     * @param name       the name of the resource.
+     * @return A metadata builder for adding the other metadata.
+     */
+    public static MetadataImplBuilder of(
+            final String kind,
+            final String apiVersion,
+            final String nameSpace,
+            final String name
+    ) {
+<span class="nc" id="L231">        return MetadataImpl.builder()</span>
+<span class="nc" id="L232">                .identity(</span>
+<span class="nc" id="L233">                        de.kaiserpfalzedv.commons.core.resources.PointerImpl.builder()</span>
+<span class="nc" id="L234">                                .kind(kind)</span>
+<span class="nc" id="L235">                                .apiVersion(apiVersion)</span>
+<span class="nc" id="L236">                                .nameSpace(nameSpace)</span>
+<span class="nc" id="L237">                                .name(name)</span>
+<span class="nc" id="L238">                                .build()</span>
+                );
+    }
+
+
+    @SuppressWarnings(&quot;MethodDoesntCallSuperMethod&quot;)
+    @SuppressFBWarnings(value = &quot;CN_IDIOM_NO_SUPER_CALL&quot;, justification = &quot;Using the lombok builder.&quot;)
+    @Override
+    public MetadataImpl clone() {
+<span class="nc" id="L247">        return this.toBuilder().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

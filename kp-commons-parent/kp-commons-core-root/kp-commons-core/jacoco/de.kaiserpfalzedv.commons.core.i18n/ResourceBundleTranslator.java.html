@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResourceBundleTranslator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kp-commons-core</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.i18n</a> &gt; <span class="el_source">ResourceBundleTranslator.java</span></div><h1>ResourceBundleTranslator.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResourceBundleTranslator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">de.kaiserpfalz-edv.commons.core:kp-commons-core</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.i18n</a> &gt; <span class="el_source">ResourceBundleTranslator.java</span></div><h1>ResourceBundleTranslator.java</h1><pre class="source lang-java linenums">/*
  * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,20 +17,27 @@
 
 package de.kaiserpfalzedv.commons.core.i18n;
 
-import de.kaiserpfalzedv.commons.api.i18n.MessageSource;
-import de.kaiserpfalzedv.commons.api.i18n.NoSuchMessageException;
-import de.kaiserpfalzedv.commons.api.i18n.Translator;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import de.kaiserpfalzedv.commons.api.i18n.MessageSource;
+import de.kaiserpfalzedv.commons.api.i18n.NoSuchMessageException;
+import de.kaiserpfalzedv.commons.api.i18n.Translator;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Translator -- Provides a nice way to read translations from Resource bundles.
@@ -38,14 +45,18 @@ import java.util.stream.Collectors;
  * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
  * @since 0.1.0  2021-03-27
  */
-<span class="fc" id="L41">@Slf4j</span>
+<span class="fc" id="L48">@Slf4j</span>
 public class ResourceBundleTranslator implements Translator, MessageSource {
+<span class="fc" id="L50">    private static final long serialVersionUID = 0L;</span>
+
     /**
      * The languages this class provides. To enable testing, a setter is provided. Normally it will be configured via
      * property with a default of &quot;de,en,fr,nl,es,it&quot;.
      */
-<span class="fc" id="L47">    @Setter</span>
-<span class="fc" id="L48">    List&lt;String&gt; configuredLanguages = List.of(&quot;de&quot;,&quot;en&quot;,&quot;fr&quot;,&quot;nl&quot;,&quot;es&quot;,&quot;it&quot;);</span>
+    @SuppressFBWarnings(value = &quot;EI_EXPOSE_REP2&quot;, justification = &quot;lombok generated setter&quot;)
+    @Setter
+    @Getter
+<span class="fc" id="L59">    private List&lt;String&gt; configuredLanguages = List.of(&quot;de&quot;,&quot;en&quot;,&quot;fr&quot;,&quot;nl&quot;,&quot;es&quot;,&quot;it&quot;);</span>
 
     /**
      * Default bundle to use when no other bundle is selected.
@@ -56,55 +67,56 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      * The default locale (used when no locale is specified in the translation call). To enable testing, a setter is
      * provided. Normally it will be configured via property &quot;default-locale&quot; with a default of &quot;de&quot;.
      */
-<span class="fc" id="L59">    @Setter</span>
-    String defaultLocale = &quot;de&quot;;
+    @Setter
+    @Getter
+<span class="fc" id="L72">    private String defaultLocale = &quot;de&quot;;</span>
 
-<span class="fc" id="L62">    private final HashMap&lt;String, HashMap&lt;Locale, ResourceBundle&gt;&gt; bundles = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L74">    private final transient HashMap&lt;String, HashMap&lt;Locale, ResourceBundle&gt;&gt; bundles = new HashMap&lt;&gt;();</span>
 
 
     public ResourceBundleTranslator() {
-<span class="nc" id="L66">        this(&quot;messages&quot;);</span>
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L78">        this(&quot;messages&quot;);</span>
+<span class="nc" id="L79">    }</span>
 
-<span class="fc" id="L69">    public ResourceBundleTranslator(final String defaultBundle) {</span>
-<span class="fc" id="L70">        this.defaultBundle = defaultBundle;</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L81">    public ResourceBundleTranslator(final String defaultBundle) {</span>
+<span class="fc" id="L82">        this.defaultBundle = defaultBundle;</span>
+<span class="fc" id="L83">    }</span>
 
 
     @SuppressWarnings(&quot;RedundantThrows&quot;)
     @Override
-    public String getMessage(String key, Object[] params, Locale locale) throws NoSuchMessageException {
-<span class="nc" id="L77">        return getTranslation(key, locale, params);</span>
+    public String getMessage(final String key, final Object[] params, final Locale locale) throws NoSuchMessageException {
+<span class="nc" id="L89">        return this.getTranslation(key, locale, params);</span>
     }
 
     @Override
-    public String getTranslation(final String key, final Locale locale, Object... arguments) {
-<span class="fc" id="L82">        return getTranslation(defaultBundle, key, locale, arguments);</span>
+    public String getTranslation(final String key, final Locale locale, final Object... arguments) {
+<span class="fc" id="L94">        return this.getTranslation(this.defaultBundle, key, locale, arguments);</span>
     }
 
     @Override
     public String getTranslation(final Object bundleObject, final String key, final Locale locale, final Object... arguments) {
-<span class="fc" id="L87">        String bundleName = bundleObject.getClass().getCanonicalName()</span>
-<span class="fc" id="L88">                .replace(&quot;.&quot;, &quot;/&quot;)</span>
-<span class="fc" id="L89">                .replace(&quot;_Subclass&quot;, &quot;&quot;); // get around for lombok or both or so. :-(</span>
+<span class="fc" id="L99">        final String bundleName = bundleObject.getClass().getCanonicalName()</span>
+<span class="fc" id="L100">                .replace(&quot;.&quot;, &quot;/&quot;)</span>
+<span class="fc" id="L101">                .replace(&quot;_Subclass&quot;, &quot;&quot;); // get around for lombok or both or so. :-(</span>
 
-<span class="fc" id="L91">        return getTranslation(bundleName, key, locale, arguments);</span>
+<span class="fc" id="L103">        return this.getTranslation(bundleName, key, locale, arguments);</span>
     }
 
+    @SuppressFBWarnings(value = &quot;DCN_NULLPOINTER_EXCEPTION&quot;, justification = &quot;It's the most elegant way.&quot;)
     @Override
-    public String getTranslation(final String bundleName, final String key, final Locale locale, Object... arguments) {
-<span class="fc" id="L96">        loadBundle(bundleName, locale);</span>
-
+    public String getTranslation(final String bundleName, final String key, final Locale locale, final Object... arguments) {
+<span class="fc" id="L109">        this.loadBundle(bundleName, locale);</span>
         try {
-<span class="fc" id="L99">            final String pattern = bundles.get(bundleName).get(locale).getString(key);</span>
-<span class="fc" id="L100">            final MessageFormat format = new MessageFormat(pattern, locale);</span>
-<span class="fc" id="L101">            return format.format(arguments);</span>
-<span class="fc" id="L102">        } catch (NullPointerException | MissingResourceException ex) {</span>
-<span class="fc" id="L103">            log.warn(</span>
-                    &quot;Translation failed. bundle={}, locale={}, key={}&quot;,
-                    bundleName, locale, key
+<span class="fc" id="L111">            final String pattern = this.bundles.get(bundleName).get(locale).getString(key);</span>
+<span class="fc" id="L112">            final MessageFormat format = new MessageFormat(pattern, locale);</span>
+<span class="fc" id="L113">            return format.format(arguments);</span>
+<span class="fc" id="L114">        } catch (NullPointerException | MissingResourceException ex) {</span>
+<span class="fc" id="L115">            log.warn(</span>
+<span class="fc" id="L116">                    &quot;Translation failed. bundle={}, locale={}, key={}&quot;,</span>
+<span class="fc" id="L117">                    bundleName, locale, key</span>
             );
-<span class="fc" id="L107">            return &quot;!&quot; + key;</span>
+<span class="fc" id="L119">            return &quot;!&quot; + key;</span>
         }
     }
 
@@ -116,59 +128,60 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
      * @param bundleName The base filename for the translation bundle.
      * @param locale     The locale to load the bundle for.
      */
-    private void loadBundle(String bundleName, Locale locale) {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (!bundles.containsKey(bundleName)) {</span>
-<span class="fc" id="L121">            log.debug(&quot;Adding bundle. baseName='{}'&quot;, bundleName);</span>
+    @SuppressFBWarnings(value = &quot;DCN_NULLPOINTER_EXCEPTION&quot;, justification = &quot;It's the most elegant way.&quot;)
+    private void loadBundle(final String bundleName, Locale locale) {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (!this.bundles.containsKey(bundleName)) {</span>
+<span class="fc" id="L134">            log.debug(&quot;Adding bundle. baseName='{}'&quot;, bundleName);</span>
 
-<span class="fc" id="L123">            bundles.put(bundleName, new HashMap&lt;&gt;());</span>
+<span class="fc" id="L136">            this.bundles.put(bundleName, new HashMap&lt;&gt;());</span>
         }
 
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (locale == null) {</span>
-<span class="nc" id="L127">            locale = Locale.forLanguageTag(defaultLocale);</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (locale == null) {</span>
+<span class="nc" id="L140">            locale = Locale.forLanguageTag(this.defaultLocale);</span>
         }
 
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (!bundles.get(bundleName).containsKey(locale)) {</span>
-<span class="fc" id="L131">            log.info(&quot;Loading bundle. baseName='{}', locale='{}'&quot;, bundleName, locale.getDisplayName());</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (!this.bundles.get(bundleName).containsKey(locale)) {</span>
+<span class="fc" id="L144">            log.info(&quot;Loading bundle. baseName='{}', locale='{}'&quot;, bundleName, locale.getDisplayName());</span>
 
             ResourceBundle bundle;
             try {
-<span class="fc" id="L135">                bundle = ResourceBundle.getBundle(bundleName, locale, new UnicodeResourceBundleControl());</span>
-<span class="fc" id="L136">            } catch (NullPointerException | MissingResourceException e) {</span>
-<span class="fc" id="L137">                Locale l = Locale.forLanguageTag(locale.getLanguage());</span>
+<span class="fc" id="L148">                bundle = ResourceBundle.getBundle(bundleName, locale, new UnicodeResourceBundleControl());</span>
+<span class="fc" id="L149">            } catch (NullPointerException | MissingResourceException e) {</span>
+<span class="fc" id="L150">                final Locale l = Locale.forLanguageTag(locale.getLanguage());</span>
 
-<span class="fc" id="L139">                log.warn(&quot;Translator did not find the wanted locale for the bundle. bundle={}, locale={}, orig.locale={}, error='{}'&quot;,</span>
-<span class="fc" id="L140">                        bundleName, l, locale, e.getMessage());</span>
+<span class="fc" id="L152">                log.warn(&quot;Translator did not find the wanted locale for the bundle. bundle={}, locale={}, orig.locale={}, error='{}'&quot;,</span>
+<span class="fc" id="L153">                        bundleName, l, locale, e.getMessage());</span>
                 try {
-<span class="nc" id="L142">                    bundle = ResourceBundle.getBundle(bundleName, l, new UnicodeResourceBundleControl());</span>
-<span class="fc" id="L143">                } catch (NullPointerException | MissingResourceException e1) {</span>
-<span class="fc" id="L144">                    log.warn(&quot;Translator did not find the wanted bundle. Using default bundle. bundle={}, error='{}'&quot;, bundleName, e1.getMessage());</span>
+<span class="nc" id="L155">                    bundle = ResourceBundle.getBundle(bundleName, l, new UnicodeResourceBundleControl());</span>
+<span class="pc" id="L156">                } catch (NullPointerException | MissingResourceException e1) {</span>
+<span class="fc" id="L157">                    log.warn(&quot;Translator did not find the wanted bundle. Using default bundle. bundle={}, error='{}'&quot;, bundleName, e1.getMessage());</span>
 
                     try {
-<span class="fc" id="L147">                        bundle = ResourceBundle.getBundle(defaultBundle, Locale.forLanguageTag(defaultLocale),</span>
-                                new UnicodeResourceBundleControl());
-<span class="nc" id="L149">                    } catch (NullPointerException | MissingResourceException e2) {</span>
-<span class="nc" id="L150">                        log.error(&quot;Resource bundle can't be read. error='{}'&quot;, e2.getMessage());</span>
+<span class="fc" id="L160">                        bundle = ResourceBundle.getBundle(this.defaultBundle, Locale.forLanguageTag(this.defaultLocale),</span>
+<span class="fc" id="L161">                                new UnicodeResourceBundleControl());</span>
+<span class="pc" id="L162">                    } catch (NullPointerException | MissingResourceException e2) {</span>
+<span class="nc" id="L163">                        log.error(&quot;Resource bundle can't be read. error='{}'&quot;, e2.getMessage());</span>
 
-<span class="nc" id="L152">                        return;</span>
-<span class="fc" id="L153">                    }</span>
-<span class="nc" id="L154">                }</span>
-<span class="fc" id="L155">            }</span>
-<span class="fc" id="L156">            bundles.get(bundleName).put(locale, bundle);</span>
+<span class="nc" id="L165">                        return;</span>
+                    }
+                }
+            }
+<span class="fc" id="L169">            this.bundles.get(bundleName).put(locale, bundle);</span>
         }
-<span class="fc" id="L158">    }</span>
+<span class="fc" id="L171">    }</span>
 
     @Override
     public void close() {
-<span class="fc" id="L162">        log.info(&quot;Closing all bundles.&quot;);</span>
-<span class="fc" id="L163">        bundles.clear();</span>
-<span class="fc" id="L164">    }</span>
+<span class="fc" id="L175">        log.info(&quot;Closing all bundles.&quot;);</span>
+<span class="fc" id="L176">        this.bundles.clear();</span>
+<span class="fc" id="L177">    }</span>
 
     @Override
     public List&lt;Locale&gt; getProvidedLocales() {
-<span class="fc" id="L168">        return configuredLanguages.stream()</span>
-<span class="fc" id="L169">                .map(Locale::forLanguageTag)</span>
-<span class="fc" id="L170">                .filter(d -&gt; {log.trace(&quot;Mapped language. locale={}&quot;, d); return true;})</span>
-<span class="fc" id="L171">                .collect(Collectors.toList());</span>
+<span class="fc" id="L181">        return this.configuredLanguages.stream()</span>
+<span class="fc" id="L182">                .map(Locale::forLanguageTag)</span>
+<span class="fc" id="L183">                .filter(d -&gt; {log.trace(&quot;Mapped language. locale={}&quot;, d); return true;})</span>
+<span class="fc" id="L184">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -184,18 +197,18 @@ public class ResourceBundleTranslator implements Translator, MessageSource {
                 final ClassLoader loader,
                 final boolean reload
         ) throws IOException {
-<span class="fc" id="L187">            ClassLoader used = Thread.currentThread().getContextClassLoader();</span>
+<span class="fc" id="L200">            final ClassLoader used = Thread.currentThread().getContextClassLoader();</span>
 
-<span class="fc" id="L189">            log.debug(&quot;Classloader will be ignored. used={}, ignored={}&quot;, used, loader);</span>
+<span class="fc" id="L202">            log.debug(&quot;Classloader will be ignored. used={}, ignored={}&quot;, used, loader);</span>
 
-<span class="fc" id="L191">            String bundleName = toBundleName(baseName, locale);</span>
-<span class="fc" id="L192">            String resourceName = toResourceName(bundleName, &quot;properties&quot;);</span>
-<span class="fc" id="L193">            final URL resourceURL = used.getResource(resourceName);</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">            if (resourceURL == null)</span>
-<span class="fc" id="L195">                return null;</span>
+<span class="fc" id="L204">            final String bundleName = this.toBundleName(baseName, locale);</span>
+<span class="fc" id="L205">            final String resourceName = this.toResourceName(bundleName, &quot;properties&quot;);</span>
+<span class="fc" id="L206">            final URL resourceURL = used.getResource(resourceName);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (resourceURL == null)</span>
+<span class="fc" id="L208">                return null;</span>
 
-<span class="fc" id="L197">            try (BufferedReader in = new BufferedReader(new InputStreamReader(resourceURL.openStream(), StandardCharsets.UTF_8))) {</span>
-<span class="fc" id="L198">                return new PropertyResourceBundle(in);</span>
+<span class="fc" id="L210">            try (BufferedReader in = new BufferedReader(new InputStreamReader(resourceURL.openStream(), StandardCharsets.UTF_8))) {</span>
+<span class="fc" id="L211">                return new PropertyResourceBundle(in);</span>
             }
         }
     }

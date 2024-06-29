@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultResourceSpecImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">de.kaiserpfalz-edv.commons.core:kp-commons-core</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.commons.core.resources</a> &gt; <span class="el_source">DefaultResourceSpecImpl.java</span></div><h1>DefaultResourceSpecImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2022-2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ */
+
+package de.kaiserpfalzedv.commons.core.resources;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import de.kaiserpfalzedv.commons.api.resources.DefaultResourceSpec;
+import de.kaiserpfalzedv.commons.api.resources.Pointer;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
+
+/**
+ * The basic data for every resource.
+ *
+ * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
+ * @since 2.0.0  2021-05-24
+ */
+@SuppressFBWarnings(value = &quot;EI_EXPOSE_REF2&quot;, justification = &quot;Use of lombok provided builder.&quot;)
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@Schema(name = &quot;DefaultResourceSpec&quot;, description = &quot;A standardized resource.&quot;)
+public class DefaultResourceSpecImpl implements DefaultResourceSpec {
+    /** serial version of this class. */
+    private static final long serialVersionUID = 0L;
+
+    @SuppressWarnings(&quot;FieldMayBeFinal&quot;)
+    @SuppressFBWarnings(value = &quot;EI_EXPOSE_REF2&quot;, justification = &quot;Use of lombok provided builder.&quot;)
+    @Schema(name = &quot;properties&quot;, description = &quot;A map of plugin properties for spec.&quot;)
+    @Builder.Default
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    private Map&lt;String, String&gt; properties = new HashMap&lt;&gt;();
+
+    @Override
+    public Map&lt;String, String&gt; getProperties() {
+<span class="nc" id="L71">        return Collections.unmodifiableMap(this.properties);</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public Pointer convertStringToResourcePointer(final String property) {
+<span class="nc" id="L77">        final String[] data = property.split(&quot;/&quot;, 4);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (data.length != 5) {</span>
+<span class="nc" id="L79">            throw new IllegalStateException(&quot;Invalid property for resource pointers: &quot; + property);</span>
+        }
+
+<span class="nc" id="L82">        return PointerImpl.builder()</span>
+<span class="nc" id="L83">                .kind(data[0])</span>
+<span class="nc" id="L84">                .apiVersion(data[1])</span>
+
+<span class="nc" id="L86">                .nameSpace(data[2])</span>
+<span class="nc" id="L87">                .name(data[3])</span>
+
+<span class="nc" id="L89">                .build();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public void saveResourcePointers(final String key, final Collection&lt;Pointer&gt; pointers) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (pointers != null) {</span>
+<span class="nc" id="L96">            final StringJoiner data = new StringJoiner(&quot;,&quot;);</span>
+
+<span class="nc" id="L98">            pointers.forEach(p -&gt; data.add(this.convertResourcePointerToString(p)));</span>
+
+<span class="nc" id="L100">            this.properties.put(key, data.toString());</span>
+        }
+<span class="nc" id="L102">    }</span>
+
+    @SuppressWarnings(&quot;MethodDoesntCallSuperMethod&quot;)
+    @SuppressFBWarnings(value = &quot;CN_IDIOM_NO_SUPER_CALL&quot;, justification = &quot;We are using the lombok builder here.&quot;)
+    @Override
+    public DefaultResourceSpecImpl clone() {
+<span class="nc" id="L108">        return this.toBuilder().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

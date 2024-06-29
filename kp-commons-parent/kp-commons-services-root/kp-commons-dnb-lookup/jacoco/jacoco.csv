@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.marcxml,LibraryLookupMarc21MappingException,6,0,0,0,2,0,1,0,1,0
-kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.marcxml,MarcConverter,39,272,3,17,9,49,5,20,2,10
-kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.client,Marc21Decoder,0,7,0,0,0,1,0,1,0,1
-kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.client,DnbLookupClientConfig,0,47,0,0,0,7,0,5,0,5
-kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.model,LibraryLookupException,7,0,0,0,3,0,1,0,1,0
+de.kaiserpfalz-edv.commons.services:kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.marcxml,LibraryLookupMarc21MappingException,6,0,0,0,2,0,1,0,1,0
+de.kaiserpfalz-edv.commons.services:kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.marcxml,MarcConverter,42,266,3,17,9,47,5,20,2,10
+de.kaiserpfalz-edv.commons.services:kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.client,Marc21Decoder,0,7,0,0,0,1,0,1,0,1
+de.kaiserpfalz-edv.commons.services:kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.client,DnbLookupClientConfig,0,46,0,0,0,7,0,5,0,5
+de.kaiserpfalz-edv.commons.services:kp-commons-dnb-lookup,de.kaiserpfalzedv.services.dnb.model,LibraryLookupException,7,0,0,0,3,0,1,0,1,0

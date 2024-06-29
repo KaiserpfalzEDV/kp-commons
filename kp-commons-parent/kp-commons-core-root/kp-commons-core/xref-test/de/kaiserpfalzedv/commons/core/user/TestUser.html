@@ -25,8 +25,8 @@
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">package</strong> de.kaiserpfalzedv.commons.core.user;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> de.kaiserpfalzedv.commons.core.resources.Metadata;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> de.kaiserpfalzedv.commons.core.resources.Pointer;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> de.kaiserpfalzedv.commons.core.resources.MetadataImpl;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> de.kaiserpfalzedv.commons.core.resources.PointerImpl;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> de.kaiserpfalzedv.commons.test.AbstractTestBase;
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> lombok.extern.slf4j.Slf4j;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Assertions;
@@ -54,16 +54,16 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String SUBJECT = <span class="jxr_string">"subject"</span>;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Map&lt;String, String&gt; DATA_PROPERTIES = Map.of(
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>              UserData.ISSUER, ISSUER,
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>              UserData.SUBJECT, SUBJECT
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>              UserDataImpl.ISSUER, ISSUER,
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>              UserDataImpl.SUBJECT, SUBJECT
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      );
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> User DATA = User.builder()
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> UserImpl DATA = UserImpl.builder()
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>              .metadata(
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>                      generateMetadata(DATA_CREATED)
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>              )
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>              .spec(
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>                      UserData.builder()
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                      UserDataImpl.builder()
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>                              .name(DATA_NAME)
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>                              .properties(DATA_PROPERTIES)
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>                              .build()
@@ -82,7 +82,7 @@
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * @return The generated metadata</em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>      @SuppressWarnings(<span class="jxr_string">"SameParameterValue"</span>)
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Metadata generateMetadata(
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> MetadataImpl generateMetadata(
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>              <strong class="jxr_keyword">final</strong> OffsetDateTime created
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      ) {
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          HashMap&lt;String, String&gt; annotations = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;(1);
@@ -90,14 +90,14 @@
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          Map&lt;String, String&gt; labels = Map.of(
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>                  <span class="jxr_string">"test"</span>, <span class="jxr_string">"valid"</span>,
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>                  UserData.ISSUER, ISSUER,
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>                  UserData.SUBJECT, SUBJECT
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>                  UserDataImpl.ISSUER, ISSUER,
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>                  UserDataImpl.SUBJECT, SUBJECT
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          );
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>  
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">return</strong> Metadata.builder()
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  .identity(Pointer.builder()
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>                          .kind(User.KIND)
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>                          .apiVersion(User.API_VERSION)
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">return</strong> MetadataImpl.builder()
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  .identity(PointerImpl.builder()
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>                          .kind(UserImpl.KIND)
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>                          .apiVersion(UserImpl.API_VERSION)
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>                          .nameSpace(DATA_NAMESPACE)
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>                          .name(DATA_NAME)
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>                          .build()
@@ -115,8 +115,8 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">void</strong> shouldReturnCorrectIssuerAndSubject() {
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         startTest(<span class="jxr_string">"read-issuer-and-subject"</span>);
 <a class="jxr_linenumber" name="L109" href="#L109">109</a> 
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>         Assertions.assertEquals(ISSUER, DATA.getMetadata().getLabel(UserData.ISSUER).orElseThrow());
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         Assertions.assertEquals(SUBJECT, DATA.getMetadata().getLabel(UserData.SUBJECT).orElseThrow());
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         Assertions.assertEquals(ISSUER, DATA.getMetadata().getLabel(UserDataImpl.ISSUER).orElseThrow());
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         Assertions.assertEquals(SUBJECT, DATA.getMetadata().getLabel(UserDataImpl.SUBJECT).orElseThrow());
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>     }
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> 
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>     @Test

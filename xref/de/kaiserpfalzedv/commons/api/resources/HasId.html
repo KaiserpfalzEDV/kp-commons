@@ -26,23 +26,23 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">package</strong> de.kaiserpfalzedv.commons.api.resources;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.util.UUID;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> * HasId --</em>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}</em>
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> * @version 2.1.0  2022-01-16</em>
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * @since 0.1.0  2021-04-18</em>
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a name="HasId" href="../../../../../de/kaiserpfalzedv/commons/api/resources/HasId.html#HasId">HasId</a> <strong class="jxr_keyword">extends</strong> Serializable {
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      String VALID_UUID_PATTERN = <span class="jxr_string">"^[a-zA-Z0-9]{8}-([a-zA-Z0-9]{4}-){3}[a-zA-Z0-9]{12}$"</span>;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      String VALID_UUID_PATTERN_MSG = <span class="jxr_string">"The UUID pattern must match '"</span> + VALID_UUID_PATTERN + <span class="jxr_string">"'"</span>;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">int</strong> VALID_UUID_LENGTH = 36;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>      String VALID_UUID_LENGTH_MSG = <span class="jxr_string">"The UUID must be exactely 36 characters long."</span>;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      String VALID_UUID_EXAMPLE = <span class="jxr_string">"caae022d-5728-4cb2-9245-b8c1ea03e380"</span>;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> * HasId --</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> * @version 2.1.0  2022-01-16</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> * @since 0.1.0  2021-04-18</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a name="HasId" href="../../../../../de/kaiserpfalzedv/commons/api/resources/HasId.html#HasId">HasId</a> <strong class="jxr_keyword">extends</strong> Serializable {
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">int</strong> MIN_LENGTH = 1;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">int</strong> MAX_LENGTH = 20;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      String VALID_ID_PATTERN = <span class="jxr_string">"^[0-9]{"</span> + MIN_LENGTH + <span class="jxr_string">","</span> + MAX_LENGTH + <span class="jxr_string">"}"</span>;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      String VALID_ID_PATTERN_MSG = <span class="jxr_string">"The ID pattern must match '"</span> + VALID_ID_PATTERN + <span class="jxr_string">"'"</span>;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      String VALID_ID_LENGTH_MSG = <span class="jxr_string">"The ID must be between one and 20 digits long."</span>;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      String VALID_ID_EXAMPLE = <span class="jxr_string">"4324324"</span>;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      UUID getId();
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      Long getId();
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  }
 </pre>
 <hr/>

@@ -110,11 +110,11 @@
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>     @CircuitBreaker(name = <span class="jxr_string">"sendSMS"</span>)
 <a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_comment">//        delay = 1000, maxDuration = 5000, retryOn = {            Sms77RateLimitException.class }, abortOn = Sms77Exception.class)</em>
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_comment">//    @CircuitBreaker(failOn = Sms77Exception.class, requestVolumeThreshold = 5)</em>
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <a name="SmsResult" href="../../../../../de/kaiserpfalzedv/services/sms77/model/SmsResult.html#SmsResult">SmsResult</a> sendSMS(@NotNull <strong class="jxr_keyword">final</strong> <a name="Sms" href="../../../../../de/kaiserpfalzedv/services/sms77/model/Sms.html#Sms">Sms</a> sms);
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <a name="SmsResult" href="../../../../../de/kaiserpfalzedv/services/sms77/model/SmsResult.html#SmsResult">SmsResult</a> sendSMS(@NotNull <strong class="jxr_keyword">final</strong> Sms sms);
 <a class="jxr_linenumber" name="L106" href="#L106">106</a> 
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_javadoccomment">     * Sends the given text to the numbers specified.</em>
-<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">     * @param number A set of destinations for the SMS.</em>
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * @param text   The text of the SMS.</em>
 <a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * @return</em>

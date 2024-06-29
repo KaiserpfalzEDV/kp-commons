@@ -47,54 +47,55 @@
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  @Data
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  @Accessors(fluent = <strong class="jxr_keyword">true</strong>, chain = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="AvatarOptions" href="../../../../../de/kaiserpfalzedv/commons/api/libravatar/AvatarOptions.html#AvatarOptions">AvatarOptions</a> <strong class="jxr_keyword">implements</strong> Serializable {
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">	 * Specifies a custom base URI for HTTP use. The default is to use the</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">	 * official libravatar HTTP server. If you *really* wanted to use a non-free</em>
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">	 * server, you could set this to "<a href="http://gravatar.com/avatar/" target="alexandria_uri">http://gravatar.com/avatar/</a>", but why</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">	 * would you do such a thing?</em>
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      @Builder.Default
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">private</strong> String baseUri = <span class="jxr_string">"http://cdn.libravatar.org/avatar/"</span>;
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment">	 * Specifies a custom base URI for HTTPS use. The default is to use the</em>
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment">	 * official libravatar HTTPS server.</em>
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      @Builder.Default
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> String secureBaseUri = <span class="jxr_string">"https://seccdn.libravatar.org/avatar/"</span>;
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">	 * Produce <a href="https://" target="alexandria_uri">https://</a> URIs where possible. This avoids mixed-content warnings</em>
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">	 * in browsers when using libravatar-sharp from within a page served via</em>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">	 * HTTPS.</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">	 **/</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      @Builder.Default
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> useHttps = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">	 * Use the SHA256 hash algorithm, rather than MD5. SHA256 is significantly</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">	 * stronger, but is not supported by Gravatar, so libravatar's fallback to</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">	 * Gravatar for missing images will not work. Note that using</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">	 * Avatar.FromOpenID implicitly uses SHA256.</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      @Builder.Default
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> useSHA256 = false;
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">	 * URI for a default image, if no image is found for the user. This also</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">	 * accepts any of the "special" values in AvatarDefaultImages</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      @Builder.Default
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">private</strong> <a name="LibravatarDefaultImage" href="../../../../../de/kaiserpfalzedv/commons/api/libravatar/LibravatarDefaultImage.html#LibravatarDefaultImage">LibravatarDefaultImage</a> defaultImage =  LibravatarDefaultImage.IDENTICON;
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">	 * Size of the image requested. Valid values are between 1 and 512 pixels.</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">	 * The default size is 80 pixels.</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      @Builder.Default
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      <strong class="jxr_keyword">private</strong> Integer imageSize = 80;
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>  }
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 0L;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">	 * Specifies a custom base URI for HTTP use. The default is to use the</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">	 * official libravatar HTTP server. If you *really* wanted to use a non-free</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">	 * server, you could set this to "<a href="http://gravatar.com/avatar/" target="alexandria_uri">http://gravatar.com/avatar/</a>", but why</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">	 * would you do such a thing?</em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      @Builder.Default
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">private</strong> String baseUri = <span class="jxr_string">"http://cdn.libravatar.org/avatar/"</span>;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment">	 * Specifies a custom base URI for HTTPS use. The default is to use the</em>
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">	 * official libravatar HTTPS server.</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      @Builder.Default
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">private</strong> String secureBaseUri = <span class="jxr_string">"https://seccdn.libravatar.org/avatar/"</span>;
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">	 * Produce <a href="https://" target="alexandria_uri">https://</a> URIs where possible. This avoids mixed-content warnings</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">	 * in browsers when using libravatar-sharp from within a page served via</em>
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">	 * HTTPS.</em>
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">	 **/</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @Builder.Default
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> useHttps = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">	 * Use the SHA256 hash algorithm, rather than MD5. SHA256 is significantly</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">	 * stronger, but is not supported by Gravatar, so libravatar's fallback to</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">	 * Gravatar for missing images will not work. Note that using</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">	 * Avatar.FromOpenID implicitly uses SHA256.</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      @Builder.Default
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> useSHA256 = false;
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">	 * URI for a default image, if no image is found for the user. This also</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">	 * accepts any of the "special" values in AvatarDefaultImages</em>
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      @Builder.Default
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">private</strong> <a name="LibravatarDefaultImage" href="../../../../../de/kaiserpfalzedv/commons/api/libravatar/LibravatarDefaultImage.html#LibravatarDefaultImage">LibravatarDefaultImage</a> defaultImage =  LibravatarDefaultImage.IDENTICON;
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">	 * Size of the image requested. Valid values are between 1 and 512 pixels.</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">	 * The default size is 80 pixels.</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      @Builder.Default
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">private</strong> Integer imageSize = 80;
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2001&#x2013;2024 <a href="https://www.kaiserpfalz-edv.de">Kaiserpfalz EDV-Service</a>. All rights reserved.</div>

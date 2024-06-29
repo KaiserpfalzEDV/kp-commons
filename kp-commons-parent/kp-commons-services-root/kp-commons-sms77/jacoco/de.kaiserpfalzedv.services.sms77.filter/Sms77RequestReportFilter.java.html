@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Sms77RequestReportFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kp-commons-sms77</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.services.sms77.filter</a> &gt; <span class="el_source">Sms77RequestReportFilter.java</span></div><h1>Sms77RequestReportFilter.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Sms77RequestReportFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">de.kaiserpfalz-edv.commons.services:kp-commons-sms77</a> &gt; <a href="index.source.html" class="el_package">de.kaiserpfalzedv.services.sms77.filter</a> &gt; <span class="el_source">Sms77RequestReportFilter.java</span></div><h1>Sms77RequestReportFilter.java</h1><pre class="source lang-java linenums">/*
  * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.services.sms77.filter;
 
 import de.kaiserpfalzedv.services.sms77.mapper.Sms77Exception;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import feign.InvocationContext;
 import feign.ResponseInterceptor;
 import io.micrometer.core.instrument.Counter;
@@ -35,23 +36,27 @@ import lombok.RequiredArgsConstructor;
  * @author klenkes74 {@literal &lt;rlichti@kaiserpfalz-edv.de&gt;}
  * @since 1.0.0  2023-01-22
  */
+@SuppressFBWarnings(value = {&quot;EI_EXPOSE_REP&quot;,&quot;EI_EXPOSE_REP2&quot;}, justification = &quot;lombok provided @Getter are created&quot;)
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class Sms77RequestReportFilter implements ResponseInterceptor {
-    private static final String API_REQUESTS_HANDLED_SINCE_START = &quot;sms77.sms-since-start&quot;;
+<span class="fc" id="L43">    private static final String API_REQUESTS_HANDLED_SINCE_START = &quot;sms77.sms-since-start&quot;;</span>
 
     private final MeterRegistry registry;
     private Counter requestCounter;
 
     @PostConstruct
     public void registerMetric() {
-<span class="fc" id="L48">        this.requestCounter = this.registry.counter(API_REQUESTS_HANDLED_SINCE_START, Tags.empty());</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L50">        this.requestCounter = this.registry.counter(API_REQUESTS_HANDLED_SINCE_START, Tags.empty());</span>
+<span class="fc" id="L51">    }</span>
 
+    @SuppressFBWarnings(value = &quot;UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR&quot;, justification = &quot;The field is set in the PostConstruct method of this class.&quot;)
     @PreDestroy
     public void unregisterMetrics() {
-<span class="fc" id="L53">        this.requestCounter.close();</span>
-<span class="fc" id="L54">    }</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        assert this.registry != null;</span>
+
+<span class="fc" id="L58">        this.requestCounter.close();</span>
+<span class="fc" id="L59">    }</span>
 
     /**
      * This filter prevents the external call when there are no credits left for this API.
@@ -61,11 +66,14 @@ public class Sms77RequestReportFilter implements ResponseInterceptor {
      *                                               credits remaining.
      */
 
+    @SuppressFBWarnings(value = &quot;UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR&quot;, justification = &quot;The field is set in the PostConstruct method of this class.&quot;)
     @Override
     public Object intercept(final InvocationContext invocationContext, final Chain chain) throws Exception {
-<span class="fc" id="L66">        this.requestCounter.increment();</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        assert this.registry != null;</span>
 
-<span class="fc" id="L68">        return chain.next(invocationContext);</span>
+<span class="fc" id="L74">        this.requestCounter.increment();</span>
+
+<span class="fc" id="L76">        return chain.next(invocationContext);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
