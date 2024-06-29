@@ -23,7 +23,7 @@
     <parent>
         <artifactId>kp-commons-services-root</artifactId>
         <groupId>de.kaiserpfalz-edv.commons.services</groupId>
-        <version>3.3.1-2-SNAPSHOT</version>
+        <version>3.3.1-2</version>
     </parent>
 
     <artifactId>kp-commons-ean-search</artifactId>

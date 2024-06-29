@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.core</groupId>
         <artifactId>kp-commons-core-root</artifactId>
-        <version>3.3.1-2-SNAPSHOT</version>
+        <version>3.3.1-2</version>
     </parent>
 
     <artifactId>kp-commons-test</artifactId>

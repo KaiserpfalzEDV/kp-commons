@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.3.1-2-SNAPSHOT</version>
+        <version>3.3.1-2</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 

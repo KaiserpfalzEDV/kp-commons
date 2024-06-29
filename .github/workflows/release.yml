@@ -46,7 +46,7 @@ jobs:
             -Prelease \
             -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
             \
-            install
+            deploy
 
   github-pages:
     runs-on: ubuntu-latest
