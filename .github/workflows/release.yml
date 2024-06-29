@@ -9,7 +9,7 @@ on:
 
 
 jobs:
-  github-pages:
+  release-library:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -26,7 +26,7 @@ jobs:
       - name: Prepare GPG signing
         id: install-gpg-key
         run: |
-          cat < (echo -e "${{ secrets.GPG_SIGNING_KEY }}") | gpg --batch --import
+          $(echo -en "${{ secrets.GPG_SIGNING_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
 
       - name: Set up Maven
@@ -47,7 +47,10 @@ jobs:
             -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
             \
             install
-        
+
+  github-pages:
+    runs-on: ubuntu-latest
+    steps:
       - name: site
         id: build-site
         run: |
