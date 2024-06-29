@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.3.1-1</version>
+        <version>3.3.1-2</version>
 	<relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
@@ -30,6 +30,7 @@
     <artifactId>kp-commons-modules-root</artifactId>
     <packaging>pom</packaging>
 
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>
         The specialized modules for JPA, REST, ...
     </description>

@@ -21,13 +21,15 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.3.1-1</version>
+    <version>3.3.1-2</version>
     <packaging>pom</packaging>
 
     <description>
         The kp-commons is a library that is used by the Kaiserpfalz EDV-Service for base integrations and common
         definitions like API base elements.
     </description>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <url>https://kaiserpfalzedv.github.io/kp-commons/</url>
 
     <modules>
         <module>kp-commons-bom</module>
@@ -93,12 +95,12 @@
 
     <distributionManagement>
         <site>
-            <id>github</id>
+            <id>gh-kaiserpfalzedv-kp-commons</id>
             <name>Kaiserpfalz EDV-Service -- KP-COMMONS</name>
             <url>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</url>
         </site>
         <repository>
-            <id>github</id>
+            <id>gh-kaiserpfalzedv-kp-commons</id>
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
         </repository>
@@ -112,22 +114,58 @@
         <skip.site>false</skip.site>
         <skip.owasp>true</skip.owasp>
 
+        <gpg.keyname>AF380360D648FC1D4BA7DBBA6A09445FE79CABD8</gpg.keyname>
+
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
         <main.basedir>${project.basedir}</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>3.3.1-1</kp-commons.version>
+        <kp-commons.version>3.3.1-2</kp-commons.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.5.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                        <autoPublish>true</autoPublish>
+                        <waitUntil>published</waitUntil>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.2.4</version>
+                    <configuration>
+                        <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
@@ -169,6 +207,7 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.12.1</version>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -214,7 +253,6 @@
                         <skipSystemScope>true</skipSystemScope>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
@@ -370,4 +408,24 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>  
+            </build>
+        </profile>
+    </profiles>
 </project>
