@@ -77,7 +77,7 @@ jobs:
 
 
       - name: Prepare checkstyle for site generation
-        id: prepare checkstyle
+        id: prepare-checkstyle
         run: |
           mvn \
             --batch-mode \
