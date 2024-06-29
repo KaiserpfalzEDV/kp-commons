@@ -1,10 +1,12 @@
 ## This is basic continuous integration build for your Quarkus application.
 
-name: Github Pages
+name: Release Software
 
 on:
   release:
     types: [created]
+  workflow_dispatch:
+
 
 jobs:
   github-pages:
