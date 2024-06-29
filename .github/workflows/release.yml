@@ -21,6 +21,12 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
+      - name: Prepare GPG signing
+        id: install-gpg-key
+        run: |
+          cat < (echo -e "${{ secrets.GPG_SIGNING_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+
       - name: Set up Maven
         id: setup-maven
         uses: s4u/maven-settings-action@v3.0.0
@@ -30,8 +36,23 @@ jobs:
 
       - name: Build
         id: build-java
-        run: mvn --batch-mode --no-transfer-progress install deploy
+        run: |
+          mvn \
+            --batch-mode \
+            --no-transfer-progress \
+            \
+            -Prelease
+            -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
+            \
+            install
         
       - name: site
         id: build-site
-        run: mvn --batch-mode --no-transfer-progress site site:stage scm-publish:publish-scm
+        run: |
+          mvn \
+            --batch-mode \
+            --no-transfer-progress \
+            \
+            -Prelease
+            \
+            site site:stage scm-publish:publish-scm
