@@ -43,7 +43,7 @@ jobs:
             --batch-mode \
             --no-transfer-progress \
             \
-            -Prelease
+            -Prelease \
             -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
             \
             install
@@ -51,11 +51,38 @@ jobs:
   github-pages:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout sources
+        id: checkout-sources
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        id: setup-java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'temurin'
+
+      - name: Prepare GPG signing
+        id: install-gpg-key
+        run: |
+          echo -en "${{ secrets.GPG_SIGNING_KEY }}\n" | gpg --batch --import || true
+          gpg --list-secret-keys --keyid-format LONG || true
+
+      - name: Set up Maven
+        id: setup-maven
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
+
       - name: site
         id: build-site
         run: |
           mvn \
             --batch-mode \
             --no-transfer-progress \
+            \
+            -Prelease \
+            -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
             \
             site site:stage scm-publish:publish-scm
