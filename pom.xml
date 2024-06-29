@@ -114,6 +114,8 @@
         <skip.site>false</skip.site>
         <skip.owasp>true</skip.owasp>
 
+        <gpg.keyname>AF380360D648FC1D4BA7DBBA6A09445FE79CABD8</gpg.keyname>
+
         <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
         <main.basedir>${project.basedir}</main.basedir>
 
