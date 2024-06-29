@@ -26,8 +26,8 @@ jobs:
       - name: Prepare GPG signing
         id: install-gpg-key
         run: |
-          echo -en "${{ secrets.GPG_SIGNING_KEY }}\n" | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
+          echo -en "${{ secrets.GPG_SIGNING_KEY }}\n" | gpg --batch --import || true
+          gpg --list-secret-keys --keyid-format LONG || true
 
       - name: Set up Maven
         id: setup-maven
