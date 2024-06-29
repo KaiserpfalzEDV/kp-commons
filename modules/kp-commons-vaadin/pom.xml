@@ -26,6 +26,7 @@
     </parent>
 
     <artifactId>kp-commons-vaadin</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>Integration of Vaadin including OpenIDConnect authentication with spring-security.</description>
 
     <properties>

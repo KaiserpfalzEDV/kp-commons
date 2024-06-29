@@ -27,7 +27,9 @@
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
-
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>The BOM for all kp-commons</description>
+    
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
         <kp-commons.version>3.3.1-2-SNAPSHOT</kp-commons.version>

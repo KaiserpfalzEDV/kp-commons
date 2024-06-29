@@ -118,8 +118,8 @@
         <main.basedir>${project.basedir}</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
@@ -398,7 +398,7 @@
     <profiles>
         <profile>
             <id>release</id>
-            
+
             <build>
                 <plugins>
                     <plugin>

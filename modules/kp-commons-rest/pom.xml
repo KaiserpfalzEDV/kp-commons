@@ -26,6 +26,7 @@
     </parent>
 
     <artifactId>kp-commons-rest</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>The REST part of kp-commons.</description>
 
     <properties>

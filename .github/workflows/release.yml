@@ -75,6 +75,18 @@ jobs:
           servers: |
             [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
 
+
+      - name: Prepare checkstyle for site generation
+        id: prepare checkstyle
+        run: |
+          mvn \
+            --batch-mode \
+            --no-transfer-progress \
+            \
+            -pl kp-checkstyle \
+            \
+            install
+
       - name: site
         id: build-site
         run: |

@@ -26,6 +26,8 @@
     </parent>
 
     <artifactId>kp-commons-spring</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>The spring integration stuff of kp-commons.</description>
 
     <properties>
         <uml-classes>de.kaiserpfalzedv.commons.spring</uml-classes>

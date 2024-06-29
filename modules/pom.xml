@@ -30,6 +30,7 @@
     <artifactId>kp-commons-modules-root</artifactId>
     <packaging>pom</packaging>
 
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>
         The specialized modules for JPA, REST, ...
     </description>

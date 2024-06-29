@@ -27,6 +27,7 @@
     </parent>
 
     <artifactId>kp-commons-ean-search</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>Library to access the (non-free) service of https://www.ean-search.org.</description>
 
     <properties>

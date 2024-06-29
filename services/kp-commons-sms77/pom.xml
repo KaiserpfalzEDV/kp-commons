@@ -27,6 +27,7 @@
     </parent>
 
     <artifactId>kp-commons-sms77</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>Library to send SMS messages via sms77.io.</description>
 
 

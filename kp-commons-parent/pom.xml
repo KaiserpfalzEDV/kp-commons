@@ -30,6 +30,7 @@
     <artifactId>kp-commons-parent</artifactId>
     <packaging>pom</packaging>
 
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>kp-commons is the common library for integrations used by Kaiserpfalz EDV-Service.</description>
     <url>https://kaiserpfalzedv.github.io/kp-commons</url>
 
@@ -193,7 +194,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.3.1-2-SNAPSHOT</version>
+                    <version>3.3.1</version>
                     <configuration>
                         <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
                     </configuration>
@@ -553,7 +554,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>3.3.1-2-SNAPSHOT</version>
+                        <version>3.3.1</version>
                         <configuration>
                             <configLocation>kaiserpfalz/checkstyle.xml</configLocation>
                         </configuration>

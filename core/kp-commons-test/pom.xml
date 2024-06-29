@@ -28,6 +28,7 @@
     </parent>
 
     <artifactId>kp-commons-test</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>Helpers for doing the testing ...</description>
 
     <properties>

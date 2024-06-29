@@ -27,6 +27,8 @@
     </parent>
 
     <artifactId>kp-checkstyle</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A checkstyle base profile for Kaiserpfalz EDV-Service projects.</description>
 
     <properties>
         <main.basedir>${project.basedir}/..</main.basedir>

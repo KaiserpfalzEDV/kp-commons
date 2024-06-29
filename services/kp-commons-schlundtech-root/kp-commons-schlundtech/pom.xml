@@ -27,6 +27,7 @@
     </parent>
 
     <artifactId>kp-commons-schlundtech</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>Library to access the API of Schlundtech based on https://github.com/InterNetX/java-domainrobot-sdk.</description>
 
     <properties>

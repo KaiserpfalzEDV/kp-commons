@@ -26,6 +26,8 @@
     </parent>
 
     <artifactId>kp-commons-jpa</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>The JPA supporting stuff of kp-commons.</description>
 
     <properties>
         <uml-classes>de.kaiserpfalzedv.commons.jpa</uml-classes>
