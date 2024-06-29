@@ -1,0 +1,33 @@
+name: build-and-publish-java-runner-to-quay
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to Quay.io
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USER }}
+          password: ${{ secrets.QUAY_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: kp-java-runner
+          dockerfile: Dockerfile
+          enableBuildKit: true
+          platforms: linux/amd64
+          push: true
+          tags: quay.io/klenkes74/kp-java-runner:21-latest,quay.io/klenkes74/kp-java-runner:21-${{ github.ref_name }}
+          outputs: type=image,name=target
