@@ -21,11 +21,10 @@ RUN apk add --update --no-cache curl nss bash \
     && addgroup --gid 1000 appgroup \
     && adduser --uid 1000 --ingroup appgroup --no-create-home --home /deployments --disabled-password appuser \
     && addgroup appuser root \
-    && chmod 744 /bin/busybox && chmod 744 `which curl` `which apk` \
-    && echo "set disable-completion on" >> /etc/inputrc \
-    && chmod 755 /__cacert_entrypoint.sh
+    && chmod 755 /bin/busybox `which sh` `which curl` `which apk` \
+    && echo "set disable-completion on" >> /etc/inputrc
 
 USER 1000
 EXPOSE 8080 8081 8443
 
-CMD [ "/deployments/run-java.sh" ]
+ENTRYPOINT [ "sh", "/deployments/run-java.sh" ]
