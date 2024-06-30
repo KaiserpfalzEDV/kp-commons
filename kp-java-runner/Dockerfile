@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-alpine AS runner
+FROM docker.io/alpine/java:21-jdk AS runner
 
 USER root
 

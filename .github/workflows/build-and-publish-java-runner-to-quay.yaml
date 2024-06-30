@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - kp-java-runner
   pull_request:
     branches:
       - main
+    paths:
+      - kp-java-runner
   workflow_dispatch:
 
 jobs:
