@@ -139,7 +139,7 @@
                     <version>0.5.0</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <publishingServerId>central</publishingServerId>
+                        <publishingServerId>kaiserpfalz-central</publishingServerId>
                         <autoPublish>true</autoPublish>
                         <waitUntil>published</waitUntil>
                     </configuration>
@@ -161,6 +161,32 @@
                             <phase>verify</phase>
                             <goals>
                                 <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.7.0</version>
+                    <configuration>
+                        <skip>${skip.javadoc}</skip>
+                        <show>public</show>
+                        <failOnError>false</failOnError>
+                        <detectOfflineLinks>false</detectOfflineLinks>
+                        <doclint>all,-missing</doclint>
+                        <nohelp>true</nohelp>
+                        <excludePackageNames>*.internal.*</excludePackageNames>
+                        <quiet>true</quiet>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadoc</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>javadoc</goal>
+                                <goal>jar</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -423,6 +449,11 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
                     </plugin>
                 </plugins>  
             </build>

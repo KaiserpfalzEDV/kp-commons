@@ -36,7 +36,7 @@ jobs:
           servers: |
             [
               { "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"},
-              { "id": "central", "username": "${{ secrets.MVN_CENTRAL_USERNAME }}", "password": "${{ secrets.MVN_CENTRAL_PASSWORD }}"}
+              { "id": "kaiserpfalz-central", "username": "${{ secrets.MVN_CENTRAL_USERNAME }}", "password": "${{ secrets.MVN_CENTRAL_PASSWORD }}"}
             ]
 
       - name: Build
