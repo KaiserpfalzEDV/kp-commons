@@ -71,6 +71,9 @@ Beat me.
   * kp-commons-ean-search
   * kp-commons-sms77
   * kp-commons-dnb-lookup
+* Helm Charts
+  * postgresql (from [postgres-operator-examples](https://github.com/CrunchyData/postgres-operator-examples.git)) under Apache 2.0 License
+  * microservice (for spring-boot based microservices with optional pre-configured OIDC and Postgres)
 
 ## Distribution
 

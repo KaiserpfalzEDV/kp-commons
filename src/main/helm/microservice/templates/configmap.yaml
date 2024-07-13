@@ -1,0 +1,12 @@
+{{- if .Values.applicationConfig.enabled }}
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "microservice.fullname" . }}-application-config
+  labels:
+    {{- include "microservice.labels" . | nindent 4 }}
+data:
+  application-config: |+
+    {{ toYaml .applicationConfig.data | nindent 4 }}
+{{- end }}
