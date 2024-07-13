@@ -49,6 +49,8 @@ spec:
               containerPort: {{ .Values.metrics.port }}
               protocol: TCP
             {{- end }}
+          {{- if .Values.probes.enabled }}
+          {{- if .Values.probes.default }}
           startupProbe:
             httpGet:
               path: /actuator/health/readiness
@@ -73,6 +75,20 @@ spec:
               {{- else }}
               port: http
               {{- end }}
+          {{- else }}
+          {{- if .Values.probes.startup }}
+          startupProbe:
+            {{- toYaml .$Values.probes.startup| nindent 12 }}}
+          {{- end }}
+          {{- if .Values.probes.readiness }}
+          readinessProbe:
+            {{- toYaml .$Values.probes.readiness| nindent 12 }}}
+          {{- end }}
+          {{- if .Values.probes.liveness }}
+            {{- toYaml .$Values.probes.liveness| nindent 12 }}}
+          livenessProbe:
+          {{- end }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if or (eq .Values.sso.enabled true) (eq .Values.postgrescluster.enabled true) }}

@@ -40,6 +40,10 @@ metrics:
   enabled: true
   port: 8081
 
+probes:
+  enabled: true
+  default: true
+
 ingress:
   enabled: false
   className: ""
