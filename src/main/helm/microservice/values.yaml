@@ -87,7 +87,7 @@ affinity: {}
 postgrescluster:
   enabled: true
   port: 5432
-  postgresVersion: 16
+  postgresVersion: 15
   pgBouncerReplicas: 1
   monitoring: true
 
@@ -111,7 +111,7 @@ sso:
 applicationConfig:
   enabled: false
   type: yaml
-  data: |
+  data:
     application:
       name: changeme
 
