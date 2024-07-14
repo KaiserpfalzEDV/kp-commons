@@ -8,5 +8,5 @@ metadata:
     {{- include "microservice.labels" . | nindent 4 }}
 data:
   application-config: |+
-    {{ toYaml .applicationConfig.data | nindent 4 }}
+    {{ toYaml .Values.applicationConfig.data | nindent 4 }}
 {{- end }}

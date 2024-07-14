@@ -29,9 +29,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "microservice.serviceAccountName" . }}
-      {{- if .Values.serviceAccount.automount }}
-      automount: true
-      {{- end }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -49,12 +47,12 @@ spec:
               containerPort: {{ .Values.metrics.port }}
               protocol: TCP
             {{- end }}
-          {{- if .Values.probes.enabled }}
-          {{- if .Values.probes.default }}
+          {{- if $.Values.probes.enabled }}
+            {{- if $.Values.probes.default }}
           startupProbe:
             httpGet:
               path: /actuator/health/readiness
-              {{- if .Values.metrics.enabled }}
+              {{- if $.Values.metrics.enabled }}
               port: metrics
               {{- else }}
               port: http
@@ -62,7 +60,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              {{- if .Values.metrics.enabled }}
+              {{- if $.Values.metrics.enabled }}
               port: metrics
               {{- else }}
               port: http
@@ -70,24 +68,25 @@ spec:
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              {{- if .Values.metrics.enabled }}
+              {{- if $.Values.metrics.enabled }}
               port: metrics
               {{- else }}
               port: http
               {{- end }}
-          {{- else }}
-          {{- if .Values.probes.startup }}
+            {{- else }}
+              {{- if .Values.probes.startup }}
           startupProbe:
-            {{- toYaml .$Values.probes.startup| nindent 12 }}}
-          {{- end }}
-          {{- if .Values.probes.readiness }}
+            {{- toYaml .Values.probes.startup| nindent 12 }}
+              {{- end }}
+              {{- if .Values.probes.readiness }}
           readinessProbe:
-            {{- toYaml .$Values.probes.readiness| nindent 12 }}}
-          {{- end }}
-          {{- if .Values.probes.liveness }}
-            {{- toYaml .$Values.probes.liveness| nindent 12 }}}
+            {{- toYaml .Values.probes.readiness| nindent 12 }}
+              {{- end }}
+              {{- if .Values.probes.liveness }}
           livenessProbe:
-          {{- end }}
+            {{- toYaml .Values.probes.liveness| nindent 12 }}
+              {{- end }}
+            {{- end }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -168,7 +167,7 @@ spec:
           name: {{ include "microservice.fullname" . }}-application-config
           items:
           - key: application-config
-            path: application-config
+            path: application.{{ .Values.applicationConfig.type }}
       {{- end }}
       {{- range .Values.mounts }}
       - name: {{ .name }}
