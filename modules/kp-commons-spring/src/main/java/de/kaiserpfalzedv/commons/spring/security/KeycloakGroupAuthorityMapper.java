@@ -40,7 +40,13 @@ public class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
         if (authority instanceof OidcUserAuthority) {
             OidcUserAuthority oidc = (OidcUserAuthority) authority;
 
-            log.trace("Reading roles. oidc={}, groups={}", oidc, oidc.getUserInfo().getClaimAsString(properties.getRoleAttribute()));
+            if (log.isTraceEnabled()) {
+                log.trace("Reading roles. oidc={}, attribute={}, groups={}", 
+                    oidc, 
+                    properties.getRoleAttribute(),
+                    oidc.getUserInfo().getClaimAsString(properties.getRoleAttribute())
+                );
+            }
 
             result.addAll(extractGroupRoleFromOidcAuthority(oidc));
         }
@@ -53,5 +59,4 @@ public class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toSet());
     }
-
 }
