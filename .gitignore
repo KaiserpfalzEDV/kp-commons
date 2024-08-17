@@ -22,3 +22,5 @@ http-client.private.env.json
 resources/_gen/
 .hugo_build.lock
 dev-*
+*.tgz
+*.lock
