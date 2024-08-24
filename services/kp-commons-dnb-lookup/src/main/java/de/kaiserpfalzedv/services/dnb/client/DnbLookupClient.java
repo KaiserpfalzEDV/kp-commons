@@ -38,7 +38,7 @@ public interface DnbLookupClient {
      * This is the generic query to the DNB index.
      *
      * <p>Will result in something like:</p>
-     * <pre>https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml</pre>
+     * {@literal <pre>https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml</pre>}
      *
      * @param query The query to be sent. It has to contain the index followed by a '='. The nicest index is 'WOE'.
      * @return A set of Books.

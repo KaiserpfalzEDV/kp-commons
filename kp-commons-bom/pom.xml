@@ -23,7 +23,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>3.3.2-1</version>
+        <version>3.3.3-1</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
@@ -32,7 +32,7 @@
     
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>3.3.2-1</kp-commons.version>
+        <kp-commons.version>3.3.3-1</kp-commons.version>
 
         <main.basedir>${project.basedir}/..</main.basedir>
 
@@ -63,7 +63,7 @@
             <dependency>
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-bom</artifactId>
-                <version>10.0.0</version>
+                <version>11.0.0-M4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -71,7 +71,7 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-bom</artifactId>
-                <version>13.2.1</version>
+                <version>13.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -87,7 +87,7 @@
             <dependency>
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-bom</artifactId>
-                <version>1.12.2</version>
+                <version>1.13.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -96,7 +96,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>2.0.12</version>
+                <version>2.1.0-alpha1</version>
             </dependency>
 
             <!-- KP-COMMONS modules -->
@@ -193,13 +193,13 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.32</version>
+                <version>1.18.34</version>
             </dependency>
 
             <dependency>
                 <groupId>jakarta.inject</groupId>
                 <artifactId>jakarta.inject-api</artifactId>
-                <version>2.0.1</version>
+                <version>2.0.1.MR</version>
             </dependency>
 
 
@@ -236,7 +236,7 @@
             <dependency>
                 <groupId>org.semver4j</groupId>
                 <artifactId>semver4j</artifactId>
-                <version>5.2.2</version>
+                <version>5.3.0</version>
             </dependency>
 
 
@@ -257,21 +257,21 @@
             <dependency>
                 <groupId>org.eclipse.microprofile.openapi</groupId>
                 <artifactId>microprofile-openapi-api</artifactId>
-                <version>3.1.1</version>
+                <version>4.0</version>
             </dependency>
 
             <!-- testing -->
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.10.2</version>
+                <version>5.11.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.19.7</version>
+                <version>1.20.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -279,7 +279,7 @@
             <dependency>
                 <groupId>org.wiremock</groupId>
                 <artifactId>wiremock</artifactId>
-                <version>3.3.2-1</version>
+                <version>3.9.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
