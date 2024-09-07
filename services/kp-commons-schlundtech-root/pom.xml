@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.services</groupId>
         <artifactId>kp-commons-services-root</artifactId>
-        <version>3.3.3-2</version>
+        <version>3.3.3-3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
