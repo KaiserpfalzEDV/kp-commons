@@ -19,6 +19,12 @@ package de.kaiserpfalzedv.commons.api.resources;
 
 import java.io.Serializable;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 /**
  * HasId --
  *
@@ -30,17 +36,18 @@ public interface HasId extends Serializable {
     int MIN_LENGTH = 1;
     int MAX_LENGTH = 20;
     String VALID_ID_PATTERN = "^[0-9]{" + MIN_LENGTH + "," + MAX_LENGTH + "}";
-    String VALID_ID_PATTERN_MSG = "The ID pattern must match '" + VALID_ID_PATTERN + "'";
     String VALID_ID_LENGTH_MSG = "The ID must be between one and 20 digits long.";
     String VALID_ID_EXAMPLE = "4324324";
 
     @Schema(
             name = "id",
             description = "The id of a resource.",
-            pattern = VALID_ID_PATTERN,
             minLength = MIN_LENGTH,
             maxLength = MAX_LENGTH,
             example = VALID_ID_EXAMPLE
     )
+    @NotNull
+    @Min(value = MIN_LENGTH, message = VALID_ID_LENGTH_MSG)
+    @Max(value = MAX_LENGTH, message = VALID_ID_LENGTH_MSG)
     Long getId();
 }
