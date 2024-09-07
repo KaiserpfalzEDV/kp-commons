@@ -38,8 +38,8 @@ public interface HasId extends Serializable {
             name = "id",
             description = "The id of a resource.",
             pattern = VALID_ID_PATTERN,
-            minLength = VALID_ID_MIN_LENGTH,
-            maxLength = VALID_ID_MAX_LENGTH,
+            minLength = MIN_LENGTH,
+            maxLength = MAX_LENGTH,
             example = VALID_ID_EXAMPLE
     )
     Long getId();
