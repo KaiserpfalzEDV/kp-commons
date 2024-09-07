@@ -34,16 +34,15 @@ import jakarta.validation.constraints.NotNull;
  */
 public interface HasId extends Serializable {
     int MIN = 1;
-    int MAX = Long.MAX_VALUE;
-    String VALID_ID_PATTERN = "^[0-9]{" + MIN_LENGTH + "," + MAX_LENGTH + "}";
+    long MAX = Long.MAX_VALUE;
     String VALID_ID_LENGTH_MSG = "The ID must be between " + MIN + " and " + MAX + ".";
     String VALID_ID_EXAMPLE = "4324324";
 
     @Schema(
             name = "id",
             description = "The id of a resource.",
-            minimum = MIN,
-            maximum = MAX,
+            minimum = "1",
+            maximum = "9223372036854775807",
             example = VALID_ID_EXAMPLE
     )
     @NotNull
