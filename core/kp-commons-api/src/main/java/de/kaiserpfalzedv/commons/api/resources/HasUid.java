@@ -17,16 +17,31 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
+import java.io.Serializable;
+import java.util.UUID;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 /**
- * TimeStampPattern --
+ * HasUid --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2.0.0  2022-01-17
+ * @version 3.3.3-3  2024-09-08
+ * @since 3.3.3-3    2024-09-08
  */
-public interface TimeStampPattern {
-    String VALID_PATTERN = "^[0-9]{4}(-[0-9]{2}){2}T([0-9]{2}:){2}[0-9]{2}.[0-9]{6}+[0-9]{2}:[0-9]{2}$";
-    String VALID_PATTERN_MSG = "The timestamp must match the pattern '" + VALID_PATTERN + "'";
-    int VALID_LENGTH = 32;
-    String VALID_LENGTH_MSG = "The timestamp must be exactely 32 characters long.";
-    String VALID_EXAMPLE = "2022-01-04T21:51:00.000000+01:00";
+public interface HasUid extends Serializable {
+    public final String VALID_UID_MSG = "The ID must be a valid UUID.";
+    public final String VALID_UID_PATTERN = "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}";
+
+    @Schema(
+            name = "id",
+            description = "The id of a resource.",
+            pattern = VALID_UID_PATTERN
+    )
+    @NotNull
+    @Pattern(regexp = VALID_UID_PATTERN, message = VALID_UID_MSG)
+    UUID getUid();
 }

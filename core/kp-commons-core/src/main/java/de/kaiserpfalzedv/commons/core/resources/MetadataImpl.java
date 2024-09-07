@@ -31,10 +31,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import de.kaiserpfalzedv.commons.api.resources.HasId;
+import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import de.kaiserpfalzedv.commons.api.resources.Metadata;
 import de.kaiserpfalzedv.commons.api.resources.Pointer;
-import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -86,16 +85,6 @@ public class MetadataImpl implements Metadata {
     @NotNull
     private de.kaiserpfalzedv.commons.core.resources.PointerImpl identity;
 
-    @Schema(
-            name = "uid",
-            description = "The unique identifier of this resource",
-            required = true,
-            minLength = HasId.MIN_LENGTH,
-            maxLength = HasId.MAX_LENGTH,
-            pattern = HasId.VALID_ID_PATTERN,
-            example = HasId.VALID_ID_EXAMPLE,
-            defaultValue = "random UUID"
-    )
     @ToString.Include
     @EqualsAndHashCode.Include
     @Builder.Default
@@ -127,46 +116,16 @@ public class MetadataImpl implements Metadata {
     @Builder.Default
     private final de.kaiserpfalzedv.commons.core.resources.PointerImpl owner = null;
 
-    @Schema(
-            name = "created",
-            description = "The timestamp of resource creation.",
-            required = true,
-            defaultValue = "now",
-            example = TimeStampPattern.VALID_EXAMPLE,
-            pattern = TimeStampPattern.VALID_PATTERN,
-            minLength = TimeStampPattern.VALID_LENGTH,
-            maxLength = TimeStampPattern.VALID_LENGTH
-    )
     @Builder.Default
-    @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
-    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
+    @Size(min = HasTimestamps.VALID_LENGTH, max = HasTimestamps.VALID_LENGTH, message = HasTimestamps.VALID_LENGTH_MSG)
+    @Pattern(regexp = HasTimestamps.VALID_PATTERN, message = HasTimestamps.VALID_PATTERN_MSG)
     protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
 
-    @Schema(
-            name = "modified",
-            description = "The timestamp of the last change.",
-            required = true,
-            defaultValue = "now",
-            example = TimeStampPattern.VALID_EXAMPLE,
-            pattern = TimeStampPattern.VALID_PATTERN,
-            minLength = TimeStampPattern.VALID_LENGTH,
-            maxLength = TimeStampPattern.VALID_LENGTH
-    )
     @Builder.Default
-    @Size(min = TimeStampPattern.VALID_LENGTH, max = TimeStampPattern.VALID_LENGTH, message = TimeStampPattern.VALID_LENGTH_MSG)
-    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
+    @Size(min = HasTimestamps.VALID_LENGTH, max = HasTimestamps.VALID_LENGTH, message = HasTimestamps.VALID_LENGTH_MSG)
+    @Pattern(regexp = HasTimestamps.VALID_PATTERN, message = HasTimestamps.VALID_PATTERN_MSG)
     protected OffsetDateTime modified = OffsetDateTime.now(ZoneOffset.UTC);
 
-    @Schema(
-            name = "deleted",
-            description = "The timestamp of object deletion. Marks an object to be deleted.",
-            nullable = true,
-            defaultValue = "null",
-            example = TimeStampPattern.VALID_EXAMPLE,
-            pattern = TimeStampPattern.VALID_PATTERN,
-            minLength = TimeStampPattern.VALID_LENGTH,
-            maxLength = TimeStampPattern.VALID_LENGTH
-    )
     @Builder.Default
     private final OffsetDateTime deleted = null;
 

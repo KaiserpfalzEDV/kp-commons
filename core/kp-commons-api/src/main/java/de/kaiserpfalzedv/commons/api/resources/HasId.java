@@ -29,21 +29,19 @@ import jakarta.validation.constraints.NotNull;
  * HasId --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.1.0  2022-01-16
+ * @version 3.3.3-3  2024-09-08
  * @since 0.1.0  2021-04-18
  */
 public interface HasId extends Serializable {
-    int MIN = 1;
-    long MAX = Long.MAX_VALUE;
-    String VALID_ID_LENGTH_MSG = "The ID must be between " + MIN + " and " + MAX + ".";
-    String VALID_ID_EXAMPLE = "4324324";
+    public final long MIN = 1;
+    public final long MAX = Long.MAX_VALUE;
+    public final String VALID_ID_LENGTH_MSG = "The ID must be between " + MIN + " and " + MAX + ".";
 
     @Schema(
             name = "id",
             description = "The id of a resource.",
             minimum = "1",
-            maximum = "9223372036854775807",
-            example = VALID_ID_EXAMPLE
+            maximum = "9223372036854775807"
     )
     @NotNull
     @Min(value = MIN, message = VALID_ID_LENGTH_MSG)

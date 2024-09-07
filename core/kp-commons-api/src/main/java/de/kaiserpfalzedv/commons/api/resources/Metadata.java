@@ -17,12 +17,10 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
-import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -37,7 +35,7 @@ import jakarta.validation.constraints.NotNull;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
  */
-public interface Metadata extends Serializable, Cloneable {
+public interface Metadata extends HasUid, HasTimestamps, Cloneable {
     /**
      * @return The display name of the resource.
      */
@@ -46,7 +44,6 @@ public interface Metadata extends Serializable, Cloneable {
             description = "The local part of the URL to retrieve the resource.",
             nullable = true,
             readOnly = true,
-            example = "/api/resource/v1/default/name",
             pattern = "/api/" + HasName.VALID_NAME_PATTERN
                     + "/" + HasApiVersion.VALID_VERSION_PATTERN
                     + "/" + HasName.VALID_NAME_PATTERN
@@ -137,17 +134,9 @@ public interface Metadata extends Serializable, Cloneable {
 
     Pointer getIdentity();
 
-    UUID getUid();
-
     Integer getGeneration();
 
     Pointer getOwner();
-
-    OffsetDateTime getCreated();
-
-    OffsetDateTime getModified();
-
-    OffsetDateTime getDeleted();
 
     Map<String, String> getAnnotations();
 
