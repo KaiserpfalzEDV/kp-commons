@@ -56,7 +56,6 @@ public abstract class AbstractRevisionedJPAEntity<T extends Serializable> extend
 
     @RevisionTimestamp
     @Column(name = "REVISIONED", insertable = true, updatable = false)
-    @NonNull
     protected OffsetDateTime revisioned;
 
 

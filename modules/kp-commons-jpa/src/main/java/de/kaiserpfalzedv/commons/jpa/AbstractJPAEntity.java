@@ -63,12 +63,10 @@ public abstract class AbstractJPAEntity<T extends Serializable> implements HasId
 
     @CreationTimestamp
     @Column(name = "CREATED", nullable = false, insertable = true, updatable = false)
-    @NonNull
     protected OffsetDateTime created;
 
     @UpdateTimestamp
     @Column(name = "MODIFIED", nullable = true, insertable = false, updatable = true)
-    @Nullable
     protected OffsetDateTime modified;
 
     @Column(name = "DELETED", nullable = true, insertable = false, updatable = true)

@@ -25,7 +25,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.boot.MetadataBuilder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
