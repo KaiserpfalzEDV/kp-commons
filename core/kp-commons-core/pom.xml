@@ -22,11 +22,11 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-core-root</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-core</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>The services used by almost all role playing systems.</description>
 
     <properties>

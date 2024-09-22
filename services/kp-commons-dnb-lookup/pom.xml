@@ -25,11 +25,11 @@
     <parent>
         <artifactId>kp-commons-services-root</artifactId>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <version>4.0.0</version>
+        <version>4.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-dnb-lookup</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>
         Library to access the (free) service of the Deutsche Nationalbibliothek for looking for book data. It is limted
         to the data in Germany.

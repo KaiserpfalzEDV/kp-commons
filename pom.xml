@@ -21,14 +21,14 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>
         The kp-commons is a library that is used by the Kaiserpfalz EDV-Service for base integrations and common
         definitions like API base elements.
     </description>
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <url>https://kaiserpfalzedv.github.io/kp-commons/</url>
 
     <modules>

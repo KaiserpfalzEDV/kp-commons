@@ -23,11 +23,11 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-schlundtech-root</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>kp-commons-schlundtech</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>Library to access the API of Schlundtech based on https://github.com/InterNetX/java-domainrobot-sdk.</description>
 
     <properties>
@@ -39,7 +39,7 @@
         <dependency>
 			<groupId>de.kaiserpfalz-edv.commons</groupId>
 			<artifactId>schlundtech-domainrobot-models</artifactId>
-			<version>4.0.0</version>
+			<version>4.0.1-SNAPSHOT</version>
 		</dependency>
     </dependencies>
 </project>

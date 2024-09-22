@@ -22,14 +22,14 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-services-root</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>kp-commons-schlundtech-root</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>
         A library to use the domainrobot of Schlundtech.
     </description>
