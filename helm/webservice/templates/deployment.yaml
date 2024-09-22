@@ -1,0 +1,110 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ include "webservice.fullname" . }}
+  labels:
+    {{- include "webservice.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "webservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "webservice.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ include "webservice.serviceAccountName" . }}
+      securityContext:
+        runAsNonRoot: true
+        fsGroupChangePolicy: "OnRootMismatch"
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: metrics
+              containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: {{ include "webservice.fullname" . }}-sso
+              prefix: "SSO_"
+          env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "webservice.fullname" . }}-pguser-postgres
+                key: pgbouncer-host
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "webservice.fullname" . }}-pguser-postgres
+                key: pgbouncer-port
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "webservice.fullname" . }}-pguser-postgres
+                key: dbname
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "webservice.fullname" . }}-pguser-postgres
+                key: user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "webservice.fullname" . }}-pguser-postgres
+                key: password
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 500Mi
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

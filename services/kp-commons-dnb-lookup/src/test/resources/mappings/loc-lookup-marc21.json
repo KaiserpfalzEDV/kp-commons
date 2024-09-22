@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "GET",
-        "urlPath": "/lcdb",
+        "urlPathPattern": "/lcdb.*",
         "queryParameters": {
           "version": {
             "equalTo": "1.1"

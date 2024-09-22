@@ -1,0 +1,67 @@
+{{- if .Values.postgresql.enabled }}
+---
+kind: PostgresCluster
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+metadata:
+  name: {{ include "webservice.fullname" . }}
+  labels:
+    {{- include "webservice.labels" . | nindent 4 }}
+spec:
+  openshift: {{ .Values.openshift }}
+  postgresVersion: {{ .Values.postgresql.version }}
+  imagePullPolicy: Always
+  port: 5432
+  service:
+    type: ClusterIP
+  instances:
+    - dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.postgresql.db_size }}
+      name: {{ include "webservice.fullname" . }}
+      replicas: {{ .Values.postgresql.replicaCount }}
+  users:
+    - databases:
+        - {{ include "webservice.fullname" . }}
+      name: postgres
+      password:
+        type: ASCII
+  standby:
+    enabled: false
+  {{- if .Values.postgresql.userInterface.enabled }}
+  userInterface:
+    pgAdmin:
+      dataVolumeClaimSpec:
+        volumeMode: RWX
+        volumeName: {{ include "webservice.fullname" . }}-pgadmin
+      replicas: {{ .Values.postgresql.userInterface.replicaCount }}
+      service:
+        type: ClusterIP
+  {{- end }}
+  {{- if .Values.postgresql.proxy.enabled }}
+  proxy:
+    pgBouncer:
+      port: 5432
+      replicas: {{ .Values.postgresql.proxy.replicaCount }}
+      service:
+        type: ClusterIP
+  {{- end }}
+  {{- if .Values.postgresql.backup.enabled }}
+  backups:
+    pgbackrest:
+      repos:
+        - name: {{ .Values.postgresql.backup.name }}
+          volume:
+            volumeClaimSpec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: {{ .Values.postgresql.backup.size }}
+      restore:
+        enabled: false
+        repoName: repo1
+  {{- end }}
+{{- end }}

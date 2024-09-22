@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>3.3.1-2</version>
+    <version>4.0.0</version>
     <packaging>pom</packaging>
 
     <description>
@@ -120,6 +120,7 @@
         <main.basedir>${project.basedir}</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
+        <maven.compiler.release>17</maven.compiler.release>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
@@ -127,7 +128,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>3.3.1-2</kp-commons.version>
+        <kp-commons.version>4.0.0</kp-commons.version>
     </properties>
 
     <build>
@@ -167,17 +168,45 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok-maven-plugin</artifactId>
+                    <version>1.18.20.0</version>
+                    <configuration>
+                        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                        <outputDirectory>${delombok.output}</outputDirectory>
+                        <addOutputDirectory>false</addOutputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>delombok</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.32</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.7.0</version>
+                    <version>3.8.0</version>
                     <configuration>
+                        <sourcepath>${delombok.output}</sourcepath>
                         <skip>${skip.javadoc}</skip>
                         <show>public</show>
                         <failOnError>false</failOnError>
+                        <failOnWarnings>false</failOnWarnings>
                         <detectOfflineLinks>false</detectOfflineLinks>
                         <doclint>all,-missing</doclint>
                         <nohelp>true</nohelp>
-                        <excludePackageNames>*.internal.*</excludePackageNames>
                         <quiet>true</quiet>
                     </configuration>
                     <executions>
@@ -281,6 +310,29 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                    <id>enforce-maven</id>
+                    <goals>
+                        <goal>enforce</goal>
+                    </goals>
+                    <configuration>
+                        <rules>
+                        <requireMavenVersion>
+                            <version>3.8</version>
+                        </requireMavenVersion>
+                        </rules>    
+                    </configuration>
+                    </execution>
+                </executions>
+                </plugin>
+        </plugins>
     </build>
 
     <reporting>
@@ -393,7 +445,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
+                <version>0.8.12</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -449,6 +501,11 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>    
                     </plugin>
 
                     <plugin>

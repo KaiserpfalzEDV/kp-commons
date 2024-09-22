@@ -1,0 +1,187 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ include "microservice.fullname" . }}
+  labels:
+    {{- include "microservice.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 180
+  selector:
+    matchLabels:
+      {{- include "microservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "microservice.selectorLabels" . | nindent 8 }}
+    spec:
+      terminationGracePeriodSeconds: 10
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "microservice.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            {{- if .Values.metrics.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+              protocol: TCP
+            {{- end }}
+          {{- if $.Values.probes.enabled }}
+            {{- if $.Values.probes.default }}
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              {{- if $.Values.metrics.enabled }}
+              port: metrics
+              {{- else }}
+              port: http
+              {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              {{- if $.Values.metrics.enabled }}
+              port: metrics
+              {{- else }}
+              port: http
+              {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              {{- if $.Values.metrics.enabled }}
+              port: metrics
+              {{- else }}
+              port: http
+              {{- end }}
+            {{- else }}
+              {{- if .Values.probes.startup }}
+          startupProbe:
+            {{- toYaml .Values.probes.startup| nindent 12 }}
+              {{- end }}
+              {{- if .Values.probes.readiness }}
+          readinessProbe:
+            {{- toYaml .Values.probes.readiness| nindent 12 }}
+              {{- end }}
+              {{- if .Values.probes.liveness }}
+          livenessProbe:
+            {{- toYaml .Values.probes.liveness| nindent 12 }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if or (eq .Values.sso.enabled true) (eq .Values.postgrescluster.enabled true) }}
+          envFrom:
+          {{- if .Values.sso.enabled }}
+          - prefix: SSO_
+            secretRef:
+              name: {{ include "microservice.fullname" . }}-sso-config
+          {{- end }}
+          {{- if .Values.postgrescluster.enabled }}
+          - prefix: PGO_
+            secretRef:
+              name: {{ .Release.Name }}-pguser-{{ .Release.Name }}
+          {{- end }}
+          {{- end }}
+          env:
+          - name: LOGGING_LEVEL
+            value: WARN
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: POD_NODE
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: CPU_MAX
+            valueFrom:
+              resourceFieldRef:
+                containerName: {{ .Chart.Name }}
+                resource: limits.cpu
+          - name: MEMORY_MAX
+            valueFrom:
+              resourceFieldRef:
+                containerName: {{ .Chart.Name }}
+                resource: limits.memory
+          - name: CPU_REQUESTED
+            valueFrom:
+              resourceFieldRef:
+                containerName: {{ .Chart.Name }}
+                resource: requests.cpu
+          - name: MEMORY_REQUESTED
+            valueFrom:
+              resourceFieldRef:
+                containerName: {{ .Chart.Name }}
+                resource: requests.memory
+          volumeMounts:
+          - name: tmp
+            mountPath: /tmp
+          {{- if .Values.applicationConfig.enabled }}
+          - name: application-config
+            mountPath: /deployments/application.{{ .Values.applicationConfig.type }}
+            subPath: application.{{ .Values.applicationConfig.type }}
+          {{- end }}
+          {{- range .Values.mounts }}
+          - name: {{ .name }}
+            mountPath: {{ .path }}
+            {{- if .subPath }}
+            subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
+      volumes:
+      - name: tmp
+        emptyDir:
+          sizeLimit: {{ .Values.tmpSize }}
+      {{- if .Values.applicationConfig.enabled }}
+      - name: application-config
+        configMap:
+          name: {{ include "microservice.fullname" . }}-application-config
+          items:
+          - key: application-config
+            path: application.{{ .Values.applicationConfig.type }}
+      {{- end }}
+      {{- range .Values.mounts }}
+      - name: {{ .name }}
+        {{- toYaml .spec | nindent 8 }}
+      {{- end}}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

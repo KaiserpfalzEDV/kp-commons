@@ -19,20 +19,24 @@ package de.kaiserpfalzedv.commons.api.resources;
 
 import java.io.Serializable;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import jakarta.validation.constraints.NotNull;
+
 /**
- * HasId --
+ * HasId -- Has an Id of type T.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 2.1.0  2022-01-16
+ * @version 4.0.0  2024-09-22
  * @since 0.1.0  2021-04-18
+ * 
+ * @Param T The type of ID (I usually use UUID).
  */
-public interface HasId extends Serializable {
-    int MIN_LENGTH = 1;
-    int MAX_LENGTH = 20;
-    String VALID_ID_PATTERN = "^[0-9]{" + MIN_LENGTH + "," + MAX_LENGTH + "}";
-    String VALID_ID_PATTERN_MSG = "The ID pattern must match '" + VALID_ID_PATTERN + "'";
-    String VALID_ID_LENGTH_MSG = "The ID must be between one and 20 digits long.";
-    String VALID_ID_EXAMPLE = "4324324";
-
-    Long getId();
+public interface HasId<T extends Serializable> {
+    @Schema(
+            name = "id",
+            description = "The id of a resource."
+    )
+    @NotNull
+    T getId();
 }

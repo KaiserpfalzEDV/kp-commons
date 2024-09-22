@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class SerializableList<T extends Serializable> extends ArrayList<T> implements Cloneable {
     private static final long serialVersionUID = 0L;
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked","java:S2975"})
     @Override
     public SerializableList<T> clone() {
         return (SerializableList<T>) super.clone();

@@ -43,7 +43,6 @@ public interface HasApiVersion {
     @Schema(
             name = "apiVersion",
             description = "The version of a resource.",
-            example = "v1",
             defaultValue = "v1",
             pattern = VALID_VERSION_PATTERN,
             minLength = VALID_VERSION_MIN_LENGTH,

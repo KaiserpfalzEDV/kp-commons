@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.jpa;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 import org.hibernate.envers.RevisionEntity;
@@ -30,6 +31,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -44,7 +46,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class AbstractRevisionedJPAEntity extends AbstractJPAEntity {
+@EqualsAndHashCode(callSuper = true, of = {"revId"})
+public abstract class AbstractRevisionedJPAEntity<T extends Serializable> extends AbstractJPAEntity<T> {
     @RevisionNumber
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DbSequence")
     @SequenceGenerator(name = "DbSequence", sequenceName = "hibernate_sequence")
@@ -57,9 +60,10 @@ public abstract class AbstractRevisionedJPAEntity extends AbstractJPAEntity {
     protected OffsetDateTime revisioned;
 
 
+    @SuppressWarnings("java:S2975")
     @Override
-    public AbstractRevisionedJPAEntity clone() throws CloneNotSupportedException {
-        final AbstractRevisionedJPAEntity result = (AbstractRevisionedJPAEntity) super.clone();
+    public AbstractRevisionedJPAEntity<T> clone() throws CloneNotSupportedException {
+        final AbstractRevisionedJPAEntity<T> result = (AbstractRevisionedJPAEntity<T>) super.clone();
 
         result.revId = this.revId;
         result.revisioned = this.revisioned;

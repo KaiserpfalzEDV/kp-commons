@@ -20,8 +20,7 @@ package de.kaiserpfalzedv.services.dnb.client;
 import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.kaiserpfalzedv.services.dnb.model.Book;
@@ -38,23 +37,11 @@ public interface DnbLookupClient {
      * This is the generic query to the DNB index.
      *
      * <p>Will result in something like:</p>
-     * <pre>https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml</pre>
+     * {@literal <pre>https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml</pre>}
      *
      * @param query The query to be sent. It has to contain the index followed by a '='. The nicest index is 'WOE'.
      * @return A set of Books.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/sru/dnb", produces = "text/xml", consumes = "text/xml")
+    @GetMapping(value = "/sru/dnb", produces = "text/xml", consumes = "text/xml")
     List<Book> lookup(@RequestParam("query") String query);
-
-    /*
-    @GetMapping(value = "/sru/dnb", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Book> lookup(final String query) {
-        final Flux<Book> books = WebClient.create("https://services.dnb.de/")
-                .get()
-                .retrieve()
-                .bodyToFlux(Book.class);
-
-        return books;
-    }
- */
 }

@@ -19,16 +19,20 @@ package de.kaiserpfalzedv.commons.api.resources;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 /**
  * HasRevision --
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 4.0.0  2024-09-22
  * @since 2.0.0  2023-01-06
+ * 
+ * @param T The type of Id of this resource (I normally use UUID).
  */
 @Schema(description = "If something has a revision.")
-public interface HasRevision extends HasId {
+public interface HasRevision<T extends Serializable> extends HasId<T> {
     @Schema(description = "The date and time of the current revision.")
     OffsetDateTime getRevisioned();
 

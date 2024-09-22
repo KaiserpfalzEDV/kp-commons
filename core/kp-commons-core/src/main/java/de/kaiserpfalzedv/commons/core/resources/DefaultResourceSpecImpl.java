@@ -101,7 +101,7 @@ public class DefaultResourceSpecImpl implements DefaultResourceSpec {
         }
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod","java:S1182","java:S2975"})
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "We are using the lombok builder here.")
     @Override
     public DefaultResourceSpecImpl clone() {

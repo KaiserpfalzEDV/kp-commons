@@ -159,14 +159,14 @@ public class ResourceImpl<D extends Serializable> implements Resource<D> {
 
 
     @Override
-    synchronized public ResourceImpl<D> increaseGeneration() {
+    public synchronized ResourceImpl<D> increaseGeneration() {
         return this.toBuilder()
                 .metadata(this.getMetadata().increaseGeneration())
                 .build();
     }
 
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod", "java:S1182", "java:S2975"})
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
     public ResourceImpl<D> clone() {

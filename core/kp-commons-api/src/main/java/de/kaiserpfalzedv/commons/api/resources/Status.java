@@ -46,7 +46,6 @@ public interface Status extends Serializable, Cloneable {
             name = "observedGeneration",
             description = "The generation of this resource which is observed.",
             required = true,
-            example = "0",
             defaultValue = "0",
             minimum = "0",
             maxItems = Integer.MAX_VALUE
@@ -62,5 +61,5 @@ public interface Status extends Serializable, Cloneable {
             minItems = 0
     )
     @Size
-    List<? extends History> getHistory();
+    <T extends History> List<T> getHistory();
 }

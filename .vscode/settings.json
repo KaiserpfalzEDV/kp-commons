@@ -6,5 +6,6 @@
         "libravatar",
         "libravatars",
         "peholmst"
-    ]
+    ],
+    "editor.detectIndentation": false
 }

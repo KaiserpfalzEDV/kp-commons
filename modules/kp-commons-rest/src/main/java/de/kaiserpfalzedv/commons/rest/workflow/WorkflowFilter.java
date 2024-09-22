@@ -167,8 +167,7 @@ public class WorkflowFilter implements Filter {
         MDC.put(workflowPrefix + RESPONSE, info.getResponseChannel());
     }
 
-
-    private void filter(final HttpServletRequest request, final HttpServletResponse context) {
+    private void filter(final HttpServletRequest request, @SuppressWarnings({"java:S1172"}) final HttpServletResponse context) {
         this.provider.getWorkflowInfo().ifPresentOrElse(
             info -> {
                 log.trace(
@@ -184,9 +183,7 @@ public class WorkflowFilter implements Filter {
 
                 this.removeMDC();
             },
-            () -> {
-                log.trace("No workflow data to remove from request.");
-            }
+            () -> log.trace("No workflow data to remove from request.")
         );
     }
 

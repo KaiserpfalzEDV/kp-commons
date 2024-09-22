@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-parent</artifactId>
-        <version>3.3.1-2</version>
+        <version>4.0.0</version>
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
@@ -46,13 +46,14 @@
         <main.basedir>${project.basedir}/..</main.basedir>
 
         <maven.compiler.parameters>true</maven.compiler.parameters>
+        <maven.compiler.release>17</maven.compiler.release>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <jackson.version>2.17.0</jackson.version>
-        <spring-boot.version>3.3.1</spring-boot.version>
+        <spring-boot.version>3.3.2</spring-boot.version>
         <android-json.version>0.0.20131108.vaadin1</android-json.version>
         <api-guardian.version>1.1.2</api-guardian.version>
         <c3p0.version>0.10.0-pre7</c3p0.version>
@@ -64,13 +65,13 @@
         <jna.version>5.14.0</jna.version>
         <jopt-simple.version>5.0.4</jopt-simple.version>
 
-        <maven.version>3.9.6</maven.version>
+        <maven.version>3.9.9</maven.version>
         <maven-common-artifact-filters.version>3.3.2</maven-common-artifact-filters.version>
         <maven-invoker.version>3.2.0</maven-invoker.version>
-        <maven-plugin-tools.version>3.9.0</maven-plugin-tools.version>
+        <maven-plugin-tools.version>3.15.0</maven-plugin-tools.version>
         <maven-resolver.version>1.9.19</maven-resolver.version>
         <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
-        <micrometer-context-propagation.version>1.0.5</micrometer-context-propagation.version>
+        <micrometer-context-propagation.version>1.1.1</micrometer-context-propagation.version>
         <mockk.version>1.13.10</mockk.version>
         <native-gradle-plugin.version>0.10.1</native-gradle-plugin.version>
         <plexus-build-api.version>0.0.7</plexus-build-api.version>
@@ -281,7 +282,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.3.1</version>
+                <version>3.3.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

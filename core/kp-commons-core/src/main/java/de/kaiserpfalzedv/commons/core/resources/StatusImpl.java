@@ -78,7 +78,7 @@ public class StatusImpl implements Status {
         return this;
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod","java:S1182","java:S2975"})
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
     public StatusImpl clone() {

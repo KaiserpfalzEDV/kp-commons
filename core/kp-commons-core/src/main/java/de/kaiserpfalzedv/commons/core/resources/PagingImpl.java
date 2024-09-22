@@ -38,12 +38,6 @@ import lombok.extern.jackson.Jacksonized;
  */
 @Schema(
         description = "Paging data including calculating next/previous and first/last pages available.",
-        example = "{\n" +
-                "  \"start\": 0, \n" +
-                "  \"size\": 100, \n" +
-                "  \"count\": 83, \n" +
-                "  \"total\": 83,\n" +
-                "}",
         title = "Pagination data for transfer lists"
 )
 @Jacksonized

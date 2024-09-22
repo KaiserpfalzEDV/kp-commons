@@ -18,7 +18,7 @@
 /**
  * <p>Libravatar -- Java Library for retrieving libravatars.</p>
  *
- * <p></p>The code in this package is taken from <a href="https://github.com/alessandroleite/libravatar-j">https://github.com/alessandroleite/libravatar-j</a>.</p>
+ * <p>The code in this package is taken from <a href="https://github.com/alessandroleite/libravatar-j">https://github.com/alessandroleite/libravatar-j</a>.</p>
  *
  * <p>It is licensed under a MIT license by Alessandro Leite.</p>
  *

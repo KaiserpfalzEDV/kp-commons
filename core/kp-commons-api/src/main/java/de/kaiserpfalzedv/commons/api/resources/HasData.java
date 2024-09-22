@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * HasAvatar -- This resource has an avatar (image).
+ * HasData -- This resource contains a data blob represented by a byte array.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 0.1.0  2021-04-07

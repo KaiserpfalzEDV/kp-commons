@@ -21,3 +21,7 @@ http-client.private.env.json
 .vscode/temp.sql
 resources/_gen/
 .hugo_build.lock
+dev-*
+*.tgz
+*.lock
+*.versionsBackup

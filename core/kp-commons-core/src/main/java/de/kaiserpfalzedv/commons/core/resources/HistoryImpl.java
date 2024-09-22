@@ -25,8 +25,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.kaiserpfalzedv.commons.api.resources.HasName;
+import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import de.kaiserpfalzedv.commons.api.resources.History;
-import de.kaiserpfalzedv.commons.api.resources.TimeStampPattern;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -64,13 +64,12 @@ public class HistoryImpl implements History {
             description = "The timestamp of the change.",
             required = true,
             defaultValue = "now",
-            example = TimeStampPattern.VALID_EXAMPLE,
-            pattern = TimeStampPattern.VALID_PATTERN,
-            minLength = TimeStampPattern.VALID_LENGTH,
-            maxLength = TimeStampPattern.VALID_LENGTH
+            pattern = HasTimestamps.VALID_PATTERN,
+            minLength = HasTimestamps.VALID_LENGTH,
+            maxLength = HasTimestamps.VALID_LENGTH
     )
     @Builder.Default
-    @Pattern(regexp = TimeStampPattern.VALID_PATTERN, message = TimeStampPattern.VALID_PATTERN_MSG)
+    @Pattern(regexp = HasTimestamps.VALID_PATTERN, message = HasTimestamps.VALID_PATTERN_MSG)
     private final OffsetDateTime timeStamp = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Schema(
@@ -78,7 +77,6 @@ public class HistoryImpl implements History {
             description = "The resource status after the change.",
             required = true,
             defaultValue = "not-specified",
-            example = HasName.VALID_NAME_EXAMPLE,
             pattern = HasName.VALID_NAME_PATTERN,
             minLength = HasName.VALID_NAME_MIN_LENGTH,
             maxLength = HasName.VALID_NAME_MAX_LENGTH
@@ -97,7 +95,7 @@ public class HistoryImpl implements History {
     private final String message = null;
 
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod","java:S1182","java:S2975"})
     @Override
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     public History clone() {

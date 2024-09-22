@@ -1,4 +1,4 @@
-FROM docker.io/alpine/java:21-jdk AS runner
+FROM docker.io/amazoncorretto:21-alpine AS runner
 
 USER root
 
@@ -10,12 +10,10 @@ ENV JAVA_APP_DIR=/deployments \
     JAVA_OPTIONS="-Dfile.encoding=utf-8" \
     LOG4J_FORMAT_MSG_NO_LOOKUPS=true \
     JAVA_MAJOR_VERSION=21 \
-    JAVA_MAX_HEAP_RATIO=40
+    JAVA_MAX_HEAP_RATIO=40 \
+    TZ=UTC
 
 RUN apk add --update --no-cache curl nss bash \
-    && cp -f /usr/share/zoneinfo/UTC /etc/localtime && echo "UTC" > /etc/timezone && apk del tzdata \
-    && sed -i 's/securerandom.source=file:\/dev\/random/securerandom.source=file:\/dev\/.\/urandom/' /opt/java/openjdk/conf/security/java.security \
-    && sed -i 's/SSLv3, TLSv1, TLSv1.1, //' /opt/java/openjdk/conf/security/java.security \
     && rm -rf /tmp/* /var/tmp/* /var/cache/apk/* \
     && chmod 755 /deployments/run-java.sh \
     && addgroup --gid 1000 appgroup \

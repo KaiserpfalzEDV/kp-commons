@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
 import lombok.Data;
+import lombok.ToString;
 
 
 /**
@@ -32,10 +33,11 @@ import lombok.Data;
  * @version 1.0.0
  * @since 2024-06-16
  */
-@Data
-@Validated
 @Configuration
 @ConfigurationProperties(prefix = "kp.security.keycloak.group-authority-mapper")
+@Validated
+@Data
+@ToString
 public class KeycloakGroupMapperProperties {
     private String roleAttribute;
 }
