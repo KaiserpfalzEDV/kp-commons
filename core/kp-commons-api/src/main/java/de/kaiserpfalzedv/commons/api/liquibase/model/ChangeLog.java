@@ -42,7 +42,6 @@ public interface ChangeLog {
             title = "Id",
             description = "Value from the changeset id attribute.",
             required = true,
-            example = "20230118-rlichti-001",
             maxLength = 255
     )
     @NotNull
@@ -59,7 +58,6 @@ public interface ChangeLog {
             title = "Author",
             description = "Value from the changeset author attribute.",
             required = true,
-            example = "rlichti",
             maxLength = 255
     )
     @Size(max = 255)
@@ -78,7 +76,6 @@ public interface ChangeLog {
                     "the changelog was passed to Liquibase. For best results, it should be a relative path. The " +
                     "logicalFilePath attribute can be used on the changelog or on individual changesets.",
             required = true,
-            example = "db/changelog/base-structure.xml",
             maxLength = 255
     )    @Size(max = 255)
     @NotNull
@@ -94,7 +91,6 @@ public interface ChangeLog {
                     "determine rollback order.",
             required = true,
             pattern = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}(Z|(+|-)\\d{2}:\\d{2})$",
-            example = "2023-01-19T01:00:00.000Z",
             maxLength = 255
     )
     @NotNull
@@ -117,7 +113,6 @@ public interface ChangeLog {
                     "values are only guaranteed to be increasing within an individual update run. There are times " +
                     "where they will restart at zero.",
             required = true,
-            example = "5",
             minimum = "0"
     )
     int getExecutionOrder();
@@ -141,7 +136,6 @@ public interface ChangeLog {
             description = "Checksum of the changeset when it was executed. Used on each run to ensure there have " +
                     "been no unexpected changes to changesets in the changelog file.",
             required = true,
-            example = "a3cca2b2aa1e3b5b3b5aad99a8529074",
             minLength = 32,
             maxLength = 35
     )
@@ -245,7 +239,6 @@ public interface ChangeLog {
             title = "Execution Type",
             description = "Description of how the changeset was executed.",
             required = true,
-            example = "MARK_RAN",
             enumeration = {"EXECUTED","FAILED","SKIPPED","RERAN","MARK_RAN"}
     )
     enum ExecType {

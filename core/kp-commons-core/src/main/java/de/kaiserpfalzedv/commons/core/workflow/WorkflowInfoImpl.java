@@ -24,6 +24,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.kaiserpfalzedv.commons.api.workflow.WorkflowInfo;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -51,35 +53,40 @@ import lombok.extern.jackson.Jacksonized;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @Schema(name = "WorkflowInfo", description = "Information of a workflow call.")
 public class WorkflowInfoImpl implements WorkflowInfo {
-        private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
+    @Schema(
+        description = "The complete (perhaps even long running) workflow",
+        required = false
+    )
     @Builder.Default
+    @Nullable
     private final WorkflowDetailInfoImpl workflow = WorkflowDetailInfoImpl.builder().build();
 
     @Schema(
             description = "The action within the workflow this call belongs to.",
-            required = true,
-            example = "{\"name\": \"check-duplicate\", \"id\": \"81f76259-e9fa-4af2-bba7-255f7370fe41\", \"created\": \"2022-01-04T14:22:00.023000Z\", \"ttl\": \"2022-01-04T14:22:02.023000Z\"}"
+            required = true
     )
+    @NotNull
     @Builder.Default
     private final WorkflowDetailInfoImpl action = WorkflowDetailInfoImpl.builder().build();
 
     @Schema(
             description = "The actual service call.",
-            required = true,
-            example = "{\"name\": \"get-user\", \"id\": \"69de33eb-6a9d-4010-9fb9-e35a4ac56eb8\", \"created\": \"2022-01-04T14:22:00.028000Z\", \"ttl\": \"2022-01-04T14:22:01.028000Z\"}"
+            required = true
     )
+    @NotNull
     @Builder.Default
     private final WorkflowDetailInfoImpl call = WorkflowDetailInfoImpl.builder().build();
 
     @Schema(
             description = "The owner of this request. Can be an ID, a name or anything else. Please keep GDPR in mind!",
-            example = "klenkes74",
-            defaultValue = "Random UUID",
-            nullable = true,
+            defaultValue = "A random UUID",
+            required = false,
             minLength = 1,
             maxLength = 100
     )
+    @Nullable
     @Builder.Default
     private final String user = UUID.randomUUID().toString();
 }

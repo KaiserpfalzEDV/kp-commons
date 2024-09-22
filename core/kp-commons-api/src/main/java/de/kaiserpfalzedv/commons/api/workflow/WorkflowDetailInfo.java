@@ -17,9 +17,13 @@
 
 package de.kaiserpfalzedv.commons.api.workflow;
 
+import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
+import de.kaiserpfalzedv.commons.api.resources.HasUid;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 /**
  * <p>WorkflowDetailInfo -- .</p>
@@ -27,12 +31,14 @@ import java.io.Serializable;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
  */
-public interface WorkflowDetailInfo extends Serializable, HasName {
-    String getId();
+public interface WorkflowDetailInfo extends Serializable, HasId<UUID>, HasUid, HasName {
+    default UUID getUid() {
+        return getId();
+    }
 
-    java.time.OffsetDateTime getCreated();
+    OffsetDateTime getCreated();
 
-    java.time.OffsetDateTime getTtl();
+    OffsetDateTime getTtl();
 
     String getResponseChannel();
 }

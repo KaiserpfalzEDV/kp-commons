@@ -33,7 +33,6 @@ public interface HasKind {
     @Schema(
             name = "kind",
             description = "The kind of a resource.",
-            example = HasName.VALID_NAME_EXAMPLE,
             pattern = HasName.VALID_NAME_PATTERN,
             minLength = HasName.VALID_NAME_MIN_LENGTH,
             maxLength = HasName.VALID_NAME_MAX_LENGTH

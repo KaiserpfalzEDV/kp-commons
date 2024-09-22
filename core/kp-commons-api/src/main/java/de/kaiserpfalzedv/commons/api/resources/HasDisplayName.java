@@ -43,8 +43,7 @@ public interface HasDisplayName extends HasName {
             description = "The name of a resource to be displayed to human users.",
             pattern = VALID_NAME_PATTERN,
             minLength = VALID_NAME_MIN_LENGTH,
-            maxLength = VALID_NAME_MAX_LENGTH,
-            example = VALID_NAME_EXAMPLE
+            maxLength = VALID_NAME_MAX_LENGTH
     )
     @Size(min = VALID_NAME_MIN_LENGTH, max = VALID_NAME_MAX_LENGTH, message = VALID_NAME_LENGTH_MSG)
     @Pattern(regexp = VALID_NAME_PATTERN, message = VALID_NAME_PATTERN_MSG)

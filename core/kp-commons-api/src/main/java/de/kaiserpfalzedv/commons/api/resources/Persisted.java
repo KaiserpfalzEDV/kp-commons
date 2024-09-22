@@ -17,6 +17,8 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
+import java.io.Serializable;
+
 /**
  * PersistetResource -- The base interface for all resources that are persisted.
  *
@@ -26,5 +28,5 @@ package de.kaiserpfalzedv.commons.api.resources;
  * 
  * @param T The type of the ID (I normally use UUID).
  */
-public interface Persisted<T> extends HasRevision<T>, Cloneable {
+public interface Persisted<T extends Serializable> extends HasRevision<T>, Cloneable {
 }

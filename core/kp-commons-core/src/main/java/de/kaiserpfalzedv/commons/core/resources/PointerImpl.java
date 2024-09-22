@@ -54,15 +54,7 @@ import lombok.extern.jackson.Jacksonized;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonPropertyOrder({"kind", "apiVersion", "namespace", "name", "selfLink"})
 @Schema(
-        description = "A full pointer to a resource.",
-        example = """
-                {
-                    "kind": "Resource",
-                    "apiVersion": "v1",
-                    "nameSpace": "namespace",
-                    "name": "name",
-                    "selfLink": "/api/v1/Resource/namespace/name"
-                }"""
+        description = "A full pointer to a resource."
 )
 public class PointerImpl implements Pointer {
     /** serial class version */
@@ -72,7 +64,6 @@ public class PointerImpl implements Pointer {
             name = "kind",
             description = "The type of the resource",
             required = true,
-            example = HasName.VALID_NAME_EXAMPLE,
             pattern = HasName.VALID_NAME_PATTERN,
             minLength = HasName.VALID_NAME_MIN_LENGTH,
             maxLength = HasName.VALID_NAME_MAX_LENGTH
@@ -88,7 +79,6 @@ public class PointerImpl implements Pointer {
             name = "apiVersion",
             description = "The version of this resource",
             required = true,
-            example = HasApiVersion.VALID_VERSION_EXAMPLE,
             defaultValue = HasApiVersion.VALID_VERSION_EXAMPLE,
             minLength = HasApiVersion.VALID_VERSION_MIN_LENGTH,
             maxLength = HasApiVersion.VALID_VERSION_MAX_LENGTH
@@ -102,7 +92,6 @@ public class PointerImpl implements Pointer {
             name = "nameSpace",
             description = "The namespace (group) of this resource",
             required = true,
-            example = HasName.VALID_NAME_EXAMPLE,
             pattern = HasName.VALID_NAME_PATTERN,
             minLength = HasName.VALID_NAME_MIN_LENGTH,
             maxLength = HasName.VALID_NAME_MAX_LENGTH
@@ -118,7 +107,6 @@ public class PointerImpl implements Pointer {
             name = "name",
             description = "The unique name of this resource within the namespace",
             required = true,
-            example = HasName.VALID_NAME_EXAMPLE,
             minLength = HasName.VALID_NAME_MIN_LENGTH,
             maxLength = HasName.VALID_NAME_MAX_LENGTH
     )
@@ -129,7 +117,7 @@ public class PointerImpl implements Pointer {
     private String name;
 
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod","java:S1182","java:S2975"})
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
     public PointerImpl clone() {

@@ -26,6 +26,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.kaiserpfalzedv.commons.api.workflow.WorkflowDetailInfo;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -52,7 +54,6 @@ import lombok.extern.jackson.Jacksonized;
         name = "WorkflowDetailInfo",
         description = "Identity and timing data of workflows, actions and calls.",
         required = true,
-        example = "{\"name\": \"create-user\", \"id\": \"37625db0-f418-4695-9f03-ccea94234399\", \"created\": \"2022-01-04T14:22:00.000000Z\", \"ttl\": \"2022-01-04T14:25:00.000000Z\"}",
         defaultValue = "A workfow with random ID and current timestamps"
 )
 public class WorkflowDetailInfoImpl implements WorkflowDetailInfo {
@@ -60,48 +61,48 @@ public class WorkflowDetailInfoImpl implements WorkflowDetailInfo {
 
     @Schema(
             description = "A user understandable name.",
-            example = "create-user",
             nullable = true,
             minLength = 1,
             maxLength = 100
     )
+    @NotNull
     private String name;
 
     @Schema(
             description = "The ID",
-            example = "b9fa12c5-16b6-4272-b504-1b4177815442",
             defaultValue = "Random UUID",
             required = true,
             minLength = 1,
             maxLength = 100
     )
+    @NotNull
     @Builder.Default
-    private final String id = UUID.randomUUID().toString();
+    private final UUID id = UUID.randomUUID();
 
     @Schema(
             description = "The creation time.",
-            example = "2022-01-04T14:07:00.1312321Z",
             defaultValue = "now",
             required = true
     )
+    @NotNull
     @Builder.Default
     private final OffsetDateTime created = OffsetDateTime.now(ZoneId.of("UTC"));
 
 
     @Schema(
             description = "The time the result does not matter any more. Services may stop working on the answer and return an error instead.",
-            example = "2023-01-01T01:00:00.000000Z",
             defaultValue = "10 Years in future",
             required = true
     )
+    @NotNull
     @Builder.Default
     private final OffsetDateTime ttl = OffsetDateTime.now(ZoneId.of("UTC")).plusYears(10);
 
 
     @Schema(
             description = "The response channel to use. Normally an URI containing the response channel for asynchronous answers.",
-            example = "https://invalid.invalid/invalid",
             nullable = true
     )
+    @Nullable
     private String responseChannel;
 }

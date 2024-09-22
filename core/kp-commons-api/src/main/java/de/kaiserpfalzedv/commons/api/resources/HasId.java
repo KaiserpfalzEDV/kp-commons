@@ -30,9 +30,9 @@ import jakarta.validation.constraints.NotNull;
  * @version 4.0.0  2024-09-22
  * @since 0.1.0  2021-04-18
  * 
- * @Param T The type of Id.
+ * @Param T The type of ID (I usually use UUID).
  */
-public interface HasId<T> extends Serializable {
+public interface HasId<T extends Serializable> {
     @Schema(
             name = "id",
             description = "The id of a resource."

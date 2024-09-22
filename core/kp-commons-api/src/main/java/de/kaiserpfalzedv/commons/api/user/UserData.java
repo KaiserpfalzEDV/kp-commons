@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.api.user;
 
+import de.kaiserpfalzedv.commons.api.resources.DefaultResourceSpec;
 import de.kaiserpfalzedv.commons.api.resources.Pointer;
 
 /**
@@ -25,7 +26,7 @@ import de.kaiserpfalzedv.commons.api.resources.Pointer;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
  */
-public interface UserData extends de.kaiserpfalzedv.commons.api.resources.DefaultResourceSpec {
+public interface UserData extends DefaultResourceSpec {
     String ISSUER = "issuer";
     String SUBJECT = "subject";
 

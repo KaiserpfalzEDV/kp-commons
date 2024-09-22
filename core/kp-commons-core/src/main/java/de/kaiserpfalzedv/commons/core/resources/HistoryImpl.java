@@ -64,7 +64,6 @@ public class HistoryImpl implements History {
             description = "The timestamp of the change.",
             required = true,
             defaultValue = "now",
-            example = HasTimestamps.VALID_EXAMPLE,
             pattern = HasTimestamps.VALID_PATTERN,
             minLength = HasTimestamps.VALID_LENGTH,
             maxLength = HasTimestamps.VALID_LENGTH
@@ -78,7 +77,6 @@ public class HistoryImpl implements History {
             description = "The resource status after the change.",
             required = true,
             defaultValue = "not-specified",
-            example = HasName.VALID_NAME_EXAMPLE,
             pattern = HasName.VALID_NAME_PATTERN,
             minLength = HasName.VALID_NAME_MIN_LENGTH,
             maxLength = HasName.VALID_NAME_MAX_LENGTH
@@ -97,7 +95,7 @@ public class HistoryImpl implements History {
     private final String message = null;
 
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod","java:S1182","java:S2975"})
     @Override
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     public History clone() {

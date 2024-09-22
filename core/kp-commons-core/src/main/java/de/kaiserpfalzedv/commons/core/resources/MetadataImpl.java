@@ -35,6 +35,7 @@ import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import de.kaiserpfalzedv.commons.api.resources.Metadata;
 import de.kaiserpfalzedv.commons.api.resources.Pointer;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -73,6 +74,7 @@ import lombok.extern.jackson.Jacksonized;
 )
 public class MetadataImpl implements Metadata {
     /** serial class version */
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 0L;
 
     @Schema(
@@ -95,7 +97,6 @@ public class MetadataImpl implements Metadata {
             name = "generation",
             description = "The generation of this object. Every change adds 1.",
             required = true,
-            example = "0",
             defaultValue = "0",
             minimum = "0",
             maxItems = Integer.MAX_VALUE
@@ -110,23 +111,28 @@ public class MetadataImpl implements Metadata {
     @Schema(
             name = "owner",
             description = "The owning resource. This is a sub-resource or managed resource of the given address.",
+            required = false,
             nullable = true,
             implementation = Pointer.class
     )
+    @Nullable
     @Builder.Default
     private final de.kaiserpfalzedv.commons.core.resources.PointerImpl owner = null;
 
     @Builder.Default
+    @NotNull
     @Size(min = HasTimestamps.VALID_LENGTH, max = HasTimestamps.VALID_LENGTH, message = HasTimestamps.VALID_LENGTH_MSG)
     @Pattern(regexp = HasTimestamps.VALID_PATTERN, message = HasTimestamps.VALID_PATTERN_MSG)
     protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Builder.Default
+    @NotNull
     @Size(min = HasTimestamps.VALID_LENGTH, max = HasTimestamps.VALID_LENGTH, message = HasTimestamps.VALID_LENGTH_MSG)
     @Pattern(regexp = HasTimestamps.VALID_PATTERN, message = HasTimestamps.VALID_PATTERN_MSG)
     protected OffsetDateTime modified = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Builder.Default
+    @Nullable
     private final OffsetDateTime deleted = null;
 
     @Schema(
@@ -137,6 +143,7 @@ public class MetadataImpl implements Metadata {
             maxItems = 256
     )
     @Builder.Default
+    @Nullable
     @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
     private final Map<String, String> annotations = new HashMap<>();
 
@@ -148,23 +155,27 @@ public class MetadataImpl implements Metadata {
             maxItems = 256
     )
     @Builder.Default
+    @Nullable
     @SuppressFBWarnings(value = {"EI_EXPOSE_REP","EI_EXPOSE_REP2"}, justification = "lombok provided @Getter are created")
     private final Map<String, String> labels = new HashMap<>();
 
 
     @Override
     @JsonIgnore
+    @NotNull
     public Optional<OffsetDateTime> getDeletionTimestamp() {
         return Optional.ofNullable(this.deleted);
     }
 
     @Override
     @JsonIgnore
+    @NotNull
     public Optional<de.kaiserpfalzedv.commons.api.resources.Pointer> getOwningResource() {
         return Optional.ofNullable(this.owner);
     }
 
     @Override
+    @NotNull
     public MetadataImpl increaseGeneration() {
         return this.toBuilder()
                 .generation(this.generation + 1)
@@ -181,6 +192,7 @@ public class MetadataImpl implements Metadata {
      * @param name       the name of the resource.
      * @return A metadata builder for adding the other metadata.
      */
+    @NotNull
     public static MetadataImplBuilder of(
             final String kind,
             final String apiVersion,
@@ -199,7 +211,7 @@ public class MetadataImpl implements Metadata {
     }
 
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod","java:S1182","java:S2975"})
     @SuppressFBWarnings(value = "CN_IDIOM_NO_SUPER_CALL", justification = "Using the lombok builder.")
     @Override
     public MetadataImpl clone() {

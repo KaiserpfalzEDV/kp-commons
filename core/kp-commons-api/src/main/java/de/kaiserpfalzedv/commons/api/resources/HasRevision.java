@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.api.resources;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 /**
@@ -31,7 +32,7 @@ import java.time.OffsetDateTime;
  * @param T The type of Id of this resource (I normally use UUID).
  */
 @Schema(description = "If something has a revision.")
-public interface HasRevision<T> extends HasId<T> {
+public interface HasRevision<T extends Serializable> extends HasId<T> {
     @Schema(description = "The date and time of the current revision.")
     OffsetDateTime getRevisioned();
 
