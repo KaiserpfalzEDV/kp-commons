@@ -26,7 +26,6 @@
 	<relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
     <artifactId>kp-commons-modules-root</artifactId>
     <packaging>pom</packaging>
 

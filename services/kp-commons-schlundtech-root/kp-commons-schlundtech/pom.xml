@@ -21,9 +21,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
-			<artifactId>kp-commons-schlundtech-root</artifactId>
-			<version>4.0.0</version>
+        <groupId>de.kaiserpfalz-edv.commons</groupId>
+        <artifactId>kp-commons-schlundtech-root</artifactId>
+        <version>4.0.0</version>
     </parent>
 
     <artifactId>kp-commons-schlundtech</artifactId>
@@ -37,7 +37,7 @@
 
     <dependencies>
         <dependency>
-			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
+			<groupId>de.kaiserpfalz-edv.commons</groupId>
 			<artifactId>schlundtech-domainrobot-models</artifactId>
 			<version>4.0.0</version>
 		</dependency>

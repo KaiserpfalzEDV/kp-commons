@@ -20,13 +20,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.kaiserpfalz-edv.commons.services</groupId>
+        <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-services-root</artifactId>
         <version>4.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>de.kaiserpfalz-edv.commons.services</groupId>
     <artifactId>kp-commons-schlundtech-root</artifactId>
     <packaging>pom</packaging>
 

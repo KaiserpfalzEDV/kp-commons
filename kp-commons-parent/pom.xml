@@ -602,7 +602,7 @@
 
             <dependencies>
                 <dependency>
-                    <groupId>de.kaiserpfalz-edv.commons.core</groupId>
+                    <groupId>de.kaiserpfalz-edv.commons</groupId>
                     <artifactId>kp-commons-test</artifactId>
                     <scope>test</scope>
                 </dependency>

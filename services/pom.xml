@@ -26,7 +26,6 @@
         <relativePath>../kp-commons-parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>de.kaiserpfalz-edv.commons.services</groupId>
     <artifactId>kp-commons-services-root</artifactId>
     <packaging>pom</packaging>
 
@@ -64,17 +63,17 @@
         </dependency>
 
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.core</groupId>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-rest</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-spring</artifactId>
         </dependency>
 
