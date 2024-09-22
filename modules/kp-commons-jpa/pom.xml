@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>3.3.3-3</version>
+        <version>4.0.0</version>
     </parent>
 
     <artifactId>kp-commons-jpa</artifactId>

@@ -21,7 +21,10 @@ package de.kaiserpfalzedv.commons.api.resources;
  * PersistetResource -- The base interface for all resources that are persisted.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 4.0.0  2024-09-22
  * @since 2.0.0  2023-01-06
+ * 
+ * @param T The type of the ID (I normally use UUID).
  */
-public interface Persisted extends HasRevision, Cloneable {
+public interface Persisted<T> extends HasRevision<T>, Cloneable {
 }

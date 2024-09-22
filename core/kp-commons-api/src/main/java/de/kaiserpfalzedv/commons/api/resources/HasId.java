@@ -21,30 +21,22 @@ import java.io.Serializable;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * HasId --
+ * HasId -- Has an Id of type T.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 3.3.3-3  2024-09-08
+ * @version 4.0.0  2024-09-22
  * @since 0.1.0  2021-04-18
+ * 
+ * @Param T The type of Id.
  */
-public interface HasId extends Serializable {
-    public final long MIN = 1;
-    public final long MAX = Long.MAX_VALUE;
-    public final String VALID_ID_LENGTH_MSG = "The ID must be between " + MIN + " and " + MAX + ".";
-
+public interface HasId<T> extends Serializable {
     @Schema(
             name = "id",
-            description = "The id of a resource.",
-            minimum = "1",
-            maximum = "9223372036854775807"
+            description = "The id of a resource."
     )
     @NotNull
-    @Min(value = MIN, message = VALID_ID_LENGTH_MSG)
-    @Max(value = MAX, message = VALID_ID_LENGTH_MSG)
-    Long getId();
+    T getId();
 }

@@ -23,7 +23,7 @@
     <parent>
 			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
 			<artifactId>kp-commons-schlundtech-root</artifactId>
-			<version>3.3.3-3</version>
+			<version>4.0.0</version>
     </parent>
 
     <artifactId>kp-commons-schlundtech</artifactId>
@@ -39,7 +39,7 @@
         <dependency>
 			<groupId>de.kaiserpfalz-edv.commons.services</groupId>
 			<artifactId>schlundtech-domainrobot-models</artifactId>
-			<version>3.3.3-3</version>
+			<version>4.0.0</version>
 		</dependency>
     </dependencies>
 </project>
