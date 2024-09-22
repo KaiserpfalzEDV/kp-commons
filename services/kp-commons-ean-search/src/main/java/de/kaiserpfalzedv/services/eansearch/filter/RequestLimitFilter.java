@@ -90,29 +90,28 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     /**
      * Reports the handled requests and remaining credits to the API.
      *
-     * @param requestContext  request context.
-     * @param responseContext response context.
+     * @param context  request context.
+     * @param chain the remaining chain to be worked on.
      */
     @Override
     public Object intercept(final InvocationContext context, final Chain chain) throws Exception {
-        final String remaining = context.response().headers().get(API_REMAINING_REQUEST_HEADER).stream().findFirst().orElse(null);
+        final String remainingRequestCount = context.response().headers().get(API_REMAINING_REQUEST_HEADER).stream().findFirst().orElse(null);
 
         synchronized (this) {
-            if (remaining != null) {
-                this.remaining = Integer.valueOf(remaining, 10);
-                this.registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), this.remaining);
+            if (remainingRequestCount != null) {
+                remaining = Integer.valueOf(remainingRequestCount, 10);
+                registry.gauge(API_REMAINING_METRICS_NAME, Tags.empty(), remaining);
             }
-
-            log.debug("EAN-Search remaining requests. remaining={}, used={}", this.remaining, this.requestCounter.count());
         }
 
+        log.debug("EAN-Search remaining requests. remaining={}, used={}", remaining, requestCounter.count());
         return chain.next(context);
     }
 
     /**
      * This filter prevents the external call when there are no credits left for this API.
      *
-     * @param requestContext request context.
+     * @param request The request teamplate to use.
      * @throws EanSearchException When the credits for this API has been used and there are no
      *                                               credits remaining.
      */
