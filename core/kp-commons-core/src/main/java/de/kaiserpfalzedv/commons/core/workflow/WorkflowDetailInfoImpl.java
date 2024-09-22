@@ -77,7 +77,7 @@ public class WorkflowDetailInfoImpl implements WorkflowDetailInfo {
     )
     @NotNull
     @Builder.Default
-    private final UUID id = UUID.randomUUID();
+    private final String id = UUID.randomUUID().toString();
 
     @Schema(
             description = "The creation time.",
