@@ -20,8 +20,7 @@ package de.kaiserpfalzedv.services.dnb.client;
 import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.kaiserpfalzedv.services.dnb.model.Book;
@@ -43,18 +42,6 @@ public interface DnbLookupClient {
      * @param query The query to be sent. It has to contain the index followed by a '='. The nicest index is 'WOE'.
      * @return A set of Books.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/sru/dnb", produces = "text/xml", consumes = "text/xml")
+    @GetMapping(path = "/src/dnb", produces = "text/xml", consumes = "text/xml")
     List<Book> lookup(@RequestParam("query") String query);
-
-    /*
-    @GetMapping(value = "/sru/dnb", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Book> lookup(final String query) {
-        final Flux<Book> books = WebClient.create("https://services.dnb.de/")
-                .get()
-                .retrieve()
-                .bodyToFlux(Book.class);
-
-        return books;
-    }
- */
 }

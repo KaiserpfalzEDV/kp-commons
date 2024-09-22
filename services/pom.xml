@@ -75,7 +75,7 @@
 
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
-            <artifactId>kp-commons-jackson</artifactId>
+            <artifactId>kp-commons-spring</artifactId>
         </dependency>
 
         <dependency>

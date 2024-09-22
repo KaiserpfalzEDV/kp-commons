@@ -40,10 +40,6 @@
             <artifactId>kp-commons-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
-            <artifactId>kp-commons-jackson</artifactId>
-        </dependency>
         <!-- Json/XML handling -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

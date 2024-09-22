@@ -146,16 +146,6 @@
                 <version>${kp-commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>${kp-commons.groupId}.modules</groupId>
-                <artifactId>kp-commons-jackson</artifactId>
-                <version>${kp-commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${kp-commons.groupId}.modules</groupId>
-                <artifactId>kp-commons-vaadin</artifactId>
-                <version>${kp-commons.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>${kp-commons.groupId}.services</groupId>
                 <artifactId>kp-commons-ean-search</artifactId>
                 <version>${kp-commons.version}</version>
