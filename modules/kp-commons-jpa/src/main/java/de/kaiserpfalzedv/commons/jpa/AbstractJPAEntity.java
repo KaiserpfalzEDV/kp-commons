@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.jpa;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -25,6 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -46,40 +48,42 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(onlyExplicitlyIncluded = true)
-public abstract class AbstractJPAEntity implements HasId, Cloneable {
+@ToString(callSuper = true)
+public abstract class AbstractJPAEntity<T extends Serializable> implements HasId<T>, Cloneable {
     @Id
     @GeneratedValue
-    @Column(name = "ID", nullable = false, updatable = false, unique = true)
-    @ToString.Include
-    protected Long id;
+    @Column(name = "ID", nullable = false, insertable = true, updatable = false, unique = true)
+    protected T id;
 
     @NonNull
     @Version
-    @Column(name = "VERSION", nullable = false)
+    @Column(name = "VERSION", nullable = false, insertable = true, updatable = true)
     @Builder.Default
-    @ToString.Include
     protected Integer version = 0;
 
     @CreationTimestamp
-    @Column(name = "CREATED", nullable = false, updatable = false)
+    @Column(name = "CREATED", nullable = false, insertable = true, updatable = false)
     @NonNull
     protected OffsetDateTime created;
 
     @UpdateTimestamp
-    @Column(name = "MODIFIED", nullable = false)
-    @NonNull
+    @Column(name = "MODIFIED", nullable = true, insertable = false, updatable = true)
+    @Nullable
     protected OffsetDateTime modified;
 
-    @Column(name = "DELETED", insertable = false)
+    @Column(name = "DELETED", nullable = true, insertable = false, updatable = true)
+    @Nullable
     protected OffsetDateTime deleted;
 
 
+    @SuppressWarnings({"unchecked","java:S2097"})
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof final AbstractJPAEntity entity)) return false;
-        return this.id.equals(entity.getId());
+        if (o == null) return false;
+        if (!(AbstractJPAEntity.class.isAssignableFrom(o.getClass()))) return false;
+
+        return this.id.equals(((HasId<T>)o).getId());
     }
 
     @Override
@@ -88,8 +92,10 @@ public abstract class AbstractJPAEntity implements HasId, Cloneable {
     }
 
     @Override
-    protected AbstractJPAEntity clone() throws CloneNotSupportedException {
-        final AbstractJPAEntity result = (AbstractJPAEntity) super.clone();
+    @SuppressWarnings("java:S2975")
+    protected AbstractJPAEntity<T> clone() throws CloneNotSupportedException {
+        @SuppressWarnings("unchecked")
+        final AbstractJPAEntity<T> result = (AbstractJPAEntity<T>) super.clone();
 
         result.id = this.id;
         result.version = this.version;
