@@ -42,6 +42,6 @@ public interface DnbLookupClient {
      * @param query The query to be sent. It has to contain the index followed by a '='. The nicest index is 'WOE'.
      * @return A set of Books.
      */
-    @GetMapping(path = "/src/dnb", produces = "text/xml", consumes = "text/xml")
+    @GetMapping(value = "/sru/dnb", produces = "text/xml", consumes = "text/xml")
     List<Book> lookup(@RequestParam("query") String query);
 }
