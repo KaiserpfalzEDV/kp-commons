@@ -22,8 +22,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.Set;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.kaiserpfalzedv.services.sms77.model.Balance;
@@ -45,45 +45,23 @@ import jakarta.validation.constraints.Size;
  * </p>
  *
  * <p>
- * This is the client for accessing the API of the sms77 paid webservice. You
- * need an Api-Key. This client has a
- * quarkus application.yaml included which will rely on certain environment
- * variables to be set. These are:
+ * This is the client for accessing the API of the sms77 paid webservice. You need an Api-Key. This client has a spring boot application.yaml included which will rely on certain environment variables to be set. These are:
  * </p>
  *
  * <dl>
  * <dt>SMS77_API_URL</dt>
- * <dd><em>(optional)</em>The URI for the SMS77.io api. Normally there is no
- * reason to give another URI than
- * {@literal https://gateway.sms77.io}. And that URI is the default when nothing
- * else is specified./</dd>
+ * <dd><em>(optional)</em>The URI for the SMS77.io api. Normally there is no reason to give another URI than {@literal https://gateway.sms77.io}. And that URI is the default when nothing else is specified./</dd>
  * <dt>SMS77_API_KEY</dt>
- * <dd>The API key from sms77.io. For development you should generate a sandbox
- * api key to cut
- * costs - but your mileage may vary.</dd>
+ * <dd>The API key from sms77.io. For development you should generate a sandbox api key to cut costs - but your mileage may vary.</dd>
  * </dl>
  *
  * <p>
- * For the time being the API does not throw any sms77 specific exceptions since
- * the sms77 API always returns
- * HTTP 200. You have to check the return objects of the calls to find out if
- * there has something happened.
+ * For the time being the API does not throw any sms77 specific exceptions since the sms77 API always returns HTTP 200. You have to check the return objects of the calls to find out if there has something happened.
  * </p>
- *
- * <p>
- * <em
- * >TODO 2023-01-22 rlichti Implement a filter to read the objects and generate
- * matching exceptions.
- * <br/>
- * NOTE: I don't have a direct need for this, but it would be a much nicer
- * interface for accessing the sms77 api.
- * </em>
- * </p>
- *
- *
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 3.0.0 2023-01-17
+ * @version 4.0.0  2024-09-22
+ * @since 3.0.0  2023-01-17
  */
 @FeignClient(name = "sms77", configuration = Sms77ClientConfig.class, path = "/api")
 @SuppressWarnings("JavadocLinkAsPlainText")
@@ -95,13 +73,11 @@ public interface Sms77Client {
      * @param sms The SMS to be sent. The same SMS can address multiple users.
      * @return The result of the SMS sending.
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/sms", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @Timed("sms77.send-sms-json.time")
     @Counted("sms77.send-sms-json.count")
     @Retry(name = "sendSMS")
     @CircuitBreaker(name = "sendSMS")
-//        delay = 1000, maxDuration = 5000, retryOn = {            Sms77RateLimitException.class }, abortOn = Sms77Exception.class)
-//    @CircuitBreaker(failOn = Sms77Exception.class, requestVolumeThreshold = 5)
+    @PostMapping(value = "/sms", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     SmsResult sendSMS(@NotNull final Sms sms);
 
     /**
@@ -111,11 +87,11 @@ public interface Sms77Client {
      * @param text   The text of the SMS.
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/sms", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @Timed("sms77.send-sms-query.time")
     @Counted("sms77.send-sms-query.count")
     @Retry(name = "sendSMS")
     @CircuitBreaker(name = "sendSMS")
+    @PostMapping(value = "/sms", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     SmsResult sendSMS(
             @Size(min = 1, max = 10) @RequestParam("to") @NotNull final Set<String> number,
 
@@ -131,7 +107,7 @@ public interface Sms77Client {
     @Counted("sms77.balance.count")
     @Retry(name = "balanceSMS")
     @CircuitBreaker(name = "balanceSMS")
-    @RequestMapping(method = RequestMethod.GET, value = "/balance", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/balance", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     Balance balance();
 
     /**
@@ -160,7 +136,7 @@ public interface Sms77Client {
     @Counted("sms77.number-format-check.multi.count")
     @Retry(name = "lookupSMS")
     @CircuitBreaker(name = "lookupSMS")
-    @RequestMapping(method = RequestMethod.GET, value = "/lookup", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/lookup", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     Set<NumberFormatCheckResult> checkMultipleNumberFormats(
             @RequestParam("number") @NotBlank final String numbersWithComma);
 
@@ -182,6 +158,6 @@ public interface Sms77Client {
     @Counted("sms77.number-format-check.multi.count")
     @Retry(name = "checkNumberFormatSMS")
     @CircuitBreaker(name = "checkNumberFormatSMS")
-    @RequestMapping(method = RequestMethod.GET, value = "/lookup", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/lookup", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     NumberFormatCheckResult checkNumberFormat(@RequestParam("number") @NotBlank final String number);
 }

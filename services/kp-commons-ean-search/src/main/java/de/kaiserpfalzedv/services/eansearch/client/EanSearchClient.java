@@ -22,8 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.Set;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.kaiserpfalzedv.services.eansearch.model.EanData;
@@ -41,7 +40,7 @@ import io.micrometer.core.annotation.Timed;
  */
 @FeignClient(name = "eansearch", configuration = EanSearchClientConfig.class, path = "/api")
 public interface EanSearchClient {
-    @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @GetMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @Retry(name = "eansearch")
     @CircuitBreaker(name = "eansearch")
     @Timed("ean-search.lookup.ean.time")
@@ -50,7 +49,7 @@ public interface EanSearchClient {
     // @CircuitBreaker(failOn = EanSearchException.class, requestVolumeThreshold = 5)
     Set<EanData> barcodeLookupEAN(@RequestParam("ean") final String ean13);
 
-    @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @GetMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @Retry(name = "eansearch")
     @CircuitBreaker(name = "eansearch")
     @Timed("ean-search.lookup.upc.time")
@@ -59,7 +58,7 @@ public interface EanSearchClient {
     // @CircuitBreaker(failOn = EanSearchException.class, requestVolumeThreshold = 5)
     Set<EanData> barcodeLookupUPC(@RequestParam("upc") final String upc12);
 
-    @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @GetMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @Retry(name = "eansearch")
     @CircuitBreaker(name = "eansearch")
     @Timed("ean-search.lookup.isbn.time")
