@@ -57,7 +57,7 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     private final MeterRegistry registry;
     private Counter requestCounter;
 
-    // No lombok generateion to make it synchronized
+    // No lombok generation to make it synchronized
     private int remaining = -1;
     private OffsetDateTime lastRequest = OffsetDateTime.now(ZoneOffset.UTC).minus(1, ChronoUnit.DAYS);
 
@@ -111,7 +111,7 @@ public class RequestLimitFilter implements RequestInterceptor, ResponseIntercept
     /**
      * This filter prevents the external call when there are no credits left for this API.
      *
-     * @param request The request teamplate to use.
+     * @param request The request template to use.
      * @throws EanSearchException When the credits for this API has been used and there are no
      *                                               credits remaining.
      */

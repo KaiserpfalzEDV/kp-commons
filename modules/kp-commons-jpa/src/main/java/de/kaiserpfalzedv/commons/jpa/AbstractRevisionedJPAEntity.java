@@ -34,11 +34,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@SuppressFBWarnings(value = "CT_CONSTRUCTOR_THROW", justification = "lombok provided superbuilder constructor.")
+@SuppressFBWarnings(value = "CT_CONSTRUCTOR_THROW", justification = "lombok provided SuperBuilder constructor.")
 @MappedSuperclass
 @RevisionEntity
 @SuperBuilder(toBuilder = true)

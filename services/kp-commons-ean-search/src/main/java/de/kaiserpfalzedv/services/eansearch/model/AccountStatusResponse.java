@@ -25,9 +25,6 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * <p>AccountStatusResponse -- The status of the current account of www.ean-search.org</p>
  *
- * TODO 2023-01-17 rlichti Implement the filter for logging X-Credits-Remaining data to the log file
- * TODO 2023-01-17 rlichti Implement the filter for exposing X-Credits-Remaining as metric
- *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
  */
