@@ -53,7 +53,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <jackson.version>2.17.0</jackson.version>
-        <spring-boot.version>3.3.2</spring-boot.version>
+        <spring-boot.version>3.3.4</spring-boot.version>
         <android-json.version>0.0.20131108.vaadin1</android-json.version>
         <api-guardian.version>1.1.2</api-guardian.version>
         <c3p0.version>0.10.0-pre7</c3p0.version>
@@ -72,8 +72,8 @@
         <maven-resolver.version>1.9.19</maven-resolver.version>
         <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
         <micrometer-context-propagation.version>1.1.1</micrometer-context-propagation.version>
-        <mockk.version>1.13.10</mockk.version>
-        <native-gradle-plugin.version>0.10.1</native-gradle-plugin.version>
+        <mockk.version>1.13.12</mockk.version>
+        <native-gradle-plugin.version>0.10.3</native-gradle-plugin.version>
         <plexus-build-api.version>0.0.7</plexus-build-api.version>
         <plexus-sec-dispatcher.version>1.4</plexus-sec-dispatcher.version>
         <simple-jndi.version>0.24.0</simple-jndi.version>
