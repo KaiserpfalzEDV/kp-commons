@@ -17,10 +17,10 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
  * HasRevision --
@@ -33,8 +33,17 @@ import java.time.OffsetDateTime;
  */
 @Schema(description = "If something has a revision.")
 public interface HasRevision<T extends Serializable> extends HasId<T> {
+    /**
+     * @return The date of the last version. It is literally the {@link #getModified()}.
+     * @deprecated Will be removed with version 5.0.0 of this library.
+     */
+    // TODO 2024-09-27 klenkes74 Remove with 5.0.0
+    @SuppressWarnings({"java:S1133","java:S1135"})
     @Schema(description = "The date and time of the current revision.")
-    OffsetDateTime getRevisioned();
+    @Deprecated
+    default OffsetDateTime getRevisioned() {
+        return getModified();
+    }
 
     @Schema(description = "The version of this resource.")
     Integer getVersion();

@@ -44,19 +44,37 @@ public interface Metadata extends HasUid, HasTimestamps, Cloneable {
             description = "The local part of the URL to retrieve the resource.",
             nullable = true,
             readOnly = true,
-            pattern = "/api/" + HasName.VALID_NAME_PATTERN
+            pattern = "/<prefix (default: api)>/" + HasName.VALID_NAME_PATTERN
                     + "/" + HasApiVersion.VALID_VERSION_PATTERN
                     + "/" + HasName.VALID_NAME_PATTERN
                     + "/" + HasName.VALID_NAME_PATTERN,
             minLength = 19,
             maxLength = 318
     )
+    @NotNull
     @JsonProperty(value = "selfLink", access = JsonProperty.Access.READ_ONLY)
     default String getSelfLink() {
-        return String.format("/api/%s/%s/%s/%s",
+        String prefix = removeTrailingSlash(getSelfLinkPrefix());
+
+        return String.format("%s/%s/%s/%s/%s",
+                prefix,
                 this.getKind().toLowerCase(Locale.getDefault()), this.getApiVersion().toLowerCase(Locale.getDefault()),
                 this.getNameSpace(), this.getName()
         );
+    }
+
+    @NotNull
+    @JsonIgnore
+    default String removeTrailingSlash(@NotNull final String prefix) {
+        return prefix.endsWith("/") 
+                ? prefix.substring(1, prefix.length() - 1) 
+                : prefix;
+    }
+
+    @NotNull
+    @JsonIgnore
+    default String getSelfLinkPrefix() {
+        return "/api";
     }
 
     @JsonIgnore

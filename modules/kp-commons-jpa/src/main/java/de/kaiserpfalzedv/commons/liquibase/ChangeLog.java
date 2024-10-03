@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.api.liquibase.model;
+package de.kaiserpfalzedv.commons.liquibase;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

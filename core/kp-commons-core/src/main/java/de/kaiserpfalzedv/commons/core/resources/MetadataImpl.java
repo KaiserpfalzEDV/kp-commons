@@ -116,7 +116,7 @@ public class MetadataImpl implements Metadata {
     )
     @Nullable
     @Builder.Default
-    private final de.kaiserpfalzedv.commons.core.resources.PointerImpl owner = null;
+    private final PointerImpl owner = null;
 
     @Builder.Default
     @NotNull

@@ -15,37 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.api.vaadin.components.model;
+package de.kaiserpfalzedv.commons.api.components.model;
+
+import org.semver4j.Semver;
+
+import java.util.List;
 
 /**
- * <p>Imprint -- The data for the impressum Vaadin component</p>
+ * <p>About -- The data for the about view</p>
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
  */
-public interface Imprint {
-    /**
-     * @return the name of the responsible person for the web page.
-     */
-    String getResponsiblePerson();
+public interface About {
+    String getName();
 
-    /**
-     * @return the name and full address of the person responsible according to the Mediendienste Staatsvertrag.
-     */
-    String getResponsibleMStV();
+    Semver getVersion();
 
-    /**
-     * @return the name and full address of the person responsible according to the Rundfunkstaatsvertrag.
-     */
-    String getResponsibleRStV();
+    String getDescription();
 
-    /**
-     * @return Full address of the owner/owning organisation of this web page.
-     */
-    String getContact();
+    <T extends ChangeLog> List<T> getLiquibaseChangeLog();
 
-    /**
-     * @return Additional text to be displayed below the imprint.
-     */
-    String getAdditionalNotes();
+    License getLicense();
 }

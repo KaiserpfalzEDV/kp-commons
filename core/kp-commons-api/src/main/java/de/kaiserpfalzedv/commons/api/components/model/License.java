@@ -15,28 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.api.vaadin.components.model;
+package de.kaiserpfalzedv.commons.api.components.model;
 
-import de.kaiserpfalzedv.commons.api.licenses.model.License;
-import de.kaiserpfalzedv.commons.api.liquibase.model.ChangeLog;
-import org.semver4j.Semver;
-
-import java.util.List;
+import java.util.Optional;
 
 /**
- * <p>About -- The data for the about view</p>
+ *<p>License -- A short structure containing a license documentation.</p>
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
  */
-public interface About {
-    String getName();
-
-    Semver getVersion();
-
-    String getDescription();
-
-    List<? extends ChangeLog> getLiquibaseChangeLog();
-
-    License getLicense();
+public interface License {
+    String getTitle();
+    String getShortNote();
+    Optional<String> getFullText();
+    String getLicenseLink();
 }

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.resources;
+package de.kaiserpfalzedv.commons.core.data;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

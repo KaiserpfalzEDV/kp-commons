@@ -15,19 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.api.licenses.model;
-
-import java.util.Optional;
+package de.kaiserpfalzedv.commons.api.components.model;
 
 /**
- *<p>License -- A short structure containing a license documentation.</p>
+ * <p>Imprint -- The data for the imprint Vaadin component</p>
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
  */
-public interface License {
-    String getTitle();
-    String getShortNote();
-    Optional<String> getFulltext();
-    String getLicenseLink();
+public interface Imprint {
+    /**
+     * @return the name of the responsible person for the web page.
+     */
+    String getResponsiblePerson();
+
+    /**
+     * @return the name and full address of the person responsible according to the Mediendienste Staatsvertrag.
+     */
+    String getResponsibleMStV();
+
+    /**
+     * @return the name and full address of the person responsible according to the Rundfunkstaatsvertrag.
+     */
+    String getResponsibleRStV();
+
+    /**
+     * @return Full address of the owner/owning organisation of this web page.
+     */
+    String getContact();
+
+    /**
+     * @return Additional text to be displayed below the imprint.
+     */
+    String getAdditionalNotes();
 }

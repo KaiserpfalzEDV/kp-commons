@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.core.resources;
+package de.kaiserpfalzedv.commons.core.data;
 
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class PagingTest {
-    private static final PagingImpl BASEPAGE = PagingImpl.builder()
+class PagingTest {
+    private static final PagingImpl BASE_PAGE = PagingImpl.builder()
             .start(100)
             .size(15)
             .count(15)
@@ -30,8 +30,8 @@ public class PagingTest {
             .build();
 
     @Test
-    public void shouldReturnTheNextPageWhenThereAreEnoughElements() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE;
+    void shouldReturnTheNextPageWhenThereAreEnoughElements() {
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE;
 
         final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
 
@@ -46,8 +46,8 @@ public class PagingTest {
     }
 
     @Test
-    public void shouldReturnIncompletePageWhenThereAreNotEnoughElementsForTheNextPage() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().total(123).build();
+    void shouldReturnIncompletePageWhenThereAreNotEnoughElementsForTheNextPage() {
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().total(123).build();
 
         final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
 
@@ -63,8 +63,8 @@ public class PagingTest {
 
 
     @Test
-    public void shouldReturnLastPageWhenRequested() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().total(123).build();
+    void shouldReturnLastPageWhenRequested() {
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().total(123).build();
 
         final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.lastPage();
 
@@ -79,8 +79,8 @@ public class PagingTest {
     }
 
     @Test
-    public void shouldReturnThePreviousPageWhenThereAreEnoughElements() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE;
+    void shouldReturnThePreviousPageWhenThereAreEnoughElements() {
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE;
 
         final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
 
@@ -96,8 +96,8 @@ public class PagingTest {
 
 
     @Test
-    public void shouldReturnFirstPageWhenRequested() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().build();
+    void shouldReturnFirstPageWhenRequested() {
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().build();
 
         final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.firstPage();
 
@@ -111,8 +111,8 @@ public class PagingTest {
         Assertions.assertEquals(expected, result);
     }
     @Test
-    public void shouldReturnFirstPageWhenThereAreNotEnoughElementsForThePreviousPage() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASEPAGE.toBuilder().size(300).build();
+    void shouldReturnFirstPageWhenThereAreNotEnoughElementsForThePreviousPage() {
+        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().size(300).build();
 
         final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
 

@@ -9,7 +9,8 @@
         "libravatars",
         "peholmst",
         "temurin",
-        "vhost"
+        "vhost",
+        "Revisioned"
     ],
     "editor.detectIndentation": false
 }

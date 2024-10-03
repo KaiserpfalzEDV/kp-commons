@@ -15,12 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.api.resources;
+package de.kaiserpfalzedv.commons.api.data;
 
 import java.io.Serializable;
 
+import de.kaiserpfalzedv.commons.api.resources.HasRevision;
+
 /**
- * PersistetResource -- The base interface for all resources that are persisted.
+ * Persisted -- The base interface for all resources that are persisted.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 4.0.0  2024-09-22

@@ -34,7 +34,7 @@ public interface HasTimestamps {
     String VALID_PATTERN = "^[0-9]{4}(-[0-9]{2}){2}T([0-9]{2}:){2}[0-9]{2}.[0-9]{6}+[0-9]{2}:[0-9]{2}$";
     String VALID_PATTERN_MSG = "The timestamp must match the pattern '" + VALID_PATTERN + "'";
     int VALID_LENGTH = 32;
-    String VALID_LENGTH_MSG = "The timestamp must be exactely 32 characters long.";
+    String VALID_LENGTH_MSG = "The timestamp must be exactly 32 characters long.";
     String VALID_EXAMPLE = "2022-01-04T21:51:00.000000+01:00";
 
     @Schema(

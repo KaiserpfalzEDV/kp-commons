@@ -34,7 +34,7 @@ import jakarta.validation.constraints.Size;
  */
 public interface HasDisplayName extends HasName {
     /**
-     * Default implemetnation of getDisplayName().
+     * Default implementation of getDisplayName().
      * 
      * @return the result of {@link #getName()}.
      */

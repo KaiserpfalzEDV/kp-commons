@@ -26,10 +26,10 @@ import jakarta.validation.constraints.Pattern;
 
 /**
  * HasUid --
- *
+ * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 4.0.0  2024-09-08
- * @since 3.3.3-3    2024-09-08
+ * @since 3.3.3-3  2024-09-08
  */
 public interface HasUid {
     public final String VALID_UID_MSG = "The ID must be a valid UUID.";
