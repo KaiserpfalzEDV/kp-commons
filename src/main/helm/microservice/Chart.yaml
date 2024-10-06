@@ -1,12 +1,16 @@
 apiVersion: v2
 name: microservice
-description: A spring-boot microservice with a postgresql database backend (managed by PGO)
+description: A spring-boot microservice with a postgresql database backend (managed by PGO) and RabbitMQ messaging.
 
 type: application
-version: 1.0.0
+version: 2.0.0
 
 dependencies:
 - name: postgrescluster
   condition: postgrescluster.enabled
   version: "5.6.0"
+  repository: "oci://quay.io/kaiserpfalzedv/helm"
+- name: rabbitmqtopology
+  condition: rabbitmq.enabled
+  version: "1.0.0"
   repository: "oci://quay.io/kaiserpfalzedv/helm"

@@ -1,0 +1,14 @@
+{{- if and (.Values.enabled) (.Values.create) -}}
+---
+kind: RabbitmqCluster
+apiVersion: rabbitmq.com/v1beta1
+metadata:
+    name: {{ include "rabbitmq.fullname" . }}
+    labels:
+        {{- include "rabbitmq.labels" . | nindent 8 }}
+    {{- if .spec }}
+spec:
+    {{ .spec | toYaml | nindent 4 }}
+    {{- end }}
+
+{{ end }}

@@ -1,0 +1,49 @@
+{{- if .Values.enabled }}
+    {{- with .Values.shovels }}
+---
+kind: Shovel
+apiVersion: rabbitmq.com/v1beta1
+metadata:
+    name: {{ .name | quote }}
+    labels:
+        {{- include "rabbitmq.labels" . | nindent 8 }}
+spec:
+    {{ .spec | toYaml | nindent 4 }}
+    uriSecret:
+        name: {{ .name }}-shovel-secret
+    rabbitmqClusterReference:
+        name: {{ include "rabbitmq.reference" . }}
+
+---
+{{- $srcVhost := "" }}
+{{- $srcQuery := "" }}
+{{- if .srcUri.vhost }}
+{{- $srcVhost = printf "/%s" .srcUri.vhost }}
+{{- end }}
+{{- if .srcUri.query }}
+{{- $srcQuery = printf "?%s" .srcUri.query }}
+{{- end}}
+{{- $srcUri := printf "amqp://%s:%s@%s:%s%s%s" .srcUri.username .srcUri.password .srcUri.host .srcUri.port $srcVhost $srcQuery }}
+
+{{- $destVhost := "" }}
+{{- $destQuery := "" }}
+{{- if .destUri.vhost }}
+{{- $destVhost = printf "/%s" .destUri.vhost }}
+{{- end }}
+{{- if .destUri.query }}
+{{- $destQuery = printf "?%s" .destUri.query }}
+{{- end }}
+        {{- $destUri := printf "amqp://%s:%s@%s:%s%s%s" .destUri.username .destUri.password .destUri.host .destUri.port $destVhost $destQuery }}
+kind: Secret
+type: Opaque
+apiVersion: v1
+metadata:
+    name: {{ .name }}-shovel-secret
+    labels:
+        {{- include "rabbitmq.labels" . | nindent 8 }}
+stringData:
+    srcUri: {{ $srcUri | quote }}
+    destUri: {{ $destUri | quote }}
+
+    {{- end }}
+{{ end }}

@@ -1,0 +1,17 @@
+{{- if .Values.enabled }}
+{{- $labels := include "rabbitmq.labels" . -}}
+{{- $reference := include "rabbitmq.reference" . -}}
+{{- range .Values.users }}
+---
+kind: User
+apiVersion: rabbitmq.com/v1beta1
+metadata:
+    name: {{ .name | quote }}
+    labels:
+        {{- $labels | nindent 8 }}
+spec:
+    {{- .spec | toYaml | nindent 4 }}
+    rabbitmqClusterReference:
+        name: {{ $reference }}
+{{- end }}
+{{- end }}

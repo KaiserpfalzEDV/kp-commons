@@ -1,0 +1,7 @@
+apiVersion: v2
+name: rabbitmq
+description: Creating a RabbitMQ broker and the topology for using it.
+
+type: application
+version: 1.0.0
+appVersion: 3.13.7

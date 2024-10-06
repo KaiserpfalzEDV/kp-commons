@@ -1,0 +1,15 @@
+{{- if .Values.enabled }}
+    {{- with .Values.policies }}
+---
+kind: Policy
+apiVersion: rabbitmq.com/v1beta1
+metadata:
+    name: {{ .name | quote }}
+    labels:
+        {{- include "rabbitmq.labels" . | nindent 8 }}
+spec:
+    {{ .spec | toYaml | nindent 4 }}
+    rabbitmqClusterReference:
+        name: {{ include "rabbitmq.reference" . }}
+    {{- end }}
+{{ end }}

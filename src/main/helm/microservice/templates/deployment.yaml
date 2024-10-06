@@ -38,70 +38,79 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if or (.Values.service.enabled) (.Values.metrics.enabled) }}
           ports:
+            {{- if .Values.service.enabled }}
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-            {{- if .Values.metrics.enabled }}
+            {{- end }}
+            {{- if or (.Values.metrics.enabled) }}
             - name: metrics
               containerPort: {{ .Values.metrics.port }}
               protocol: TCP
             {{- end }}
-          {{- if $.Values.probes.enabled }}
-            {{- if $.Values.probes.default }}
+            {{- if $.Values.probes.enabled }}
+                {{- if $.Values.probes.default }}
           startupProbe:
             httpGet:
               path: /actuator/health/readiness
-              {{- if $.Values.metrics.enabled }}
+                    {{- if $.Values.metrics.enabled }}
               port: metrics
-              {{- else }}
+                    {{- else }}
               port: http
-              {{- end }}
+                    {{- end }}
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              {{- if $.Values.metrics.enabled }}
+                    {{- if $.Values.metrics.enabled }}
               port: metrics
-              {{- else }}
+                    {{- else }}
               port: http
-              {{- end }}
+                    {{- end }}
           readinessProbe:
-            httpGet:
-              path: /actuator/health/readiness
-              {{- if $.Values.metrics.enabled }}
-              port: metrics
-              {{- else }}
-              port: http
-              {{- end }}
-            {{- else }}
-              {{- if .Values.probes.startup }}
+                httpGet:
+                path: /actuator/health/readiness
+                    {{- if $.Values.metrics.enabled }}
+                port: metrics
+                    {{- else }}
+                port: http
+                    {{- end }}
+                {{- else }}
+                    {{- if .Values.probes.startup }}
           startupProbe:
             {{- toYaml .Values.probes.startup| nindent 12 }}
-              {{- end }}
-              {{- if .Values.probes.readiness }}
+                    {{- end }}
+                    {{- if .Values.probes.readiness }}
           readinessProbe:
             {{- toYaml .Values.probes.readiness| nindent 12 }}
-              {{- end }}
-              {{- if .Values.probes.liveness }}
+                    {{- end }}
+                    {{- if .Values.probes.liveness }}
           livenessProbe:
             {{- toYaml .Values.probes.liveness| nindent 12 }}
-              {{- end }}
+                    {{- end }}
+                {{- end }}
             {{- end }}
-          {{- end }}
+        {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if or (eq .Values.sso.enabled true) (eq .Values.postgrescluster.enabled true) }}
           envFrom:
-          {{- if .Values.sso.enabled }}
+            {{- if .Values.sso.enabled }}
           - prefix: SSO_
             secretRef:
               name: {{ include "microservice.fullname" . }}-sso-config
-          {{- end }}
-          {{- if .Values.postgrescluster.enabled }}
+              {{- end }}
+              {{- if .Values.postgrescluster.enabled }}
           - prefix: PGO_
             secretRef:
               name: {{ .Release.Name }}-pguser-{{ .Release.Name }}
-          {{- end }}
+              {{- end }}
+              {{- if .Values.rabbitmq.enabled}}
+          - prefix: RABBITMQ_
+            secretRef:
+              name: {{ include "microservice.fullname" . }}-user-credentials
+              {{- end}}
           {{- end }}
           env:
           - name: LOGGING_LEVEL

@@ -1,6 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
-partOf: ""
+partOf: &partOf ""
 version: "0.0.1+changeme"
 
 image:
@@ -32,10 +32,6 @@ securityContext:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
 
-service:
-  type: ClusterIP
-  port: 8080
-
 metrics:
   enabled: true
   port: 8081
@@ -43,6 +39,39 @@ metrics:
 probes:
   enabled: true
   default: true
+
+
+resources:
+  limits:
+    cpu: '2'
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1280Mi
+
+tmpSize: 500Mi
+
+mounts: {}
+
+replicaCount: 1
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 8080
+  containerPort: 8080
 
 ingress:
   enabled: false
@@ -60,32 +89,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources:
-  limits:
-    cpu: '2'
-    memory: 2Gi
-  requests:
-    cpu: 500m
-    memory: 1280Mi
-
-tmpSize: 500Mi
-
-replicaCount: 1
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 3
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
 postgrescluster:
-  enabled: true
+  enabled: false
   port: 5432
   postgresVersion: 15
   pgBouncerReplicas: 1
@@ -98,9 +103,10 @@ postgrescluster:
   instanceReplicas: 1
 
   openshift: true
+  partOf: *partOf
 
 sso:
-  enabled: true
+  enabled: false
   issuerUri: https://changeme/
   clientId: changeme
   clientSecret: changeme
@@ -108,11 +114,19 @@ sso:
   userNameAttribute: preferred_username
   roleAttribute: roles
 
+rabbitmq:
+  enabled: false
+  broker: 
+    create: false
+    name: changeme
+    uri: changeme
+    port: 5672
+  labels: {}
+  partOf: *partOf
+
 applicationConfig:
   enabled: false
   type: yaml
   data:
     application:
       name: changeme
-
-mounts: {}
