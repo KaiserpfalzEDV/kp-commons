@@ -89,7 +89,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-postgrescluster:
+postgres:
   enabled: false
   port: 5432
   postgresVersion: 15
@@ -116,12 +116,8 @@ sso:
 
 rabbitmq:
   enabled: false
-  broker: 
-    create: false
-    name: changeme
-    uri: changeme
-    port: 5672
-  labels: {}
+  create: false
+  name: changeme
   partOf: *partOf
 
 applicationConfig:

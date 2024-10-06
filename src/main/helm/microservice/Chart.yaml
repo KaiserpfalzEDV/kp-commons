@@ -7,10 +7,10 @@ version: 2.0.0
 
 dependencies:
 - name: postgrescluster
-  condition: postgrescluster.enabled
+  condition: postgres.enabled
   version: "5.6.0"
   repository: "oci://quay.io/kaiserpfalzedv/helm"
-- name: rabbitmqtopology
+- name: rabbitmq
   condition: rabbitmq.enabled
   version: "1.0.0"
   repository: "oci://quay.io/kaiserpfalzedv/helm"
