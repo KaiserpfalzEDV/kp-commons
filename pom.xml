@@ -95,12 +95,12 @@
 
     <distributionManagement>
         <site>
-            <id>gh-kaiserpfalzedv-kp-commons</id>
+            <id>github</id>
             <name>Kaiserpfalz EDV-Service -- KP-COMMONS</name>
             <url>scm:git:git@github.com:KaiserpfalzEDV/kp-commons.git</url>
         </site>
         <repository>
-            <id>gh-kaiserpfalzedv-kp-commons</id>
+            <id>github</id>
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons</url>
         </repository>

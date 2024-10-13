@@ -1,16 +1,6 @@
 name: Helm Chart Webservice
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - helm/webservice
-  pull_request:
-    branches:
-      - main
-    paths:
-      - helm/webservice
   workflow_dispatch:
 
 jobs:
