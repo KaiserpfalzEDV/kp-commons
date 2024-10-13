@@ -4,6 +4,11 @@
 >
 > -- @blue_eyed_darkness on TikTok
 
+[![CodeQL](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/release.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/release.yml)
+[![CodeQL](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/github-pages.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/github-pages.yml)
+[![JavaRunner](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/build-and-publish-java-runner-to-quay.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/build-and-publish-java-runner-to-quay.yml)
+[![CodeQL](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/publish-helm-webserice.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/publish-helm-webserice.yml)
+[![CodeQL](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/codeql-analysis.yml)
 [![CI](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/ci.yml/badge.svg)](https://github.com/KaiserpfalzEDV/kp-commons/actions/workflows/ci.yml)
 
 ## Abstract
