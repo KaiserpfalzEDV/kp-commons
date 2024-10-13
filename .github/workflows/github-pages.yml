@@ -10,6 +10,9 @@ jobs:
   github-pages:
     name: Create and Publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout sources
         id: checkout-sources
@@ -46,6 +49,8 @@ jobs:
             -pl kp-checkstyle \
             \
             install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: site
         id: build-site
@@ -58,3 +63,5 @@ jobs:
             -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
             \
             site site:stage scm-publish:publish-scm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
