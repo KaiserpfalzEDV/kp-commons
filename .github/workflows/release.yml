@@ -36,7 +36,6 @@ jobs:
           servers: |
             [
               { "id": "nvdApi", "username": "klenkes74", "password": "${{ secrets.NVD_API_KEY }}"},
-              { "id": "github", "username": "${{ github.actor }}", "password": "${{ secrets.GITHUB_TOKEN }}"},
               { "id": "kaiserpfalz-central", "username": "${{ secrets.MVN_CENTRAL_USERNAME }}", "password": "${{ secrets.MVN_CENTRAL_PASSWORD }}"}
             ]
 
