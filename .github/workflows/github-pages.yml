@@ -31,7 +31,10 @@ jobs:
         uses: s4u/maven-settings-action@v3.0.0
         with:
           servers: |
-            [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
+            [
+              { "id": "nvdApi", "username": "klenkes74", "password": "${{ secrets.NVD_API_KEY }}"},
+              { "id": "github", "username": "${{ secrets.GITHUB_ACTOR }}", "password": "${{ secret.GITHUB_TOKEN }}"}
+            ]
 
       - name: Prepare GPG signing
         id: install-gpg-key
