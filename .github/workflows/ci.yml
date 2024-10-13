@@ -37,7 +37,7 @@ jobs:
           servers: |
             [
               { "id": "nvdApi", "username": "klenkes74", "password": "${{ secrets.NVD_API_KEY }}"},
-              { "id": "github", "username": "${{ .GITHUB_ACTOR }}", "password": "${{ secrets.GITHUB_TOKEN }}"}
+              { "id": "github", "username": "${{ GITHUB_ACTOR }}", "password": "${{ secrets.GITHUB_TOKEN }}"}
             ]
 
       - name: Compile stuff
