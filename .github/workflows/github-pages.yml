@@ -12,9 +12,17 @@ jobs:
   github-pages:
     name: Create and Publish
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
-      packages: write
+      pages: write
+      packages: read
+      id-token: write
+
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+
     steps:
       - name: Checkout sources
         id: checkout-sources
@@ -37,12 +45,6 @@ jobs:
               { "id": "nvdApi", "username": "klenkes74", "password": "${{ secrets.NVD_API_KEY }}"}
             ]
 
-      - name: Prepare GPG signing
-        id: install-gpg-key
-        run: |
-          echo -en "${{ secrets.GPG_SIGNING_KEY }}\n" | gpg --batch --import || true
-          gpg --list-secret-keys --keyid-format LONG || true
-
       - name: Prepare checkstyle for site generation
         id: prepare-checkstyle
         run: |
@@ -53,8 +55,6 @@ jobs:
             -pl kp-checkstyle \
             \
             install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: site
         id: build-site
@@ -64,8 +64,16 @@ jobs:
             --no-transfer-progress \
             \
             -Prelease \
-            -Dgpg.passphrase=${{ secrets.GPG_SECRET }} \
             \
-            site site:stage scm-publish:publish-scm
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            site site:stage
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: 'target/staging'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
