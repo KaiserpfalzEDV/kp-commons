@@ -33,7 +33,7 @@ jobs:
           servers: |
             [
               { "id": "nvdApi", "username": "klenkes74", "password": "${{ secrets.NVD_API_KEY }}"},
-              { "id": "github", "username": "${{ secrets.GITHUB_ACTOR }}", "password": "${{ secret.GITHUB_TOKEN }}"}
+              { "id": "github", "username": "${{ secrets.GITHUB_ACTOR }}", "password": "${{ secrets.GITHUB_TOKEN }}"}
             ]
 
       - name: Prepare GPG signing
