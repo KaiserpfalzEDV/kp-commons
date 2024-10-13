@@ -24,6 +24,9 @@ jobs:
       cancel-in-progress: false
 
     steps:
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v2
+
       - name: Checkout sources
         id: checkout-sources
         uses: actions/checkout@v4
