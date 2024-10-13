@@ -30,20 +30,11 @@ jobs:
           servers: |
             [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
 
-
       - name: Prepare GPG signing
         id: install-gpg-key
         run: |
           echo -en "${{ secrets.GPG_SIGNING_KEY }}\n" | gpg --batch --import || true
           gpg --list-secret-keys --keyid-format LONG || true
-
-      - name: Set up Maven
-        id: setup-maven
-        uses: s4u/maven-settings-action@v3.0.0
-        with:
-          servers: |
-            [{ "id": "nvdApi", "username": "egal", "password": "${{ secrets.NVD_API_KEY }}"}]
-
 
       - name: Prepare checkstyle for site generation
         id: prepare-checkstyle
