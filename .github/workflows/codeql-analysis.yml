@@ -45,7 +45,7 @@ jobs:
           servers: |
             [
               { "id": "nvdApi", "username": "klenkes74", "password": "${{ secrets.NVD_API_KEY }}"},
-              { "id": "github", "username": "${{ secrets.GITHUB_ACTOR }}", "password": "${{ secrets.GITHUB_TOKEN }}"}
+              { "id": "github", "username": "${{ GITHUB_ACTOR }}", "password": "${{ secrets.GITHUB_TOKEN }}"}
             ]
 
       # Initializes the CodeQL tools for scanning.
