@@ -1,8 +1,0 @@
-###
-GET https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=oai_dc
-
-###
-GET https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=RDF
-
-###
-GET https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE=9783958672567&recordSchema=MARC21-xml

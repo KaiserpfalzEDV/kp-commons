@@ -71,7 +71,7 @@ Beat me.
 * modules
   * kp-commons-jpa
   * kp-commons-rest
-  * (kp-commons-vaadin - WIP)
+  * kp-commons-spring
 * services
   * kp-commons-ean-search
   * kp-commons-sms77

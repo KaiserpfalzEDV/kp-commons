@@ -9,6 +9,7 @@ import de.kaiserpfalzedv.commons.core.i18n.ResourceBundleTranslator;
 
 @Component
 public class KaiserpfalzMessageSource extends ResourceBundleTranslator implements MessageSource {
+    public static final long serialVersionUID = 0L;
 
     @Override
     public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {

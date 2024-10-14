@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "Autobuild",
+        "checkstyle",
         "codeql",
         "eansearch",
         "kaiserpfalzedv",
@@ -8,9 +9,9 @@
         "libravatar",
         "libravatars",
         "peholmst",
+        "Revisioned",
         "temurin",
-        "vhost",
-        "Revisioned"
+        "vhost"
     ],
     "editor.detectIndentation": false
 }
