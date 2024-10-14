@@ -62,7 +62,7 @@
         <jakarta-inject.version>2.0.1.MR</jakarta-inject.version>
         <janino.version>3.1.12</janino.version>
         <jline.version>2.14.6</jline.version>
-        <jna.version>5.14.0</jna.version>
+        <jna.version>5.15.0</jna.version>
         <jopt-simple.version>5.0.4</jopt-simple.version>
 
         <maven.version>3.9.9</maven.version>
