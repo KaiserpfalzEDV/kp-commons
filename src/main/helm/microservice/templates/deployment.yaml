@@ -69,12 +69,12 @@ spec:
               port: http
                     {{- end }}
           readinessProbe:
-                httpGet:
-                path: /actuator/health/readiness
+            httpGet:
+              path: /actuator/health/readiness
                     {{- if $.Values.metrics.enabled }}
-                port: metrics
+              port: metrics
                     {{- else }}
-                port: http
+              port: http
                     {{- end }}
                 {{- else }}
                     {{- if .Values.probes.startup }}
@@ -94,17 +94,12 @@ spec:
         {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or (eq .Values.sso.enabled true) (eq .Values.postgrescluster.enabled true) }}
+          {{- if or (eq .Values.sso.enabled true) (eq .Values.rabbitmq.enabled true) }}
           envFrom:
             {{- if .Values.sso.enabled }}
           - prefix: SSO_
             secretRef:
               name: {{ include "microservice.fullname" . }}-sso-config
-              {{- end }}
-              {{- if .Values.postgrescluster.enabled }}
-          - prefix: PGO_
-            secretRef:
-              name: {{ .Release.Name }}-pguser-{{ .Release.Name }}
               {{- end }}
               {{- if .Values.rabbitmq.enabled}}
           - prefix: RABBITMQ_
@@ -113,6 +108,17 @@ spec:
               {{- end}}
           {{- end }}
           env:
+          {{- if .Values.postgresql.enabled }}
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:postgresql://{{ include "microservice.fullname" . }}.svc/postgres
+          - name: SPRING_DATASOURCE_USERNAME
+            value: postgres
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" . }}-postgresql
+                key: postgres-password
+          {{- end }}
           - name: LOGGING_LEVEL
             value: WARN
           - name: POD_NAME

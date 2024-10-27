@@ -1,15 +1,15 @@
 {{- if .Values.enabled }}
-    {{- with .Values.permissions }}
+{{- range .Values.permissions }}
 ---
 kind: Permission
 apiVersion: rabbitmq.com/v1beta1
 metadata:
-    name: {{ .name | quote }}
-    labels:
-        {{- include "rabbitmq.labels" . | nindent 8 }}
+  name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "rabbitmq.labels" $ | nindent 4 }}
 spec:
-    {{ .spec | toYaml | nindent 4 }}
-    rabbitmqClusterReference:
-        name: {{ include "rabbitmq.reference" . }}
-    {{- end }}
+  {{- .spec | toYaml | nindent 2 }}
+  rabbitmqClusterReference:
+    name: {{ include "rabbitmq.broker" $ }}
+{{- end }}
 {{ end }}

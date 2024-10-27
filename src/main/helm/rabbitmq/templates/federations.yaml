@@ -1,39 +1,35 @@
 {{- if .Values.enabled }}
-    {{- with .Values.federations }}
+{{- range .Values.federations }}
 ---
 kind: Federation
 apiVersion: rabbitmq.com/v1beta1
 metadata:
-    name: {{ .name | quote }}
-    labels:
-        {{- include "rabbitmq.labels" . | nindent 8 }}
+  name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "rabbitmq.labels" $ | nindent 4 }}
 spec:
-    {{ .spec | toYaml | nindent 4 }}
-    uriSecret:
-        name: {{ .name }}-uri-secret
-
-    rabbitmqClusterReference:
-        name: {{ include "rabbitmq.reference" . }}
+  {{- .spec | toYaml | nindent 2 }}
+  rabbitmqClusterReference:
+    name: {{ include "rabbitmq.broker" $ }}
 
 ---
-        {{- $vhost := "" }}
-        {{- if .uri.vhost }}
-            {{- $vhost = printf "/%s" .uri.vhost }}
-        {{- end }}
-        {{- $query := "" }}
-        {{- if .uri.query }}
-            {{- $query = printf "?%s" .uri.query }}
-        {{- end}}
-        {{- $uri := printf "amqp://%s:%s@%s:%s%s%s" .uri.username .uri.password .uri.host .uri.port $vhost $query }}
+{{- $vhost := "" }}
+{{- if .uri.vhost }}
+{{- $vhost = printf "/%s" .uri.vhost }}
+{{- end }}
+{{- $query := "" }}
+{{- if .uri.query }}
+{{- $query = printf "?%s" .uri.query }}
+{{- end}}
+{{- $uri := printf "amqp://%s:%s@%s:%s%s%s" .uri.username .uri.password .uri.host .uri.port $vhost $query }}
 kind: Secret
 type: Opaque
 apiVersion: v1
 metadata:
-    name: {{ .name }}-uri-secret
-    labels:
-        {{- include "rabbitmq.labels" . | nindent 8 }}
+  name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}-uri-secret
+  labels:
+    {{- include "rabbitmq.labels" $ | nindent 4 }}
 stringData:
-    uri: {{ $uri | quote }}
-
-    {{- end }}
+  uri: {{ $uri | quote }}
+{{- end }}
 {{ end }}

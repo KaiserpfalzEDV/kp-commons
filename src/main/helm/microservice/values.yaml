@@ -49,6 +49,9 @@ resources:
     cpu: 500m
     memory: 1280Mi
 
+externalDb:
+  
+
 tmpSize: 500Mi
 
 mounts: {}
@@ -89,21 +92,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-postgres:
+postgresql:
   enabled: false
-  port: 5432
-  postgresVersion: 15
-  pgBouncerReplicas: 1
-  monitoring: true
-
-  instanceName: db
-  instanceSize: 2Gi
-  instanceMemory: 1Gi
-  instanceCPU: 1000m
-  instanceReplicas: 1
-
-  openshift: true
-  partOf: *partOf
 
 sso:
   enabled: false
@@ -117,8 +107,8 @@ sso:
 rabbitmq:
   enabled: false
   create: false
-  name: changeme
   partOf: *partOf
+    
 
 applicationConfig:
   enabled: false

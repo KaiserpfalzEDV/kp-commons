@@ -1,50 +1,54 @@
 ---
 enabled: false
 create: false
-name: changeme
+fullnameOverride: ""
+broker: ""
 port: 5672
 
 labels: {}
 #  key: value
 
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/users
+selectorLabels: {}
+#  key: value
+
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/users
 users: []
 #- name: ""
 #  spec: {}
 
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/queues
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/queues
 queues: []
 #- name: ""
 #  spec: {}
 
 # Exchanges and Topics
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/topic-exchanges
-#   and https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/exchanges
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/topic-exchanges
+#   and https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/exchanges
 exchanges: []
 #- name: ""
 #  spec: {}
 
-# check https://github.com/rabbitmq/messaging-topology-operator/blob/main/docs/examples/policies/policy.yaml
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/blob/main/docs/examples/policies/policy.yaml
 policies: []
 #- name: ""
 #  spec: {}
 
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/permissions
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/permissions
 permissions: []
 #- name: ""
 #  spec: {}
 
-# check https://github.com/rabbitmq/messaging-topology-operator/blob/main/docs/examples/vhosts/vhost.yaml
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/blob/main/docs/examples/vhosts/vhost.yaml
 virtualHosts: []
 #- name: ""
 #  spec: {}
 
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/bindings
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/bindings
 bindings: []
 #- name: ""
 #  spec: {}
 
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/federations
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/federations
 federations: []
 #- name: ""
 #  spec: {}
@@ -56,7 +60,7 @@ federations: []
 #    username: changeme
 #    password: changeme
 
-# check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/shovels
+# check https://github.com/rabbitmq/rabbitmq.topology-operator/tree/main/docs/examples/shovels
 shovels: []
 #- name: ""
 #  spec: {}

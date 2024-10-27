@@ -3,12 +3,15 @@
 kind: RabbitmqCluster
 apiVersion: rabbitmq.com/v1beta1
 metadata:
-    name: {{ include "rabbitmq.fullname" . }}
-    labels:
-        {{- include "rabbitmq.labels" . | nindent 8 }}
-    {{- if .spec }}
+{{- if $.Values.broker }}
+  name: {{ $.Values.broker }}
+{{- else }}
+  name: {{ include "rabbitmq.fullname" . }}
+{{- end }}
+  labels:
+    {{- include "rabbitmq.labels" . | nindent 4 }}
+{{- if .spec }}
 spec:
-    {{ .spec | toYaml | nindent 4 }}
-    {{- end }}
-
+  {{ .spec | toYaml | nindent 2 }}
+{{- end }}
 {{ end }}

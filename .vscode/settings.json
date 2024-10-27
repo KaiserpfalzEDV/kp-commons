@@ -1,17 +1,22 @@
 {
     "cSpell.words": [
-        "Autobuild",
+      "Autobuild",
         "checkstyle",
-        "codeql",
-        "eansearch",
-        "kaiserpfalzedv",
-        "Leite",
-        "libravatar",
-        "libravatars",
-        "peholmst",
+      "codeql",
+      "eansearch",
+      "fullname",
+      "kaiserpfalzedv",
+      "Leite",
+      "libravatar",
+      "libravatars",
+      "peholmst",
         "Revisioned",
-        "temurin",
-        "vhost"
+      "rabbitmq",
+      "temurin",
+      "vhost"
     ],
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.tabCompletion": "off",
+    "maven.executable.preferMavenWrapper": false
 }

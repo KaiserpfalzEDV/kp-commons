@@ -1,19 +1,18 @@
 {{- if .Values.enabled }}
-    {{- with .Values.shovels }}
+{{- range .Values.shovels }}
 ---
 kind: Shovel
 apiVersion: rabbitmq.com/v1beta1
 metadata:
-    name: {{ .name | quote }}
-    labels:
-        {{- include "rabbitmq.labels" . | nindent 8 }}
+  name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "rabbitmq.labels" $ | nindent 4 }}
 spec:
-    {{ .spec | toYaml | nindent 4 }}
-    uriSecret:
-        name: {{ .name }}-shovel-secret
-    rabbitmqClusterReference:
-        name: {{ include "rabbitmq.reference" . }}
-
+  {{ .spec | toYaml | nindent 2 }}
+  uriSecret:
+    name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}-shovel-secret
+  rabbitmqClusterReference:
+    name: {{ include "rabbitmq.reference" . }}
 ---
 {{- $srcVhost := "" }}
 {{- $srcQuery := "" }}
@@ -38,12 +37,11 @@ kind: Secret
 type: Opaque
 apiVersion: v1
 metadata:
-    name: {{ .name }}-shovel-secret
-    labels:
-        {{- include "rabbitmq.labels" . | nindent 8 }}
+  name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}-shovel-secret
+  labels:
+    {{- include "rabbitmq.labels" . | nindent 8 }}
 stringData:
-    srcUri: {{ $srcUri | quote }}
-    destUri: {{ $destUri | quote }}
-
-    {{- end }}
+  srcUri: {{ $srcUri | quote }}
+  destUri: {{ $destUri | quote }}
+{{- end }}
 {{ end }}
