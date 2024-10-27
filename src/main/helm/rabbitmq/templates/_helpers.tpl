@@ -12,7 +12,7 @@ Existing broker to reference to.
 {{- if .Values.broker }}
 {{ .Values.broker }}
 {{- else }}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- include "rabbitmq.fullname" . }}
 {{- end }}
 {{- end }}
 
@@ -54,7 +54,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.partOf }}
 app.kubernetes.io/part-of: {{ .Values.partOf }}
 {{- else }}
-app.kubernetes.io/part-of: {{ include "rabbitmq.name" . }}
+app.kubernetes.io/part-of: {{ include "rabbitmq.fullname" . }}
 {{- end }}
 {{- range $k, $v := .Values.labels }}
 {{ printf "%s: %s" $k ($v|quote) }}

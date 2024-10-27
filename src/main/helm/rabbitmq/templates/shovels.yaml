@@ -12,7 +12,7 @@ spec:
   uriSecret:
     name: {{ include "rabbitmq.fullname" $ }}-{{ .name }}-shovel-secret
   rabbitmqClusterReference:
-    name: {{ include "rabbitmq.reference" . }}
+    name: {{ include "rabbitmq.broker" . }}
 ---
 {{- $srcVhost := "" }}
 {{- $srcQuery := "" }}

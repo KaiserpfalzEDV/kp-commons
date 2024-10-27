@@ -3,11 +3,7 @@
 kind: RabbitmqCluster
 apiVersion: rabbitmq.com/v1beta1
 metadata:
-{{- if $.Values.broker }}
-  name: {{ $.Values.broker }}
-{{- else }}
-  name: {{ include "rabbitmq.fullname" . }}
-{{- end }}
+  name: {{ include "rabbitmq.broker" . }}
   labels:
     {{- include "rabbitmq.labels" . | nindent 4 }}
 {{- if .spec }}
