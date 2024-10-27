@@ -1,4 +1,4 @@
-{{- if and (.Values.enabled) (.Values.create) -}}
+{{- if and (.Values.enabled) (.Values.create) }}
 ---
 kind: RabbitmqCluster
 apiVersion: rabbitmq.com/v1beta1
