@@ -94,18 +94,13 @@ spec:
         {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or (eq .Values.sso.enabled true) (eq .Values.rabbitmq.enabled true) }}
+          {{- if .Values.sso.enabled }}
           envFrom:
             {{- if .Values.sso.enabled }}
           - prefix: SSO_
             secretRef:
               name: {{ include "microservice.fullname" . }}-sso-config
               {{- end }}
-              {{- if .Values.rabbitmq.enabled}}
-          - prefix: RABBITMQ_
-            secretRef:
-              name: {{ include "microservice.fullname" . }}-user-credentials
-              {{- end}}
           {{- end }}
           env:
           {{- if .Values.postgresql.enabled }}
@@ -119,7 +114,29 @@ spec:
                 name: {{ include "microservice.fullname" . }}-postgresql
                 key: postgres-password
           {{- end }}
-          - name: LOGGING_LEVEL
+          {{- if .Values.rabbitmq.enabled}}
+          - name: SPRING_RABBITMQ_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" . }}-rabbitmq-default-user
+                key: host
+          - name: SPRING_RABBITMQ_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" . }}-rabbitmq-default-user
+                key: port
+          - name: SPRING_RABBITMQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" . }}-rabbitmq-default-user
+                key: username
+          - name: SPRING_RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" . }}-rabbitmq-default-user
+                key: password
+          {{- end}}
+          - name: LOGGING_LEVEL_ROOT
             value: WARN
           - name: POD_NAME
             valueFrom:
