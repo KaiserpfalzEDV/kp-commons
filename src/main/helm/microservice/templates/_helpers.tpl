@@ -65,10 +65,10 @@ Create the name of the service account to use
 {{/*
 Create the default broker name.
 */}}
-{{- define "microservice.messsageBroker" -}}
+{{- define "microservice.messageBroker" -}}
 {{- if .Values.rabbitmq.broker }}
-{{- .Vallues.rabbitmq.broker }}
+{{- default (include "microservice.fullname" .) .Values.rabbitmq.broker }}
 {{- else }}
-{{- default "messagebroker" (include "microservice.fullname" .) -}}
+{{- default "default" (include "microservice.fullname" .) -}}
 {{- end }}
 {{- end }}
