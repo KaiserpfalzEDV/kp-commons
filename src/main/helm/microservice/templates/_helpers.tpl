@@ -71,3 +71,4 @@ Create the default broker name.
 {{- else }}
 {{- default "messagebroker" (include "microservice.fullname" .) -}}
 {{- end }}
+{{- end }}

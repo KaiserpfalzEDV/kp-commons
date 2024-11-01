@@ -3,7 +3,7 @@ name: microservice
 description: A spring-boot microservice with a postgresql database backend (managed by PGO) and RabbitMQ rabbitmq.
 
 type: application
-version: 2.0.1
+version: 2.0.2
 
 dependencies:
 - name: postgresql
