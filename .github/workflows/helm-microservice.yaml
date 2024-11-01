@@ -1,0 +1,55 @@
+---
+name: microservice Helm Chart
+
+# Configures this workflow to run every time a change is pushed to the branch called `release`.
+on:
+  push:
+    branches:
+    - 'main'
+    - 'develop'
+    paths:
+    - 'src/main/helm/microservice'
+  workflow_dispatch:
+
+# Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
+env:
+  CHART: microservice
+  REGISTRY: quay.io/kaiserpfalzedv
+
+# There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
+jobs:
+  publish-quay:
+    runs-on: ubuntu-latest
+    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Login to Quay.io
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.QUAY_ORG_USER }}
+          password: ${{ secrets.QUAY_ORG_TOKEN }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4.2.0
+
+      - name: Package helm chart 
+        run: |
+          cd src/main/helm/
+          helm dependency update ${{ env.CHART }}
+          helm package ${{ env.CHART }}
+
+      - name: Push helm chart to quay.io
+        run: |
+          cd src/main/helm
+          VERSION=$(egrep "^version: " ${{ env.CHART }}/Chart.yaml|cut -d":" -f2|tr -d '[:space:]')
+          echo "Pushing helm chart ${{ env.CHART }}:${VERSION} to oci://${{ env. REGISTRY}}/helm"
+          helm push ${{ env.CHART }}-${VERSION}.tgz oci://${{ env. REGISTRY}}/helm
