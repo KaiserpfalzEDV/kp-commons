@@ -61,3 +61,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the default broker name.
+*/}}
+{{- define "microservice.messsageBroker" -}}
+{{- if .Values.rabbitmq.broker }}
+{{- .Vallues.rabbitmq.broker }}
+{{- else }}
+{{- default "messagebroker" (include "microservice.fullname" .) -}}
+{{- end }}
