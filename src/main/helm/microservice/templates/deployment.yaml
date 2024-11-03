@@ -109,7 +109,7 @@ spec:
           env:
           {{- if .Values.postgresql.enabled }}
           - name: SPRING_DATASOURCE_URL
-            value: jdbc:postgresql://{{ include "microservice.fullname" . }}.svc/postgres
+            value: jdbc:postgresql://{{ include "microservice.fullname" . }}-postgresql.svc/postgres
           - name: SPRING_DATASOURCE_USERNAME
             value: postgres
           - name: SPRING_DATASOURCE_PASSWORD
