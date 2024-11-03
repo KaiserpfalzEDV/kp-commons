@@ -12,5 +12,5 @@ dependencies:
   repository: "https://charts.bitnami.com/bitnami"
 - name: rabbitmq
   condition: rabbitmq.enabled
-  version: "1.0.0"
+  version: "1.0.1"
   repository: "oci://quay.io/kaiserpfalzedv/helm"
