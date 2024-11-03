@@ -5,9 +5,16 @@ name: CI
 on:
   push:
     branches: [ feature/*, develop, main ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ feature/*, develop, main ]
+    paths-ignore:
+    - '.github/ISSUE_TEMPLATE/**'
+    - 'src/main/helm/**'
+    - 'src/main/kubernetes/**'
+    - CODE_OF_CONDUCT.md
+    - CONTRIBUTING.md
+    - 'KES Corporate Contributor License Agreement (2019-12-31).pdf'
+    - LICENSE
+    - README.md
+    - SECURITY.md
   workflow_dispatch:
 
 
