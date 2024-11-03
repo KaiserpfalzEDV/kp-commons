@@ -96,13 +96,16 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if or (.Values.envFrom) (.Values.sso.enabled) }}
           envFrom:
-            {{- if .Values.sso.enabled }}
+          {{- if .Values.sso.enabled }}
           - prefix: SSO_
             secretRef:
               name: {{ include "microservice.fullname" . }}-sso-config
-              {{- end }}
+          {{- end }}
+          {{- if .Values.envFrom }}
           {{- .Values.envFrom | toYaml | nindent 10 }}
           {{- end }}
+          {{- end }}
+          {{- if or (.Values.env) (.Values.postgresql.enabled) (.Values.rabbitmq.enabled) }}
           env:
           {{- if .Values.postgresql.enabled }}
           - name: SPRING_DATASOURCE_URL
@@ -175,7 +178,10 @@ spec:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}
                 resource: requests.memory
-          {{ .Values.env | toYaml | nindent 12 }}
+          {{- if .Values.env }}
+          {{ .Values.env | toYaml | nindent 10 }}
+          {{- end }}
+          {{- end }}
           volumeMounts:
           - name: tmp
             mountPath: /tmp
