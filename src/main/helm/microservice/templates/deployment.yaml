@@ -94,13 +94,14 @@ spec:
         {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.sso.enabled }}
+          {{- if or (.Values.envFrom) (.Values.sso.enabled) }}
           envFrom:
             {{- if .Values.sso.enabled }}
           - prefix: SSO_
             secretRef:
               name: {{ include "microservice.fullname" . }}-sso-config
               {{- end }}
+          {{- .Values.envFrom | toYaml | nindent 10 }}
           {{- end }}
           env:
           {{- if .Values.postgresql.enabled }}
@@ -174,6 +175,7 @@ spec:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}
                 resource: requests.memory
+          {{ .Values.env | toYaml | nindent 12 }}
           volumeMounts:
           - name: tmp
             mountPath: /tmp
