@@ -6,9 +6,15 @@ on:
   push:
     branches: [ feature/*, develop, main ]
     paths-ignore:
+    - '.github/workflows/build-and-publish-java-runner-to-quay.yaml'
+    - '.github/workflows/codeql-analysis.yml'
+    - '.github/workflows/github-pages.yml'
+    - '.github/workflows/helm-**.yaml'
+    - '.github/workflows/release.yml'
     - '.github/ISSUE_TEMPLATE/**'
     - 'src/main/helm/**'
     - 'src/main/kubernetes/**'
+    - 'kp-java-runner/**'
     - CODE_OF_CONDUCT.md
     - CONTRIBUTING.md
     - 'KES Corporate Contributor License Agreement (2019-12-31).pdf'
