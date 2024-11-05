@@ -23,7 +23,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>4.0.3</version>
+        <version>4.0.4</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
@@ -32,7 +32,7 @@
     
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>4.0.3</kp-commons.version>
+        <kp-commons.version>4.0.4</kp-commons.version>
 
         <main.basedir>${project.basedir}/..</main.basedir>
 

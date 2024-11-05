@@ -26,10 +26,7 @@ import org.hibernate.envers.RevisionTimestamp;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,9 +45,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true, of = {"revId"})
 public abstract class AbstractRevisionedJPAEntity<T extends Serializable> extends AbstractJPAEntity<T> {
     @RevisionNumber
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DbSequence")
-    @SequenceGenerator(name = "DbSequence", sequenceName = "hibernate_sequence")
-    @Column(name = "REVID", nullable = false, updatable = false)
     protected int revId;
 
     @RevisionTimestamp
