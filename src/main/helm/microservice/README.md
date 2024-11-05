@@ -6,7 +6,7 @@ A helm chart for microservices.
 
 ## Changelog
 
-### Version 2.1.4
+### Version 2.1.5
 
 - Reconfigured the default probes. Startup probes now runs every second for 300 Seconds.
 

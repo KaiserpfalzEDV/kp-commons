@@ -60,10 +60,10 @@ spec:
                     {{- else }}
               port: http
                     {{- end }}
-              periodSeconds: 5
-              successTreshold: 1
-              failureThreshold: 300
-              timeoutSeconds: 2
+            periodSeconds: 3
+            successTreshold: 1
+            failureThreshold: 100
+            timeoutSeconds: 2
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -72,9 +72,9 @@ spec:
                     {{- else }}
               port: http
                     {{- end }}
-              periodSeconds: 30
-              successTreshold: 1
-              failureThreshold: 4
+            periodSeconds: 30
+            successTreshold: 1
+            failureThreshold: 4
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
@@ -85,9 +85,9 @@ spec:
                     {{- end }}
                 {{- else }}
                     {{- if .Values.probes.startup }}
-              periodSeconds: 10
-              successTreshold: 1
-              failureThreshold: 3
+            periodSeconds: 10
+            successTreshold: 1
+            failureThreshold: 3
           startupProbe:
             {{- toYaml .Values.probes.startup| nindent 12 }}
                     {{- end }}
