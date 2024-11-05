@@ -61,7 +61,7 @@ spec:
               port: http
                     {{- end }}
             periodSeconds: 3
-            successTreshold: 1
+            successThreshold: 1
             failureThreshold: 100
             timeoutSeconds: 2
           livenessProbe:
@@ -73,7 +73,7 @@ spec:
               port: http
                     {{- end }}
             periodSeconds: 30
-            successTreshold: 1
+            successThreshold: 1
             failureThreshold: 4
           readinessProbe:
             httpGet:
@@ -86,7 +86,7 @@ spec:
                 {{- else }}
                     {{- if .Values.probes.startup }}
             periodSeconds: 10
-            successTreshold: 1
+            successThreshold: 1
             failureThreshold: 3
           startupProbe:
             {{- toYaml .Values.probes.startup| nindent 12 }}
