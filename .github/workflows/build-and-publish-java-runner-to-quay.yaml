@@ -5,17 +5,8 @@ on:
     branches:
       - main
       - develop
-    paths-ignore:
+    paths:
       - 'kp-java-runner/**'
-      - '.github/ISSUE_TEMPLATE/**'
-      - 'src/main/helm/**'
-      - 'src/main/kubernetes/**'
-      - CODE_OF_CONDUCT.md
-      - CONTRIBUTING.md
-      - 'KES Corporate Contributor License Agreement (2019-12-31).pdf'
-      - LICENSE
-      - README.md
-      - SECURITY.md
   workflow_dispatch:
 
 jobs:
