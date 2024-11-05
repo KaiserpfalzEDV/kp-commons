@@ -21,6 +21,8 @@ package de.kaiserpfalzedv.commons.core.data;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import de.kaiserpfalzedv.commons.api.data.Paging;
+
 class PagingTest {
     private static final PagingImpl BASE_PAGE = PagingImpl.builder()
             .start(100)
@@ -31,11 +33,11 @@ class PagingTest {
 
     @Test
     void shouldReturnTheNextPageWhenThereAreEnoughElements() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE;
+        final Paging sut = BASE_PAGE;
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
+        final Paging result = sut.nextPage();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
+        final Paging expected = PagingImpl.builder()
                 .start(115)
                 .size(15)
                 .count(15)
@@ -47,11 +49,11 @@ class PagingTest {
 
     @Test
     void shouldReturnIncompletePageWhenThereAreNotEnoughElementsForTheNextPage() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().total(123).build();
+        final Paging sut = BASE_PAGE.toBuilder().total(123).build();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.nextPage();
+        final Paging result = sut.nextPage();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
+        final Paging expected = PagingImpl.builder()
                 .start(115)
                 .size(15)
                 .count(8)
@@ -64,11 +66,11 @@ class PagingTest {
 
     @Test
     void shouldReturnLastPageWhenRequested() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().total(123).build();
+        final Paging sut = BASE_PAGE.toBuilder().total(123).build();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.lastPage();
+        final Paging result = sut.lastPage();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
+        final Paging expected = PagingImpl.builder()
                 .start(120)
                 .size(15)
                 .count(3)
@@ -80,11 +82,11 @@ class PagingTest {
 
     @Test
     void shouldReturnThePreviousPageWhenThereAreEnoughElements() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE;
+        final Paging sut = BASE_PAGE;
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
+        final Paging result = sut.previousPage();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
+        final Paging expected = PagingImpl.builder()
                 .start(85)
                 .size(15)
                 .count(15)
@@ -97,11 +99,11 @@ class PagingTest {
 
     @Test
     void shouldReturnFirstPageWhenRequested() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().build();
+        final Paging sut = BASE_PAGE.toBuilder().build();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.firstPage();
+        final Paging result = sut.firstPage();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
+        final Paging expected = PagingImpl.builder()
                 .start(0)
                 .size(15)
                 .count(15)
@@ -112,11 +114,11 @@ class PagingTest {
     }
     @Test
     void shouldReturnFirstPageWhenThereAreNotEnoughElementsForThePreviousPage() {
-        final de.kaiserpfalzedv.commons.api.resources.Paging sut = BASE_PAGE.toBuilder().size(300).build();
+        final Paging sut = BASE_PAGE.toBuilder().size(300).build();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging result = sut.previousPage();
+        final Paging result = sut.previousPage();
 
-        final de.kaiserpfalzedv.commons.api.resources.Paging expected = PagingImpl.builder()
+        final Paging expected = PagingImpl.builder()
                 .start(0)
                 .size(300)
                 .count(200)
