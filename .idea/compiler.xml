@@ -7,15 +7,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="kp-commons-api" />
         <module name="kp-core-testsupport" />
-        <module name="kp-commons-rest" />
+        <module name="kp-checkstyle" />
         <module name="kp-commons-quarkus" />
         <module name="kp-commons-vaadin" />
+      </profile>
+      <profile name="Annotation profile for kp-commons-root" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+        </processorPath>
+        <module name="kp-commons-api" />
+        <module name="kp-commons-rest" />
+        <module name="kp-commons-test" />
         <module name="kp-commons-sms77" />
-        <module name="kp-commons-ean-search" />
         <module name="kp-commons-core" />
         <module name="kp-commons-dnb-lookup" />
+        <module name="kp-commons-ean-search" />
+        <module name="kp-commons-spring" />
         <module name="kp-commons-jpa" />
       </profile>
     </annotationProcessing>
@@ -29,22 +40,31 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kp-checkstyle" options="-parameters" />
       <module name="kp-commons-api" options="-parameters" />
+      <module name="kp-commons-bom" options="-parameters" />
       <module name="kp-commons-core" options="-parameters" />
+      <module name="kp-commons-core-root" options="-parameters" />
       <module name="kp-commons-dnb-lookup" options="-parameters" />
       <module name="kp-commons-ean-search" options="-parameters" />
       <module name="kp-commons-events" options="-parameters" />
       <module name="kp-commons-fileserver" options="-parameters" />
       <module name="kp-commons-jpa" options="-parameters" />
+      <module name="kp-commons-modules-root" options="-parameters" />
       <module name="kp-commons-parent" options="-parameters" />
       <module name="kp-commons-quarkus" options="-parameters" />
       <module name="kp-commons-rest" options="-parameters" />
+      <module name="kp-commons-root" options="-parameters" />
       <module name="kp-commons-services" options="-parameters" />
+      <module name="kp-commons-services-root" options="-parameters" />
       <module name="kp-commons-servlet" options="-parameters" />
       <module name="kp-commons-sms77" options="-parameters" />
+      <module name="kp-commons-spring" options="-parameters" />
+      <module name="kp-commons-test" options="-parameters" />
       <module name="kp-commons-userserver" options="-parameters" />
       <module name="kp-commons-vaadin" options="-parameters" />
       <module name="kp-core-testsupport" options="-parameters" />
+      <module name="kp-spring-boot-parent" options="-parameters" />
       <module name="testsupport" options="-parameters" />
     </option>
   </component>

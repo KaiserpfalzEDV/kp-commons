@@ -37,7 +37,7 @@
         <main.basedir>${project.basedir}/..</main.basedir>
 
         <jackson.version>2.17.0</jackson.version>
-        <spring-boot.version>3.3.4</spring-boot.version>
+        <spring-boot.version>3.3.5</spring-boot.version>
         <springframework.version>6.1.14</springframework.version>
         <jackson-bom.version>2.18.1</jackson-bom.version>
     </properties>
