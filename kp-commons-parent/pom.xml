@@ -24,7 +24,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>4.0.5</version>
+        <version>4.0.4</version>
     </parent>
 
     <artifactId>kp-commons-parent</artifactId>
@@ -68,7 +68,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <jackson.version>2.17.0</jackson.version>
-        <spring-boot.version>3.3.5</spring-boot.version>
+        <spring-boot.version>3.4.0</spring-boot.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
 
@@ -392,7 +392,7 @@
                         <dependency>
                             <groupId>net.sourceforge.plantuml</groupId>
                             <artifactId>plantuml</artifactId>
-                            <version>1.2024.3</version>
+                            <version>1.2024.7</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -409,14 +409,12 @@
                         <failBuildOnCVSS>8</failBuildOnCVSS>
                         <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                         <failOnError>true</failOnError>
-                        <nvdServerId>nvdApi</nvdServerId>
-                        <verbose>true</verbose>
+                        <serverId>nvdApi</serverId>
                         <nvdApiServerId>nvdApi</nvdApiServerId>
-                        <inherit>false</inherit>
                         <msbuildAnalyzerEnabled>false</msbuildAnalyzerEnabled>
                         <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
-                        <pipfileAnalzerEnabled>false</pipfileAnalzerEnabled>
-                        <nugetconfAnalyzerenabled>false</nugetconfAnalyzerenabled>
+                        <pipAnalyzerEnabled>false</pipAnalyzerEnabled>
+                        <nugetconfAnalyzerEnabled>false</nugetconfAnalyzerEnabled>
                         <skipSystemScope>true</skipSystemScope>
                     </configuration>
                 </plugin>
@@ -543,7 +541,8 @@
                         <artifactId>maven-surefire-report-plugin</artifactId>
                         <version>3.2.5</version>
                         <configuration>
-                            <skip>${skipTests}</skip>
+                            <skipSurefireReport>${skipTests}</skipSurefireReport>
+                            <skipFailsafeReport>${skipTests}</skipFailsafeReport>
                         </configuration>
                     </plugin>
 
@@ -581,7 +580,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.8.6.4</version>
+                        <version>4.8.6.2</version>
                         <configuration>
                             <effort>Max</effort>
                             <threshold>Low</threshold>

@@ -23,7 +23,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>4.0.5</version>
+        <version>4.0.4</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
@@ -32,12 +32,12 @@
     
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>4.0.5</kp-commons.version>
+        <kp-commons.version>4.0.4</kp-commons.version>
 
         <main.basedir>${project.basedir}/..</main.basedir>
 
         <jackson.version>2.17.0</jackson.version>
-        <spring-boot.version>3.3.5</spring-boot.version>
+        <spring-boot.version>3.4.0</spring-boot.version>
         <springframework.version>6.1.14</springframework.version>
         <jackson-bom.version>2.18.1</jackson-bom.version>
     </properties>
@@ -87,7 +87,7 @@
             <dependency>
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-bom</artifactId>
-                <version>1.13.6</version>
+                <version>1.13.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -226,7 +226,7 @@
             <dependency>
                 <groupId>org.semver4j</groupId>
                 <artifactId>semver4j</artifactId>
-                <version>5.4.1</version>
+                <version>5.3.0</version>
             </dependency>
 
 
