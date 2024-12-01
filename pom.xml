@@ -128,7 +128,8 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>4.0.5</kp-commons.version>
+        <kp-commons.version>4.0.4</kp-commons.version>
+        <delombok.output>${project.build.directory}/delombok</delombok.output>
     </properties>
 
     <build>
@@ -302,14 +303,12 @@
                         <failBuildOnCVSS>8</failBuildOnCVSS>
                         <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                         <failOnError>true</failOnError>
-                        <nvdServerId>nvdApi</nvdServerId>
-                        <verbose>true</verbose>
+                        <nvdDatafeedServerId>nvdApi</nvdDatafeedServerId>
                         <nvdApiServerId>nvdApi</nvdApiServerId>
-                        <inherit>false</inherit>
                         <msbuildAnalyzerEnabled>false</msbuildAnalyzerEnabled>
                         <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
-                        <pipfileAnalzerEnabled>false</pipfileAnalzerEnabled>
-                        <nugetconfAnalyzerenabled>false</nugetconfAnalyzerenabled>
+                        <pipAnalyzerEnabled>false</pipAnalyzerEnabled>
+                        <nugetconfAnalyzerEnabled>false</nugetconfAnalyzerEnabled>
                         <skipSystemScope>true</skipSystemScope>
                     </configuration>
                 </plugin>
@@ -421,29 +420,15 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.21.2</version>
                 <configuration>
-                    <linkXref>true</linkXref>
+                    <linkXRef>true</linkXRef>
                     <inputEncoding>${project.reporting.inputEncoding}</inputEncoding>
                     <minimumTokens>100</minimumTokens>
                     <targetJdk>${maven.compiler.target}</targetJdk>
-                    <excludeRoot>
+                    <excludeRoots>
                         <excludeRoot>target/generated-sources</excludeRoot>
-                    </excludeRoot>
-                    <reportSets>
-                        <reportSet>
-                            <reports>
-                                <report>pmd</report>
-                                <report>cpd</report>
-                            </reports>
-                        </reportSet>
-                        <reportSet>
-                            <id>aggregate</id>
-                            <inherited>false</inherited>
-                            <reports>
-                                <report>aggergate-pmd</report>
-                                <report>aggergate-cpd</report>
-                            </reports>
-                        </reportSet>
-                    </reportSets>
+                    </excludeRoots>
+                    <skipEmptyReport>true</skipEmptyReport>
+                    <aggregate>true</aggregate>
                 </configuration>
             </plugin>
 

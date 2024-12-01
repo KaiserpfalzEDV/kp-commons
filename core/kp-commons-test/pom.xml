@@ -25,6 +25,7 @@
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-core-root</artifactId>
         <version>4.0.5</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>kp-commons-test</artifactId>
