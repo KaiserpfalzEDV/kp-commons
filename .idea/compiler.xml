@@ -7,10 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="kp-core-testsupport" />
-        <module name="kp-checkstyle" />
         <module name="kp-commons-quarkus" />
         <module name="kp-commons-vaadin" />
+        <module name="kp-core-testsupport" />
+        <module name="kp-checkstyle" />
       </profile>
       <profile name="Annotation profile for kp-commons-root" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -21,13 +21,22 @@
         </processorPath>
         <module name="kp-commons-api" />
         <module name="kp-commons-rest" />
-        <module name="kp-commons-test" />
         <module name="kp-commons-sms77" />
         <module name="kp-commons-core" />
         <module name="kp-commons-dnb-lookup" />
         <module name="kp-commons-ean-search" />
         <module name="kp-commons-spring" />
         <module name="kp-commons-jpa" />
+      </profile>
+      <profile name="Annotation profile for kp-commons-test" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+        </processorPath>
+        <module name="kp-commons-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

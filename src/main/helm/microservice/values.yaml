@@ -11,12 +11,8 @@ image:
 
 imagePullSecrets: []
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  automount: false
-  annotations: {}
-  name: ""
+env: []
+envFrom: []
 
 podAnnotations: {}
 
@@ -32,6 +28,13 @@ securityContext:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
 
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  automount: false
+  annotations: {}
+  name: ""
+
 metrics:
   enabled: true
   port: 8081
@@ -39,6 +42,9 @@ metrics:
 probes:
   enabled: true
   default: true
+  startup: {}
+  liveness: {}
+  readiness: {}
 
 
 resources:
@@ -49,7 +55,7 @@ resources:
     cpu: 500m
     memory: 1280Mi
 
-externalDb:
+externalDb: {}
   
 
 tmpSize: 500Mi

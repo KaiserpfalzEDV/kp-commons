@@ -149,6 +149,26 @@ spec:
               secretKeyRef:
                 name: {{ include "microservice.messageBroker" . }}-default-user
                 key: password
+          - name: SPRING_RABBITMQ_STREAM_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.messageBroker" . }}-default-user
+                key: host
+          - name: SPRING_RABBITMQ_STREAM_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.messageBroker" . }}-default-user
+                key: port
+          - name: SPRING_RABBITMQ_STREAM_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.messageBroker" . }}-default-user
+                key: username
+          - name: SPRING_RABBITMQ_STREAM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.messageBroker" . }}-default-user
+                key: password
           {{- end}}
           - name: LOGGING_LEVEL_ROOT
             value: WARN
@@ -195,6 +215,7 @@ spec:
           volumeMounts:
           - name: tmp
             mountPath: /tmp
+            readOnly: false
           {{- if .Values.applicationConfig.enabled }}
           - name: application-config
             mountPath: /deployments/application.{{ .Values.applicationConfig.type }}
@@ -205,6 +226,9 @@ spec:
             mountPath: {{ .path }}
             {{- if .subPath }}
             subPath: {{ .subPath }}
+            {{- end }}
+            {{- if .readOnly }}
+            readOnly: {{ .readOnly }}
             {{- end }}
           {{- end }}
       volumes:
