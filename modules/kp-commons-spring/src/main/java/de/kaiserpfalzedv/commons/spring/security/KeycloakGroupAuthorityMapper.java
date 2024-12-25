@@ -2,6 +2,7 @@ package de.kaiserpfalzedv.commons.spring.security;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,10 +41,8 @@ public class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
     private void extractRolesFromAuthority(Set<GrantedAuthority> result, GrantedAuthority authority) {
         log.entry(result, authority);
 
-        if (authority instanceof OidcUserAuthority) {
-            OidcUserAuthority oidc = (OidcUserAuthority) authority;
-
-            if (log.isTraceEnabled()) {
+        if (authority instanceof OidcUserAuthority oidc) {
+          if (log.isTraceEnabled()) {
                 log.trace("Reading roles. oidc={}, attribute={}, groups={}", 
                     oidc, 
                     properties.getRoleAttribute(),
@@ -60,9 +59,14 @@ public class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
     private Set<SimpleGrantedAuthority> extractGroupRoleFromOidcAuthority(OidcUserAuthority oidc) {
         log.entry(oidc);
 
+        List<String> roles = oidc.getUserInfo().getClaimAsStringList(properties.getRoleAttribute());
+
+        if (roles == null) {
+            return log.exit(new HashSet<>());
+        }
+
         return log.exit(
-            oidc.getUserInfo().getClaimAsStringList(properties.getRoleAttribute())
-                .stream()
+            roles.stream()
                 .map(r -> "ROLE_" + r.toUpperCase())
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet())
