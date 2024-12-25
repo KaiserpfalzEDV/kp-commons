@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -12,7 +13,6 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -21,22 +21,25 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @RequiredArgsConstructor
-@Slf4j
+@XSlf4j
 public class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
 
     private final KeycloakGroupMapperProperties properties;
 
     @Override
     public Collection<? extends GrantedAuthority> mapAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        log.entry(authorities);
+
         Set<GrantedAuthority> result = new HashSet<>();
 
         authorities.forEach(authority -> extractRolesFromAuthority(result, authority));
 
-        log.debug("Roles mapped. roles={}", result);
-        return result;
+        return log.exit(result);
     }
 
-    private void extractRolesFromAuthority(Set<GrantedAuthority> result, GrantedAuthority authority){
+    private void extractRolesFromAuthority(Set<GrantedAuthority> result, GrantedAuthority authority) {
+        log.entry(result, authority);
+
         if (authority instanceof OidcUserAuthority) {
             OidcUserAuthority oidc = (OidcUserAuthority) authority;
 
@@ -50,13 +53,19 @@ public class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
 
             result.addAll(extractGroupRoleFromOidcAuthority(oidc));
         }
+
+        log.exit();
     }
 
     private Set<SimpleGrantedAuthority> extractGroupRoleFromOidcAuthority(OidcUserAuthority oidc) {
-        return oidc.getUserInfo().getClaimAsStringList(properties.getRoleAttribute())
-            .stream()
-            .map(r -> "ROLE_" + r.toUpperCase())
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toSet());
+        log.entry(oidc);
+
+        return log.exit(
+            oidc.getUserInfo().getClaimAsStringList(properties.getRoleAttribute())
+                .stream()
+                .map(r -> "ROLE_" + r.toUpperCase())
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet())
+        );
     }
 }

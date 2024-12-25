@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.spring.security;
 
 
 
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -39,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-06-14
  */
 @Component
-@Slf4j
+@XSlf4j
 public class KeycloakLogoutHandler implements LogoutHandler {
     private final RestTemplate restTemplate;
 
@@ -49,10 +50,16 @@ public class KeycloakLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
+        log.entry(request, response, auth);
+
         logoutFromKeycloak((OidcUser) auth.getPrincipal());
+
+        log.exit();
     }
 
     private void logoutFromKeycloak(OidcUser user) {
+        log.entry(user);
+
         String endSessionEndpoint = user.getIssuer() + "/protocol/openid-connect/logout";
         UriComponentsBuilder builder = UriComponentsBuilder
             .fromUriString(endSessionEndpoint)
@@ -65,5 +72,7 @@ public class KeycloakLogoutHandler implements LogoutHandler {
         } else {
             log.error("Could not propagate logout to Keycloak");
         }
+
+        log.exit();
     }
 }

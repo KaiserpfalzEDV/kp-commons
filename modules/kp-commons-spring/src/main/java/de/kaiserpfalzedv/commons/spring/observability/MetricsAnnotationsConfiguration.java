@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.spring.observability;
 
 
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,14 +34,19 @@ import io.micrometer.core.instrument.MeterRegistry;
  * @since 1.0.0  2023-12-10
  */
 @Configuration
+@XSlf4j
 public class MetricsAnnotationsConfiguration {
     @Bean
-    public TimedAspect timedAspect(final MeterRegistry registry) {
-        return new TimedAspect(registry);
+    public TimedAspect timedAspect(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") final MeterRegistry registry) {
+        log.entry(registry);
+
+        return log.exit(new TimedAspect(registry));
     }
 
     @Bean
-    public CountedAspect countedAspect(final MeterRegistry registry) {
-        return new CountedAspect(registry);
+    public CountedAspect countedAspect(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") final MeterRegistry registry) {
+        log.entry(registry);
+
+        return log.exit(new CountedAspect(registry));
     }
 }

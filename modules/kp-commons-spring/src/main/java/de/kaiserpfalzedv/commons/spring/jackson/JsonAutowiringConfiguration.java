@@ -17,6 +17,7 @@
  */
 package de.kaiserpfalzedv.commons.spring.jackson;
 
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +27,6 @@ import org.springframework.http.converter.json.SpringHandlerInstantiator;
 
 import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Enables the usage of {@link Autowired} in Json objects.
  *
@@ -36,22 +35,23 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023-12-08
  */
 @Configuration
-@Slf4j
+@XSlf4j
 public class JsonAutowiringConfiguration {
     /** @return the Jackson2ObjectMapperBuilder that enables the {@link Autowired} annotation in Jackson deserialized objects. */
     @Bean
     public Jackson2ObjectMapperBuilder objectMapperBuilder(final HandlerInstantiator handlerInstantiator) {
+        log.entry(handlerInstantiator);
+
         final Jackson2ObjectMapperBuilder result = new Jackson2ObjectMapperBuilder();
         result.handlerInstantiator(handlerInstantiator);
 
-        log.debug("Created modified Jackson ObjectMapperBuilder. builder={}", result);
-        return result;
+        return log.exit(result);
     }
 
 
     /** @return The HandlerInstantiator needed by the {@link #objectMapperBuilder(HandlerInstantiator)} */
     @Bean
     public HandlerInstantiator handlerInstantiator(final ApplicationContext applicationContext) {
-        return new SpringHandlerInstantiator(applicationContext.getAutowireCapableBeanFactory());
+        return log.exit(new SpringHandlerInstantiator(applicationContext.getAutowireCapableBeanFactory()));
     }
 }
