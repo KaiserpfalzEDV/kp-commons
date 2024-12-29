@@ -79,7 +79,7 @@
         <simple-jndi.version>0.24.0</simple-jndi.version>
         <sisu.version>2.6.0</sisu.version>
         <spock-framework.version>2.3-groovy-4.0</spock-framework.version>
-        <testng.version>7.5.1</testng.version>
+        <testng.version>7.10.2</testng.version>
         <spring-asciidoctor-extensions.version>0.6.3</spring-asciidoctor-extensions.version>
     </properties>
 
