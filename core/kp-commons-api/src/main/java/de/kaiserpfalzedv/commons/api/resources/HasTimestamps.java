@@ -61,6 +61,5 @@ public interface HasTimestamps {
             maxLength = HasTimestamps.VALID_LENGTH,
             pattern = HasTimestamps.VALID_PATTERN
     )
-    @NotNull
     OffsetDateTime getDeleted();
 }
