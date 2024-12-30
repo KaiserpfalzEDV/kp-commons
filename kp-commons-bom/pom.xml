@@ -38,7 +38,7 @@
 
         <jackson.version>2.18.2</jackson.version>
         <spring-boot.version>3.4.1</spring-boot.version>
-        <springframework.version>6.2.0</springframework.version>
+        <springframework.version>6.2.1</springframework.version>
         <jackson-bom.version>2.18.2</jackson-bom.version>
     </properties>
 
