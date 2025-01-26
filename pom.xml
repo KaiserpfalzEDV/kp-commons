@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>4.0.9</version>
+    <version>4.0.10</version>
     <packaging>pom</packaging>
 
     <description>
@@ -128,7 +128,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>4.0.9</kp-commons.version>
+        <kp-commons.version>4.0.10</kp-commons.version>
         <delombok.output>${project.build.directory}/delombok</delombok.output>
     </properties>
 

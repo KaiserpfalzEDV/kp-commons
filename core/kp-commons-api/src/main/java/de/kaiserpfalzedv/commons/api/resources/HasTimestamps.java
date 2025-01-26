@@ -22,6 +22,7 @@ import java.time.OffsetDateTime;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * HasTimestamps --
@@ -44,6 +45,7 @@ public interface HasTimestamps {
             pattern = HasTimestamps.VALID_PATTERN
     )
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     OffsetDateTime getCreated();
 
     @Schema(
@@ -53,6 +55,7 @@ public interface HasTimestamps {
             pattern = HasTimestamps.VALID_PATTERN
     )
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     OffsetDateTime getModified();
 
     @Schema(
@@ -61,5 +64,6 @@ public interface HasTimestamps {
             maxLength = HasTimestamps.VALID_LENGTH,
             pattern = HasTimestamps.VALID_PATTERN
     )
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     OffsetDateTime getDeleted();
 }
