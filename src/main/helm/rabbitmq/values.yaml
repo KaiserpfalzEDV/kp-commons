@@ -11,6 +11,13 @@ labels: {}
 selectorLabels: {}
 #  key: value
 
+ingress:
+  enabled: false
+  targetPort: 15672
+  hosts: []
+  annotations: {}
+  className: openshift-default
+
 # check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/users
 users: []
 #- name: ""
