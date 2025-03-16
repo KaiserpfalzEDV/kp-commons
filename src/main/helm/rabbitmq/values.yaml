@@ -17,6 +17,8 @@ ingress:
   hosts: []
   annotations: {}
   className: openshift-default
+tls:
+  enabled: false
 
 # check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/users
 users: []
