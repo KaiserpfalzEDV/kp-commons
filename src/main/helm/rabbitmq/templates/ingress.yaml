@@ -35,9 +35,9 @@ spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
-  {{- if .Values.ingress.tls }}
+  {{- if .Values.tls }}
   tls:
-    {{- if .Values.ingress.tls.enabled }}
+    {{- if .Values.tls.enabled }}
     - hosts:
         {{- range .Values.ingress.hosts }}
         - {{ . | quote }}
