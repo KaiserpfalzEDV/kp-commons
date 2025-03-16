@@ -24,9 +24,7 @@ metadata:
     cert-manager.io/duration: {{ .Values.tls.duration | default "2160h"}}
     cert-manager.io/renew-before: {{ .Values.tls.renewBefore | default "1728h" }}
     cert-manager.io/usages: "server auth"
-    cert-manager.io/revision-history-limit: "5"
-    cert-manager.io/private-key-algorithm: "ECDSA"
-    cert-manager.io/private-key-size: "521"
+    cert-manager.io/revision-history-limit: "3"
       {{- with first .Values.ingress.hosts }}
     cert-manager.io/common-name: {{ . }}
       {{- end }}
