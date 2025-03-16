@@ -13,12 +13,14 @@ selectorLabels: {}
 
 ingress:
   enabled: false
-  targetPort: 15672
   hosts: []
   annotations: {}
   className: openshift-default
 tls:
   enabled: false
+  clusterIssuer: ""
+  duration: "2160h"
+  renewBefore: "1728h"
 
 # check https://github.com/rabbitmq/messaging-topology-operator/tree/main/docs/examples/users
 users: []

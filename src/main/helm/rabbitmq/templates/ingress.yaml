@@ -1,6 +1,5 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "rabbitmq.fullname" . -}}
-{{- $svcPort := .Values.ingress.targetPort -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
@@ -46,7 +45,7 @@ spec:
     {{- if .Values.ingress.tls.enabled }}
     - hosts:
         {{- range .Values.ingress.hosts }}
-        - {{ .host | quote }}
+        - {{ . | quote }}
         {{- end }}
       secretName: {{ $fullName }}-tls
     {{- end }}
@@ -56,23 +55,12 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
-            pathType: {{ .pathType }}
-            {{- end }}
+          - path: "/"
+            pathType: ImplementationSpecific
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcPort }}
-              {{- else }}
-              # noinspection KubernetesUnknownKeys
-              serviceName: {{ $fullName }}
-              # noinspection KubernetesUnknownKeys
-              servicePort: {{ $svcPort }}
-              {{- end }}
-          {{- end }}
+                  number: 15672
     {{- end }}
 {{- end }}
