@@ -3,4 +3,4 @@ name: rabbitmq
 description: Creating a RabbitMQ broker and the topology for using it.
 
 type: application
-version: 1.1.3
+version: 1.1.4

@@ -18,9 +18,8 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "rabbitmq.labels" . | nindent 4 }}
-  {{- if or .Values.ingress.annotations .Values.tls.enabled }}
+  {{- if .Values.tls.enabled }}
   annotations:
-    {{- if .Values.tls.enabled }}
     cert-manager.io/cluster-issuer: {{ .Values.tls.clusterIssuer }}
     cert-manager.io/duration: {{ .Values.tls.duration | default "2160h"}}
     cert-manager.io/renew-before: {{ .Values.tls.renewBefore | default "1728h" }}
@@ -31,10 +30,6 @@ metadata:
       {{- with first .Values.ingress.hosts }}
     cert-manager.io/common-name: {{ . }}
       {{- end }}
-    {{- end }}
-    {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
   {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
