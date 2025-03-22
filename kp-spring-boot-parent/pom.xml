@@ -53,7 +53,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <jackson.version>2.18.2</jackson.version>
-        <spring-boot.version>3.4.1</spring-boot.version>
+        <spring-boot.version>3.4.4</spring-boot.version>
         <android-json.version>0.0.20131108.vaadin1</android-json.version>
         <api-guardian.version>1.1.2</api-guardian.version>
         <c3p0.version>0.10.0-pre7</c3p0.version>
