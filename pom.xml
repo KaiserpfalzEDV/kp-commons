@@ -39,7 +39,6 @@
 
         <module>core</module>
         <module>modules</module>
-        <module>services</module>
     </modules>
 
     <inceptionYear>2001</inceptionYear>
@@ -396,7 +395,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.5.0</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -418,7 +417,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.26.0</version>
+                <version>3.24.0</version>
                 <configuration>
                     <linkXRef>true</linkXRef>
                     <inputEncoding>${project.reporting.inputEncoding}</inputEncoding>
