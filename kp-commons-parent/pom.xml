@@ -182,7 +182,7 @@
                 <plugin>
                     <groupId>io.smallrye</groupId>
                     <artifactId>jandex-maven-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.3.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>io.smallrye</groupId>
