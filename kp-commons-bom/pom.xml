@@ -23,7 +23,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-root</artifactId>
-        <version>4.0.12</version>
+        <version>4.0.13</version>
     </parent>
 
     <artifactId>kp-commons-bom</artifactId>
@@ -32,14 +32,13 @@
     
     <properties>
         <kp-commons.groupId>de.kaiserpfalz-edv.commons</kp-commons.groupId>
-        <kp-commons.version>4.0.12</kp-commons.version>
+        <kp-commons.version>4.0.13</kp-commons.version>
 
         <main.basedir>${project.basedir}/..</main.basedir>
 
-        <jackson.version>2.18.2</jackson.version>
+        <jackson.version>2.18.3</jackson.version>
         <spring-boot.version>3.4.4</spring-boot.version>
         <springframework.version>6.2.5</springframework.version>
-        <jackson-bom.version>2.18.2</jackson-bom.version>
     </properties>
 
     <dependencyManagement>
@@ -79,7 +78,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>${jackson-bom.version}</version>
+                <version>${jackson.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
