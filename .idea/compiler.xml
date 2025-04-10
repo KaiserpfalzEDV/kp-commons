@@ -83,6 +83,16 @@
         </processorPath>
         <module name="kp-commons-spring" />
       </profile>
+      <profile name="Annotation profile for de.kaiserpfalz-edv.rpg:kp-rpg" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="kp-rpg-core" />
+        <module name="kp-rpg-torg" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="kp-commons-events" target="17" />
@@ -118,6 +128,12 @@
       <module name="kp-commons-userserver" options="-parameters" />
       <module name="kp-commons-vaadin" options="-parameters" />
       <module name="kp-core-testsupport" options="-parameters" />
+      <module name="kp-rpg" options="-parameters" />
+      <module name="kp-rpg-bom" options="-parameters" />
+      <module name="kp-rpg-core" options="-parameters" />
+      <module name="kp-rpg-game-modules" options="-parameters" />
+      <module name="kp-rpg-parent" options="-parameters" />
+      <module name="kp-rpg-torg" options="-parameters" />
       <module name="kp-spring-boot-parent" options="-parameters" />
       <module name="testsupport" options="-parameters" />
     </option>

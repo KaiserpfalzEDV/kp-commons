@@ -2,6 +2,11 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="kp-commons" />
+      <option name="name" value="GitHub Packages" />
+      <option name="url" value="https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="gh-klenkes74-sb-starter" />
       <option name="name" value="gh-klenkes74-sb-starter" />
       <option name="url" value="https://maven.pkg.github.com/klenkes74/sb-starter" />
@@ -32,9 +37,19 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="github" />
+      <option name="name" value="github" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="central" />
       <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="kp-commons" />
+      <option name="name" value="GitHub Packages kp-commons" />
+      <option name="url" value="https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons" />
     </remote-repository>
   </component>
 </project>
