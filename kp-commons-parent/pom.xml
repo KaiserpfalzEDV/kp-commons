@@ -70,6 +70,8 @@
         <jackson.version>2.18.3</jackson.version>
         <spring-boot.version>3.4.4</spring-boot.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
+
+        <byte.buddy.version>1.15.11</byte.buddy.version>
     </properties>
 
     <build>
@@ -227,9 +229,32 @@
                 </plugin>
 
                 <plugin>
+                    <!-- copy agent jar either from local or remote repository -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.6.0</version>
+                    <executions>
+                        <execution>
+                            <!-- the correct phase is important so it is available before the test starts -->
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <configuration>
+                                <artifact>net.bytebuddy:byte-buddy-agent:${byte.buddy.version}</artifact>
+                                <!-- store within separate "test-agent" directory beneath "target" -->
+                                <outputDirectory>${project.build.directory}/test-agent</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.5.3</version>
+                    <configuration>
+                        <argLine>-javaagent:"${project.build.directory}/test-agent/byte-buddy-agent-${byte.buddy.version}.jar"</argLine>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -538,6 +563,10 @@
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
                         <version>3.5.2</version>
                         <configuration>
@@ -629,6 +658,26 @@
             <build>
                 <plugins>
                     <plugin>
+                        <!-- copy agent jar either from local or remote repository -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <executions>
+                            <execution>
+                                <!-- the correct phase is important so it is available before the test starts -->
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifact>net.bytebuddy:byte-buddy-agent:${byte.buddy.version}</artifact>
+                                    <!-- store within separate "test-agent" directory beneath "target" -->
+                                    <outputDirectory>${project.build.directory}/test-agent</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                     </plugin>
@@ -709,7 +758,7 @@
             <id>spring-boot-test</id>
             <activation>
                 <file>
-                    <exists>src/test/resources/application.yaml</exists>
+                    <exists>src/test/resources/application-test.yaml</exists>
                 </file>
             </activation>
 
