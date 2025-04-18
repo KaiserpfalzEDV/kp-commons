@@ -23,75 +23,28 @@
         <module name="kp-commons-ean-search" />
         <module name="kp-commons-sms77" />
       </profile>
-      <profile name="Annotation profile for kp-commons-test" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="kp-commons-test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-api" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="kp-commons-api" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-core" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="kp-commons-core" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-jpa" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="kp-commons-jpa" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-rest" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="kp-commons-rest" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-spring" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="kp-commons-spring" />
-      </profile>
       <profile name="Annotation profile for de.kaiserpfalz-edv.rpg:kp-rpg" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
+        <sourceOutputDir name="../generated-sources/annotations" />
+        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="kp-rpg-core" />
-        <module name="kp-rpg-torg" />
+        <module name="kp-commons-api.test" />
+        <module name="kp-commons-jpa.test" />
+        <module name="kp-commons-core.main" />
+        <module name="kp-commons-rest.test" />
+        <module name="kp-commons-jpa.main" />
+        <module name="kp-rpg-torg.main" />
+        <module name="kp-commons-test.main" />
+        <module name="kp-commons-api.main" />
+        <module name="kp-commons-core.test" />
+        <module name="kp-commons-rest.main" />
+        <module name="kp-commons-spring.main" />
+        <module name="kp-commons-spring.test" />
+        <module name="kp-rpg-core.main" />
+        <module name="kp-rpg-torg.test" />
+        <module name="kp-rpg-core.test" />
+        <module name="kp-commons-test.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -106,34 +59,50 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="kp-checkstyle" options="-parameters" />
       <module name="kp-commons-api" options="-parameters" />
+      <module name="kp-commons-api.main" options="-parameters" />
+      <module name="kp-commons-api.test" options="-parameters" />
       <module name="kp-commons-bom" options="-parameters" />
       <module name="kp-commons-core" options="-parameters" />
       <module name="kp-commons-core-root" options="-parameters" />
+      <module name="kp-commons-core.main" options="-parameters" />
+      <module name="kp-commons-core.test" options="-parameters" />
       <module name="kp-commons-dnb-lookup" options="-parameters" />
       <module name="kp-commons-ean-search" options="-parameters" />
       <module name="kp-commons-events" options="-parameters" />
       <module name="kp-commons-fileserver" options="-parameters" />
       <module name="kp-commons-jpa" options="-parameters" />
+      <module name="kp-commons-jpa.main" options="-parameters" />
+      <module name="kp-commons-jpa.test" options="-parameters" />
       <module name="kp-commons-modules-root" options="-parameters" />
       <module name="kp-commons-parent" options="-parameters" />
       <module name="kp-commons-quarkus" options="-parameters" />
       <module name="kp-commons-rest" options="-parameters" />
+      <module name="kp-commons-rest.main" options="-parameters" />
+      <module name="kp-commons-rest.test" options="-parameters" />
       <module name="kp-commons-root" options="-parameters" />
       <module name="kp-commons-services" options="-parameters" />
       <module name="kp-commons-services-root" options="-parameters" />
       <module name="kp-commons-servlet" options="-parameters" />
       <module name="kp-commons-sms77" options="-parameters" />
       <module name="kp-commons-spring" options="-parameters" />
+      <module name="kp-commons-spring.main" options="-parameters" />
+      <module name="kp-commons-spring.test" options="-parameters" />
       <module name="kp-commons-test" options="-parameters" />
+      <module name="kp-commons-test.main" options="-parameters" />
+      <module name="kp-commons-test.test" options="-parameters" />
       <module name="kp-commons-userserver" options="-parameters" />
       <module name="kp-commons-vaadin" options="-parameters" />
       <module name="kp-core-testsupport" options="-parameters" />
       <module name="kp-rpg" options="-parameters" />
       <module name="kp-rpg-bom" options="-parameters" />
       <module name="kp-rpg-core" options="-parameters" />
+      <module name="kp-rpg-core.main" options="-parameters" />
+      <module name="kp-rpg-core.test" options="-parameters" />
       <module name="kp-rpg-game-modules" options="-parameters" />
       <module name="kp-rpg-parent" options="-parameters" />
       <module name="kp-rpg-torg" options="-parameters" />
+      <module name="kp-rpg-torg.main" options="-parameters" />
+      <module name="kp-rpg-torg.test" options="-parameters" />
       <module name="kp-spring-boot-parent" options="-parameters" />
       <module name="testsupport" options="-parameters" />
     </option>
