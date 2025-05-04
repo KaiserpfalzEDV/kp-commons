@@ -71,6 +71,7 @@ public class LoggingEventBus extends EventBus {
     log.entry(object);
 
     super.register(object);
+    log.debug("Registered subscriber. subscriber={}", object);
 
     log.exit(object);
   }
@@ -81,7 +82,7 @@ public class LoggingEventBus extends EventBus {
 
     try {
       super.unregister(object);
-      log.info("Unregistered subscriber. subscriber={}", object);
+      log.debug("Unregistered subscriber. subscriber={}", object);
     } catch (IllegalArgumentException e) {
       log.catching(INFO, e);
     }

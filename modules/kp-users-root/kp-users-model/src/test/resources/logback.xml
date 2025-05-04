@@ -13,11 +13,11 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="de.kaiserpfalzedv" level="TRACE" additivity="false">
+    <logger name="de.kaiserpfalzedv" level="INFO" additivity="false">
         <appender-ref ref="Console"/>
     </logger>
 
-    <logger name="org.casbin.jcasbin" level="DEBUG" additivity="false">
+    <logger name="org.casbin.jcasbin" level="INFO" additivity="false">
         <appender-ref ref="Console"/>
     </logger>
 </configuration>

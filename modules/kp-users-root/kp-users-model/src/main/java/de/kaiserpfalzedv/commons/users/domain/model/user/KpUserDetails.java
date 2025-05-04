@@ -122,7 +122,7 @@ public class KpUserDetails implements User {
         this.deleted = OffsetDateTime.now(Clock.systemUTC());
         
         bus.post(UserDeletedEvent.builder().user(this).timestamp(deleted).build());
-        log.trace("Deleted user. banned={}, detained={}, deleted={}", isBanned(), isDetained(), isDeleted());
+        log.info("Deleted user. banned={}, detained={}, deleted={}", isBanned(), isDetained(), isDeleted());
         
         return log.exit(this);
     }
@@ -134,6 +134,7 @@ public class KpUserDetails implements User {
         this.deleted = null;
         
         bus.post(UserActivatedEvent.builder().user(this).build());
+        log.info("Undeleted user. banned={}, detained={}", isBanned(), isDetained());
         
         return log.exit(this);
     }

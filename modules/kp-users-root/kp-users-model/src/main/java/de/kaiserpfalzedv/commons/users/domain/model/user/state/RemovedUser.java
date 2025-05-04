@@ -48,6 +48,12 @@ public class RemovedUser implements UserState {
   public UserState activate() {
     user.undelete(bus);
     
+    if (user.isBanned()) {
+      return BannedUser.builder().user(user).bus(bus).build();
+    } else if (user.isDetained()) {
+      return DetainedUser.builder().user(user).bus(bus).build();
+    }
+    
     return ActiveUser.builder().user(user).bus(bus).build();
   }
   
