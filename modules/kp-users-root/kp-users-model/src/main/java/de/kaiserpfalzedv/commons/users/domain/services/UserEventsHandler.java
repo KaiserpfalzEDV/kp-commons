@@ -23,10 +23,10 @@ import de.kaiserpfalzedv.commons.users.domain.model.events.activity.UserLoginEve
 import de.kaiserpfalzedv.commons.users.domain.model.events.activity.UserLogoutEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.events.apikey.ApiKeyCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.events.apikey.ApiKeyRevokedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserBannedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserDetainedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserBannedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserPetitionedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserReleasedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserReleasedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserActivatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserDeletedEvent;
@@ -38,6 +38,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserRemovedEven
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 12.04.25
  */
+@SuppressWarnings("unused") // It's an API interface
 public interface UserEventsHandler {
   void event(UserActivatedEvent event);
   void event(UserCreatedEvent event);

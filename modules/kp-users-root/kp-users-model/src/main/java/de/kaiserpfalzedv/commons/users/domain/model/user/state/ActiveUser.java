@@ -79,6 +79,8 @@ public class ActiveUser implements UserState {
   
   @Override
   public UserState remove(final boolean delete) {
+    user.delete(bus);
+
     bus.post(UserRemovedEvent.builder().user(user).delete(delete).build());
     
     return RemovedUser.builder().user(user).bus(bus).build();

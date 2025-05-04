@@ -27,6 +27,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
+import lombok.extern.slf4j.XSlf4j;
 
 import java.util.UUID;
 
@@ -39,6 +40,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @ToString(of = {"user"})
+@XSlf4j
 public class DetainedUser implements UserState {
   @Getter
   final private User user;
@@ -51,7 +53,9 @@ public class DetainedUser implements UserState {
   
   @Override
   public UserState detain(final long days) {
-    return this;
+    user.detain(bus, days);
+    
+    return DetainedUser.builder().user(user).bus(bus).build();
   }
   
   @Override
@@ -84,7 +88,9 @@ public class DetainedUser implements UserState {
   public UserState remove(final boolean delete) {
     user.delete(bus);
     
-    return RemovedUser.builder().user(user).bus(bus).build();
+    log.warn("Will not delete user since it is detained. It has to be removed after the detention is ended. detainedTill={}", user.getDetainedTill());
+    
+    return DeletedUser.builder().user(user).bus(bus).build();
   }
   
   @Override
