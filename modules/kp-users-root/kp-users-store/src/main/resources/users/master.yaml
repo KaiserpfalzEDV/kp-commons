@@ -1,0 +1,12 @@
+---
+databaseChangeLog:
+  - include:
+      file: 1.0.0/users.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.0.0'
+  - include:
+      file: 1.0.0/apikeys.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.0.0'
