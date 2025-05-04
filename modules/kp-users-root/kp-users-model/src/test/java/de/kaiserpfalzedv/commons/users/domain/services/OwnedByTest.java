@@ -21,6 +21,7 @@ package de.kaiserpfalzedv.commons.users.domain.services;
 
 import de.kaiserpfalzedv.commons.api.resources.*;
 import de.kaiserpfalzedv.commons.users.domain.model.abac.HasOwner;
+import de.kaiserpfalzedv.commons.users.domain.model.abac.OwnedBy;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.annotation.Nullable;

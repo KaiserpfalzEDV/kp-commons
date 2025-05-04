@@ -320,8 +320,6 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/immutables/value/2.5.6/value-2.5.6.jar" />
         </processorPath>
-        <module name="rpg-core.main.test.main" />
-        <module name="rpg-core.main.test.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -340,6 +338,7 @@
       <module name="kp-commons-sms77.main" target="17" />
       <module name="kp-commons-sms77.test" target="17" />
       <module name="kp-commons-userserver" target="17" />
+      <module name="kp-rpg" target="11" />
       <module name="mongodb-testsupport" target="11" />
       <module name="mongodb-testsupport.main" target="11" />
       <module name="mongodb-testsupport.test" target="11" />
@@ -352,6 +351,9 @@
       <module name="rpg-core" target="11" />
       <module name="rpg-core.main" target="11" />
       <module name="rpg-core.main.main" target="11" />
+      <module name="rpg-core.main.test" target="11" />
+      <module name="rpg-core.main.test.main" target="11" />
+      <module name="rpg-core.main.test.test" target="11" />
       <module name="rpg-core.test" target="11" />
       <module name="rpg-dsa5" target="11" />
       <module name="rpg-dsa5.main" target="11" />
@@ -359,12 +361,14 @@
       <module name="rpg-fate" target="11" />
       <module name="rpg-fate.main" target="11" />
       <module name="rpg-fate.test" target="11" />
+      <module name="rpg-game-modules" target="11" />
       <module name="rpg-hexxen" target="11" />
       <module name="rpg-hexxen.main" target="11" />
       <module name="rpg-hexxen.test" target="11" />
       <module name="rpg-saga" target="11" />
       <module name="rpg-saga.main" target="11" />
       <module name="rpg-saga.test" target="11" />
+      <module name="rpg-server" target="11" />
       <module name="rpg-torg" target="11" />
       <module name="rpg-torg.main" target="11" />
       <module name="rpg-torg.test" target="11" />
@@ -374,6 +378,7 @@
       <module name="rpg-wod" target="11" />
       <module name="rpg-wod.main" target="11" />
       <module name="rpg-wod.test" target="11" />
+      <module name="testsupport" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

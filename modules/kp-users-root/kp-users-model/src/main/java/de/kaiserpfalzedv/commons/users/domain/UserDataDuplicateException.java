@@ -15,36 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikeys;
+package de.kaiserpfalzedv.commons.users.domain;
 
 
-import de.kaiserpfalzedv.commons.api.BaseException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.ToString;
 
-
 /**
- * All exceptions around using api keys.
- *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 03.05.2025
  */
 @Getter
 @ToString(callSuper = true)
-public abstract class BaseApiKeyException extends BaseException {
-  private final ApiKey apiKey;
-  
-  public BaseApiKeyException(@Nullable final ApiKey apiKey, @NotBlank final String message) {
-    super(message);
-    
-    this.apiKey = apiKey;
-  }
-  
-  public BaseApiKeyException(@Nullable final ApiKey apiKey, final String message, final Throwable cause) {
-    super(message, cause);
-    
-    this.apiKey = apiKey;
+public class UserDataDuplicateException extends UserDataException {
+  public UserDataDuplicateException(@Nullable final User user, final String message) {
+    super(user, message);
   }
 }

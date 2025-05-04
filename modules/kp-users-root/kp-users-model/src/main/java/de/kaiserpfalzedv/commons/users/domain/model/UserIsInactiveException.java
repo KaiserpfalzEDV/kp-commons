@@ -1,6 +1,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model;
 
 
+import de.kaiserpfalzedv.commons.users.domain.BaseUserException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
