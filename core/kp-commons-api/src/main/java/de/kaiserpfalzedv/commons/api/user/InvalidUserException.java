@@ -24,6 +24,7 @@ import de.kaiserpfalzedv.commons.api.BaseException;
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
+ * @deprecated Please check the module kp-user instead!
  */
 public class InvalidUserException extends BaseException {
     /**

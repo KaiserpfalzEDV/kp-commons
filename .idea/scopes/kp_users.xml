@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="kp-users" pattern="file[kp-users-client*]:*//*||file[kp-users-model*]:*//*||file[kp-users-store*]:*//*" />
+</component>

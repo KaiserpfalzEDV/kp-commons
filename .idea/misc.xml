@@ -21,6 +21,20 @@
         <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-dsa5/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-fate/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-hexxen/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-saga/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-torg/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-traveller/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-wod/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/tomb/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/mongodb-testsupport/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/oauth2-testsupport/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
   <component name="ProjectType">

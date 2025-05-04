@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="libravatar" pattern="src[kp-commons-core.main]:de.kaiserpfalzedv.commons.core.libravatar..*||test[kp-commons-core.test]:de.kaiserpfalzedv.commons.core.libravatar..*" />
+</component>

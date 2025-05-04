@@ -1,0 +1,6 @@
+p, PLAYER, User/self, view list create update delete remove
+p, JUDGE, User, view list create update delete remove detain ban release
+p, ORGA, User, view list create update detain ban release delete
+p, ADMIN, *, *
+p, JUDGE, *, view list create update delete remove
+p, ORGA, *, view list create update delete

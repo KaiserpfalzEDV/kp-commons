@@ -24,5 +24,6 @@ import de.kaiserpfalzedv.commons.api.store.StoreService;
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24
+ * @deprecated Please check the module kp-user instead!
  */
 public interface UserStoreService extends StoreService<User> {}

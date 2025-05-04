@@ -2,11 +2,6 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="kp-commons" />
-      <option name="name" value="GitHub Packages" />
-      <option name="url" value="https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="gh-klenkes74-sb-starter" />
       <option name="name" value="gh-klenkes74-sb-starter" />
       <option name="url" value="https://maven.pkg.github.com/klenkes74/sb-starter" />
@@ -27,6 +22,51 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="github" />
+      <option name="name" value="github" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="central" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="torganized-play-threats" />
+      <option name="name" value="torganized-play-threats" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-threats" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="kp-commons" />
+      <option name="name" value="GitHub Packages" />
+      <option name="url" value="https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="torganized-play-users" />
+      <option name="name" value="torganized-play-users" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-users" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="torganized-play-codex" />
+      <option name="name" value="torganized-play-codex" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-codex" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="dv8tion" />
+      <option name="name" value="m2-dv8tion" />
+      <option name="url" value="https://m2.dv8tion.net/releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="torganized-play-commons" />
+      <option name="name" value="torganized-play-commons" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-commons" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="torganized-play-operatives" />
+      <option name="name" value="torganized-play-operatives" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-operatives" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="Vaadin Directory" />
       <option name="name" value="Vaadin Directory" />
       <option name="url" value="https://maven.vaadin.com/vaadin-addons" />
@@ -37,14 +77,9 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="github" />
-      <option name="name" value="github" />
-      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="central" />
-      <option name="url" value="https://repo1.maven.org/maven2" />
+      <option name="id" value="torganized-play-gaming" />
+      <option name="name" value="torganized-play-gaming" />
+      <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-gaming" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="kp-commons" />

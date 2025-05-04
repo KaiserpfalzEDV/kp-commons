@@ -1,0 +1,9 @@
+<component name="CopyrightManager">
+  <settings default="GPLv3">
+    <module2copyright>
+      <element module="All" copyright="GPLv3" />
+      <element module="kp-users" copyright="LGPLv3" />
+      <element module="libravatar" copyright="MIT" />
+    </module2copyright>
+  </settings>
+</component>

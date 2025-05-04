@@ -1,0 +1,9 @@
+p, PLAYER, TestObject/owned, view list create update delete remove
+p, ORGA, TestObject, view list create update delete
+p, JUDGE, TestObject, view list create update delete remove
+p, PLAYER, User/self, view list create update delete remove
+p, JUDGE, User, view list create update delete remove detain ban release
+p, ORGA, User, view list create update detain ban release delete
+p, ADMIN, *, *
+p, JUDGE, *, view list create update delete remove
+p, ORGA, *, view list create update delete

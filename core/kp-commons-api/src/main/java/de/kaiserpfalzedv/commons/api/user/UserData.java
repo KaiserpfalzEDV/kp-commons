@@ -25,6 +25,7 @@ import de.kaiserpfalzedv.commons.api.resources.Pointer;
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0  2023-01-19
+ * @deprecated Please check the module kp-user instead!
  */
 public interface UserData extends DefaultResourceSpec {
     String ISSUER = "issuer";
