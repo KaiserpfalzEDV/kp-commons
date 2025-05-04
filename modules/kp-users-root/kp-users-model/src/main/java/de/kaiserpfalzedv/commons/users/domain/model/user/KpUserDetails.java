@@ -65,6 +65,10 @@ public class KpUserDetails implements User {
     private String issuer;
     private String subject;
     
+    private String email;
+    private String phone;
+    private String discord;
+    
     @Builder.Default
     private final Set<SimpleGrantedAuthority> authorities = new HashSet<>();
     

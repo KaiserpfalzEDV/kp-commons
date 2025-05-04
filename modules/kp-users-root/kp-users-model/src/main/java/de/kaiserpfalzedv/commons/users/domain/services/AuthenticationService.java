@@ -24,6 +24,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.apikeys.InvalidApiKeyExcepti
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 /**
  * The service to authenticate users either via OpenIDConnect or via api key.
@@ -50,4 +51,6 @@ public interface AuthenticationService {
    * @throws InvalidApiKeyException if the APIKEY is not valid for any reason.
    */
   User authenticate(@NotNull Authentication authentication) throws UserIsInactiveException, UserCantBeCreatedException, InvalidApiKeyException;
+  
+  User authenticate(@NotNull OidcUser oidcUser) throws UserIsInactiveException, UserCantBeCreatedException;
 }
