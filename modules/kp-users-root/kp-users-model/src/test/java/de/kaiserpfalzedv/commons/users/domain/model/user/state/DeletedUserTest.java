@@ -28,6 +28,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -90,6 +91,12 @@ public class DeletedUserTest {
   public void shouldReturnBannedUserWhenActivatingABannedUser() {
     log.entry();
     
+    sut = KpUserDetails.builder()
+        .bannedOn(OffsetDateTime.now().minusDays(2L))
+        .build()
+        .getState(bus).delete();
+    deletedUser = null;
+    
     UserState result = sut.activate();
     assertInstanceOf(BannedUser.class, result);
     assertNotNull(activeUser);
@@ -107,6 +114,13 @@ public class DeletedUserTest {
   @Test
   public void shouldReturnDetainedUserWhenActivatingADetainedUser() {
     log.entry();
+    
+    sut = KpUserDetails.builder()
+        .detainmentDuration(Duration.ofDays(30L))
+        .detainedTill(OffsetDateTime.now().plusDays(1L))
+        .build()
+        .getState(bus).delete();
+    deletedUser = null;
     
     UserState result = sut.activate();
     assertInstanceOf(DetainedUser.class, result);
