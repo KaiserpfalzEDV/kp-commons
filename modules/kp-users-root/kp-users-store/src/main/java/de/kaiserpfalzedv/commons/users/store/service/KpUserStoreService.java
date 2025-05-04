@@ -1,6 +1,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
+import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import de.kaiserpfalzedv.commons.users.domain.services.UserWriteService;
@@ -65,8 +66,8 @@ public class KpUserStoreService implements UserReadService, UserWriteService {
   }
   
   @Override
-  public User create(final User user) {
-    return null;
+  public User create(final User user) throws UserCantBeCreatedException {
+    throw new UserCantBeCreatedException(user.getIssuer(), user.getSubject(), user.getUsername(), user.getEmail());
   }
   
   @Override

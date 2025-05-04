@@ -64,6 +64,21 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    */
   String getSubject();
   
+  /**
+   * @return the email address of the user.
+   */
+  String getEmail();
+  
+  /**
+   * @return the phone number.
+   */
+  String getPhone();
+  
+  /**
+   * @return the discord username.
+   */
+  String getDiscord();
+  
   
   /**
    * @return The period the user has been detained for.

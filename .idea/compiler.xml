@@ -314,13 +314,6 @@
         </processorPath>
         <module name="kp-users-store.test" />
       </profile>
-      <profile name="Annotation profile for KP RPG :: Base" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/immutables/value/2.5.6/value-2.5.6.jar" />
-        </processorPath>
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="kp-commons-dnb-lookup" target="17" />

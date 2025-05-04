@@ -19,10 +19,8 @@ package de.kaiserpfalzedv.commons.users.domain;
 
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 
 
 /**
@@ -38,15 +36,6 @@ public class UserCantBeCreatedException extends BaseUserException {
   private final String subject;
   private final String username;
   private final String email;
-  
-  public UserCantBeCreatedException(@NotNull OidcIdToken token) {
-    super(null, createExceptionMessage(token.getIssuer().toString(), token.getSubject(), token.getPreferredUsername(), token.getEmail()));
-    
-    this.issuer = token.getIssuer().toString();
-    this.subject = token.getSubject();
-    this.username = token.getSubject();
-    this.email = token.getEmail();
-  }
   
   public UserCantBeCreatedException(@NotBlank final String issuer, @NotBlank final String subject,
                                     @NotBlank final String username, final String email) {

@@ -16,10 +16,10 @@ import java.time.OffsetDateTime;
 @ToString(callSuper = true)
 public class UserIsBannedException extends UserIsInactiveException {
   public UserIsBannedException(@NotNull User user) {
-    super(user, "User is banned since " + user.getDeleted());
+    super(user, "User is banned since " + user.getBannedOn());
   }
   
   public OffsetDateTime getBannedAt() {
-    return user.getDeleted();
+    return user.getBannedOn();
   }
 }

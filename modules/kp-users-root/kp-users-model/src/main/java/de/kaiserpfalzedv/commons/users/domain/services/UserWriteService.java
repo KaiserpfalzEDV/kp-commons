@@ -1,6 +1,7 @@
 package de.kaiserpfalzedv.commons.users.domain.services;
 
 
+import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotBlank;
 
@@ -9,7 +10,7 @@ import jakarta.validation.constraints.NotBlank;
  * @since 03.05.2025
  */
 public interface UserWriteService {
-  User create(User user);
+  User create(User user) throws UserCantBeCreatedException;
   User updateIssuer(User user, @NotBlank String issuer, @NotBlank String sub);
 
   User updateNamespace(User user, @NotBlank String namespace);
