@@ -19,10 +19,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 import com.google.common.eventbus.EventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserBannedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserDetainedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserReleasedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserDeletedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.events.state.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -95,6 +92,7 @@ public class KpUserDetails implements User {
         
         detainmentDuration = null;
         detainedTill = null;
+        bannedOn = null;
         
         bus.post(UserReleasedEvent.builder().user(this).build());
         
@@ -118,23 +116,13 @@ public class KpUserDetails implements User {
     }
     
     @Override
-    public KpUserDetails unban(@NotNull EventBus bus) {
-        log.entry(bus);
-        
-        bannedOn = null;
-        
-        bus.post(UserReleasedEvent.builder().user(this).build());
-        
-        return log.exit(this);
-    }
-    
-    @Override
     public KpUserDetails delete(@NotNull EventBus bus) {
         log.entry(bus);
         
         this.deleted = OffsetDateTime.now(Clock.systemUTC());
         
         bus.post(UserDeletedEvent.builder().user(this).timestamp(deleted).build());
+        log.trace("Deleted user. banned={}, detained={}, deleted={}", isBanned(), isDetained(), isDeleted());
         
         return log.exit(this);
     }
@@ -145,7 +133,7 @@ public class KpUserDetails implements User {
         
         this.deleted = null;
         
-        bus.post(UserReleasedEvent.builder().user(this).build());
+        bus.post(UserActivatedEvent.builder().user(this).build());
         
         return log.exit(this);
     }

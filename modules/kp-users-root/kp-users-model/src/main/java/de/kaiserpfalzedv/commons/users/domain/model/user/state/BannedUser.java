@@ -27,6 +27,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
+import lombok.extern.slf4j.XSlf4j;
 
 import java.util.UUID;
 
@@ -39,6 +40,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @ToString(of = {"user"})
+@XSlf4j
 public class BannedUser implements UserState {
   @Getter
   final private User user;
@@ -56,14 +58,15 @@ public class BannedUser implements UserState {
   
   @Override
   public UserState release() {
+    log.entry(user);
     
     user.release(bus);
     
     if (user.isDeleted()) {
-      return DeletedUser.builder().user(user).bus(bus).build();
+      return log.exit(DeletedUser.builder().user(user).bus(bus).build());
     }
     
-    return ActiveUser.builder().user(user).bus(bus).build();
+    return log.exit(ActiveUser.builder().user(user).bus(bus).build());
   }
   
   @Override
@@ -83,7 +86,7 @@ public class BannedUser implements UserState {
   public UserState remove(final boolean delete) {
     user.delete(bus);
     
-    return RemovedUser.builder().user(user).bus(bus).build();
+    return DeletedUser.builder().user(user).bus(bus).build();
   }
   
   @Override

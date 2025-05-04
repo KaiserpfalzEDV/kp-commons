@@ -121,14 +121,6 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   User ban(@NotNull EventBus bus);
   
   /**
-   * Unban the user from the system.
-   *
-   * @param bus The bus for sending the changing event.
-   * @return the user
-   */
-  User unban(@NotNull EventBus bus);
-  
-  /**
    * delete the user.
    *
    * @param bus The bus for sending the changing event.
@@ -143,6 +135,12 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * @return the user
    */
   User undelete(@NotNull EventBus bus);
+  
+  
+  /**
+   * @return true if the user is neither banned, detained, nor deleted.
+   */
+  default boolean isActive() { return !isInactive(); }
   
   /**
    * @return true if the user is banned from the system.
@@ -160,7 +158,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * @return true if the user is deleted.
    */
   default boolean isDeleted() {
-    return getDeleted() != null && !isBanned();
+    return getDeleted() != null;
   }
   
   /**
@@ -169,6 +167,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   default boolean isInactive() {
     return (isDeleted() || isBanned() || isDetained());
   }
+  
   
   default UUID getOwnerId() {
     return getId();
@@ -193,19 +192,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * @return the current user state.
    */
   default UserState getState(EventBus bus) {
-    if (isDeleted()) {
-      return DeletedUser.builder().user(this).bus(bus).build();
-    }
-    
-    if (isBanned()) {
-      return BannedUser.builder().user(this).bus(bus).build();
-    }
-    
-    if (isDetained()) {
-      return DetainedUser.builder().user(this).bus(bus).build();
-    }
-    
-    return ActiveUser.builder().user(this).bus(bus).build();
+    return UserState.Factory.fromUser(this, bus);
   }
   
   /**

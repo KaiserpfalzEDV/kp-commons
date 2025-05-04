@@ -19,7 +19,9 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.state;
 
 
+import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -32,6 +34,35 @@ import java.util.UUID;
  */
 
 public interface UserState {
+  class Factory {
+    static public UserState fromUser(@NotNull final User user, @NotNull final EventBus bus) {
+      if  (user.isActive()) {
+        return ActiveUser.builder()
+            .user(user)
+            .bus(bus)
+            .build();
+      } else if (user.isBanned()) {
+        return BannedUser.builder()
+            .user(user)
+            .bus(bus)
+            .build();
+      } else if (user.isDetained()) {
+        return DetainedUser.builder()
+            .user(user)
+            .bus(bus)
+            .build();
+      } else {
+        // If the user is not active, banned, nor detained. It has to be deleted!
+        
+        return DeletedUser.builder()
+            .user(user)
+            .bus(bus)
+            .build();
+      }
+    }
+  }
+  
+  
   User getUser();
   
   /**
@@ -43,7 +74,7 @@ public interface UserState {
   
   
   default boolean isActive() {
-    return !getUser().isInactive();
+    return getUser().isActive();
   }
   
   default boolean isInactive() {
