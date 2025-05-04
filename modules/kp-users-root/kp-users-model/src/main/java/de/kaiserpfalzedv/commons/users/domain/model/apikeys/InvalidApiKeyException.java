@@ -30,7 +30,7 @@ import lombok.ToString;
  * @since 04.05.2025
  */
 @Getter
-@ToString
+@ToString(callSuper = true)
 public class InvalidApiKeyException extends BaseApiKeyException {
   public InvalidApiKeyException(@Nullable final ApiKey apiKey) {
     super(apiKey, generateMessage(apiKey));

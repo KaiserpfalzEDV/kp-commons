@@ -15,10 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.BaseUserException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
