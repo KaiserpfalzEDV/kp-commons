@@ -20,16 +20,8 @@ package de.kaiserpfalzedv.commons.users.domain.model.user.events;
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyRevokedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBannedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserActivatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserRemovedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 
 /**
  * This is the interface for the SCSes to implement to react on user events according to their own needs.
@@ -50,7 +42,4 @@ public interface UserEventsHandler {
   
   void event(UserLoginEvent event);
   void event(UserLogoutEvent event);
-  
-  void event(ApiKeyCreatedEvent event);
-  void event(ApiKeyRevokedEvent event);
 }

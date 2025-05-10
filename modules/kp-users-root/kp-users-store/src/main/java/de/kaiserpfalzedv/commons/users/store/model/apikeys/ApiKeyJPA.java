@@ -61,11 +61,6 @@ public class ApiKeyJPA extends AbstractJPAEntity<UUID> implements ApiKey {
     @ToString.Include
     private String nameSpace;
     
-    @Transient
-    public String getName() {
-        return id.toString();
-    }
-
     @NotNull
     @ManyToOne
     @JoinColumn(name = "USER", nullable = false, updatable = false, referencedColumnName = "ID", foreignKey = @ForeignKey(name = "APIKEYS_USER_FK"))

@@ -48,10 +48,6 @@ public class ApiKeyImpl implements ApiKey {
     @Builder.Default
     private String nameSpace = "./.";
 
-    public String getName() {
-        return id.toString();
-    }
-    
     /**
      * The expiration time of this API key. Defaults to 1 year from now.
      */

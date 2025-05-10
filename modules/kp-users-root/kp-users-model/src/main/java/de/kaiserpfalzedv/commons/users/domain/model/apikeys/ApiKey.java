@@ -38,6 +38,12 @@ import java.util.UUID;
 public interface ApiKey extends HasId<UUID>, HasNameSpace, HasName, HasTimestamps {
   User getUser();
   
+  default String getName() {
+    return getId().toString();
+  }
+  
+  
+  
   /**
    * @return The expiration time of this API key.
    */
