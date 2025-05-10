@@ -19,10 +19,10 @@ package de.kaiserpfalzedv.commons.users.store.model.users;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserBannedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserDetainedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserReleasedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserDeletedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBannedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;

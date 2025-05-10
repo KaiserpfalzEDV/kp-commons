@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,28 +15,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.state;
+package de.kaiserpfalzedv.commons.users.domain.model.role;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.kaiserpfalzedv.commons.api.resources.HasId;
+import de.kaiserpfalzedv.commons.api.resources.HasName;
+import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
+import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
+import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
- * The event sent when a user gets removed from the system.
- *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 09.11.24
+ * @since 10.05.2025
  */
-@Jacksonized
-@SuperBuilder(toBuilder = true)
-@Getter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class UserBannedEvent extends UserBaseEvent {
-  private final String i18nKey = "user.banned";
+@JsonDeserialize(as = KpRole.class)
+
+public interface Role extends GrantedAuthority, HasId<UUID>, HasNameSpace, HasName, HasTimestamps, Serializable {
 }

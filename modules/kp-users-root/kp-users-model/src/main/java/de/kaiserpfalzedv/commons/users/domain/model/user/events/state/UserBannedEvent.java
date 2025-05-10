@@ -15,10 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.state;
+package de.kaiserpfalzedv.commons.users.domain.model.user.events.state;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -27,7 +27,7 @@ import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * The event sent when a user gets temporary blocked.
+ * The event sent when a user gets removed from the system.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 09.11.24
@@ -37,6 +37,6 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserReleasedEvent extends UserBaseEvent {
-  private final String i18nKey = "user.released";
+public class UserBannedEvent extends UserBaseEvent {
+  private final String i18nKey = "user.banned";
 }

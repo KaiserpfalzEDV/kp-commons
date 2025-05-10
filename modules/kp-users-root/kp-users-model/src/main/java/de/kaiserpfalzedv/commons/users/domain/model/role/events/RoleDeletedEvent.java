@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025.  Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2024-2025. Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -13,50 +13,30 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program.
- *  If not, see <https://www.gnu.org/licenses/>.
- *
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.apikey;
+package de.kaiserpfalzedv.commons.users.domain.model.role.events;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.ApiKey;
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import java.time.Duration;
-import java.time.OffsetDateTime;
-
 
 /**
- * The api key is about to expire.
+ * The event sent when a role is deleted from the system.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 2025-05-10
  */
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class ApiKeyNearExpiryEvent extends UserBaseEvent {
-  private final String i18nKey = "user.api-key.expiry";
-
-  private final ApiKey apiKey;
-  private final OffsetDateTime expiry;
-  private final Duration ttl;
-  
-  @Override
-  public  Object[] getI18nData() {
-    return new Object[]{
-        getTimestamp(),
-        apiKey,
-        expiry,
-        ttl
-    };
-  }
+public class RoleDeletedEvent extends RoleBaseEvent {
+  private final String i18nKey = "role.deleted";
 }

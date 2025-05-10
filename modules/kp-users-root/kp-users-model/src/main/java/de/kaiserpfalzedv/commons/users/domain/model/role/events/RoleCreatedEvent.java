@@ -16,11 +16,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.state;
+package de.kaiserpfalzedv.commons.users.domain.model.role.events;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -29,21 +27,16 @@ import lombok.extern.jackson.Jacksonized;
 
 
 /**
+ * The event sent when a role is newly created in the system.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 09.11.24
+ * @since 2025-05-10
  */
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserRemovedEvent extends UserBaseEvent {
-  @Getter
-  private final String i18nKey = "user.removed";
-
-  /**
-   * If data needs to be deleted instead of anonymized.
-   */
-  @Builder.Default
-  private final boolean delete = false;
+public class RoleCreatedEvent extends RoleBaseEvent {
+  private final String i18nKey = "role.created";
 }

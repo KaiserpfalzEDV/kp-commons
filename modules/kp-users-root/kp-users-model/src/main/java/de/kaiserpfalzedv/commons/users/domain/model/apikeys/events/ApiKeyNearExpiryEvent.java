@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,31 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.state;
+package de.kaiserpfalzedv.commons.users.domain.model.apikeys.events;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikeys.ApiKey;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+
 
 /**
- * The event sent when a user gets temporary blocked.
+ * The api key is about to expire.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 09.11.24
+ * @since 04.05.2025
  */
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserDetainedEvent extends UserBaseEvent {
-  @Getter
-  private final String i18nKey = "user.log-detained";
+public class ApiKeyNearExpiryEvent extends UserBaseEvent {
+  private final String i18nKey = "user.api-key.expiry";
 
-  private final long days;
+  private final ApiKey apiKey;
+  private final OffsetDateTime expiry;
+  private final Duration ttl;
+  
+  @Override
+  public  Object[] getI18nData() {
+    return new Object[]{
+        getTimestamp(),
+        apiKey,
+        expiry,
+        ttl
+    };
+  }
 }

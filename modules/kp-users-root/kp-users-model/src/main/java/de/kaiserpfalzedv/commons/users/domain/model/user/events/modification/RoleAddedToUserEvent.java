@@ -15,21 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.arbitation;
+package de.kaiserpfalzedv.commons.users.domain.model.user.events.modification;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.UUID;
-
 
 /**
- * The event sent when a user gets temporary blocked.
+ * The user got a role assigned.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 09.11.24
@@ -39,9 +36,9 @@ import java.util.UUID;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserPetitionedEvent extends UserBaseEvent {
-  @Getter
-  private final String i18nKey = "user.petitioned";
-
-  private final UUID petition;
+public class RoleAddedToUserEvent extends UserBaseEvent {
+  @Builder.Default
+  private final String i18nKey = "user.log-in";
+  
+  private final Role role;
 }

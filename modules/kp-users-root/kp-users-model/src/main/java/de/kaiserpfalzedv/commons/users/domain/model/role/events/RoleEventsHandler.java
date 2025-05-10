@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2025. Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,28 +16,16 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.events.activity;
-
-
-import de.kaiserpfalzedv.commons.users.domain.model.events.UserBaseEvent;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
+package de.kaiserpfalzedv.commons.users.domain.model.role.events;
 
 
 /**
- * The event sent when any user logs out.
+ * This is the interface for the SCSes to implement to react on roles events according to their own needs.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 09.11.24
+ * @since 2025-05-10
  */
-@Jacksonized
-@SuperBuilder(toBuilder = true)
-@Getter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class UserLogoutEvent extends UserBaseEvent {
-  private final String i18nKey = "user.log-out";
+public interface RoleEventsHandler {
+  void event(RoleCreatedEvent event);
+  void event(RoleDeletedEvent event);
 }

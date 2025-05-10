@@ -20,8 +20,8 @@ package de.kaiserpfalzedv.commons.users.domain.model.user.state;
 
 
 import com.google.common.eventbus.EventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserPetitionedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserRemovedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserRemovedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
