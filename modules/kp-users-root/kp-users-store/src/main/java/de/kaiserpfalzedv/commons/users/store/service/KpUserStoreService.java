@@ -18,9 +18,12 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import de.kaiserpfalzedv.commons.users.domain.services.UserWriteService;
+import de.kaiserpfalzedv.commons.users.store.model.roles.RoleJPA;
+import de.kaiserpfalzedv.commons.users.store.model.roles.RoleRepository;
 import de.kaiserpfalzedv.commons.users.store.model.users.UserJPA;
 import de.kaiserpfalzedv.commons.users.store.model.users.UserRepository;
 import de.kaiserpfalzedv.commons.users.store.model.users.UserToJpa;
@@ -46,6 +49,7 @@ import java.util.UUID;
 @XSlf4j
 public class KpUserStoreService implements UserReadService, UserWriteService {
     private final UserRepository users;
+    private final RoleRepository roles;
     private final UserToJpa toUserJPA;
 
 
@@ -128,75 +132,161 @@ public class KpUserStoreService implements UserReadService, UserWriteService {
     }
     
     @Override
-    public User create(final User user) throws UserCantBeCreatedException {
+    public void create(final User user) throws UserCantBeCreatedException {
         log.entry(user);
         
         try {
             UserJPA data = users.save(toUserJPA.apply(user));
             
-            return log.exit(data);
+            log.exit(data);
         } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
             throw new UserCantBeCreatedException(user.getIssuer(), user.getSubject(), user.getUsername(), user.getEmail(), e);
         }
     }
     
     @Override
-    public User updateIssuer(final User user, final String issuer, final String sub) {
+    public void updateIssuer(final User user, final String issuer, final String sub) {
         log.entry(issuer, sub);
         
         Optional<UserJPA> data = users.findById(user.getId());
-        data.ifPresent(e -> users.save(e.toBuilder().issuer(issuer).build()));
-
-        return log.exit(users.findById(user.getId()).orElse(null));
+        data.ifPresentOrElse(u -> {
+                UserJPA saved = users.save(u.toBuilder().issuer(issuer).build());
+                log.info("User updated with new issuer and sub. user={}, issuer={}, sub={}", saved, saved.getIssuer(), saved.getSubject());
+            },
+            () -> thereIsNoSuchUser(user)
+        );
+        
+        log.exit();
+    }
+    
+    private static void thereIsNoSuchUser(final User user) {
+        log.warn("There is no such user. user={}", user);
     }
     
     @Override
-    public User updateNamespace(final User user, final String namespace) {
+    public void updateNamespace(final User user, final String namespace) {
         log.entry(user, namespace);
         
         Optional<UserJPA> data = users.findById(user.getId());
-        data.ifPresent(e -> users.save(e.toBuilder().nameSpace(namespace).build()));
+        data.ifPresentOrElse(
+            u -> {
+                users.save(u.toBuilder().nameSpace(namespace).build());
+                log.info("User updated with new namespace. user={}, namespace={}", user, namespace);
+            },
+            () -> thereIsNoSuchUser(user)
+        );
 
-        return log.exit(users.findById(user.getId()).orElse(null));
+        log.exit();
     }
     
     @Override
-    public User updateName(final User user, final String name) {
+    public void updateName(final User user, final String name) {
         log.entry(user, name);
         
         Optional<UserJPA> data = users.findById(user.getId());
-        data.ifPresent(e -> users.save(e.toBuilder().name(name).build()));
+        data.ifPresentOrElse(
+            u -> {
+                users.save(u.toBuilder().name(name).build());
+                log.info("User updated with new name. user={}, name={}", user, name);
+            },
+            () -> thereIsNoSuchUser(user)
+        );
         
-        return log.exit(users.findById(user.getId()).orElse(null));
+        log.exit();
     }
     
     @Override
-    public User updateNamespaceAndName(final User user, final String namespace, final String name) {
+    public void updateNamespaceAndName(final User user, final String namespace, final String name) {
         log.entry(user, namespace, name);
         
         Optional<UserJPA> data = users.findById(user.getId());
-        data.ifPresent(e -> users.save(e.toBuilder().nameSpace(namespace).name(name).build()));
+        data.ifPresentOrElse(
+            u -> {
+                users.save(u.toBuilder().nameSpace(namespace).name(name).build());
+                log.info("User updated with new namespace and name. user={}, namespace={}, name={}", user, namespace, name);
+            },
+            () -> thereIsNoSuchUser(user)
+        );
         
-        return log.exit(users.findById(user.getId()).orElse(null));
+        log.exit();
     }
     
     @Override
-    public User updateEmail(final User user, final String email) {
+    public void updateEmail(final User user, final String email) {
         log.entry(user, email);
         
         Optional<UserJPA> data = users.findById(user.getId());
-        data.ifPresent(e -> users.save(e.toBuilder().email(email).build()));
+        data.ifPresentOrElse(
+            u -> {
+                users.save(u.toBuilder().email(email).build());
+                log.info("User updated with new email. user={}, email={}", user, email);
+            },
+            () -> thereIsNoSuchUser(user)
+        );
         
-        return log.exit(users.findById(user.getId()).orElse(null));
+        log.exit();
     }
     
     @Override
-    public User updateDiscord(final User user, final String discord) {
+    public void updateDiscord(final User user, final String discord) {
         log.entry(user, discord);
         
         Optional<UserJPA> data = users.findById(user.getId());
-        data.ifPresent(e -> users.save(e.toBuilder().discord(discord).build()));
+        data.ifPresentOrElse(
+            u -> {
+                users.save(u.toBuilder().discord(discord).build());
+                log.info("User updated with new discord. user={}, discord={}", user, discord);
+            }
+            ,
+            () -> thereIsNoSuchUser(user)
+        );
         
-        return log.exit(users.findById(user.getId()).orElse(null));
+        log.exit();
+    }
+    
+    @Override
+    public void addRole(final User user, final Role role) {
+        log.entry(user, role);
+        
+        Optional<UserJPA> data = users.findById(user.getId());
+        data.ifPresentOrElse(
+            u -> {
+                Optional<RoleJPA> roleData = roles.findById(role.getId());
+                roleData.ifPresentOrElse(
+                    r -> {
+                        u.addRole(r);
+                        users.save(u);
+                        log.info("User updated with new role. user={}, role={}", user, role);
+                    },
+                    () -> log.warn("There is no such role to be added to user. user={}, role={}", user, role)
+                );
+            },
+            () -> thereIsNoSuchUser(user)
+        );
+        
+        log.exit();
+    }
+    
+    @Override
+    public void removeRole(final User user, final Role role) {
+        log.entry(user, role);
+        
+        Optional<UserJPA> data = users.findById(user.getId());
+        data.ifPresentOrElse(
+            u -> {
+                Optional<RoleJPA> roleData = roles.findById(role.getId());
+                roleData.ifPresentOrElse(
+                    r -> {
+                        u.removeRole(r);
+                        users.save(u);
+                        log.info("User updated with removed role. user={}, role={}", user, role);
+                    },
+                    () -> log.warn("There is no such role to be removed from user. user={}, role={}", user, role)
+                );
+            },
+            () -> thereIsNoSuchUser(user)
+        );
+        
+        log.exit();
     }
 }

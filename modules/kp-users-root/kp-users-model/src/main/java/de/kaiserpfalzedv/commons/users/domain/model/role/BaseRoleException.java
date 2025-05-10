@@ -18,27 +18,33 @@
 package de.kaiserpfalzedv.commons.users.domain.model.role;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.kaiserpfalzedv.commons.api.resources.HasId;
-import de.kaiserpfalzedv.commons.api.resources.HasName;
-import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
-import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
-import org.springframework.security.core.GrantedAuthority;
+import de.kaiserpfalzedv.commons.api.BaseException;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.io.Serializable;
-import java.util.UUID;
 
 /**
+ * All exceptions around using roles.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 10.05.2025
+ * @since 2025-05-10
  */
-@JsonDeserialize(as = KpRole.class)
-
-public interface Role extends GrantedAuthority, HasId<UUID>, HasNameSpace, HasName, HasTimestamps, Serializable {
-  /**
-   * @return The name of the authority. In spring traditionally with a "ROLE_" prefix.
-   */
-  default String getAuthority() {
-    return "ROLE_" + getName();
+@Getter
+@ToString(callSuper = true)
+public abstract class BaseRoleException extends BaseException {
+  private final Role apiKey;
+  
+  public BaseRoleException(@Nullable final Role role, @NotBlank final String message) {
+    super(message);
+    
+    this.apiKey = role;
+  }
+  
+  public BaseRoleException(@Nullable final Role role, final String message, final Throwable cause) {
+    super(message, cause);
+    
+    this.apiKey = role;
   }
 }

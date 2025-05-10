@@ -65,12 +65,4 @@ public class KpRole implements Role {
   
   /** Role deleted at */
   private OffsetDateTime deleted;
-  
-  /**
-   * @return The name of the authority. In spring traditionally with a "ROLE_" prefix.
-   */
-  @Override
-  public String getAuthority() {
-    return "ROLE_" + name;
-  }
 }

@@ -19,11 +19,12 @@ package de.kaiserpfalzedv.commons.users.store.model.users;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
+import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBannedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.store.model.roles.RoleJPA;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -31,7 +32,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.XSlf4j;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.time.*;
 import java.util.Set;
@@ -117,8 +117,13 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     private String discord;
     
     
-    // FIXME 2025-05-04 klenkes74 Repair the JPA handling of the authorities ...
-    private Set<GrantedAuthority> authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "USERS_ROLES",
+        joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+        inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")}
+    )
+    private Set<RoleJPA> authorities;
     
     
     @Override
@@ -186,5 +191,13 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     @Override
     public void eraseCredentials() {
         // do nothing. We don't have credentials ...
+    }
+    
+    public void addRole(@NotNull RoleJPA role) {
+        authorities.add(role);
+    }
+    
+    public void removeRole(@NotNull RoleJPA role) {
+        authorities.remove(role);
     }
 }
