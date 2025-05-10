@@ -23,7 +23,6 @@ import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
@@ -57,7 +56,7 @@ public class UserAuthenticationService implements AuthenticationService {
   
   
   @Override
-  public User authenticate(final Authentication authentication) throws UserIsInactiveException, UserCantBeCreatedException, InvalidApiKeyException {
+  public User authenticate(final Authentication authentication) throws UserIsInactiveException, UserCantBeCreatedException {
     log.entry(namespace, authentication);
     
     if (authentication.getPrincipal() instanceof OidcUser) {
@@ -90,8 +89,9 @@ public class UserAuthenticationService implements AuthenticationService {
     log.entry(oidcUser);
     
     User user = createUserFromOidcUser(oidcUser);
-    
-    return log.exit(writeService.create(user));
+    writeService.create(user);
+
+    return log.exit(user);
   }
   
   

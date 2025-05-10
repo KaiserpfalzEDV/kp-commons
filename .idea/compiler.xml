@@ -230,34 +230,6 @@
         </processorPath>
         <module name="kp-users-client.test" />
       </profile>
-      <profile name="Annotation profile for kp-users-messaging.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-users-messaging.main" />
-      </profile>
-      <profile name="Annotation profile for kp-users-messaging.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-users-messaging.test" />
-      </profile>
       <profile name="Annotation profile for kp-users-model.main" enabled="true">
         <sourceOutputDir name="../generated-sources/annotations" />
         <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
@@ -314,6 +286,34 @@
         </processorPath>
         <module name="kp-users-store.test" />
       </profile>
+      <profile name="Annotation profile for kp-users-messaging.main.main" enabled="true">
+        <sourceOutputDir name="../generated-sources/annotations" />
+        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
+        <option name="mapstruct.verbose" value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="kp-users-messaging.main.main" />
+      </profile>
+      <profile name="Annotation profile for kp-users-messaging.main.test" enabled="true">
+        <sourceOutputDir name="../generated-sources/annotations" />
+        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
+        <option name="mapstruct.verbose" value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="kp-users-messaging.main.test" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="kp-commons-dnb-lookup" target="17" />
@@ -332,6 +332,8 @@
       <module name="kp-commons-sms77.test" target="17" />
       <module name="kp-commons-userserver" target="17" />
       <module name="kp-rpg" target="11" />
+      <module name="kp-users-messaging" target="17" />
+      <module name="kp-users-messaging.test" target="17" />
       <module name="kp-users-server.main" target="17" />
       <module name="kp-users-server.test" target="17" />
       <module name="mongodb-testsupport" target="11" />
@@ -379,38 +381,38 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="kp-checkstyle" options="-parameters" />
-      <module name="kp-commons-api" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-api.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-api.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-api" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-api.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-api.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-bom" options="-parameters" />
-      <module name="kp-commons-core" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-core" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-core-root" options="-parameters" />
-      <module name="kp-commons-core.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-core.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-core.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-core.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-dnb-lookup" options="-parameters" />
       <module name="kp-commons-ean-search" options="-parameters" />
       <module name="kp-commons-events" options="-parameters" />
       <module name="kp-commons-fileserver" options="-parameters" />
-      <module name="kp-commons-jpa" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-jpa.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-jpa.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-jpa" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-jpa.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-jpa.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-modules-root" options="-parameters" />
       <module name="kp-commons-parent" options="-parameters" />
       <module name="kp-commons-quarkus" options="-parameters" />
-      <module name="kp-commons-rest" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-rest.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-rest.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-rest" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-rest.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-rest.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-root" options="-parameters" />
       <module name="kp-commons-services" options="-parameters" />
       <module name="kp-commons-services-root" options="-parameters" />
       <module name="kp-commons-servlet" options="-parameters" />
       <module name="kp-commons-sms77" options="-parameters" />
-      <module name="kp-commons-spring" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-spring.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-spring.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-test.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-test.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-spring" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-spring.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-spring.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-test.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-test.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-userserver" options="-parameters" />
       <module name="kp-commons-vaadin" options="-parameters" />
       <module name="kp-core-testsupport" options="-parameters" />
@@ -425,21 +427,23 @@
       <module name="kp-rpg-torg.main" options="-parameters" />
       <module name="kp-rpg-torg.test" options="-parameters" />
       <module name="kp-spring-boot-parent" options="-parameters" />
-      <module name="kp-users-client" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-client.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-client.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-client" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-client.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-client.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-users-messaging" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-messaging.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-messaging.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-messaging.main.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-messaging.main.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-users-messaging.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-model" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-model.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-model.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-model" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-model.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-model.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-users-root" options="-parameters" />
       <module name="kp-users-server.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-users-server.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-store" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-store.main" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-users-store.test" options="-parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-store" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-store.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-users-store.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="mongodb-testsupport" options="-parameters" />
       <module name="mongodb-testsupport.main" options="-parameters" />
       <module name="mongodb-testsupport.test" options="-parameters" />
