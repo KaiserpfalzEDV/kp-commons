@@ -22,6 +22,7 @@ import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.TestUser;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import lombok.extern.slf4j.XSlf4j;
@@ -35,6 +36,8 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -202,6 +205,17 @@ public class ApiKeyDefaultMethodsTest {
     log.entry("shouldThrowNoExceptionWhenCheckedForBeingDetainedForDefaultApiKey");
     
     sut.checkDetained();
+    
+    log.exit();
+  }
+  
+  
+  @Test
+  void shouldGenerateRevokeEventWhenApiKeyGetsRevoked() {
+    log.entry("shouldGenerateRevokeEventWhenApiKeyGetsRevoked");
+    
+    sut.revoke(bus);
+    verify(bus).post(any(ApiKeyRevokedEvent.class));
     
     log.exit();
   }

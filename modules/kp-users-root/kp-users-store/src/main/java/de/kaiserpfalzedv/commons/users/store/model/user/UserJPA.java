@@ -24,6 +24,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBanned
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
+import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -34,6 +35,7 @@ import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.XSlf4j;
 
 import java.time.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -116,7 +118,10 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
         inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")}
     )
-    private Set<RoleJPA> authorities;
+    private Set<RoleJPA> authorities = new HashSet<>();
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    private Set<ApiKeyJPA> apiKeys = new HashSet<>();
     
     
     @Override

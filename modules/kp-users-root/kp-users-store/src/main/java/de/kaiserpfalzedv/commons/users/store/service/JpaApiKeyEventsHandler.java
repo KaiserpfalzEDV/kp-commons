@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.users.store.service;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyNearExpiryEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.services.ApiKeysEventsHandler;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
@@ -59,6 +60,15 @@ public class JpaApiKeyEventsHandler implements ApiKeysEventsHandler {
     
     repository.deleteById(event.getApiKey().getId());
     log.info("Revoked api key: key='{}', user='{}'", event.getApiKey().getName(), event.getUser());
+    
+    log.exit(event.getApiKey());
+  }
+  
+  @Override
+  public void event(final ApiKeyNearExpiryEvent event) {
+    log.entry(event);
+    
+    log.debug("Nothing to do.");
     
     log.exit(event.getApiKey());
   }

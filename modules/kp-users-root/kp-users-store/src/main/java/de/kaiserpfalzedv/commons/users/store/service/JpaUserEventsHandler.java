@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.users.store.service;
 
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserEventsHandler;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
@@ -98,6 +99,7 @@ public class JpaUserEventsHandler implements UserEventsHandler {
     Optional<UserJPA> data = repository.findById(event.getUser().getId());
     data.ifPresent(u -> {
       u.delete(bus);
+      revokeAllApiKeysForUser(u);
       repository.save(u);
       log.info("Deleted user. user={}", u);
     });
@@ -105,10 +107,21 @@ public class JpaUserEventsHandler implements UserEventsHandler {
     log.exit(data.orElse(null));
   }
   
+  private void revokeAllApiKeysForUser(final UserJPA user) {
+    log.entry(user);
+    
+    user.getApiKeys().forEach(key -> bus.post(ApiKeyRevokedEvent.builder().user(user).apiKey(key).build()));
+    
+    log.exit(user);
+  }
+  
   @Override
   public void event(final UserRemovedEvent event) {
     log.entry(event);
-
+    
+    Optional<UserJPA> data = repository.findById(event.getUser().getId());
+    data.ifPresent(this::revokeAllApiKeysForUser);
+    
     repository.deleteById(event.getUser().getId());
     log.info("Removed user by ID. user={}", event.getUser());
     

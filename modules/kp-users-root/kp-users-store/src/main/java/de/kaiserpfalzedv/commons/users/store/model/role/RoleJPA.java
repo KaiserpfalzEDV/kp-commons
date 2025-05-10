@@ -43,7 +43,7 @@ import java.util.UUID;
 @Table(
     name = "ROLES",
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"ID"}, name = "ROLES_ID_UK")
+        @UniqueConstraint(columnNames = {"ID"}, name = "ROLES_ID_UK"),
     }
 )
 @Jacksonized

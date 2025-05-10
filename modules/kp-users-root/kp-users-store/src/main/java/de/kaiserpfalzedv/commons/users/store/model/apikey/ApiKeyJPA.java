@@ -33,7 +33,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * The player
+ * The APIKEY for a player.
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0
  */

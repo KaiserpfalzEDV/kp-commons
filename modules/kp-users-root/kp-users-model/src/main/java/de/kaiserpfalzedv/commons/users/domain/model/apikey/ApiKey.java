@@ -19,6 +19,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
@@ -26,6 +27,7 @@ import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 
 import java.time.OffsetDateTime;
@@ -42,12 +44,19 @@ public interface ApiKey extends HasId<UUID>, HasNameSpace, HasName, HasTimestamp
     return getId().toString();
   }
   
-  
-  
   /**
    * @return The expiration time of this API key.
    */
   OffsetDateTime getExpiration();
+  
+  
+  /**
+   * Revokes the APIKEY.
+   * @param bus the bus to send the revokation event to.
+   */
+  default void revoke(EventBus bus) {
+    bus.post(ApiKeyRevokedEvent.builder().user(getUser()).apiKey(this).build());
+  }
   
   /**
    * @return if the API key is expired.

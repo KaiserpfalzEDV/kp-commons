@@ -31,3 +31,7 @@ databaseChangeLog:
                 foreignKeyName: USERS_ROLES_ROLES_FK
                 referencedTableName: ROLES
                 referencedColumnNames: ID
+    - addUniqueConstraint:
+        constraintName: USERS_ROLES_UK
+        tableName: USERS_ROLES
+        columnNames: USER_ID, ROLE_ID

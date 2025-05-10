@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.users.domain.services;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyNearExpiryEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 
 /**
@@ -32,4 +33,5 @@ import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedE
 public interface ApiKeysEventsHandler {
   void event(ApiKeyCreatedEvent event);
   void event(ApiKeyRevokedEvent event);
+  void event(ApiKeyNearExpiryEvent event);
 }
