@@ -23,7 +23,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.InvalidApiKeyException;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;

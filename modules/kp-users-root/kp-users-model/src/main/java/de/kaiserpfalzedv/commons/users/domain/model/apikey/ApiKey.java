@@ -16,7 +16,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikeys;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.kaiserpfalzedv.commons.api.resources.HasId;

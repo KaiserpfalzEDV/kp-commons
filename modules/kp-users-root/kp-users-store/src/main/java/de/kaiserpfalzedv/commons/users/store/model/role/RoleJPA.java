@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.roles;
+package de.kaiserpfalzedv.commons.users.store.model.role;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;

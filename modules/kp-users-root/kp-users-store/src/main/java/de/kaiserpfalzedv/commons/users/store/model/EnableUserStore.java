@@ -35,6 +35,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 @EnableJpaRepositories
-@EntityScan(basePackages = "de.paladinsinn.tp.dcis.users.store")
-@ComponentScan(basePackages = "de.paladinsinn.tp.dcis.users.store")
+@EntityScan(basePackages = "de.paladinsinn.tp.dcis.user.store")
+@ComponentScan(basePackages = "de.paladinsinn.tp.dcis.user.store")
 public @interface EnableUserStore {}

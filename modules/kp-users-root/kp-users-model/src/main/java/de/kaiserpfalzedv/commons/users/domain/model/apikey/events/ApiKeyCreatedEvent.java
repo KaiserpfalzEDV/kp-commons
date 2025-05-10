@@ -15,32 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikeys;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
 
 
-import jakarta.annotation.Nullable;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * If the api key is not usable. No reason will be given for it.
- *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 21.04.25
  */
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
-public class InvalidApiKeyException extends BaseApiKeyException {
-  public InvalidApiKeyException(@Nullable final ApiKey apiKey) {
-    super(apiKey, generateMessage(apiKey));
-  }
-  
-  public InvalidApiKeyException(@Nullable final ApiKey apiKey, final Throwable cause) {
-    super(apiKey, generateMessage(apiKey), cause);
-  }
-  
-  private static String generateMessage(@Nullable final ApiKey apiKey) {
-    return "Invalid API key%s.".formatted(apiKey == null ? "" : " ('%s')".formatted(apiKey.getId()));
-  }
+@EqualsAndHashCode(callSuper = true)
+public class ApiKeyCreatedEvent extends UserBaseEvent {
+  private final String i18nKey = "user.api-key.created";
+
+  private final ApiKey apiKey;
 }

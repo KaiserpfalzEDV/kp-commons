@@ -15,20 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.users;
+package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.function.Function;
 
 @Mapper
-public interface UserToJpa extends Function<User, UserJPA> {
+public interface ApiKeyToJPA extends Function<ApiKey, ApiKeyJPA> {
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "revId", ignore = true)
-    @Mapping(target = "revisioned", ignore = true)
     @Mapping(target = "modified", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    UserJPA apply(User orig);
+    ApiKeyJPA apply(ApiKey orig);
 }

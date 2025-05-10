@@ -21,8 +21,8 @@ package de.kaiserpfalzedv.commons.users.domain.services;
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyRevokedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBannedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;

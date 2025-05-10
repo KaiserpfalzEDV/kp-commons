@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.apikeys;
+package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.ApiKey;
-import de.kaiserpfalzedv.commons.users.store.model.users.UserJPA;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
+import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

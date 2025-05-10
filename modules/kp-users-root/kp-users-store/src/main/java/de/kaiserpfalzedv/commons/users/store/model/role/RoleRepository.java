@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,30 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package de.kaiserpfalzedv.commons.users.store.model.role;
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikeys.events;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.ApiKey;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-
+import java.util.UUID;
 
 /**
+ * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 21.04.25
+ * @version 1.0.0
+ * @since 2025-05-10
  */
-@Jacksonized
-@SuperBuilder(toBuilder = true)
-@Getter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class ApiKeyRevokedEvent extends UserBaseEvent {
-  private final String i18nKey = "user.api-key.revoked";
-
-  private final ApiKey apiKey;
+@Repository
+public interface RoleRepository extends JpaRepository<RoleJPA, UUID> {
 }

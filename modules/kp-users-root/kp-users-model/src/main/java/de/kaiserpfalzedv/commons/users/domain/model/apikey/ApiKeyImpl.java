@@ -16,7 +16,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikeys;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import jakarta.validation.Valid;

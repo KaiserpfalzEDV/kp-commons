@@ -15,36 +15,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikeys;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
 
 
-import de.kaiserpfalzedv.commons.api.BaseException;
-import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotBlank;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
+
+import java.time.Duration;
+import java.time.OffsetDateTime;
 
 
 /**
- * All exceptions around using api keys.
+ * The api key is about to expire.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 04.05.2025
  */
+@Jacksonized
+@SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
-public abstract class BaseApiKeyException extends BaseException {
+@EqualsAndHashCode(callSuper = true)
+public class ApiKeyNearExpiryEvent extends UserBaseEvent {
+  private final String i18nKey = "user.api-key.expiry";
+
   private final ApiKey apiKey;
+  private final OffsetDateTime expiry;
+  private final Duration ttl;
   
-  public BaseApiKeyException(@Nullable final ApiKey apiKey, @NotBlank final String message) {
-    super(message);
-    
-    this.apiKey = apiKey;
-  }
-  
-  public BaseApiKeyException(@Nullable final ApiKey apiKey, final String message, final Throwable cause) {
-    super(message, cause);
-    
-    this.apiKey = apiKey;
+  @Override
+  public  Object[] getI18nData() {
+    return new Object[]{
+        getTimestamp(),
+        apiKey,
+        expiry,
+        ttl
+    };
   }
 }

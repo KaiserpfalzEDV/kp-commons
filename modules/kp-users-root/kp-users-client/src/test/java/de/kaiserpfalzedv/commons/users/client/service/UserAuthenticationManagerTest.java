@@ -156,13 +156,13 @@ public class UserAuthenticationManagerTest {
   }
   private static final UUID SUBJECT = UUID.randomUUID();
   
-  private static final String NAMESPACE = "urn:kp-users-root";
+  private static final String NAMESPACE = "urn:kp-user-root";
   public static final String NAME_PLAYER = "Patricia Player";
   public static final String NAME_GM = "Georg Gamemaster";
   public static final String NAME_ORGA = "Olivia Orga";
   public static final String NAME_JUDGE = "Judy Judge";
   public static final String NAME_ADMIN = "Amanda Admin";
-  private static final String EMAIL = "user@urn.kp-users-root";
+  private static final String EMAIL = "user@urn.kp-user-root";
   private static final String PHONE = "+49 1234-12345678";
   private static final String DISCORD = "user";
   

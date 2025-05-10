@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
-package de.kaiserpfalzedv.commons.users.store.model.apikeys;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.ApiKey;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import java.util.UUID;
 
-import java.util.function.Function;
-
-@Mapper
-public interface ApiKeyToJPA extends Function<ApiKey, ApiKeyJPA> {
-    @Mapping(target = "version", ignore = true)
-    @Mapping(target = "modified", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
-    ApiKeyJPA apply(ApiKey orig);
+/**
+ * 
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2024-08-18
+ */
+@Repository
+public interface ApiKeyRepository extends JpaRepository<ApiKeyJPA, UUID> {
 }

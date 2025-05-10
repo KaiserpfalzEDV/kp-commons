@@ -15,24 +15,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.roles;
+package de.kaiserpfalzedv.commons.users.store.model.user;
 
-import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
+import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.function.Function;
 
-/**
- * Maps the role to the JPA implementation.
- *
- * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2025-05-10
- */
 @Mapper
-public interface RoleToJPA extends Function<Role, RoleJPA> {
+public interface UserToJpa extends Function<User, UserJPA> {
     @Mapping(target = "version", ignore = true)
+    @Mapping(target = "revId", ignore = true)
+    @Mapping(target = "revisioned", ignore = true)
     @Mapping(target = "modified", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    RoleJPA apply(Role orig);
+    UserJPA apply(User orig);
 }

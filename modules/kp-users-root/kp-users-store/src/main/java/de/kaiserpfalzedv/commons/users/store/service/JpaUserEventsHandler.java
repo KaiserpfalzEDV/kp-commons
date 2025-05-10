@@ -24,9 +24,9 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLog
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
-import de.kaiserpfalzedv.commons.users.store.model.users.UserJPA;
-import de.kaiserpfalzedv.commons.users.store.model.users.UserRepository;
-import de.kaiserpfalzedv.commons.users.store.model.users.UserToJpaImpl;
+import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
+import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
+import de.kaiserpfalzedv.commons.users.store.model.user.UserToJpaImpl;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;

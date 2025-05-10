@@ -19,11 +19,11 @@
 package de.kaiserpfalzedv.commons.users.domain.services;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyRevokedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 
 /**
- * This is the interface for the SCSes to implement to react on apikeys events according to their own needs.
+ * This is the interface for the SCSes to implement to react on apikey events according to their own needs.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-10

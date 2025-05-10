@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.users;
+package de.kaiserpfalzedv.commons.users.store.model.user;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
@@ -24,7 +24,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBanned
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
-import de.kaiserpfalzedv.commons.users.store.model.roles.RoleJPA;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

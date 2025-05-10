@@ -15,24 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 
-import de.kaiserpfalzedv.commons.users.domain.BaseUserException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.BaseApiKeyException;
-import org.springframework.security.core.AuthenticationException;
+import jakarta.annotation.Nullable;
+import lombok.Getter;
+import lombok.ToString;
 
 
 /**
+ * If the api key is not usable. No reason will be given for it.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 04.05.2025
  */
-public class UserAuthenticationException extends AuthenticationException {
-  public UserAuthenticationException(final BaseUserException userException) {
-    super(userException.getMessage(), userException);
+@Getter
+@ToString(callSuper = true)
+public class InvalidApiKeyException extends BaseApiKeyException {
+  public InvalidApiKeyException(@Nullable final ApiKey apiKey) {
+    super(apiKey, generateMessage(apiKey));
   }
   
-  public UserAuthenticationException(final BaseApiKeyException apiKeyException) {
-    super(apiKeyException.getMessage(), apiKeyException);
+  public InvalidApiKeyException(@Nullable final ApiKey apiKey, final Throwable cause) {
+    super(apiKey, generateMessage(apiKey), cause);
+  }
+  
+  private static String generateMessage(@Nullable final ApiKey apiKey) {
+    return "Invalid API key%s.".formatted(apiKey == null ? "" : " ('%s')".formatted(apiKey.getId()));
   }
 }

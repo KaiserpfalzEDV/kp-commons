@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 public class UserLoggedInStateRepository {
   public static final int INACTIVITY_LIMIT_IN_SECONDS = 3600;
   
-  /** The cache of logged-in users. */
+  /** The cache of logged-in user. */
   private final HashMap<User, Instant> lastLogin = new HashMap<>();
 
   
@@ -159,7 +159,7 @@ public class UserLoggedInStateRepository {
   public void purgeAllUsers() {
     synchronized (lastLogin) {
       lastLogin.clear();
-      log.warn("Purged all users from cache.");
+      log.warn("Purged all user from cache.");
     }
   }
 }

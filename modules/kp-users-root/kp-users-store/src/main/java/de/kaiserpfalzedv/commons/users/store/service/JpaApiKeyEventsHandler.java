@@ -18,12 +18,12 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.events.ApiKeyRevokedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.services.ApiKeysEventsHandler;
-import de.kaiserpfalzedv.commons.users.store.model.apikeys.ApiKeyJPA;
-import de.kaiserpfalzedv.commons.users.store.model.apikeys.ApiKeyRepository;
-import de.kaiserpfalzedv.commons.users.store.model.apikeys.ApiKeyToJPA;
+import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
+import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyRepository;
+import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyToJPA;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;

@@ -26,7 +26,7 @@ import lombok.ToString;
 
 
 /**
- * All exceptions around using roles.
+ * All exceptions around using role.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-10

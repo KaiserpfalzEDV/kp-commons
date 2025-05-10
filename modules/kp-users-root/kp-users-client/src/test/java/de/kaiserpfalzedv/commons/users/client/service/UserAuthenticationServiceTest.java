@@ -24,7 +24,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
 import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.InvalidApiKeyException;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
@@ -207,14 +207,14 @@ public class UserAuthenticationServiceTest {
   }
   private static final UUID SUBJECT = UUID.randomUUID();
   
-  private static final String NAMESPACE = "urn:kp-users-root";
+  private static final String NAMESPACE = "urn:kp-user-root";
   public static final String NAME_PLAYER = "Patricia Player";
   public static final String NAME_BANNED = "Berta Banned";
   public static final String NAME_DETAINED = "Diana Detained";
   public static final String NAME_DELETED = "Drue Deleted";
   public static final String NAME_CREATED = "Clara Created";
   public static final String NAME_FAILED_CREATION = "Fanny Failing";
-  private static final String EMAIL = "user@urn.kp-users-root";
+  private static final String EMAIL = "user@urn.kp-user-root";
   private static final String PHONE = "+49 1234-12345678";
   private static final String DISCORD = "user";
   

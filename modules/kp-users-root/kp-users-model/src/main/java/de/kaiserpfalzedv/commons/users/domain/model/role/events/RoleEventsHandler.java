@@ -20,7 +20,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.role.events;
 
 
 /**
- * This is the interface for the SCSes to implement to react on roles events according to their own needs.
+ * This is the interface for the SCSes to implement to react on role events according to their own needs.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-10

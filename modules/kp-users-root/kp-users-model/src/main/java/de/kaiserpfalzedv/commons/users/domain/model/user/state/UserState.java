@@ -27,7 +27,7 @@ import java.util.UUID;
 
 
 /**
- * This is the state machine for users.
+ * This is the state machine for user.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 12.04.25
