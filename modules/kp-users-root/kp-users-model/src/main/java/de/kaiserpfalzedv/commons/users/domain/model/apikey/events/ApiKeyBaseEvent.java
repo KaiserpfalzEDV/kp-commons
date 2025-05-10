@@ -18,22 +18,46 @@
 package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
+import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
+
+import java.time.Duration;
+import java.time.OffsetDateTime;
 
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 21.04.25
+ * @since 2025-05-10
  */
-@Jacksonized
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class ApiKeyRevokedEvent extends ApiKeyBaseEvent {
-  private final String i18nKey = "user.api-key.revoked";
+public abstract class ApiKeyBaseEvent extends UserBaseEvent {
+  private final ApiKey apiKey;
+  
+  @Override
+  public User getUser() {
+    return getApiKey().getUser();
+  }
+  
+  @Override
+  public Object[] getI18nData() {
+    return new Object[]{
+        getTimestamp(),
+        getSystem(),
+        getApiKey().getNameSpace(),
+        getApiKey().getName(),
+        getApiKey().getExpiration(),
+        Duration.between(OffsetDateTime.now(), getApiKey().getExpiration()),
+        getUser().getId(),
+        getUser().getNameSpace(),
+        getUser().getName()
+    };
+  }
 }

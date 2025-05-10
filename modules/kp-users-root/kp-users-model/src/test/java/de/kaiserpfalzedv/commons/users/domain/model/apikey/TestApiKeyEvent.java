@@ -15,25 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 21.04.25
+ * @since 2025-05-10
  */
-@Jacksonized
 @SuperBuilder(toBuilder = true)
 @Getter
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class ApiKeyRevokedEvent extends ApiKeyBaseEvent {
-  private final String i18nKey = "user.api-key.revoked";
+@ToString(callSuper = true)
+public class TestApiKeyEvent extends ApiKeyBaseEvent {
+  private final String i18nKey = "apikey.test";
+  
+  private final ApiKey apiKey;
 }

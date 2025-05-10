@@ -100,11 +100,6 @@ public class KpUserDetails implements User {
     }
     
     @Override
-    public boolean isBanned() {
-        return bannedOn != null;
-    }
-    
-    @Override
     public KpUserDetails ban(@NotNull EventBus bus) {
         log.entry(bus);
 

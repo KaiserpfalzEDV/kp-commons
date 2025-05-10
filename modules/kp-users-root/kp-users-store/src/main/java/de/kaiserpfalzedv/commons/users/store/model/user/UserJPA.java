@@ -73,13 +73,6 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     @Column(name = "BANNED", nullable = false)
     private OffsetDateTime bannedOn;
     
-    @Transient
-    public boolean isBanned() {
-        return bannedOn != null;
-    }
-    
-    
-    
     @NotNull
     @NotBlank
     @Column(name = "ISSUER", nullable = false)

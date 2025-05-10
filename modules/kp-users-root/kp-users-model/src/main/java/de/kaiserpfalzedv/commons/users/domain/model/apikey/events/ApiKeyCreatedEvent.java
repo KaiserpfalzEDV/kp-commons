@@ -18,8 +18,6 @@
 package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -36,8 +34,6 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class ApiKeyCreatedEvent extends UserBaseEvent {
+public class ApiKeyCreatedEvent extends ApiKeyBaseEvent {
   private final String i18nKey = "user.api-key.created";
-
-  private final ApiKey apiKey;
 }

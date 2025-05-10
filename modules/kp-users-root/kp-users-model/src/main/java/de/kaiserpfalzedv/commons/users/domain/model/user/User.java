@@ -145,7 +145,10 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   /**
    * @return true if the user is banned from the system.
    */
-  boolean isBanned();
+  default boolean isBanned() {
+    return getBannedOn() != null;
+  }
+  
   
   /**
    * @return true if the user is detained.

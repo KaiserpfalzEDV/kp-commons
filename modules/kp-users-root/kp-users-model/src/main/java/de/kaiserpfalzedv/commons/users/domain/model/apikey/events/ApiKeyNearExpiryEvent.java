@@ -18,16 +18,11 @@
 package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-
-import java.time.Duration;
-import java.time.OffsetDateTime;
 
 
 /**
@@ -41,20 +36,6 @@ import java.time.OffsetDateTime;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class ApiKeyNearExpiryEvent extends UserBaseEvent {
+public class ApiKeyNearExpiryEvent extends ApiKeyBaseEvent {
   private final String i18nKey = "user.api-key.expiry";
-
-  private final ApiKey apiKey;
-  private final OffsetDateTime expiry;
-  private final Duration ttl;
-  
-  @Override
-  public  Object[] getI18nData() {
-    return new Object[]{
-        getTimestamp(),
-        apiKey,
-        expiry,
-        ttl
-    };
-  }
 }

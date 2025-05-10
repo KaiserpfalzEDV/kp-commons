@@ -53,7 +53,7 @@ public interface ApiKey extends HasId<UUID>, HasNameSpace, HasName, HasTimestamp
    * @return if the API key is expired.
    */
   default boolean isExpired() {
-    return getExpiration().isAfter(OffsetDateTime.now());
+    return getExpiration().isBefore(OffsetDateTime.now());
   }
   
   /**

@@ -13,7 +13,7 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="de.kaiserpfalzedv" level="INFO" additivity="false">
+    <logger name="de.kaiserpfalzedv" level="DEBUG" additivity="false">
         <appender-ref ref="Console"/>
     </logger>
 

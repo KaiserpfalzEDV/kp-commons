@@ -15,25 +15,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
+
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 21.04.25
+ * @since 2025-05-10
  */
-@Jacksonized
-@SuperBuilder(toBuilder = true)
+@Builder(toBuilder = true)
 @Getter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class ApiKeyRevokedEvent extends ApiKeyBaseEvent {
-  private final String i18nKey = "user.api-key.revoked";
+@EqualsAndHashCode(of = "id")
+@ToString(of = {"id"})
+public class TestApiKey implements ApiKey {
+  @Builder.Default
+  private final UUID id = UUID.randomUUID();
+  private final User user;
+
+  @Builder.Default
+  private final OffsetDateTime created = OffsetDateTime.now();
+  
+  @Builder.Default
+  private final OffsetDateTime expiration = OffsetDateTime.now().plusDays(30L);
+  
+  @Override
+  public String getNameSpace() {
+    return user.getNameSpace();
+  }
+  
+  @Override
+  public OffsetDateTime getModified() {
+    return created;
+  }
+  
+  @Override
+  public OffsetDateTime getDeleted() {
+    return null;
+  }
 }

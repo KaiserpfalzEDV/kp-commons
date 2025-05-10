@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
 import com.google.common.eventbus.EventBus;
+import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,6 +40,7 @@ import static org.mockito.Mockito.*;
  * @since 2025-05-10
  */
 @ExtendWith(MockitoExtension.class)
+@XSlf4j
 public class KpUserDetailsTest {
   @Mock
   private EventBus bus;
@@ -264,9 +266,12 @@ public class KpUserDetailsTest {
     sut.delete(bus);
     reset(bus);
     
-    sut.undelete(bus);
+    User result = sut.undelete(bus);
+    log.debug("Undeleted a banned user. user={}", result);
+    
     verify(bus, times(1)).post(Mockito.any());
     
+    assertEquals(result, sut);
     assertTrue(sut.isBanned(), "The user should be banned!");
     assertFalse(sut.isDeleted(), "The user should not be deleted anymore!");
   }
