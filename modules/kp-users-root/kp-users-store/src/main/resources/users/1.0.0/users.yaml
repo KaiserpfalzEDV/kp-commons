@@ -61,18 +61,17 @@ databaseChangeLog:
         - column:
             name: DELETED
             type: TIMESTAMP WITH TIME ZONE
-        - column:
-            name: NAMESPACE
-            type: VARCHAR(100)
-            constraints:
-              nullable: false
-              notNullConstraintName: USERS_NAMESPACE_NN
+
         - column:
             name: DETAINED_TILL
             type: TIMESTAMP WITH TIME ZONE
         - column:
             name: DETAINED_DURATION
             type: NUMERIC(21,0)
+        - column:
+            name: BANNED
+            type: TIMESTAMP WITH TIME ZONE
+
         - column:
             name: ISSUER
             type: VARCHAR(100)
@@ -85,47 +84,30 @@ databaseChangeLog:
             constraints:
               nullable: false
               notNullConstraintName: USERS_SUBJECT_NN
+        
+        - column:
+            name: NAMESPACE
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_NAMESPACE_NN
         - column:
             name: NAME
             type: VARCHAR(100)
             constraints:
               nullable: false
               notNullConstraintName: USERS_NAME_NN
+
         - column:
-            name: BANNED
-            type: boolean
-            defaultValueBoolean: false
-            constraints:
-              nullable: false
-              notNullConstraintName: USERS_BANNED_NN
+            name: EMAIL
+            type: VARACHAR(100)
         - column:
-            name: GM
-            type: boolean
-            defaultValueBoolean: false
-            constraints:
-              nullable: false
-              notNullConstraintName: USERS_GM_NN
+            name: PHONE
+            type: VARCHAR(100)
         - column:
-            name: ORGA
-            type: boolean
-            defaultValueBoolean: false
-            constraints:
-              nullable: false
-              notNullConstraintName: USERS_ORGA_NN
-        - column:
-            name: JUDGE
-            type: boolean
-            defaultValueBoolean: false
-            constraints:
-              nullable: false
-              notNullConstraintName: USERS_JUDGE_NN
-        - column:
-            name: ADMIN
-            type: boolean
-            defaultValueBoolean: false
-            constraints:
-              nullable: false
-              notNullConstraintName: USERS_ADMIN_NN
+            name: DISCORD
+            type: VARCHAR(100)
+            
     - addUniqueConstraint:
         constraintName: USERS_NAME_UK
         tableName: USERS

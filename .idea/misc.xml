@@ -19,7 +19,6 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -39,6 +38,12 @@
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/mongodb-testsupport/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/oauth2-testsupport/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-bom/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-core/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/pom.xml" />
       </set>
     </option>
   </component>
