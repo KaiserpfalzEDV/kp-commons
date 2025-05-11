@@ -16,6 +16,7 @@
  */
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -42,4 +44,7 @@ public interface UserRepository extends JpaRepository<UserJPA, UUID> {
     
     List<UserJPA> findByIssuer(String issuer);
     Page<UserJPA> findByIssuer(String issuer, Pageable pageable);
+    
+    List<UserJPA> findByAuthoritiesContains(Set<RoleJPA> authorities);
+    
 }

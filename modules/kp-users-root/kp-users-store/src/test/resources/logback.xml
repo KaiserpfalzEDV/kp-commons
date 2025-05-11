@@ -12,4 +12,8 @@
     <root level="info">
         <appender-ref ref="Console" />
     </root>
+
+    <logger name="de.kaiserpfalzedv" level="TRACE" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
 </configuration>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,26 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.kaiserpfalzedv.commons.users.store.model.role;
 
-import jakarta.validation.constraints.NotBlank;
+package de.kaiserpfalzedv.commons.users.domain;
+
+
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
- * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 1.0.0
- * @since 2025-05-10
+ * @since 2025-05-11
  */
-@Repository
-public interface RoleRepository extends JpaRepository<RoleJPA, UUID> {
-  List<RoleJPA> findByNameSpace(@NotBlank final String nameSpace);
-  Page<RoleJPA> findByNameSpace(@NotBlank final String nameSpace, @NotNull Pageable pageable);
+@Getter
+@ToString(callSuper = true)
+public class UserNotFoundException extends BaseUserException {
+  private final UUID id;
+  
+  public UserNotFoundException(@NotNull UUID id) {
+    super(null, message(id));
+    
+    this.id = id;
+  }
+  
+  public UserNotFoundException(@NotNull UUID id, @Nullable final Throwable cause) {
+    super(null, message(id), cause);
+    
+    this.id = id;
+  }
+  
+  private static String message(@NotNull final UUID id) {
+    return "There is no user with id '%s'".formatted(id);
+  }
 }

@@ -15,24 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.role;
+package de.kaiserpfalzedv.commons.users.domain.model.role;
 
-import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
-import java.util.function.Function;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 
 /**
- * Maps the role to the JPA implementation.
- *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2025-05-10
+ * @since 2025-05-11
  */
-@Mapper
-public interface RoleToJPA extends Function<Role, RoleJPA> {
-    @Mapping(target = "version", ignore = true)
-    @Mapping(target = "modified", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
-    RoleJPA apply(Role orig);
+public interface RoleReadService {
+  Optional<? extends Role> retrieve(@NotNull UUID id);
+  
+  List<? extends Role> retrieveAll();
+  Page<? extends Role> retrieveAll(@NotNull Pageable pageable);
+  
+  List<? extends Role> retrieveAllFromNamespace(@NotNull String namespace);
+  Page<? extends Role> retrieveAllFromNamespace(@NotNull String namespace, @NotNull Pageable pageable);
 }

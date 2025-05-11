@@ -21,7 +21,7 @@ package de.kaiserpfalzedv.commons.users.store.service;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyNearExpiryEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
-import de.kaiserpfalzedv.commons.users.domain.services.ApiKeysEventsHandler;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyEventsHandler;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyRepository;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyToJPA;
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
-public class JpaApiKeyEventsHandler implements ApiKeysEventsHandler {
+public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler {
   private final ApiKeyRepository repository;
   private final ApiKeyToJPA toJPA;
   

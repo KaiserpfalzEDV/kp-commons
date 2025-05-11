@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,26 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.kaiserpfalzedv.commons.users.store.model.role;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey.events;
 
-import java.util.List;
-import java.util.UUID;
 
 /**
- * 
+ * This is the interface for the SCSes to implement to react on apikey events according to their own needs.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 1.0.0
  * @since 2025-05-10
  */
-@Repository
-public interface RoleRepository extends JpaRepository<RoleJPA, UUID> {
-  List<RoleJPA> findByNameSpace(@NotBlank final String nameSpace);
-  Page<RoleJPA> findByNameSpace(@NotBlank final String nameSpace, @NotNull Pageable pageable);
+@SuppressWarnings("unused") // It's an API interface
+public interface ApiKeyEventsHandler {
+  void event(ApiKeyCreatedEvent event);
+  void event(ApiKeyRevokedEvent event);
+  void event(ApiKeyNearExpiryEvent event);
 }
