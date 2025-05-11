@@ -15,19 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.BaseUserException;
-import org.springframework.security.core.AuthenticationException;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 
+import java.util.UUID;
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 2025-05-11
  */
-public class UserAuthenticationException extends AuthenticationException {
-  public UserAuthenticationException(final BaseUserException userException) {
-    super(userException.getMessage(), userException);
+@Getter
+public class ApiKeyNotFoundException extends BaseApiKeyException {
+  private final UUID id;
+  
+  public ApiKeyNotFoundException(@NotNull final UUID id) {
+    super(null, message(id));
+    
+    this.id = id;
+  }
+  
+  private static String message(@NotNull final UUID id) {
+    return "ApiKey '%s' not found".formatted(id);
   }
 }

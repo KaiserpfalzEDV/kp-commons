@@ -19,9 +19,6 @@ package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.api.resources.HasId;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.state.UserState;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.BeforeEach;

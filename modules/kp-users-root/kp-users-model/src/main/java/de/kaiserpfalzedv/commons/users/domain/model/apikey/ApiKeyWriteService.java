@@ -20,7 +20,6 @@ package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
@@ -28,10 +27,9 @@ import java.util.UUID;
  * @since 2025-05-11
  */
 public interface ApiKeyWriteService {
-  void create(@NotNull ApiKey apiKey);
+  void create(@NotNull ApiKey apiKey) throws InvalidApiKeyException;
   
-  void updateTTL(@NotNull UUID apiKeyId, @NotNull OffsetDateTime ttl);
-  void updateRefresh(@NotNull UUID apiKeyId, long days);
+  ApiKey refresh(@NotNull UUID apiKeyId, long days) throws ApiKeyNotFoundException;
   
   void delete(@NotNull UUID apiKeyId);
   default void remove(@NotNull UUID apiKeyId) {

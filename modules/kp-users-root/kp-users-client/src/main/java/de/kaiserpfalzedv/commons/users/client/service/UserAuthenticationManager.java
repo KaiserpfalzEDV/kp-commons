@@ -2,8 +2,8 @@ package de.kaiserpfalzedv.commons.users.client.service;
 
 
 import de.kaiserpfalzedv.commons.users.client.model.KpUserAuthentication;
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
 import de.kaiserpfalzedv.commons.users.domain.services.UserAuthenticationException;

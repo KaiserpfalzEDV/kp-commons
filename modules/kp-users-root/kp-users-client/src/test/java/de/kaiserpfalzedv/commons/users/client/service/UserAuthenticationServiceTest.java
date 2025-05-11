@@ -18,12 +18,12 @@
 package de.kaiserpfalzedv.commons.users.client.service;
 
 
-import de.kaiserpfalzedv.commons.users.domain.BaseUserException;
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.BaseUserException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDeletedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDetainedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
@@ -102,7 +102,7 @@ public class UserAuthenticationServiceTest {
     when(authentication.getPrincipal()).thenReturn(oidcUser);
     when(oidcUser.getIssuer()).thenReturn(DEFAULT_ISSUER);
     when(oidcUser.getSubject()).thenReturn(PLAYER.getSubject());
-    when(userReadService.findByOauth(PLAYER.getIssuer(), PLAYER.getSubject())).thenReturn(Optional.of(PLAYER));
+    when(userReadService.findByOauth(PLAYER.getIssuer(), PLAYER.getSubject())).thenReturn(PLAYER_OPTIONAL);
     
     User result = sut.authenticate(authentication);
     
@@ -120,9 +120,8 @@ public class UserAuthenticationServiceTest {
     when(oidcUser.getSubject()).thenReturn(BANNED.getSubject());
     when(userReadService.findByOauth(BANNED.getIssuer(), BANNED.getSubject())).thenReturn(Optional.of(BANNED));
     
-    User result = null;
     try {
-      result = sut.authenticate(oidcUser);
+      sut.authenticate(oidcUser);
       
       fail("There should have been an UserIsBannedException.");
     } catch (UserIsBannedException e) {
@@ -142,9 +141,8 @@ public class UserAuthenticationServiceTest {
     when(oidcUser.getSubject()).thenReturn(DETAINED.getSubject());
     when(userReadService.findByOauth(DETAINED.getIssuer(), DETAINED.getSubject())).thenReturn(Optional.of(DETAINED));
     
-    User result = null;
     try {
-      result = sut.authenticate(oidcUser);
+      sut.authenticate(oidcUser);
       
       fail("There should have been an UserIsDetainedException.");
     } catch (UserIsDetainedException e) {
@@ -164,9 +162,8 @@ public class UserAuthenticationServiceTest {
     when(oidcUser.getSubject()).thenReturn(DELETED.getSubject());
     when(userReadService.findByOauth(DELETED.getIssuer(), DELETED.getSubject())).thenReturn(Optional.of(DELETED));
     
-    User result = null;
     try {
-      result = sut.authenticate(oidcUser);
+      sut.authenticate(oidcUser);
       
       fail("There should have been an UserIsDeletedException.");
     } catch (UserIsDeletedException e) {
@@ -214,7 +211,6 @@ public class UserAuthenticationServiceTest {
   public static final String NAME_DETAINED = "Diana Detained";
   public static final String NAME_DELETED = "Drue Deleted";
   public static final String NAME_CREATED = "Clara Created";
-  public static final String NAME_FAILED_CREATION = "Fanny Failing";
   private static final String EMAIL = "user@urn.kp-user-root";
   private static final String PHONE = "+49 1234-12345678";
   private static final String DISCORD = "user";
@@ -225,6 +221,7 @@ public class UserAuthenticationServiceTest {
   private static final Set<SimpleGrantedAuthority> PLAYER_AUTHORITIES = Set.of(
       new SimpleGrantedAuthority("ROLE_PLAYER")
   );
+  
   
   
   private static final User PLAYER = KpUserDetails.builder()
@@ -240,6 +237,8 @@ public class UserAuthenticationServiceTest {
       .modified(MODIFIED_AT)
       .authorities(PLAYER_AUTHORITIES)
       .build();
+  private static final Optional<? extends User> PLAYER_OPTIONAL = Optional.of(PLAYER);
+  
   private static final User BANNED = ((KpUserDetails)PLAYER).toBuilder()
       .name(NAME_BANNED)
       .bannedOn(PLAYER.getModified())

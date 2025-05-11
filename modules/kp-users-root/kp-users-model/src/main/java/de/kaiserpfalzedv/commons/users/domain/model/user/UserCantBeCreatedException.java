@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
 import jakarta.validation.constraints.NotBlank;

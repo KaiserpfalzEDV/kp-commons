@@ -20,8 +20,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.user.*;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.Test;
 

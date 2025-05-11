@@ -18,14 +18,13 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 import com.google.common.eventbus.EventBus;
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserWriteService;
 import de.kaiserpfalzedv.commons.users.store.model.role.JpaRoleReadService;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserToJpa;
@@ -51,9 +50,8 @@ public class JpaUserWriteService implements UserWriteService {
     private final UserToJpa toUserJPA;
 
     private final JpaRoleReadService rolesReader;
-    private final RoleToJpa toRoleJpa;
-    
-    private final EventBus bus;
+  
+  private final EventBus bus;
     
     @Override
     public void create(final User user) throws UserCantBeCreatedException {
@@ -87,7 +85,7 @@ public class JpaUserWriteService implements UserWriteService {
         log.entry(id, data);
         
         if (data.isEmpty()) {
-            log.throwing(XLogger.Level.WARN, new UserNotFoundException(id));
+            throw log.throwing(XLogger.Level.WARN, new UserNotFoundException(id));
         }
         
         log.exit(id);
@@ -200,9 +198,7 @@ public class JpaUserWriteService implements UserWriteService {
         data.ifPresent(u -> {
             Optional<RoleJPA> roleData = rolesReader.retrieve(role.getId());
             roleData.ifPresentOrElse(
-                r -> {
-                    removeRoleFromUser(data.get(), r);
-                },
+                r -> removeRoleFromUser(data.get(), r),
                 () -> log.warn("There is no such role to be removed from user. user={}, role={}", id, role)
             );
         });
@@ -219,9 +215,7 @@ public class JpaUserWriteService implements UserWriteService {
         }
         
         List<UserJPA> data = users.findByAuthoritiesContains(Set.of(roleJPA.get()));
-        data.forEach(u -> {
-            removeRoleFromUser(u, roleJPA.get());
-        });
+        data.forEach(u -> removeRoleFromUser(u, roleJPA.get()));
  
         
     }

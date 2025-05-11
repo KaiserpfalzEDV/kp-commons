@@ -15,10 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
@@ -36,12 +35,6 @@ public class UserNotFoundException extends BaseUserException {
   
   public UserNotFoundException(@NotNull UUID id) {
     super(null, message(id));
-    
-    this.id = id;
-  }
-  
-  public UserNotFoundException(@NotNull UUID id, @Nullable final Throwable cause) {
-    super(null, message(id), cause);
     
     this.id = id;
   }

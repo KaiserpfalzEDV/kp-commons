@@ -18,8 +18,8 @@
 package de.kaiserpfalzedv.commons.users.domain.services;
 
 
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotNull;

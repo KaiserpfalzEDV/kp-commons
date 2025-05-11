@@ -15,10 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.ToString;
@@ -29,8 +28,8 @@ import lombok.ToString;
  */
 @Getter
 @ToString(callSuper = true)
-public class UserDataException extends BaseUserException {
-  public UserDataException(@Nullable final User user, final String message) {
+public class UserDataDuplicateException extends UserDataException {
+  public UserDataDuplicateException(@Nullable final User user, final String message) {
     super(user, message);
   }
 }

@@ -19,8 +19,8 @@ package de.kaiserpfalzedv.commons.users.client.service;
 
 
 import de.kaiserpfalzedv.commons.users.client.model.KpUserAuthentication;
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
@@ -158,10 +158,6 @@ public class UserAuthenticationManagerTest {
   
   private static final String NAMESPACE = "urn:kp-user-root";
   public static final String NAME_PLAYER = "Patricia Player";
-  public static final String NAME_GM = "Georg Gamemaster";
-  public static final String NAME_ORGA = "Olivia Orga";
-  public static final String NAME_JUDGE = "Judy Judge";
-  public static final String NAME_ADMIN = "Amanda Admin";
   private static final String EMAIL = "user@urn.kp-user-root";
   private static final String PHONE = "+49 1234-12345678";
   private static final String DISCORD = "user";
@@ -171,27 +167,6 @@ public class UserAuthenticationManagerTest {
   
   private static final Set<SimpleGrantedAuthority> PLAYER_AUTHORITIES = Set.of(
       new SimpleGrantedAuthority("ROLE_PLAYER")
-  );
-  private static final Set<SimpleGrantedAuthority> GM_AUTHORITIES = Set.of(
-      new SimpleGrantedAuthority("ROLE_PLAYER"),
-      new SimpleGrantedAuthority("ROLE_GM")
-  );
-  private static final Set<SimpleGrantedAuthority> ORGA_AUTHORITIES = Set.of(
-      new SimpleGrantedAuthority("ROLE_PLAYER"),
-      new SimpleGrantedAuthority("ROLE_GM"),
-      new SimpleGrantedAuthority("ROLE_ORGA")
-  );
-  private static final Set<SimpleGrantedAuthority> JUDGE_AUTHORITIES = Set.of(
-      new SimpleGrantedAuthority("ROLE_PLAYER"),
-      new SimpleGrantedAuthority("ROLE_GM"),
-      new SimpleGrantedAuthority("ROLE_ORGA"),
-      new SimpleGrantedAuthority("ROLE_JUDGE")
-  );
-  private static final Set<SimpleGrantedAuthority> ADMIN_AUTHORITIES = Set.of(
-      new SimpleGrantedAuthority("ROLE_PLAYER"),
-      new SimpleGrantedAuthority("ROLE_GM"),
-      new SimpleGrantedAuthority("ROLE_ORGA"),
-      new SimpleGrantedAuthority("ROLE_ADMIN")
   );
   
   
@@ -206,21 +181,5 @@ public class UserAuthenticationManagerTest {
       .created(CREATED_AT)
       .modified(MODIFIED_AT)
       .authorities(PLAYER_AUTHORITIES)
-      .build();
-  private static final User GM = ((KpUserDetails)PLAYER).toBuilder()
-      .name(NAME_GM)
-      .authorities(GM_AUTHORITIES)
-      .build();
-  private static final User ORGA = ((KpUserDetails)PLAYER).toBuilder()
-      .name(NAME_ORGA)
-      .authorities(ORGA_AUTHORITIES)
-      .build();
-  private static final User JUDGE = ((KpUserDetails)PLAYER).toBuilder()
-      .name(NAME_JUDGE)
-      .authorities(JUDGE_AUTHORITIES)
-      .build();
-  private static final User ADMIN = ((KpUserDetails)PLAYER).toBuilder()
-      .name(NAME_ADMIN)
-      .authorities(ADMIN_AUTHORITIES)
       .build();
 }

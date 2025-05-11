@@ -15,22 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.api.BaseException;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.ToString;
 
+
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 03.05.2025
+ * @since 20.04.25
  */
 @Getter
 @ToString(callSuper = true)
-public class UserDataDuplicateException extends UserDataException {
-  public UserDataDuplicateException(@Nullable final User user, final String message) {
-    super(user, message);
+public abstract class BaseUserException extends BaseException {
+  protected final User user;
+  
+  public BaseUserException(@Nullable final User user, @NotBlank final String message) {
+    super(message);
+    
+    this.user = user;
+  }
+  
+  public BaseUserException(@Nullable final User user, @NotBlank final String message, @Nullable final Throwable cause) {
+    super(message, cause);
+    
+    this.user = user;
   }
 }

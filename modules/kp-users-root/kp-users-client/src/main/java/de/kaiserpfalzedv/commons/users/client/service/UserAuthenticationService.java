@@ -18,11 +18,11 @@
 package de.kaiserpfalzedv.commons.users.client.service;
 
 
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDeletedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDetainedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
@@ -70,7 +70,7 @@ public class UserAuthenticationService implements AuthenticationService {
   public User authenticate(final OidcUser oidcUser) throws UserIsInactiveException, UserCantBeCreatedException {
     log.entry(namespace, oidcUser);
     
-    Optional<User> data = readService.findByOauth(oidcUser.getIssuer().toString(), oidcUser.getSubject());
+    Optional<? extends User> data = readService.findByOauth(oidcUser.getIssuer().toString(), oidcUser.getSubject());
     
     log.debug("Data found. found={}, data={}", data.isPresent(), data.orElse(null));
     

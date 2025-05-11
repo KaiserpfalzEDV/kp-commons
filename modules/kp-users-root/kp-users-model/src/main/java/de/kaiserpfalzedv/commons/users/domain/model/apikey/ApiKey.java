@@ -24,9 +24,9 @@ import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDeletedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDetainedException;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 
@@ -97,7 +97,7 @@ public interface ApiKey extends HasId<UUID>, HasNameSpace, HasName, HasTimestamp
   /**
    * Checks if the user is inactive.
 
-   * @throws de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException if the user is banned.
+   * @throws UserIsBannedException if the user is banned.
    * @throws UserIsDeletedException if the user is deleted.
    * @throws UserIsDetainedException if the user is detained.
    */

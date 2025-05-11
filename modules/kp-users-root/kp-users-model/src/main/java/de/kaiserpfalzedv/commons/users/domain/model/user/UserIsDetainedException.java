@@ -15,19 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.BaseUserException;
-import org.springframework.security.core.AuthenticationException;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.ToString;
+
+import java.time.Duration;
+import java.time.OffsetDateTime;
 
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 20.04.25
  */
-public class UserAuthenticationException extends AuthenticationException {
-  public UserAuthenticationException(final BaseUserException userException) {
-    super(userException.getMessage(), userException);
+@Getter
+@ToString(callSuper = true)
+public class UserIsDetainedException extends UserIsInactiveException {
+  public UserIsDetainedException(@NotNull User user) {
+    super(user, "User is detained till " + user.getDetainedTill());
+  }
+  
+  public OffsetDateTime getDetainedTill() {
+    return user.getDetainedTill();
+  }
+  
+  public Duration getDetainedFor() {
+    return user.getDetainmentDuration();
+  }
+  
+  public Long getDetainedDays() {
+    return user.getDetainmentDuration().toDays();
   }
 }

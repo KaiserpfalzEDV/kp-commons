@@ -18,8 +18,6 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import de.kaiserpfalzedv.commons.users.domain.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

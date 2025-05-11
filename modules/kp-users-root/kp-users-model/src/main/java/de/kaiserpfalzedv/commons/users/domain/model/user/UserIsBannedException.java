@@ -15,19 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.ToString;
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.BaseUserException;
-import org.springframework.security.core.AuthenticationException;
+import java.time.OffsetDateTime;
 
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 20.04.25
  */
-public class UserAuthenticationException extends AuthenticationException {
-  public UserAuthenticationException(final BaseUserException userException) {
-    super(userException.getMessage(), userException);
+@Getter
+@ToString(callSuper = true)
+public class UserIsBannedException extends UserIsInactiveException {
+  public UserIsBannedException(@NotNull User user) {
+    super(user, "User is banned since " + user.getBannedOn());
+  }
+  
+  public OffsetDateTime getBannedAt() {
+    return user.getBannedOn();
   }
 }

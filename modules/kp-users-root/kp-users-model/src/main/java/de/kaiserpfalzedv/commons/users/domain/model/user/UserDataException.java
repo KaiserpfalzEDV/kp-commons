@@ -15,19 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.BaseUserException;
-import org.springframework.security.core.AuthenticationException;
-
+import jakarta.annotation.Nullable;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 04.05.2025
+ * @since 03.05.2025
  */
-public class UserAuthenticationException extends AuthenticationException {
-  public UserAuthenticationException(final BaseUserException userException) {
-    super(userException.getMessage(), userException);
+@Getter
+@ToString(callSuper = true)
+public class UserDataException extends BaseUserException {
+  public UserDataException(@Nullable final User user, final String message) {
+    super(user, message);
   }
 }
