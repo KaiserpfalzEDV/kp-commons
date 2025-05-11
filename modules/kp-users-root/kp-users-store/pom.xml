@@ -21,9 +21,9 @@
 
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <artifactId>kp-spring-boot-parent</artifactId>
+        <artifactId>kp-users-root</artifactId>
         <version>4.1.0-SNAPSHOT</version>
-        <relativePath>../../../kp-spring-boot-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>kp-users-store</artifactId>
@@ -58,9 +58,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-ext</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons</groupId>
-            <artifactId>kp-users-model</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

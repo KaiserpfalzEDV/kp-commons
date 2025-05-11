@@ -23,6 +23,7 @@
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-users-root</artifactId>
         <version>4.1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>kp-users-model</artifactId>
@@ -30,7 +31,7 @@
     <description>The model for the user management</description>
 
     <properties>
-        <uml-classes>de.kaiserpfalzedv.commons.users.model</uml-classes>
+        <uml-classes>de.kaiserpfalzedv.commons.users.domain</uml-classes>
         <main.basedir>${project.basedir}/../../..</main.basedir>
     </properties>
 
@@ -85,10 +86,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-      <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-core</artifactId>
-      </dependency>
     </dependencies>
 
     <build>

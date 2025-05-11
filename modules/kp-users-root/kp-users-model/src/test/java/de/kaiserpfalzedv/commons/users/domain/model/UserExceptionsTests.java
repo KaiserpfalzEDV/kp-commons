@@ -67,7 +67,7 @@ public class UserExceptionsTests {
   public void shouldGiveDeletedDateWhenUserIsDeleted() {
     log.entry();
     
-    User user = USER.toBuilder().deleted(OffsetDateTime.now()).build();
+    User user = USER.toBuilder().deleted(OffsetDateTime.now().minusSeconds(1L)).build();
     
     UserIsDeletedException sut = new UserIsDeletedException(user);
     

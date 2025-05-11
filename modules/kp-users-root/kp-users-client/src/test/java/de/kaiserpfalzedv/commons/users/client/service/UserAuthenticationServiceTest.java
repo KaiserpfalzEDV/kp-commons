@@ -49,6 +49,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -187,7 +188,7 @@ public class UserAuthenticationServiceTest {
     
     when(userReadService.findByOauth(CREATED.getIssuer(), CREATED.getSubject())).thenReturn(Optional.empty());
     
-    when(userWriteService.create(CREATED)).thenReturn(CREATED);
+    verify(userWriteService).create(CREATED);
     
     User result = sut.authenticate(oidcUser);
     

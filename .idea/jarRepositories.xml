@@ -32,14 +32,14 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="kp-commons" />
-      <option name="name" value="GitHub Packages" />
-      <option name="url" value="https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="torganized-play-threats" />
       <option name="name" value="torganized-play-threats" />
       <option name="url" value="https://maven.pkg.github.com/Paladins-Inn/torganized-play-threats" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="kp-commons" />
+      <option name="name" value="GitHub Packages" />
+      <option name="url" value="https://maven.pkg.github.com/KaiserpfalzEDV/kp-commons" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="torganized-play-users" />
