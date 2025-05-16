@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -36,6 +37,15 @@ public class UserCantBeCreatedException extends BaseUserException {
   private final String subject;
   private final String username;
   private final String email;
+  
+  public UserCantBeCreatedException(@NotNull final User user, final Throwable cause) {
+    super(user, createExceptionMessage(user.getIssuer(), user.getSubject(), user.getUsername(), user.getEmail()), cause);
+    
+    this.issuer = user.getIssuer();
+    this.subject = user.getSubject();
+    this.username = user.getUsername();
+    this.email = user.getEmail();
+  }
   
   public UserCantBeCreatedException(@NotBlank final String issuer, @NotBlank final String subject,
                                     @NotBlank final String username, final String email) {

@@ -19,20 +19,23 @@ package de.kaiserpfalzedv.commons.users.store.service;
 
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserWriteService;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserEventsHandler;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserToJpaImpl;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -43,14 +46,22 @@ import java.util.Optional;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-04-19
  */
+@SuppressWarnings("LoggingSimilarMessage")
 @Service
 @Scope("singleton")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class JpaUserEventsHandler implements UserEventsHandler {
-  private final LoggingEventBus bus;
+  public static final String SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT = "System is the same. Ignoring event. event={}";
+  
+  private final UserWriteService service;
   private final UserRepository repository;
-  private final UserToJpaImpl toJpa;
+  private final LoggingEventBus bus;
+
+  
+  @Value("${spring.application.system:kp-commons")
+  private String system;
+  
   
   @PostConstruct
   public void init() {
@@ -74,7 +85,13 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   @Override
   public void event(final UserActivatedEvent event) {
     log.entry(event);
-
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
     Optional<UserJPA> data = repository.findById(event.getUser().getId());
     
     data.ifPresent(userJPA -> userJPA.undelete(bus));
@@ -85,53 +102,62 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   @Override
   public void event(final UserCreatedEvent event) {
     log.entry(event);
-
-    UserJPA result = repository.save(toJpa.apply(event.getUser()));
-    log.info("Created new user. stored={}", result);
     
-    log.exit(result);
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
+    try {
+      service.create(event.getUser());
+    } catch (UserCantBeCreatedException e) {
+      log.warn(e.getMessage());
+    }
+    
+    log.exit();
   }
   
   @Override
   public void event(final UserDeletedEvent event) {
     log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
 
-    Optional<UserJPA> data = repository.findById(event.getUser().getId());
-    data.ifPresent(u -> {
-      u.delete(bus);
-      revokeAllApiKeysForUser(u);
-      repository.save(u);
-      log.info("Deleted user. user={}", u);
-    });
+    service.delete(event.getUser().getId());
     
-    log.exit(data.orElse(null));
-  }
-  
-  private void revokeAllApiKeysForUser(final UserJPA user) {
-    log.entry(user);
-    
-    user.getApiKeys().forEach(key -> bus.post(ApiKeyRevokedEvent.builder().user(user).apiKey(key).build()));
-    
-    log.exit(user);
+    log.exit();
   }
   
   @Override
   public void event(final UserRemovedEvent event) {
     log.entry(event);
     
-    Optional<UserJPA> data = repository.findById(event.getUser().getId());
-    data.ifPresent(this::revokeAllApiKeysForUser);
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
     
-    repository.deleteById(event.getUser().getId());
-    log.info("Removed user by ID. user={}", event.getUser());
-    
-    log.exit(event.getUser());
+    service.remove(event.getUser().getId());
+
+    log.exit();
   }
   
   @Override
   public void event(final UserBannedEvent event) {
     log.entry(event);
-
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
     Optional<UserJPA> data = repository.findById(event.getUser().getId());
     data.ifPresent(u -> {
       u.ban(bus);
@@ -146,6 +172,12 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   public void event(final UserDetainedEvent event) {
     log.entry(event);
     
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
     Optional<UserJPA> data = repository.findById(event.getUser().getId());
     data.ifPresent(u -> {
       u.detain(bus, event.getDays());
@@ -159,6 +191,12 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   @Override
   public void event(final UserPetitionedEvent event) {
     log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
 
     log.warn("user petitioned event not yet implemented!");
     
@@ -168,6 +206,12 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   @Override
   public void event(final UserReleasedEvent event) {
     log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
 
     Optional<UserJPA> data = repository.findById(event.getUser().getId());
     data.ifPresent(u -> {
@@ -183,6 +227,12 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   public void event(final UserLoginEvent event) {
     log.entry(event);
     
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
     // TODO 2025-05-10 klenkes74 Implement a user log database.
     log.info("User logged in. user={}", event.getUser());
 
@@ -193,8 +243,135 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   public void event(final UserLogoutEvent event) {
     log.entry(event);
     
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
     // TODO 2025-05-10 klenkes74 Implement a user log database.
     log.info("User logged out. user={}", event.getUser());
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final UserIssuerAndSubModificationEvent event) {
+    log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
+    
+    try {
+      service.updateIssuer(event.getUser().getId(), event.getUser().getIssuer(), event.getUser().getSubject());
+    } catch (UserNotFoundException e) {
+      log.warn(e.getMessage(), e);
+    }
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final UserNamespaceAndNameModificationEvent event) {
+    log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+    }
+    
+    
+    try {
+      service.updateNamespaceAndName(event.getUser().getId(), event.getUser().getNameSpace(), event.getUser().getName());
+    } catch (UserNotFoundException e) {
+      log.warn(e.getMessage(), e);
+    }
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final UserNamespaceModificationEvent event) {
+    log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
+    
+    try {
+      service.updateNamespace(event.getUser().getId(), event.getUser().getNameSpace());
+    } catch (UserNotFoundException e) {
+      log.warn(e.getMessage(), e);
+    }
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final UserNameModificationEvent event) {
+    log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
+    
+    try {
+      service.updateName(event.getUser().getId(), event.getUser().getName());
+    } catch (UserNotFoundException e) {
+      log.warn(e.getMessage(), e);
+    }
+    
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final UserEmailModificationEvent event) {
+    log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+      return;
+    }
+    
+    
+    try {
+      service.updateEmail(event.getUser().getId(), event.getUser().getEmail());
+    } catch (UserNotFoundException e) {
+      log.warn(e.getMessage(), e);
+    }
+    
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final UserDiscordModificationEvent event) {
+    log.entry(event);
+    
+    if (system.equals(event.getSystem())) {
+      log.trace(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.exit();
+    }
+    
+    
+    try {
+      service.updateDiscord(event.getUser().getId(), event.getUser().getDiscord());
+    } catch (UserNotFoundException e) {
+      log.warn(e.getMessage(), e);
+    }
+    
     
     log.exit();
   }

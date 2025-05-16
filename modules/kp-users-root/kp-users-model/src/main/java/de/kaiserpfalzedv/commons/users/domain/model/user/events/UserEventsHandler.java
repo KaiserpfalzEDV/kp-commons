@@ -21,6 +21,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.user.events;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 
 /**
@@ -42,4 +43,11 @@ public interface UserEventsHandler {
   
   void event(UserLoginEvent event);
   void event(UserLogoutEvent event);
+  
+  void event(UserIssuerAndSubModificationEvent event);
+  void event(UserNamespaceAndNameModificationEvent event);
+  void event(UserNamespaceModificationEvent event);
+  void event(UserNameModificationEvent event);
+  void event(UserEmailModificationEvent event);
+  void event(UserDiscordModificationEvent event);
 }

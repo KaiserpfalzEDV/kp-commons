@@ -20,10 +20,9 @@ package de.kaiserpfalzedv.commons.users.store.model.user;
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBannedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleAddedToUserEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleRemovedFromUserEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import jakarta.annotation.Nullable;
@@ -118,9 +117,11 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
         inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")}
     )
+    @Builder.Default
     private Set<RoleJPA> authorities = new HashSet<>();
     
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @Builder.Default
     private Set<ApiKeyJPA> apiKeys = new HashSet<>();
     
     
@@ -146,6 +147,7 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         
         detainmentDuration = null;
         detainedTill = null;
+        bannedOn = null;
         
         bus.post(UserReleasedEvent.builder().user(this).build());
         
@@ -180,7 +182,7 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         
         this.deleted = null;
         
-        bus.post(UserReleasedEvent.builder().user(this).build());
+        bus.post(UserActivatedEvent.builder().user(this).build());
         
         return log.exit(this);
     }
@@ -191,11 +193,27 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         // do nothing. We don't have credentials ...
     }
     
-    public void addRole(@NotNull RoleJPA role) {
-        authorities.add(role);
+    public UserJPA addRole(@NotNull EventBus bus, @NotNull RoleJPA role) {
+        log.entry(role);
+        
+        if (! authorities.contains(role)) {
+            authorities.add(role);
+            
+            bus.post(RoleAddedToUserEvent.builder().user(this).role(role).build());
+        }
+        
+        return log.exit(this);
     }
     
-    public void removeRole(@NotNull RoleJPA role) {
-        authorities.remove(role);
+    public UserJPA removeRole(@NotNull EventBus bus, @NotNull RoleJPA role) {
+        log.entry(role);
+        
+        if (authorities.contains(role)) {
+            authorities.remove(role);
+            
+            bus.post(RoleRemovedFromUserEvent.builder().user(this).role(role).build());
+        }
+        
+        return log.exit(this);
     }
 }

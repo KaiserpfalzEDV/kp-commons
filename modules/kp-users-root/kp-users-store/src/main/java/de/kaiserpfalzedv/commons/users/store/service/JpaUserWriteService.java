@@ -177,7 +177,7 @@ public class JpaUserWriteService implements UserWriteService {
             Optional<RoleJPA> roleData = rolesReader.retrieve(role.getId());
             roleData.ifPresentOrElse(
                 r -> {
-                    u.addRole(r);
+                    u.addRole(bus, r);
                     users.save(u);
                     log.info("User updated with new role. user={}, role={}", id, role);
                 },
@@ -223,7 +223,7 @@ public class JpaUserWriteService implements UserWriteService {
     private void removeRoleFromUser(final UserJPA user, final RoleJPA role) {
         log.entry(user, role);
 
-        user.removeRole(role);
+        user.removeRole(bus, role);
         log.info("Removed role from user. user={}, role.removed='{}', role.remaining={}", user.getId(), role.getName(), user.getAuthorities());
         users.save(user);
         
