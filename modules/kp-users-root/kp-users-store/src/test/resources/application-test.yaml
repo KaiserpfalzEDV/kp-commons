@@ -33,7 +33,10 @@ spring:
 
 logging:
   level:
+    root: WARN
     web: WARN
     security: WARN
     liquibase: INFO
-    "de.kaiserpfalzedv": INFO
+    "de.kaiserpfalzedv.commons": INFO
+    "de.kaiserpfalzedv.commons.users": DEBUG
+    "de.kaiserpfalzedv.commons.users.store": TRACE
