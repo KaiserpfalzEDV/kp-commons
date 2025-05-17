@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025. Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2024-2025. Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,14 +19,24 @@
 package de.kaiserpfalzedv.commons.users.domain.model.role.events;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
+
+
 /**
- * This is the interface for the SCSes to implement to react on role events according to their own needs.
+ * The event sent when a role is updated in the system.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-10
  */
-public interface RoleEventsHandler {
-  void event(RoleCreatedEvent event);
-  void event(RoleUpdatedEvent event);
-  void event(RoleRemovedEvent event);
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class RoleUpdatedEvent extends RoleBaseEvent {
+  private final String i18nKey = "role.created";
 }

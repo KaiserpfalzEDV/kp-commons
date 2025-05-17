@@ -19,8 +19,9 @@ package de.kaiserpfalzedv.commons.users.store.service;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleDeletedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleRemovedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleEventsHandler;
+import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleUpdatedEvent;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleRepository;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
@@ -57,7 +58,14 @@ public class JpaRoleEventsHandler implements RoleEventsHandler {
   }
   
   @Override
-  public void event(final RoleDeletedEvent event) {
+  public void event(final RoleUpdatedEvent event) {
+    log.entry(event);
+    
+    // FIXME 2025-05-17 klenkes74 Implement The stuff with service instead of repository.
+  }
+  
+  @Override
+  public void event(final RoleRemovedEvent event) {
     log.entry(event);
     
     users.revokeRoleFromAllUsers(event.getRole());

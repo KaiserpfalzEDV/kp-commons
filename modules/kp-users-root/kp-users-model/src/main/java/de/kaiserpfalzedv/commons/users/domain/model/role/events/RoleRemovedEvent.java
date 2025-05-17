@@ -37,6 +37,6 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class RoleDeletedEvent extends RoleBaseEvent {
-  private final String i18nKey = "role.deleted";
+public class RoleRemovedEvent extends RoleBaseEvent {
+  private final String i18nKey = "role.removed";
 }

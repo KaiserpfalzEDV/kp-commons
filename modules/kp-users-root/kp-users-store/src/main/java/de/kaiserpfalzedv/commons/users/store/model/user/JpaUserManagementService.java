@@ -83,9 +83,8 @@ public class JpaUserManagementService implements UserManagementService {
   public void create(@NotNull final User user) throws UserCantBeCreatedException {
     log.entry(user);
     
-    UserJPA result;
     try {
-      result = repository.save(toJpa.apply(user));
+      UserJPA result = repository.save(toJpa.apply(user));
       
       bus.post(UserCreatedEvent.builder().system(system).user(result).build());
       log.exit(result);

@@ -20,7 +20,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.role;
 
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleBaseEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleDeletedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleRemovedEvent;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -96,7 +96,7 @@ public class RoleEventsTest {
   void shouldReturnTheCorrectI18nDataWhenAskedWithRoleDeletedEvent() {
     log.entry("shouldReturnTheCorrectI18nDataWhenAskedWithRoleDeletedEvent");
     
-    sut = RoleDeletedEvent.builder()
+    sut = RoleRemovedEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
         .system(DEFAULT_SYSTEM)
         .role(DEFAULT_ROLE)
@@ -140,10 +140,10 @@ public class RoleEventsTest {
 
   
   @Test
-  void shouldReturnTheCorrectI18nKeyWhenAskedWithRoleDeletedEvent() {
+  void shouldReturnTheCorrectI18nKeyWhenAskedWithRoleRemovedEvent() {
     log.entry("shouldReturnTheCorrectI18nKeyWhenAskedWithRoleDeletedEvent");
     
-    sut = RoleDeletedEvent.builder()
+    sut = RoleRemovedEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
         .system(DEFAULT_SYSTEM)
         .role(DEFAULT_ROLE)
@@ -152,7 +152,7 @@ public class RoleEventsTest {
     String result = sut.getI18nKey();
     log.debug("Queried i18nKey. i18nKey={}", result);
     
-    assertEquals("role.deleted", result);
+    assertEquals("role.removed", result);
     
     log.exit(result);
   }

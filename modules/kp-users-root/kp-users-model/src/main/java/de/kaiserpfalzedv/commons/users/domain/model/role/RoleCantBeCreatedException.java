@@ -19,10 +19,8 @@ package de.kaiserpfalzedv.commons.users.domain.model.role;
 
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.ToString;
-
-import java.util.UUID;
 
 
 /**
@@ -30,13 +28,16 @@ import java.util.UUID;
  * @since 2025-05-17
  */
 @Getter
-@ToString
-public class RoleNotFoundException extends BaseRoleException {
-  public RoleNotFoundException(@Nullable final UUID id) {
-    super(null, createMessage(id));
+public class RoleCantBeCreatedException extends BaseRoleException {
+  public RoleCantBeCreatedException(@NotNull final Role role, @Nullable final Throwable cause) {
+    super(role, createMessage(role), cause);
   }
   
-  private static String createMessage(@Nullable final UUID id) {
-    return "Role with id '%s' not found".formatted(id);
+  private static String createMessage(@NotNull final Role role) {
+    return "Role '%s/%s' with id '%s' can't be created".formatted(
+        role.getNameSpace(),
+        role.getName(),
+        role.getId()
+    );
   }
 }

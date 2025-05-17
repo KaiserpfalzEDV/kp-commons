@@ -18,19 +18,11 @@
 package de.kaiserpfalzedv.commons.users.store.user;
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.role.KpRole;
-import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
-import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleAddedToUserEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleRemovedFromUserEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserBannedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDetainedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserReleasedEvent;
-import de.kaiserpfalzedv.commons.users.store.model.role.JpaRoleReadService;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
-import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserRoleManagementService;
 import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserStateManagementService;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
@@ -45,7 +37,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

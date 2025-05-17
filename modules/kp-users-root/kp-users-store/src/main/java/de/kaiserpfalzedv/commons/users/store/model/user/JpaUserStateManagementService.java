@@ -73,6 +73,7 @@ public class JpaUserStateManagementService implements UserStateManagementService
   
   
   
+  @SuppressWarnings("removal")
   @Override
   public void activate(final UUID id) throws UserNotFoundException {
     log.entry(id);

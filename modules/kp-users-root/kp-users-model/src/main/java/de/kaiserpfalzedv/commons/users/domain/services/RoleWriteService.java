@@ -19,6 +19,8 @@ package de.kaiserpfalzedv.commons.users.domain.services;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
+import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
+import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -29,11 +31,10 @@ import java.util.UUID;
  * @since 2025-05-11
  */
 public interface RoleWriteService {
-  void create(@NotNull Role role);
+  void create(@NotNull Role role) throws RoleCantBeCreatedException;
   
-  void updateNamespaceAndName(@NotNull UUID id, @NotBlank String namespace, @NotBlank String name);
-  void updateName(@NotNull UUID id, @NotBlank String name);
+  void updateNameSpace(@NotNull UUID id, @NotBlank String namespace) throws RoleNotFoundException;
+  void updateName(@NotNull UUID id, @NotBlank String name) throws RoleNotFoundException;
   
-  void delete(@NotNull UUID id);
   void remove(@NotNull UUID id);
 }
