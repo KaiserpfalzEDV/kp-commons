@@ -30,6 +30,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,9 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   private final JpaRoleWriteService writeService;
   private final JpaUserRoleManagementService userRoleManagement;
   private final LoggingEventBus bus;
+  
+  @Value("${spring.application.system:kp-commons}")
+  private String system = "kp-commons";
   
   
   @PostConstruct
@@ -72,10 +76,12 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   public void event(@NotNull final RoleCreatedEvent event) {
     log.entry(event);
     
-    try {
-      writeService.create(event.getRole());
-    } catch (RoleCantBeCreatedException e) {
-      log.warn(e.getMessage());
+    if(eventIsFromExternalSystem(event)) {
+      try {
+        writeService.create(event.getRole());
+      } catch (RoleCantBeCreatedException e) {
+        log.warn(e.getMessage());
+      }
     }
     
     log.exit();
@@ -85,10 +91,12 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   public void event(@NotNull final RoleUpdateNameSpaceEvent event) {
     log.entry(event);
     
-    try {
-      writeService.updateNameSpace(event.getRole().getId(), event.getRole().getNameSpace());
-    } catch (RoleNotFoundException e) {
-      log.warn(e.getMessage());
+    if (eventIsFromExternalSystem(event)) {
+      try {
+        writeService.updateNameSpace(event.getRole().getId(), event.getRole().getNameSpace());
+      } catch (RoleNotFoundException e) {
+        log.warn(e.getMessage());
+      }
     }
     
     log.exit();
@@ -99,10 +107,12 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   public void event(@NotNull final RoleUpdateNameEvent event) {
     log.entry(event);
     
-    try {
-      writeService.updateName(event.getRole().getId(), event.getRole().getName());
-    } catch (RoleNotFoundException e) {
-      log.warn(e.getMessage());
+    if (eventIsFromExternalSystem(event)) {
+      try {
+        writeService.updateName(event.getRole().getId(), event.getRole().getName());
+      } catch (RoleNotFoundException e) {
+        log.warn(e.getMessage());
+      }
     }
     
     log.exit();
@@ -112,10 +122,32 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   @Override
   public void event(@NotNull final RoleRemovedEvent event) {
     log.entry(event);
-
-    userRoleManagement.revokeRoleFromAllUsers(event.getRole());
-    writeService.remove(event.getRole().getId());
+    
+    if (eventIsFromExternalSystem(event)) {
+      userRoleManagement.revokeRoleFromAllUsers(event.getRole());
+      writeService.remove(event.getRole().getId());
+    }
     
     log.exit();
+  }
+  
+  
+  /**
+   * Check if the event is from an external system.
+   * @param event The event to check.
+   * @return True if the event is from an external system, false otherwise.
+   */
+  private boolean eventIsFromExternalSystem(final RoleBaseEvent event) {
+    log.entry(event);
+    
+    boolean result;
+    if (system.equals(event.getSystem())) {
+      log.debug("System is the same. Ignoring event. event={}", event);
+      result = false;
+    } else {
+      result = true;
+    }
+    
+    return log.exit(result);
   }
 }

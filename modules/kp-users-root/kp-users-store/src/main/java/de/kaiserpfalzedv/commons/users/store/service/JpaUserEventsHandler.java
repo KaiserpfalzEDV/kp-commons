@@ -52,8 +52,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class JpaUserEventsHandler implements UserEventsHandler {
-  public static final String SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT = "System is the same. Ignoring event. event={}";
-  
   private final JpaUserManagementService service;
   private final JpaUserDataManagementService dataService;
   private final JpaUserRoleManagementService roleService;
@@ -62,7 +60,7 @@ public class JpaUserEventsHandler implements UserEventsHandler {
   
   
   @Value("${spring.application.system:kp-commons")
-  private String system;
+  private String system = "kp-commons";
   
   
   @PostConstruct
@@ -343,7 +341,7 @@ public class JpaUserEventsHandler implements UserEventsHandler {
     
     boolean result;
     if (system.equals(event.getSystem())) {
-      log.debug(SYSTEM_IS_THE_SAME_IGNORING_EVENT_EVENT, event);
+      log.debug("System is the same. Ignoring event. event={}", event);
       result = false;
     } else {
       result = true;

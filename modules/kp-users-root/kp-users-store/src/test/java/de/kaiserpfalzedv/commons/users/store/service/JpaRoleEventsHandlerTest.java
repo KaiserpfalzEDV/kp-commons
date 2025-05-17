@@ -62,6 +62,9 @@ public class JpaRoleEventsHandlerTest {
   @Mock
   private LoggingEventBus bus;
   
+  private static final String LOCAL_SYSTEM = "kp-commons";
+  private static final String EXTERNAL_SYSTEM = "other-system";
+  
   
   private static final UUID TEST_ROLE_ID = UUID.randomUUID();
   private static final String TEST_ROLE_NAME = "Test Role";
@@ -93,11 +96,12 @@ public class JpaRoleEventsHandlerTest {
   
   
   @Test
-  void shouldCreateRoleOnRoleCreatedEvent() throws RoleCantBeCreatedException {
+  void shouldCreateRoleOnRoleCreatedEventWhenEventIsFromExternalSystem() throws RoleCantBeCreatedException {
     log.entry();
     
     // given
     RoleCreatedEvent event = mock(RoleCreatedEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
     
     // when
@@ -107,13 +111,13 @@ public class JpaRoleEventsHandlerTest {
     verify(writeService).create(role);
   }
   
-  
   @Test
-  void shouldHandleExceptionWhenCreationFails() throws RoleCantBeCreatedException {
+  void shouldHandleExceptionWhenCreationFailsWhenEventIsFromExternalSystem() throws RoleCantBeCreatedException {
     log.entry();
     
     // given
     RoleCreatedEvent event = mock(RoleCreatedEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
     
     doThrow(new RoleCantBeCreatedException(role, new IllegalStateException())).when(writeService).create(role);
@@ -127,13 +131,29 @@ public class JpaRoleEventsHandlerTest {
     log.exit();
   }
   
+  @Test
+  void shouldIgnoreRoleOnRoleCreatedEventWhenEventIsFromLocalSystem() throws RoleCantBeCreatedException {
+    log.entry();
+    
+    // given
+    RoleCreatedEvent event = mock(RoleCreatedEvent.class);
+    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    
+    // when
+    sut.event(event);
+    
+    // then
+    verify(writeService, never()).create(role);
+  }
+  
   
   @Test
-  void shouldChangeNameSpaceOnRoleUpdateNameSpaceEvent() throws RoleNotFoundException {
+  void shouldChangeNameSpaceOnRoleUpdateNameSpaceEventWhenEventIsFromExternalSystem() throws RoleNotFoundException {
     log.entry();
     
     // given
     RoleUpdateNameSpaceEvent event = mock(RoleUpdateNameSpaceEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
     
     // when
@@ -146,11 +166,12 @@ public class JpaRoleEventsHandlerTest {
   }
   
   @Test
-  void shouldHandleExceptionOnRoleUpdateNameSpaceEvent() throws RoleNotFoundException {
+  void shouldHandleExceptionOnRoleUpdateNameSpaceEventWhenEventIsFromExternalSystem() throws RoleNotFoundException {
     log.entry();
     
     // given
     RoleUpdateNameSpaceEvent event = mock(RoleUpdateNameSpaceEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
 
     
@@ -165,13 +186,31 @@ public class JpaRoleEventsHandlerTest {
     log.exit();
   }
   
+  @Test
+  void shouldIgnoreNameSpaceOnRoleUpdateNameSpaceEventWhenEventIsFromLocalSystem() throws RoleNotFoundException {
+    log.entry();
+    
+    // given
+    RoleUpdateNameSpaceEvent event = mock(RoleUpdateNameSpaceEvent.class);
+    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    
+    // when
+    sut.event(event);
+    
+    // then
+    verify(writeService, never()).updateNameSpace(role.getId(), role.getNameSpace());
+    
+    log.exit();
+  }
+  
   
   @Test
-  void shouldChangeNameOnRoleUpdateNameEvent() throws RoleNotFoundException {
+  void shouldChangeNameOnRoleUpdateNameEventWhenEventIsFromExternalSystem() throws RoleNotFoundException {
     log.entry();
     
     // given
     RoleUpdateNameEvent event = mock(RoleUpdateNameEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
     
     // when
@@ -184,11 +223,12 @@ public class JpaRoleEventsHandlerTest {
   }
   
   @Test
-  void shouldHandleExceptionOnRoleUpdateNameEvent() throws RoleNotFoundException {
+  void shouldHandleExceptionOnRoleUpdateNameEventWhenEventIsFromExternalSystem() throws RoleNotFoundException {
     log.entry();
     
     // given
     RoleUpdateNameEvent event = mock(RoleUpdateNameEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
     
     doThrow(new RoleNotFoundException(TEST_ROLE_ID)).when(writeService).updateName(TEST_ROLE_ID, TEST_ROLE_NAME);
@@ -202,13 +242,31 @@ public class JpaRoleEventsHandlerTest {
     log.exit();
   }
   
+  @Test
+  void shouldIgnoreNameOnRoleUpdateNameSpaceEventWhenEventIsFromLocalSystem() throws RoleNotFoundException {
+    log.entry();
+    
+    // given
+    RoleUpdateNameEvent event = mock(RoleUpdateNameEvent.class);
+    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    
+    // when
+    sut.event(event);
+    
+    // then
+    verify(writeService, never()).updateName(role.getId(), role.getName());
+    
+    log.exit();
+  }
+  
   
   @Test
-  void shouldRemoveRoleOnRemoveEvent() {
+  void shouldRemoveRoleOnRemoveEventWhenEventIsFromExternalSystem() {
     log.entry();
     
     // given
     RoleRemovedEvent event = mock(RoleRemovedEvent.class);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getRole()).thenReturn(role);
     
     // when
@@ -220,8 +278,26 @@ public class JpaRoleEventsHandlerTest {
     
     log.exit();
   }
-
-
+  
+  @Test
+  void shouldIgnoreRoleOnRemoveEventWhenEventIsFromLocalSystem() {
+    log.entry();
+    
+    // given
+    RoleRemovedEvent event = mock(RoleRemovedEvent.class);
+    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    
+    // when
+    sut.event(event);
+    
+    // then
+    verify(userRoleManagement, never()).revokeRoleFromAllUsers(role);
+    verify(writeService, never()).remove(TEST_ROLE_ID);
+    
+    log.exit();
+  }
+  
+  
   @Test
   void shouldRegisterToEventBus() {
     log.entry();

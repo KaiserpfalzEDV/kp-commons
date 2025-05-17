@@ -21,10 +21,7 @@ package de.kaiserpfalzedv.commons.users.store.service;
 import com.google.common.eventbus.Subscribe;
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyEventsHandler;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyNearExpiryEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.*;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.JpaApiKeyWriteService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -49,9 +46,8 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   private final JpaApiKeyWriteService writeService;
   private final LoggingEventBus bus;
   
-  
-  @Value("${spring.application.system:kp-commons-users}")
-  private String system;
+  @Value("${spring.application.system:kp-commons}")
+  private String system = "kp-commons";
 
   
   @PostConstruct
@@ -79,10 +75,12 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   public void event(@NotNull final ApiKeyCreatedEvent event) {
     log.entry(event);
     
-    try {
-      writeService.create(event.getApiKey());
-    } catch (InvalidApiKeyException e) {
-      log.warn(e.getMessage(), e);
+    if (eventIsFromExternalSystem(event)) {
+      try {
+        writeService.create(event.getApiKey());
+      } catch (InvalidApiKeyException e) {
+        log.warn(e.getMessage(), e);
+      }
     }
     
     log.exit();
@@ -93,7 +91,9 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   public void event(@NotNull final ApiKeyRevokedEvent event) {
     log.entry(event);
     
-    writeService.delete(event.getApiKey().getId());
+    if (eventIsFromExternalSystem(event)) {
+      writeService.delete(event.getApiKey().getId());
+    }
 
     log.exit();
   }
@@ -103,5 +103,25 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   public void event(@NotNull final ApiKeyNearExpiryEvent event) {
     // Don't need to handle this event at all.
     log.trace("Nothing to do.");
+  }
+  
+  
+  /**
+   * Check if the event is from an external system.
+   * @param event The event to check.
+   * @return True if the event is from an external system, false otherwise.
+   */
+  private boolean eventIsFromExternalSystem(final ApiKeyBaseEvent event) {
+    log.entry(event);
+    
+    boolean result;
+    if (system.equals(event.getSystem())) {
+      log.debug("System is the same. Ignoring event. event={}", event);
+      result = false;
+    } else {
+      result = true;
+    }
+    
+    return log.exit(result);
   }
 }

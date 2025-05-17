@@ -58,6 +58,10 @@ public class JpaApiKeyEventsHandlerTest {
   private LoggingEventBus bus;
   
   
+  private static final String LOCAL_SYSTEM = "kp-commons";
+  private static final String EXTERNAL_SYSTEM = "other-system";
+  
+  
   @BeforeEach
   public void setUp() {
     reset(writeService, bus);
@@ -68,14 +72,16 @@ public class JpaApiKeyEventsHandlerTest {
     validateMockitoUsage();
     verifyNoMoreInteractions(writeService, bus);
   }
+
   
   @Test
-  void shouldHandleApiKeyCreatedEvent() throws InvalidApiKeyException {
+  void shouldHandleApiKeyCreatedEventWhenEventIsFromExternalSystem() throws InvalidApiKeyException {
     log.entry();
     
     // given
     ApiKeyCreatedEvent event = mock(ApiKeyCreatedEvent.class);
     when(event.getApiKey()).thenReturn(API_KEY);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -87,12 +93,13 @@ public class JpaApiKeyEventsHandlerTest {
   }
   
   @Test
-  void shouldHandleExceptionWhileCreatingApiKey() throws InvalidApiKeyException {
+  void shouldHandleExceptionWhileCreatingApiKeyWhenEventIsFromExternalSystem() throws InvalidApiKeyException {
     log.entry();
     
     // given
     ApiKeyCreatedEvent event = mock(ApiKeyCreatedEvent.class);
     when(event.getApiKey()).thenReturn(API_KEY);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
 
     doThrow(InvalidApiKeyException.class).when(writeService).create(API_KEY);
 
@@ -105,23 +112,55 @@ public class JpaApiKeyEventsHandlerTest {
     log.exit();
   }
   
-  
   @Test
-  void shouldHandleApiKeyRevokedEvent() {
+  void shouldIgnoreApiKeyCreatedEventWhenEventIsFromLocalSystem() throws InvalidApiKeyException {
     log.entry();
     
     // given
-    ApiKey apiKey = mock(ApiKey.class);
-    when(apiKey.getId()).thenReturn(DEFAULT_ID);
+    ApiKeyCreatedEvent event = mock(ApiKeyCreatedEvent.class);
+    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
     
+    // when
+    sut.event(event);
+    
+    // then
+    verify(writeService, never()).create(API_KEY);
+    
+    log.exit();
+  }
+  
+  
+  @Test
+  void shouldHandleApiKeyRevokedEventWhenEventIsFromExternalSystem() {
+    log.entry();
+    
+    // given
     ApiKeyRevokedEvent event = mock(ApiKeyRevokedEvent.class);
-    when(event.getApiKey()).thenReturn(apiKey);
+    when(event.getApiKey()).thenReturn(API_KEY);
+    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
     
     // when
     sut.event(event);
     
     // then
     verify(writeService).delete(DEFAULT_ID);
+    
+    log.exit();
+  }
+  
+  @Test
+  void shouldIgnoreApiKeyRevokedEventWhenEventIsFromLocalSystem() {
+    log.entry();
+    
+    // given
+    ApiKeyRevokedEvent event = mock(ApiKeyRevokedEvent.class);
+    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    
+    // when
+    sut.event(event);
+    
+    // then
+    verify(writeService, never()).delete(DEFAULT_ID);
     
     log.exit();
   }
