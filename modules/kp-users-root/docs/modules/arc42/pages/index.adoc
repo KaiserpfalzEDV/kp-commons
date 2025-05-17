@@ -1,4 +1,4 @@
-= DCIS System Architecture
+= arc42 Documentation
 :page-aliases: ROOT:index.adoc
 
 include::partial$config.adoc[]
@@ -7,7 +7,7 @@ include::partial$config.adoc[]
 ====
 You can download this documentation in PDF format:
 
-https://docs.kaiserpfalz-edv.de/kp-commons-users/kp-commons-users.pdf
+https://docs.kaiserpfalz-edv.de/kp-commons-users/distributed-user-management.pdf
 ====
 
 

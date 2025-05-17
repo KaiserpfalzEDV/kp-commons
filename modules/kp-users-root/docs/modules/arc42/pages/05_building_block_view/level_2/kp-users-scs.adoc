@@ -1,4 +1,4 @@
-= Level 2: kp-users-store
+= Level 2: kp-users-scs
 
 include::partial$config.adoc[]
 

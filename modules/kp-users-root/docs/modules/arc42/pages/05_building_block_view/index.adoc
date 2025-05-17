@@ -12,15 +12,56 @@ include::partial$config.adoc[]
 ----
 @startuml building-block-overview
 
-component "kp-users-model" <<Domain>> as model
-component "kp-users-store" <<JPA>> as store
-component "kp-users-messaging" <<AMQP>> as messaging
-component "kp-users-client" <<Client>> as client
 
-store --> model : uses
-messaging --> model : uses
+together {
+  rectangle "client" <<SCS>> as clients {
+    component "client-scs" <<external>> as otherscs
+    database "scs-db" <<external>> as db
+
+    component "kp-users-client" <<Library>> as client
+    component "kp-users-model" <<Library>> as model
+    component "kp-users-store" <<Library>> as store
+    component "kp-users-messaging" <<Library>> as messaging
+  }
+  component "amqp-broker" <<external>> as broker
+  component "identity-provider" <<external>> as idp
+}
+
+rectangle "user-scs" <<SCS>> as userscs {
+  component "kp-users-scs" <<SCS>> as scs
+
+  component "kp-users-model" <<Library>> as authmodel
+  component "kp-users-store" <<Library>> as authstore
+  component "kp-users-messaging" <<Library>> as authmessaging
+
+  database "auth-db" <<external>> as authdb
+}
+
+
+scs --> authstore : uses
+scs --> authmessaging : uses
+authstore --> authmodel : uses
+authmessaging --> authmodel : uses
+
+
 client --> store : uses
 client --> messaging : uses
+client ..> idp : uses
+store --> model : uses
+messaging --> model : uses
+
+otherscs --> client : uses
+otherscs --> db : owns
+
+authmessaging <..> broker : communicates
+messaging <..> broker : communicates
+
+authstore --> authdb : owns
+scs ..> idp : uses
+store <..> db : uses
+
+otherscs ..> scs : transcludes
+otherscs ..> client : transcludes (fallback)
 
 @enduml
 ----
@@ -47,6 +88,9 @@ The system tries to separate the concerns of
 * the client to be used in all SCS
 * integration into Spring Boot Security as AuthenticationProvider
 
+[[kp-users-scs]]kp-users-scs [ xref:./level_1/kp-users-scs.adoc[Level 1] | xref:./level_2/kp-users-scs.adoc[Level 2] | xref:./level_3/kp-users-scs/index.adoc[Level 3] ]::
+* management UI
+* authoritative data source for the system.
 
 
 === Important Interfaces

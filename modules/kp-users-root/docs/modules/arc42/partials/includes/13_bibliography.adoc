@@ -2,6 +2,6 @@
 :agilemanifesto: [xref:13_bibliography.adoc#agilemanifesto[AGILE]]
 :cleancode: [xref:13_bibliography.adoc#cleancode[CLEANCODE]]
 :scs: [xref:13_bibliography.adoc#scs[SCS]]
-:baeldung01: [xref:13_bibliography.adocs#baeldung01[BAELDUNG01]]
+:baeldung01: [xref:13_bibliography.adoc#baeldung01[BAELDUNG01]]
 :sapl: [xref:13_bibliography.adoc#sapl[SAPL]]
 :wiki01: [xref:13_bibliography.adoc#wiki01[WIKI01]]

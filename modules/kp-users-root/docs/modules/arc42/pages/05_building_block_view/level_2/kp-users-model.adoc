@@ -2,15 +2,15 @@
 
 include::partial$config.adoc[]
 
-_*TBD*_
+_**TBD**_
 
 == Quality/Performance Characteristics
 
-_*TBD*_
+_**TBD**_
 
 == Pages
 
-_*TBD*_
+_**TBD**_
 
 == Fulfilled Requirements
 
