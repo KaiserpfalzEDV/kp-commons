@@ -9,91 +9,38 @@ include::partial$config.adoc[]
 skinparam actorStyle awesome
 
 together {
-  :GM: as gm << Human >>
-  :Judge: as judge << Human >>
-  :Orga: as orga << Human >>
+  :User: as user << Human >>
   :Admin: as admin << Human >>
-
-  together {
-    :Player: as player << Human >>
-
-    rectangle <<External>> {
-      :Foundry VTT: as foundry << System >>
-      :Discord: as discord << System >>
-    }
-  }
 }
+admin .right.|> user : is a
 
-
-gm    .d.|> player : is a
-judge .d.|> player : is a
-orga  .d.|> player : is a
-admin .d.|> player : is a
+component "kp-users-scs" <<SCS>> as usersscs
 
 together {
-  rectangle "Application Layer" {
-    :UI Layer: as ui << Virtual >>
-    :API Layer: as api << Virtual >>
-    :Discord Bot: as bot << System >>
-  }
+  component "Client 1" <<SCS>> as client1scs
+  component "Client 2" <<SCS>> as client2scs
+  component "Client N" <<SCS>> as clientNscs
 }
 
-rectangle "Delphi Council Information System" {
-    :DCIS Arbitration: as arbitration << System >>
-    :DCIS Operatives: as operatives << System >>
-    :DCIS Gaming: as gaming << System >>
-    :DCIS Threats: as threats << System >>
-    :DCIS Users: as users << System >>
-}
+client1scs <..> client2scs : async
+client1scs <..> clientNscs : async
+client1scs <..> usersscs : async
+client2scs <..> clientNscs : async
+client2scs <..> usersscs : async
+clientNscs <..> usersscs : async
 
-rectangle "Torg Codex" {
-    :Torg Codex: as codex << System >>
-}
+client1scs <--> client2scs : transcludes (opt)
+client1scs <--> clientNscs : transcludes (opt)
+client2scs <--> clientNscs : transcludes (opt)
 
-broker as "Messaging Broker" << Asynchronus >>
-mail as "Mailserver" << External Service >>
+client1scs --> usersscs : transcludes
+client2scs --> usersscs : transcludes
+clientNscs --> usersscs : transcludes
 
-player --> discord : uses
-player --> ui : uses
-player --> foundry : uses
-admin --> sso : configures
+user --> client1scs : uses
+user --> client2scs : uses
+user --> clientNscs : uses
+user --> usersscs : uses
 
-foundry --> api
-discord <--> bot
-
-bot --> api
-
-ui --> users
-ui --> arbitration
-ui --> operatives
-ui --> gaming
-ui --> threats
-ui --> codex
-
-api --> users
-api --> arbitration
-api --> operatives
-api --> gaming
-api --> threats
-api --> codex
-
-mail <-- users : sends email
-mail --> player : sends email
-bot <-- users : sends message
-
-users <-.-> broker
-arbitration <-.-> broker
-operatives <-.-> broker
-gaming <-.-> broker
-threats <-.-> broker
-codex <-.-> broker
-
-sso <-- player : logs into
-sso <-.- users
-sso <-.- arbitration
-sso <-.- operatives
-sso <-.- gaming
-sso <-.- threats
-sso <-.- codex
 @enduml
 ----
