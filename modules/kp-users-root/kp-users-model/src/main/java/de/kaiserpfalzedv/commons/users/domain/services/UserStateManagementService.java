@@ -30,6 +30,7 @@ import java.util.UUID;
  * @since 03.05.2025
  */
 public interface UserStateManagementService {
+  @Deprecated(forRemoval = true)
   void activate(@NotNull UUID id) throws UserNotFoundException;
   void detain(@NotNull UUID id, long days) throws UserNotFoundException;
   void ban(@NotNull UUID id) throws UserNotFoundException;

@@ -50,7 +50,7 @@ public class JpaUserStateManagementService implements UserStateManagementService
  
   
   @Value("${spring.application.system:kp-commons}")
-  private String system;
+  private String system = "kp-commons";
   
   
   @PostConstruct

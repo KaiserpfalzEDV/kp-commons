@@ -51,7 +51,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
   private final LoggingEventBus bus;
   
   @Value("${spring.application.system:kp-commons}")
-  private String system;
+  private String system = "kp-commons";
   
   
   @PostConstruct

@@ -55,7 +55,7 @@ public class JpaUserRoleManagementService implements UserRoleManagementService, 
   
   
   @Value("${spring.application.system:kp-commons}")
-  private String system;
+  private String system = "kp-commons";
 
   
   @PostConstruct
