@@ -15,14 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.user;
+package de.kaiserpfalzedv.commons.users.store.model.user;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleAddedToUserEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleRemovedFromUserEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

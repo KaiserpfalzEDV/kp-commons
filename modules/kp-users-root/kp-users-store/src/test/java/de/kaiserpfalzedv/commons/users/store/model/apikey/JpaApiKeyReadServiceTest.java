@@ -15,12 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.apikey;
+package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
 
-import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
-import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyRepository;
-import de.kaiserpfalzedv.commons.users.store.model.apikey.JpaApiKeyReadService;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;

@@ -15,12 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.role;
+package de.kaiserpfalzedv.commons.users.store.model.role;
 
 
-import de.kaiserpfalzedv.commons.users.store.model.role.JpaRoleReadService;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleRepository;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

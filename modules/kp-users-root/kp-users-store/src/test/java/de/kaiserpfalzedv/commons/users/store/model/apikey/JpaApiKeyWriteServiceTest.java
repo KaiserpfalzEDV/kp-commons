@@ -15,20 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.apikey;
+package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyImpl;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyToImpl;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyToImplImpl;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
-import de.kaiserpfalzedv.commons.users.store.model.apikey.*;
+import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -48,25 +49,28 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @XSlf4j
 public class JpaApiKeyWriteServiceTest {
+  @InjectMocks
   private JpaApiKeyWriteService sut;
   
   @Mock
   private ApiKeyRepository repository;
-  
-  private final ApiKeyToImpl toImpl = new ApiKeyToImplImpl();
-  private final ApiKeyToJPA toJPA = new ApiKeyToJPAImpl();
+
+  @Mock
+  private ApiKeyToImpl toImpl;
+
+  @Mock
+  private ApiKeyToJPA toJPA;
   
   
   @BeforeEach
   public void setUp() {
-    reset(repository);
-    
-    sut = new JpaApiKeyWriteService(repository, toJPA);
+    reset(repository, toImpl, toJPA);
   }
   
   @AfterEach
   public void tearDown() {
     validateMockitoUsage();
+    verifyNoMoreInteractions(repository, toImpl, toJPA);
   }
   
   
@@ -97,6 +101,7 @@ public class JpaApiKeyWriteServiceTest {
     log.entry();
     
     when(repository.save(any(ApiKeyJPA.class))).thenReturn(DEFAULT_APIKEY);
+    when(toImpl.apply(any(ApiKeyJPA.class))).thenReturn(DEFAULT_APIKEY_IMPL);
     
     sut.create(toImpl.apply(DEFAULT_APIKEY));
     
@@ -181,10 +186,28 @@ public class JpaApiKeyWriteServiceTest {
       
       .issuer("issuer")
       .subject(DEFAULT_ID.toString())
+
+      .email("email@email.email")
       
       .version(0)
       .revId(0)
       .revisioned(NOW)
+      
+      .created(NOW)
+      .modified(NOW)
+      
+      .build();
+  
+  private static final KpUserDetails DEFAULT_USER_IMPL = KpUserDetails.builder()
+      .id(DEFAULT_ID)
+      
+      .nameSpace("namespace")
+      .name("name")
+      
+      .issuer("issuer")
+      .subject(DEFAULT_ID.toString())
+      
+      .email("email@email.email")
       
       .created(NOW)
       .modified(NOW)
@@ -198,6 +221,18 @@ public class JpaApiKeyWriteServiceTest {
       
       .nameSpace("namespace")
       .user(DEFAULT_USER)
+      
+      .created(NOW)
+      .modified(NOW)
+      
+      .build();
+  
+  private static final ApiKeyImpl DEFAULT_APIKEY_IMPL = ApiKeyImpl.builder()
+      .id(DEFAULT_ID)
+      .expiration(NOW.plusDays(10L))
+      
+      .nameSpace("namespace")
+      .user(DEFAULT_USER_IMPL)
       
       .created(NOW)
       .modified(NOW)

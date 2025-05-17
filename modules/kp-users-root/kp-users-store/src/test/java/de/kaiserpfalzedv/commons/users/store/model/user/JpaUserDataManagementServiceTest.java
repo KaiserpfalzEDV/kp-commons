@@ -15,15 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.user;
+package de.kaiserpfalzedv.commons.users.store.model.user;
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
-import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserDataManagementService;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserToJpa;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

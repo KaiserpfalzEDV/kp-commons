@@ -15,12 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.user;
+package de.kaiserpfalzedv.commons.users.store.model.user;
 
 
-import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserReadService;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

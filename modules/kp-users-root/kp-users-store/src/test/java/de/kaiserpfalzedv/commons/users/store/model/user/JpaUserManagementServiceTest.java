@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.user;
+package de.kaiserpfalzedv.commons.users.store.model.user;
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
@@ -25,10 +25,6 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserActiva
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserDeletedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserRemovedEvent;
-import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserManagementService;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserJPA;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserRepository;
-import de.kaiserpfalzedv.commons.users.store.model.user.UserToJpa;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
