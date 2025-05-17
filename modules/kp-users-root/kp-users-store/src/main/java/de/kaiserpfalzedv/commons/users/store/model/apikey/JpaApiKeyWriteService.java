@@ -20,7 +20,7 @@ package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyNotFoundException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyWriteService;
+import de.kaiserpfalzedv.commons.users.domain.services.ApiKeyWriteService;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;

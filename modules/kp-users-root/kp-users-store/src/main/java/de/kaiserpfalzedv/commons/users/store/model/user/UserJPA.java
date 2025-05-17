@@ -99,6 +99,7 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     private String name;
     
     @Nullable
+    @Email
     @Column(name = "EMAIL", columnDefinition = "VARCHAR(100)")
     private String email;
     

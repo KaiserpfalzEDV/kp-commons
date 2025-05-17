@@ -15,28 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.role;
+package de.kaiserpfalzedv.commons.users.domain.services;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2025-05-11
+ * @since 03.05.2025
  */
-public interface RoleReadService {
-  Optional<? extends Role> retrieve(@NotNull UUID id);
-  
-  List<? extends Role> retrieveAll();
-  Page<? extends Role> retrieveAll(@NotNull Pageable pageable);
-  
-  List<? extends Role> retrieveAllFromNamespace(@NotNull String namespace);
-  Page<? extends Role> retrieveAllFromNamespace(@NotNull String namespace, @NotNull Pageable pageable);
+public interface UserManagementService {
+  void create(@NotNull User user) throws UserCantBeCreatedException;
+  void delete(@NotNull UUID id);
+  void undelete(@NotNull UUID id) throws UserNotFoundException;
+  void remove(@NotNull UUID id);
 }

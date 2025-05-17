@@ -15,13 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store.model.role;
+package de.kaiserpfalzedv.commons.users.store.service;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleDeletedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleEventsHandler;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserWriteService;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleRepository;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
+import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserRoleManagementService;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
@@ -39,7 +42,7 @@ import org.springframework.stereotype.Service;
 @XSlf4j
 public class JpaRoleEventsHandler implements RoleEventsHandler {
   private final RoleRepository repository;
-  private final UserWriteService users;
+  private final JpaUserRoleManagementService users;
   
   private final RoleToJpa toJPA;
   

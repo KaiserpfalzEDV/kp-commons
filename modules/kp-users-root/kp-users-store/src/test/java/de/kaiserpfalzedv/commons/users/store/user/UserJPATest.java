@@ -211,6 +211,14 @@ class UserJPATest {
     log.exit();
   }
   
+  
+  @Test
+  void shouldThrowAnExceptionWhenInvalidEmailIsSet() {
+    log.entry();
+    
+    user.toBuilder().email("invalid-email").build();
+  }
+  
 
   private static final OffsetDateTime DEFAULT_CREATE_TIME = OffsetDateTime.now();
   private static final RoleJPA DEFAULT_ROLE = RoleJPA.builder()

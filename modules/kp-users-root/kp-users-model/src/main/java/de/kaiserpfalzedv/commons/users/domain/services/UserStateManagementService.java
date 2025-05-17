@@ -15,21 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.user;
+package de.kaiserpfalzedv.commons.users.domain.services;
 
 
-import jakarta.validation.constraints.NotBlank;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
+ * Service to manage the state of a user.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2025-05-03
+ * @since 03.05.2025
  */
-public interface UserReadService {
-  Optional<? extends User> findById(@NotBlank UUID id);
-
-  Optional<? extends User> findByUsername(@NotBlank final String nameSpace, @NotBlank final String name);
-  Optional<? extends User> findByOauth(@NotBlank final String issuer, @NotBlank final String sub);
+public interface UserStateManagementService {
+  void activate(@NotNull UUID id) throws UserNotFoundException;
+  void detain(@NotNull UUID id, long days) throws UserNotFoundException;
+  void ban(@NotNull UUID id) throws UserNotFoundException;
+  void release(@NotNull UUID id) throws UserNotFoundException;
 }

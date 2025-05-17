@@ -15,9 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.role;
+package de.kaiserpfalzedv.commons.users.domain.services;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

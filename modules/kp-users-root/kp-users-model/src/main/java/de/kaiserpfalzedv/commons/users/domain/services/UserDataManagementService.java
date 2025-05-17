@@ -15,10 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.user;
+package de.kaiserpfalzedv.commons.users.domain.services;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,19 +28,11 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 03.05.2025
  */
-public interface UserWriteService {
-  void create(@NotNull User user) throws UserCantBeCreatedException;
-  
+public interface UserDataManagementService {
   void updateIssuer(@NotNull UUID id, @NotBlank String issuer, @NotBlank String sub) throws UserNotFoundException;
   void updateNamespace(@NotNull UUID id, @NotBlank String namespace) throws UserNotFoundException;
   void updateName(@NotNull UUID id, @NotBlank String name) throws UserNotFoundException;
   void updateNamespaceAndName(@NotNull UUID id, @NotBlank String namespace, @NotBlank String name) throws UserNotFoundException;
   void updateEmail(@NotNull UUID id, @NotBlank String email) throws UserNotFoundException;
   void updateDiscord(@NotNull UUID id, @NotBlank String discord) throws UserNotFoundException;
-  void addRole(@NotNull UUID id, @NotNull Role role) throws UserNotFoundException;
-  void removeRole(@NotNull UUID id, @NotNull Role role) throws UserNotFoundException;
-  void revokeRoleFromAllUsers(@NotNull Role role);
-  
-  void delete(@NotNull UUID id);
-  void remove(@NotNull UUID id);
 }

@@ -26,10 +26,7 @@ import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import de.kaiserpfalzedv.commons.users.domain.model.abac.HasOwner;
 import de.kaiserpfalzedv.commons.users.domain.model.user.state.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -64,6 +61,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   /**
    * @return the email address of the user.
    */
+  @Email
   String getEmail();
   
   /**

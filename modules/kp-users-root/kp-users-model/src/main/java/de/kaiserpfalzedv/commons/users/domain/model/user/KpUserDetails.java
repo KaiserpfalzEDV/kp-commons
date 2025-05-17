@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -62,6 +63,7 @@ public class KpUserDetails implements User {
     private String issuer;
     private String subject;
     
+    @Email
     private String email;
     private String phone;
     private String discord;

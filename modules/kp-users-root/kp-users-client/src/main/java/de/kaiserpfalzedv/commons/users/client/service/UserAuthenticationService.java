@@ -26,8 +26,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserReadService;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserWriteService;
+import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;

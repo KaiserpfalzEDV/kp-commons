@@ -27,8 +27,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserReadService;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserWriteService;
+import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

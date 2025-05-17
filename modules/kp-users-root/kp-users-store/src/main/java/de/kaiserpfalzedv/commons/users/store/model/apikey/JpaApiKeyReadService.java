@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.model.apikey;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyReadService;
+import de.kaiserpfalzedv.commons.users.domain.services.ApiKeyReadService;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

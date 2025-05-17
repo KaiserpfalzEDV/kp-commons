@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.model.role;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.role.RoleReadService;
+import de.kaiserpfalzedv.commons.users.domain.services.RoleReadService;
 import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
 import jakarta.inject.Inject;

@@ -18,24 +18,18 @@
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
 
-import com.google.common.eventbus.EventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserWriteService;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserRemovedEvent;
+import de.kaiserpfalzedv.commons.users.domain.services.UserDataManagementService;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,6 +37,8 @@ import java.util.UUID;
 
 
 /**
+ * Service for managing user data in a JPA context.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-16
  */
@@ -50,9 +46,9 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
-public class JpaUserWriteService implements UserWriteService {
+public class JpaUserDataManagementService implements UserDataManagementService {
   private final UserRepository repository;
-  private final EventBus bus;
+  private final LoggingEventBus bus;
   private final UserToJpa toJpa;
   private final RoleToJpa roleToJpa;
   
@@ -60,22 +56,24 @@ public class JpaUserWriteService implements UserWriteService {
   private String system;
   
   
-  @Override
-  public void create(@NotNull final User user) throws UserCantBeCreatedException {
-    log.entry(user);
+  @PostConstruct
+  public void init() {
+    log.entry(bus, repository, roleToJpa, system);
     
+    bus.register(this);
     
-    UserJPA result;
-    try {
-      result = repository.save(toJpa.apply(user));
-      
-      bus.post(UserCreatedEvent.builder().system(system).user(result).build());
-    } catch (OptimisticLockingFailureException e) {
-      throw new UserCantBeCreatedException(user, e);
-    }
-    
-    log.exit(result);
+    log.exit();
   }
+  
+  @PreDestroy
+  public void close() {
+    log.entry(bus, repository, roleToJpa, system);
+    
+    bus.unregister(this);
+    
+    log.exit();
+  }
+  
   
   @Override
   public void updateIssuer(final UUID id, final String issuer, final String sub) throws UserNotFoundException {
@@ -91,17 +89,7 @@ public class JpaUserWriteService implements UserWriteService {
     bus.post(UserIssuerAndSubModificationEvent.builder().system(system).user(result).build());
     log.exit(repository.saveAndFlush(result));
   }
-  
-  private UserJPA loadUserOrThrowException(final UUID id) throws UserNotFoundException {
-    log.entry(id);
-    
-    Optional<UserJPA> data = repository.findById(id);
-    if (data.isEmpty()) {
-      throw log.throwing(new UserNotFoundException(id));
-    }
-    
-    return log.exit(data.get());
-  }
+
   
   @Override
   public void updateNamespace(final UUID id, final String namespace) throws UserNotFoundException {
@@ -115,6 +103,7 @@ public class JpaUserWriteService implements UserWriteService {
     log.exit(repository.saveAndFlush(data));
   }
   
+  
   @Override
   public void updateName(final UUID id, final String name) throws UserNotFoundException {
     log.entry(id, name);
@@ -126,6 +115,7 @@ public class JpaUserWriteService implements UserWriteService {
     bus.post(UserNameModificationEvent.builder().system(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
+  
   
   @Override
   public void updateNamespaceAndName(final UUID id, final String namespace, final String name) throws UserNotFoundException {
@@ -139,6 +129,7 @@ public class JpaUserWriteService implements UserWriteService {
     log.exit(repository.saveAndFlush(data));
   }
   
+  
   @Override
   public void updateEmail(final UUID id, final String email) throws UserNotFoundException {
     log.entry(id, email);
@@ -150,6 +141,7 @@ public class JpaUserWriteService implements UserWriteService {
     bus.post(UserEmailModificationEvent.builder().system(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
+
   
   @Override
   public void updateDiscord(final UUID id, final String discord) throws UserNotFoundException {
@@ -163,83 +155,15 @@ public class JpaUserWriteService implements UserWriteService {
     log.exit(repository.saveAndFlush(data));
   }
   
-  @Override
-  public void addRole(final UUID id, final Role role) throws UserNotFoundException {
-    log.entry(id, role);
-    
-    UserJPA data = loadUserOrThrowException(id);
-    
-    data.addRole(bus, roleToJpa.apply(role));
-    // no bus post since User does it for us!
-    
-    log.exit(repository.saveAndFlush(data));
-  }
   
-  @Override
-  public void removeRole(final UUID id, final Role role) throws UserNotFoundException {
-    log.entry(id, role);
-    
-    UserJPA data = loadUserOrThrowException(id);
-    
-    data.removeRole(bus, roleToJpa.apply(role));
-    
-    log.exit(repository.saveAndFlush(data));
-  }
-  
-  @Override
-  public void revokeRoleFromAllUsers(final Role role) {
-    log.entry(role);
-    
-    // TODO 2025-05-16 klenkes74 Implement the role removal.
-    throw log.throwing(new UnsupportedOperationException("Revoke role from all users is not implemented yet!"));
-  }
-  
-  @Override
-  public void delete(final UUID id) {
+  private UserJPA loadUserOrThrowException(final UUID id) throws UserNotFoundException {
     log.entry(id);
     
-    try {
-      UserJPA data = loadUserOrThrowException(id);
-      data.delete(bus);
-      
-      revokeAllApiKeysForUser(data);
-      
-      log.exit(repository.saveAndFlush(data));
-    } catch (UserNotFoundException e) {
-      log.info("User didn't exist. Nothing to do. id='{}'", id);
-      
-      log.exit();
-    }
-  }
-  
-  private void revokeAllApiKeysForUser(final UserJPA user) {
-    log.entry(user);
-    
-    // no system() in this event, since it has to be worked on at least once :-).
-    user.getApiKeys().forEach(key -> bus.post(ApiKeyRevokedEvent.builder().user(user).apiKey(key).build()));
-    
-    log.exit(user);
-  }
-  
-  
-  
-  @Override
-  public void remove(final UUID id) {
-    log.entry(id);
-    
-    try {
-      UserJPA data = loadUserOrThrowException(id);
-      
-      revokeAllApiKeysForUser(data);
-      
-      repository.delete(data);
-      
-      bus.post(UserRemovedEvent.builder().system(system).user(data).build());
-      log.info("User removed from system. user={}", data);
-    } catch (UserNotFoundException e) {
-      log.info("User didn't exist. Nothing to do. id='{}'", id);
+    Optional<UserJPA> data = repository.findById(id);
+    if (data.isEmpty()) {
+      throw log.throwing(new UserNotFoundException(id));
     }
     
-    log.exit();
+    return log.exit(data.get());
   }
 }

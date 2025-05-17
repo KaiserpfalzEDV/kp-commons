@@ -15,24 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.apikey;
+package de.kaiserpfalzedv.commons.users.domain.services;
 
 
+import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2025-05-11
+ * @since 03.05.2025
  */
-public interface ApiKeyWriteService {
-  void create(@NotNull ApiKey apiKey) throws InvalidApiKeyException;
-  
-  ApiKey refresh(@NotNull UUID apiKeyId, long days) throws ApiKeyNotFoundException;
-  
-  void delete(@NotNull UUID apiKeyId);
-  default void remove(@NotNull UUID apiKeyId) {
-    delete(apiKeyId);
-  }
+public interface UserRoleManagementService {
+  void addRole(@NotNull UUID id, @NotNull Role role) throws UserNotFoundException;
+  void removeRole(@NotNull UUID id, @NotNull Role role) throws UserNotFoundException;
+  void revokeRoleFromAllUsers(@NotNull Role role);
 }

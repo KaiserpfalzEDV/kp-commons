@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserReadService;
+import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
 import jakarta.inject.Inject;
