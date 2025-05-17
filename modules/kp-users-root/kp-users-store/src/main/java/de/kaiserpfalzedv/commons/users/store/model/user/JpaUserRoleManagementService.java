@@ -20,9 +20,11 @@ package de.kaiserpfalzedv.commons.users.store.model.user;
 
 import com.google.common.eventbus.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
+import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
+import de.kaiserpfalzedv.commons.users.domain.services.RoleReadService;
 import de.kaiserpfalzedv.commons.users.domain.services.UserRoleManagementService;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
@@ -49,7 +51,8 @@ import java.util.UUID;
 public class JpaUserRoleManagementService implements UserRoleManagementService, AutoCloseable {
   private final UserRepository repository;
   private final EventBus bus;
-  private final RoleToJpa roleToJpa;
+  private final RoleReadService roleReadService;
+  
   
   @Value("${spring.application.system:kp-commons}")
   private String system;
@@ -57,7 +60,7 @@ public class JpaUserRoleManagementService implements UserRoleManagementService, 
   
   @PostConstruct
   public void init() {
-    log.entry(bus, repository, roleToJpa, system);
+    log.entry(bus, system);
    
     bus.register(this);
     
@@ -66,7 +69,7 @@ public class JpaUserRoleManagementService implements UserRoleManagementService, 
   
   @PreDestroy
   public void close() {
-    log.entry(bus, repository, roleToJpa, system);
+    log.entry(bus, system);
     
     bus.unregister(this);
     
@@ -75,26 +78,28 @@ public class JpaUserRoleManagementService implements UserRoleManagementService, 
   
   
   @Override
-  public void addRole(final UUID id, final Role role) throws UserNotFoundException {
+  public void addRole(final UUID id, final Role role) throws UserNotFoundException, RoleNotFoundException {
     log.entry(id, role);
     
-    UserJPA data = loadUserOrThrowException(id);
+    UserJPA user = loadUserOrThrowException(id);
+    RoleJPA jpa = loadRoleOrThrowException(role.getId());
     
-    data.addRole(bus, roleToJpa.apply(role));
+    user.addRole(bus, jpa);
     // no bus post since User does it for us!
     
-    log.exit(repository.saveAndFlush(data));
+    log.exit(repository.saveAndFlush(user));
   }
   
   @Override
-  public void removeRole(final UUID id, final Role role) throws UserNotFoundException {
+  public void removeRole(final UUID id, final Role role) throws UserNotFoundException, RoleNotFoundException {
     log.entry(id, role);
     
-    UserJPA data = loadUserOrThrowException(id);
+    UserJPA user = loadUserOrThrowException(id);
+    RoleJPA jpa = loadRoleOrThrowException(role.getId());
     
-    data.removeRole(bus, roleToJpa.apply(role));
+    user.removeRole(bus, jpa);
     
-    log.exit(repository.saveAndFlush(data));
+    log.exit(repository.saveAndFlush(user));
   }
   
   @Override
@@ -122,5 +127,16 @@ public class JpaUserRoleManagementService implements UserRoleManagementService, 
     }
     
     return log.exit(data.get());
+  }
+  
+  private RoleJPA loadRoleOrThrowException(final UUID id) throws RoleNotFoundException {
+    log.entry(id);
+    
+    Optional<? extends Role> data = roleReadService.retrieve(id);
+    if (data.isEmpty()) {
+      throw log.throwing(new RoleNotFoundException(id));
+    }
+    
+    return log.exit((RoleJPA)data.get());
   }
 }

@@ -34,17 +34,17 @@ import lombok.ToString;
 @Getter
 @ToString(callSuper = true)
 public abstract class BaseRoleException extends BaseException {
-  private final Role apiKey;
+  private final Role role;
   
   public BaseRoleException(@Nullable final Role role, @NotBlank final String message) {
     super(message);
     
-    this.apiKey = role;
+    this.role = role;
   }
   
   public BaseRoleException(@Nullable final Role role, final String message, final Throwable cause) {
     super(message, cause);
     
-    this.apiKey = role;
+    this.role = role;
   }
 }

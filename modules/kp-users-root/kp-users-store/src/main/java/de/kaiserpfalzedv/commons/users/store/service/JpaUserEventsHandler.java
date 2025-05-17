@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.commons.users.store.service;
 
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
@@ -221,7 +222,7 @@ public class JpaUserEventsHandler implements UserEventsHandler {
     if (eventIsFromExternalSystem(event)) {
       try {
         roleService.addRole(event.getUser().getId(), event.getRole());
-      } catch (UserNotFoundException e) {
+      } catch (UserNotFoundException | RoleNotFoundException e) {
         log.warn(e.getMessage(), e);
       }
     }
@@ -234,7 +235,7 @@ public class JpaUserEventsHandler implements UserEventsHandler {
     if (eventIsFromExternalSystem(event)) {
       try {
         roleService.removeRole(event.getUser().getId(), event.getRole());
-      } catch (UserNotFoundException e) {
+      } catch (UserNotFoundException | RoleNotFoundException e) {
         log.warn(e.getMessage(), e);
       }
     }

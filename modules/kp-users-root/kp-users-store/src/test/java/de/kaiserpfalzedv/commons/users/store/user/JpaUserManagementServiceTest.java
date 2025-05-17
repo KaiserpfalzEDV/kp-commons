@@ -90,7 +90,7 @@ public class JpaUserManagementServiceTest {
   }
   
   @Test
-  void shouldThrowExceptionWhenCreatingAnAlreadyExistingUser() throws UserCantBeCreatedException {
+  void shouldThrowExceptionWhenCreatingAnAlreadyExistingUser() {
     log.entry();
     
     when(toJpa.apply(DEFAULT_USER)).thenReturn(DEFAULT_JPA_USER);

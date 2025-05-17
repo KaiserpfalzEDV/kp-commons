@@ -15,22 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.services;
+package de.kaiserpfalzedv.commons.users.domain.model.role;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
-import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
-import jakarta.validation.constraints.NotNull;
+import jakarta.annotation.Nullable;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
 
 import java.util.UUID;
 
+
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 03.05.2025
+ * @since 2025-05-17
  */
-public interface UserRoleManagementService {
-  void addRole(@NotNull UUID id, @NotNull Role role) throws UserNotFoundException, RoleNotFoundException;
-  void removeRole(@NotNull UUID id, @NotNull Role role) throws UserNotFoundException, RoleNotFoundException;
-  void revokeRoleFromAllUsers(@NotNull Role role);
+@Getter
+@ToString
+public class RoleNotFoundException extends BaseRoleException {
+  public RoleNotFoundException(@Nullable final UUID id) {
+    super(null, createMessage(id));
+  }
+  
+  private static String createMessage(@Nullable final UUID id) {
+    return "Role with id '%s' not found".formatted(id);
+  }
 }

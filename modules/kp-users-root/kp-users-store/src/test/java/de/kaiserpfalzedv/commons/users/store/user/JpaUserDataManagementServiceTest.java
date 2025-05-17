@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.users.store.user;
 
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserDataManagementService;
@@ -262,21 +261,7 @@ public class JpaUserDataManagementServiceTest {
   
   private static final UUID DEFAULT_ID = UUID.randomUUID();
   private static final OffsetDateTime CREATED_AT = OffsetDateTime.now();
-  private static final KpUserDetails DEFAULT_USER = KpUserDetails.builder()
-      .id(DEFAULT_ID)
-      
-      .nameSpace("namespace")
-      .name("name")
-      
-      .issuer("issuer")
-      .subject(DEFAULT_ID.toString())
-      
-      .email("email@email.email")
-      
-      .created(CREATED_AT)
-      .modified(CREATED_AT)
-      
-      .build();
+  
   private static final UserJPA DEFAULT_JPA_USER = UserJPA.builder()
       .id(DEFAULT_ID)
       

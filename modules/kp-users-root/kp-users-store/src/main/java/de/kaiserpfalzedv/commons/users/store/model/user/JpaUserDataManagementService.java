@@ -49,8 +49,6 @@ import java.util.UUID;
 public class JpaUserDataManagementService implements UserDataManagementService {
   private final UserRepository repository;
   private final LoggingEventBus bus;
-  private final UserToJpa toJpa;
-  private final RoleToJpa roleToJpa;
   
   @Value("${spring.application.system:kp-commons}")
   private String system;
@@ -58,7 +56,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
   
   @PostConstruct
   public void init() {
-    log.entry(bus, repository, roleToJpa, system);
+    log.entry(bus, system);
     
     bus.register(this);
     
@@ -67,7 +65,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
   
   @PreDestroy
   public void close() {
-    log.entry(bus, repository, roleToJpa, system);
+    log.entry(bus, system);
     
     bus.unregister(this);
     
