@@ -1,0 +1,14 @@
+= kp-commons-users System Architecture
+:page-aliases: ROOT:index.adoc
+
+include::partial$config.adoc[]
+
+[TIP]
+====
+You can download this documentation in PDF format:
+
+https://docs.kaiserpfalz-edv.de/kp-commons-users/kp-commons-users-system-architecture.pdf
+====
+
+
+include::kes:commons:partial$kes.adoc[]

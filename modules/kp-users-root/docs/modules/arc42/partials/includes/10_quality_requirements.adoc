@@ -1,0 +1,11 @@
+
+:fs01: [xref:10_quality_requirements.adoc#FS01[FS01 Tailored to Spring Security]]
+:fs02: [xref:10_quality_requirements.adoc#FS02[FS02 Data Protection]]
+:co01: [xref:10_quality_requirements.adoc#CO01[CO01 Compatible with keycloak]]
+:co02: [xref:10_quality_requirements.adoc#CO03[CO02 Compatible with discord]]
+:us01: [xref:10_quality_requirements.adoc#US01[US01 Web based]]
+:us02: [xref:10_quality_requirements.adoc#US02[US02 Multi-Language]]
+:us03: [xref:10_quality_requirements.adoc#US03[US03 Fast Response Times]]
+:re01: [xref:10_quality_requirements.adoc#RE01[RE01 Working hours 24/7]]
+:re02: [xref:10_quality_requirements.adoc#RE02[RE02 12-Factor]]
+:mt01: [xref:10_quality_requirements.adoc#MT01[MT01 Small Team]]

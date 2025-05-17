@@ -1,0 +1,186 @@
+= Technical Context
+
+include::partial$config.adoc[]
+
+.The technical context of the DCIS.
+[plantuml,technical-context,svg]
+----
+@startuml
+skinparam actorStyle awesome
+
+together {
+  :Player: << Human >>
+  :GM: << Human >>
+  :Judge: << Human >>
+  :Orga: << Human >>
+  :Admin: << Human >>
+}
+
+together {
+  rectangle << External >> {
+    together {
+      [FoundryVTT]
+      [discord]
+    }
+  }
+
+  [k8s ingress]
+}
+
+together {
+  [SSO]
+  [broker]
+}
+
+component "k8s ingress" {
+    portin HTTP as HTTPingressIn
+
+    component "ingress" as HTTPingress
+
+    HTTPingressIn -- HTTPingress
+}
+
+
+FoundryVTT --> HTTPingressIn
+[SSO]
+
+[dcis-gaming]
+[torg-codex]
+[dcis-threats]
+[dcis-operatives]
+[dcis-discord]
+together {
+  [dcis-users]
+  [mail]
+}
+
+
+component dcis-gaming << SCS >> {
+    portin HTTP as HTTPgaming
+    portout AMQP as AMQPgaming
+
+    component "torganized-play-gaming" as DCISgaming
+    database "PostgreSQL" as gamingDB
+
+    HTTPgaming -- DCISgaming
+    AMQPgaming -- DCISgaming
+    DCISgaming -- gamingDB
+}
+
+component torg-codex << SCS >> {
+    portin HTTP as HTTPcodex
+    portout AMQP as AMQPcodex
+
+    component "torg-codex" as DCIScodex
+    database "MongoDB" as codexDB
+
+    HTTPcodex -- DCIScodex
+    AMQPcodex -- DCIScodex
+    DCIScodex -- codexDB
+}
+
+component dcis-threats << SCS >> {
+    portin HTTP as HTTPthreats
+    portout AMQP as AMQPthreats
+
+    component "torganized-play-threats" as DCISthreats
+    database "PostgreSQL" as threatsDB
+
+    HTTPthreats -- DCISthreats
+    AMQPthreats -- DCISthreats
+    DCISthreats -- threatsDB
+}
+
+[broker]
+component "broker" {
+    portin AMQP as AMQPbroker
+
+    component "broker" as DCISbroker
+
+    AMQPbroker -- DCISbroker
+}
+
+component dcis-operatives << SCS >> {
+    portin HTTP as HTTPoperatives
+    portout AMQP as AMQPoperatives
+
+    component "torganized-play-operatives" as DCISoperatives
+    database "PostgreSQL" as operativesDB
+
+    HTTPoperatives -- DCISoperatives
+    AMQPoperatives -- DCISoperatives
+    DCISoperatives -- operativesDB
+}
+
+component dcis-users << SCS >> {
+    portin HTTP as HTTPusers
+    portout AMQP as AMQPusers
+
+    component "torganized-play-users" as DCISusers
+    component "torganized-play-arbitration" as DCISarbitration
+    database "PostgreSQL" as usersDB
+
+    HTTPusers -- DCISusers
+    HTTPusers -- DCISarbitration
+
+    AMQPusers -- DCISusers
+    AMQPusers -- DCISarbitration
+
+    DCISusers -- usersDB
+    DCISarbitration -- usersDB
+}
+
+component dcis-discord << SCS >> {
+    portout HTTP as HTTPdiscord
+    portout AMQP as AMQPdiscord
+
+    component "torganized-play-discord" AS DCISdiscord
+
+    HTTPdiscord --> discord
+
+    AMQPdiscord -- DCISdiscord
+}
+
+component dcis-commons << SCS >> {
+    portin HTTP as HTTPcommons
+
+    component "torganized-play-commons" as DCIScommons
+
+    HTTPcommons -- DCIScommons
+}
+
+
+
+:Player: .d.> HTTPingressIn
+:GM: .d.> HTTPingressIn
+:Judge: .d.> HTTPingressIn
+:Orga: .d.> HTTPingressIn
+:Admin: .d.> HTTPingressIn
+
+FoundryVTT .d.> HTTPingressIn
+
+DCISgaming ..> SSO
+DCIScodex ..> SSO
+DCISthreats ..> SSO
+DCISoperatives ..> SSO
+DCISusers ..> SSO
+
+HTTPingress .d.> HTTPgaming : use
+HTTPingress .d.> HTTPcodex : use
+HTTPingress .d.> HTTPthreats : use
+HTTPingress .d.> HTTPoperatives : use
+HTTPingress .d.> HTTPusers : use
+HTTPingress .d.> HTTPcommons : use
+
+DCISusers ..> mail : use
+
+HTTPdiscord <.u.> discord : use
+
+AMQPbroker <.u.> AMQPdiscord : use
+AMQPbroker <.u.> AMQPgaming : use
+AMQPbroker <.u.> AMQPcodex : use
+AMQPbroker <.u.> AMQPthreats : use
+AMQPbroker <.u.> AMQPoperatives : use
+AMQPbroker <.u.> AMQPusers : use
+@enduml
+----

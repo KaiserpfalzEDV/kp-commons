@@ -1,0 +1,5 @@
+:tr001: [xref:11_technical_risks.adoc#TR001[TR-001]]
+:tr002: [xref:11_technical_risks.adoc#TR002[TR-002]]
+:tr003: [xref:11_technical_risks.adoc#TR003[TR-003]]
+:tr004: [xref:11_technical_risks.adoc#TR004[TR-004]]
+:tr005: [xref:11_technical_risks.adoc#TR005[TR-005]]

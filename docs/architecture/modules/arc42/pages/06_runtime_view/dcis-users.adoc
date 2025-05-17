@@ -1,0 +1,379 @@
+= dcis-users
+(((SCS, dcis-users)))
+(((dcis-users)))
+
+include::partial$config.adoc[]
+
+Handles the user management stuff for the whole system.
+In addition the SCS handles arbitation and notification of users to external systems like e-mail or discord.
+
+[[runtime-dcis-users-pages]]
+== Pages
+
+.Web based UI of the dcis-users system
+[cols="<.<4,<.<4m,<.<8m,<.<4a",options="header",frame="topbot",grid="rows"]
+|===
+| Name | Method | URL | Permission
+
+4+h| Use case: List users
+
+.2+h| List Users | GET| /users/index
+| anon
+3+a| List all users matching the query parameters.
+
+4+h| Use case: Create user
+
+.2+h| Create User | POST | /users/
+| * ADMIN
+* ORGA
+* self
+3+a| Creates a user with the given data.
+
+
+4+h| Use case: Edit User
+
+.2+h| Get User | GET | /users/<ID>
+| * ADMIN
+* ORGA
+* JUDGE
+* self
+3+a| Edits the data for the given user (if the role allowes editing).
+If the role has no write access to the users data, the public data is displayed instead.
+
+.2+h| Edit User | PUT | /users/<ID>
+| * ADMIN
+* ORGA
+* JUDGE
+* self
+3+a| Edits the data for the given user (if the role allowes editing).
+If the role has no write access to the users data, the public data is displayed instead.
+
+
+4+h| Use case: User log
+
+.2+h| Show log | GET | /users/<ID>/log
+| * ADMIN
+* ORGA
+* JUDGE
+* self
+3+a| Shows the logfile for the given user.
+
+
+4+h| Use case: Ban user
+
+.2+h| Delete User | DELETE | /users/<ID>
+| * ADMIN
+* ORGA
+* JUDGE
+* self
+3+a| Blocks a user and marks it as deleted.
+The data is in the system but the user is not listed any more and only ADMIN/ORGA/JUDGES are able to access the data.
+The user can only be "undeleted" by ADMIN and ORGA.
+
+.2+h| Undelete User | PUT | /users/<ID>/undelete
+| * ADMIN
+* ORGA
+3+a| "Undeletes" the user.
+
+4+h| Use case: Detain/Release user
+
+.2+h| Detain User | PUT | /users/<ID>/detain?ttl=\d{1,3}&comment=.+
+| * JUDGE
+* ORGA
+3+a| Detains a user for `ttl` days.
+
+.2+h| Release User | PUT | /users/<ID>/release&comment=.+
+| * JUDGE
+* ORGA
+* ADMIN
+3+a| Releases a detained user.
+
+
+4+h| Use case: Rate user
+
+.2+h| Rate User | POST | /users/<ID>/rating?rating=\d{0,5}&comment=.+
+| * PLAYER
+* GM
+3+a| Rates the user with the rating and adding a comment.
+Only logged-in users are allowed to rate other users.
+
+
+.2+h| Delete Rating | DELETE | /users/<ID>/rating/<ID>
+| * self
+* ADMIN
+* JUDGE
+3+a| Removes a rating.
+
+.2+h| Delete all ratings | DELETE | /users/<ID>/rating
+| * ADMIN
+* JUDGE
+3+a| Clears all ratings for this user.
+
+.2+h| Block rating | PUT | /users/<ID>/rating/block
+| * ADMIN
+* ORGA
+* JUDGE
+3+a| Blocks the user from being part of the rating system.
+
+.2+h| Unblock rating | PUT | /users/<ID>/rating/unblock
+| * ADMIN
+* ORGA
+* JUDGE
+3+a| Unblocks the user from being excluded from the rating system.
+.2+h| Create Arbitration | POST | /users/arbitration/
+| * PLAYER
+* GM
+* ORGA
+* JUDGE
+* ADMIN
+3+a| Creates a new arbitration process for any data set.
+
+.2+h| List Arbitration | GET | /users/arbitration/
+| * PLAYER
+* GM
+* ORGA
+* JUDGE
+* ADMIN
+3+a| Lists the arbitration running.
+The list may differ depending on the access rights of the user getting the list.
+
+.2+h| Modify Arbitration | PUT | /users/arbitration/<ID>/update
+| * JUDGE
+* ADMIN
+3+a| Changes the arbitration data.
+
+.2+h| File Information | POST | /users/arbitration/<ID>/file
+| * PLAYER
+* GM
+* ORGA
+* JUDGE
+* ADMIN
+3+a| Files additional information for the arbitration.
+
+.2+h| Decide Arbitration | PUT | /users/arbitration/<ID>/decide
+| * JUDGE
+* ADMIN
+3+a| Decides about the arbitration.
+|===
+
+[[runtime-dcis-users-rest]]
+== REST API
+
+.REST API of the dcis-users system
+[cols="<.<4,<.<4m,<.<8m,<.<4a",options="header",frame="topbot",grid="rows"]
+|===
+| Name | Method | URL | Permission
+
+.2+h| List Users | GET| /users/api/v1index
+| anon
+3+a| List all users matching the query parameters.
+
+.2+h| Create User | POST | /users/api/v1/users/
+| * ADMIN
+* ORGA
+* self
+3+a| Creates a user with the given data.
+
+.2+h| Edit User | GET | /users/api/v1/users/<ID> 
+| * ADMIN
+* ORGA
+* JUDGE
+* self
+3+a| Edits the data for the given user (if the role allowes editing).
+If the role has no write access to the users data, the public data is displayed instead.
+
+.2+h| Delete User | DELETE | /users/api/v1/users/<ID>
+| * ADMIN
+* ORGA
+* JUDGE
+* self
+3+a| Blocks a user and marks it as deleted.
+The data is in the system but the user is not listed any more and only ADMIN/ORGA/JUDGES are able to access the data.
+The user can only be "undeleted" by ADMIN and ORGA.
+
+.2+h| Undelete User | PUT | /users/api/v1/users/<ID>/undelete
+| * ADMIN
+* ORGA
+3+a| "Undeletes" the user.
+
+.2+h| Unban User | PUT | /users/api/v1/users/<ID>/unban?comment=.+
+| * JUDGE
+* ORGA
+* ADMIN
+3+a| Unbans a banned user.
+
+.2+h| Rate User | POST | /users/api/v1/users/<ID>/rating?rating=\d{0,5}&comment=.+
+| * PLAYER
+* GM
+3+a| Rates the user with the rating and adding a comment.
+Only logged-in users are allowed to rate other users.
+
+.2+h| Delete Rating | DELETE | /users/api/v1/users/<ID>/rating/<ID>
+| * self
+* ADMIN
+* JUDGE
+3+a| Removes a rating.
+
+.2+h| Delete all ratings | DELETE | /users/api/v1/users/<ID>/rating
+| * ADMIN
+* JUDGE
+3+a| Clears all ratings for this user.
+
+.2+h| Block rating | PUT | /users/api/v1/users/<ID>/rating/block
+| * ADMIN
+* ORGA
+* JUDGE
+3+a| Blocks the user from being part of the rating system.
+
+.2+h| Unblock rating | PUT | /users/api/v1/users/<ID>/rating/unblock
+| * ADMIN
+* ORGA
+* JUDGE
+3+a| Unblocks the user from being excluded from the rating system.
+
+.2+h| Create Arbitration | POST | /users/api/v1/arbitration/
+| * PLAYER
+* GM
+* ORGA
+* JUDGE
+* ADMIN
+3+a| Creates a new arbitration process for any data set.
+
+.2+h| List Arbitration | GET | /users/api/v1/arbitration/
+| * PLAYER
+* GM
+* ORGA
+* JUDGE
+* ADMIN
+3+a| Lists the arbitration running.
+The list may differ depending on the access rights of the user getting the list.
+
+.2+h| Modify Arbitration | PUT | /users/api/v1/arbitration/<ID>/update
+| * JUDGE
+* ADMIN
+3+a| Changes the arbitration data.
+
+.2+h| File Information | POST | /users/api/v1/arbitration/<ID>/file
+| * PLAYER
+* GM
+* ORGA
+* JUDGE
+* ADMIN
+3+a| Files additional information for the arbitration.
+
+.2+h| Decide Arbitration | PUT | /users/api/v1/arbitration/<ID>/decide
+| * JUDGE
+* ADMIN
+3+a| Decides about the arbitration.
+|===
+
+
+[[runtime-dcis-users-transcludes]]
+== Transcludes
+.Transcludes of dcis-users to be included on other pages.
+[cols="<.<4,<.<12m,>.<1,>.<1,>.<1,>.<1",options="header",frame="topbot",grid="rows"]
+|===
+| Name | URL <| MinX <| MinY <| MaxX <| MaxY
+
+.2+h| User List | /users/tc/?id[]=<ID1>&id[]=<ID2> | 100 | 300 | 500 | 400
+5+a| Lists users with a link to the users details page.
+
+.2+h| User Title | /users/<ID>/title | 20 | 20 | 200 | 20
+5+a| Gives the username to be displayed on pages
+
+.2+h| ID-Card | /users/<ID>/card | 200 | 300 | 200 | 300
+5+a| A standardized card for displaying users.
+
+.2+h| List Arbitration | /users/arbitration/<system>/<entity>/<id>/list | 400 | 100 | 400 | 300
+5+a| Lists running arbitration for the given entity.
+
+.2+h| Contest Entity | /users/arbitration/<system>/<entity>/<id>/start | 400 | 300 | 400 | 300
+5+a| Start an arbitration for this entity.
+
+.2+h| Arbitration Card | /users/arbitration/<id>/card | 200 | 300 | 200 | 300
+5+a| A standardized card for displaying a single arbitration.
+|===
+
+
+[[runtime-dcis-users-messaging]]
+== Messaging Channels
+
+This is an overview over existing general queues that exist in the whole system.
+
+.Messaging channels of the dcis-users.
+[cols="<.<4m,<.<4,<.<4,<.<8", options="header",frame="topbot",grid="rows"]
+|===
+| Name | Type | Direction | SCS
+
+.2+h| dcis.user.log
+| Queue
+| Inbound
+| dcis-users
+3+a| New log entries for the users action log
+
+.2+h| dcis.user.notification
+| Topic
+| Outbound
+| dcis-users
+3+a| Changes to user states are published for recognition by other systems.
+
+.2+h| dcis.user.registration
+| Queue
+| Inbound
+| dcis-users
+3+a| If users register themselves on other systems they can send the new user into this system.
+
+.2+h| dcis.arbitration.start
+| Queue
+| Inbound
+| dcis-users
+3+a| Starting an arbitration.
+
+.2+h| dcis.arbitration.file
+| Queue
+| Inbound
+| dcis-users
+3+a| File Information to an arbitration
+
+.2+h| dcis.arbitration.close
+| Queue
+| Inbound
+| dcis-users
+3+a| Close arbitration by system.
+
+.2+h| dcis.arbitration.notification
+| Topic
+| Outbound
+| dcis-users
+3+a| Changes to arbitrations are published for recognition by other systems.
+
+.2+h| dcis.user.contact
+| Queue
+| Inbound
+| dcis-users
+3+a| Notify a user via e-mail, discord, ...
+|===
+
+
+[[runtime-dcis-users-scheduled]]
+== Scheduled Jobs
+
+.Scheduled jobs to do data house keeping
+[cols="<.<4,<.<16a", options="header",frame="topbot",grid="rows"]
+|===
+| Name | Period
+
+.2+h| Unban Users | daily
+| Unban users at end of their banning period.
+
+.2+h| Block Users | daily
+a| Block users inactive for more than 2 years.
+
+.2+h| Delete Users | daily
+| Delete user data blocked/marked for deletion more than 3 years.
+
+.2+h| Purge Logs | yearly
+| Purge logfiles after 10 years.
+|===
+
+<<<

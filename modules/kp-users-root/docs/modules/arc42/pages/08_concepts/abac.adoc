@@ -1,0 +1,61 @@
+= Attribute based access control
+
+include::partial$config.adoc[]
+
+In addition to the xref:08_concepts/rbac.adoc[] working on the different access levels for players, game masters and the different orga roles, there is an attribute based access control throughout the system.
+
+Attribute-Based Access Control (ABAC) is a security model that manages access to resources based on attributes associated with users, resources, actions, and the environment.
+
+
+
+== Key Concepts
+
+Attributes:: Properties or characteristics assigned to users (e.g., role, department), resources (e.g., document type, sensitivity), actions (e.g., edit, review), and environment (e.g., time, location).
+
+Policies:: Rules that define which combinations of attributes grant or deny access to resources.
+
+
+== Application to the DCIS
+
+The different domains may use different policies to limit access.
+Access to data for operatives may be governed by ownership of the operative and on which tables the operative is used.
+The access level to threats could depend on the owner of the threat.
+The Torg Codex has to have a DRM mainly governed by ownership of certain IP.
+
+
+
+== Example Policy
+
+NOTE: This policy is an example and does not resemble the used policy notation in the code of the DCIS system.
+It is purely a way to explain the methodology.
+
+.A pseudo-code policy for ABAC
+[source,text]
+----
+Allow access
+  if: user.role == "editor"
+    AND user.department == "Documentation"
+    AND resource.type == "Technical Guide"
+    AND action == "edit"
+    AND environment.time BETWEEN 09:00 AND 18:00
+----
+
+
+== Benefits
+
+Fine-grained access control tailored to organizational needs.
+Enhanced security and compliance for sensitive documentation.
+Flexibility to adapt policies as roles and projects evolve.
+
+
+== Further readings an web links
+
+* https://www.baeldung.com/java-access-control-models[Access Control Models], Baldung, {baeldung01}.
+* https://sapl.io/[The Streaming Attribute Policy Language and Engine], FTK e.V., {sapl}.
+* https://en.wikipedia.org/wiki/Attribute-based_access_control[Attribute-based access control], Wikipedia, {wiki01}.
+
+== Summary
+
+ABAC could implement an ownership model and act as DRM system for intellectual property access of the Torg Eternity data.
+
+<<<

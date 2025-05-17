@@ -1,0 +1,2 @@
+= Distributed User Management
+Roland T. Lichti <rlichti@kaiserpfalz-edv.de>

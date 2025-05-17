@@ -1,0 +1,105 @@
+= Quality Requirements
+
+include::partial$config.adoc[]
+
+[cols="<.<1,<.<4a",options="header",frame="topbot",grid="rows"]
+|===
+| Requirement | Description
+
+|[[REQ-FS,Functional Suitability]] **Functional Suitability**
+|* The software **has to** manage user accounts.
+
+|[[REQ-CO,Compatibility]] **Compatibility**
+|* The managed data **has to** integrate into spring-security.
+
+|[[REQ-US,Usability]] **Usability**
+|* The software **has to** be accessible via Web Browsers
+* The software **has to** be internationalized.
+  There has to be localization for at least _German_ and _English_ languages.
+
+|[[REQ-RE,Reliability]] **Reliability**
+|The systems needs to operate for world wide consumption.
+
+|[[REQ-MT,Maintainability]] **Maintainability**
+|The software should be easily maintainable.
+This includes using widely used frameworks so help can be given quite easily.
+
+|===
+
+
+== Quality Tree
+
+[plantuml,quality-tree,svg]
+----
+@startmindmap
++ **Requirements**
+-- Functional Suitability (FS)
+---_ Tailored to Spring Security (FS01)
+---_ Data Retention TTL (FS02)
+-- Compatibility (CO)
+---_ Compatible with Spring Security (FS01)
+---_ Compatible with Keycloak (CO01)
+---_ Compatible with discord (CO02)
+
+++ Usability (US)
++++_ Web based (US01)
++++_ Multi-language (US02)
++++_ Fast Responses (us03)
+++ Reliability (RE)
++++_ Working Hours 24/7 (RE01)
++++_ 12-Factor (RE02)
+++ Maintainability (MT)
++++_ Small Team (MT01)
++++_ 12-Factor (RE02)
+@endmindmap
+----
+
+== Quality Scenarios
+
+[cols="<.<1,<.<9a",options="header",frame="topbot",grid="rows"]
+|===
+| ID | Scenario
+
+|[[FS01,Tailored to Spring Security (FS01)]] **FS01**
+|The system is created for integrating into Spring Security.
+
+|[[FS02,Data Protection (FS02)]] **FS02**
+|The software needs to conform to the GDPR in Europe.
+
+|[[CO01,Compatible with Keycloak (CO01)]] **CO01**
+|The data transfer between keycloak and the system should be possible.
+
+|[[CO02,Compatible with discord (CO02)]] **CO02**
+|The system should offer a discord bot to use the data.
+
+|[[US01,Web based (US01)]] **US01**
+|The main interface should be web based.
+
+|[[US02,Multi Language (US02)]] **US02**
+|The system **has to** be available at least in *German* and *English* language.
+Other translations **should** be easily addable.
+
+|[[US03,Fast Response Times (US03)]] **US03**
+| Request have to be answered quickly. The following time percentiles are sufficient:
+[cols="<.<1,<.<1",width=40%,options="header",frame="topbot",grid="rows"]
+!===
+!Percentage of requests !Response Time
+!95%!1,5s
+!90%!2s
+!75%!2,5s
+!50%!4s
+!25%!5
+!===
+
+|[[RE01,Working hours 24/7 (RE01)]] **RE01**
+|Torg Eternity is played around the world. So the systems have to work 24/7. There is no maintenance window available where no users would be affected.
+
+|[[RE02,12 Factor (RE02)]] **RE02**
+|Following the guidelines of 'The Twelve-Factor App' {12factor} support the maintainability and resilience of the system.
+
+|[[MT01,Small Team (MT01)]] **MT01**
+|Maintaining the software and the data must be possible for a small team (basically the full army of myself, me, and I).
+
+|===
+
+<<<

@@ -1,0 +1,4 @@
+:adr-001: [xref:09_architecture_decisions/001_using-adrs.adoc[ADR-001]]
+:adr-002: [xref:09_architecture_decisions/002_spring-boot.adoc[ADR-002]]
+:adr-003: [xref:09_architecture_decisions/003_messaging-rabbitmq.adoc[ADR-003]]
+:adr-004: [xref:09_architecture_decisions/004_sql-data-store.adoc[ADR-004]]

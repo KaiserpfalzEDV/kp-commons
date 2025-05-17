@@ -1,0 +1,67 @@
+= Guava EventBus: Concept Overview
+
+include::partial$config.adoc[]
+
+The *Guava EventBus*, part of the Google Guava library for Java, implements a *publish-subscribe (pub-sub)* messaging pattern. This design pattern decouples the components that send events (publishers) from those that handle them (subscribers).
+
+== 🔁 Core Concept
+
+The Guava EventBus allows objects to communicate with each other *without being tightly coupled*. Instead of directly calling methods on other objects, an object can *post an event* to the EventBus, and any object that is registered as a *subscriber* to that type of event will automatically receive it.
+
+== 🧠 Key Features
+
+* *Decoupling*: Publishers don’t need to know who the subscribers are.
+* *Type-based routing*: Events are dispatched to subscribers based on the event's type.
+* *Annotation-driven*: Methods that should handle events are annotated with `@Subscribe`.
+* *Thread-safe*: Internally synchronized so that multiple threads can safely post events or register subscribers.
+* *Synchronous by default*: Event handlers are called in the same thread as the caller that posts the event (can be made async with `AsyncEventBus`).
+
+== 🧱 Basic Components
+
+=== 1. EventBus Instance
+
+[source,java,opts=novalidate]
+----
+EventBus eventBus = new EventBus();
+----
+
+=== 2. Event Class
+
+[source,java,opts=novalidate]
+----
+@Builder
+@AllArgsConstructor
+@Getter
+public class UserCreatedEvent {
+    private final String username;
+}
+----
+
+=== 3. Subscriber
+
+[source,java,opts=novalidate]
+----
+public class UserEventListener {
+    @Subscribe
+    public void handleUserCreated(UserCreatedEvent event) {
+        System.out.println("User created: " + event.getUsername());
+    }
+}
+----
+
+=== 4. Posting an Event
+
+[source,java,opts=novalidate]
+----
+eventBus.register(new UserEventListener());
+eventBus.post(new UserCreatedEvent("Alice"));
+----
+
+== ⚡ Use Cases
+
+* Event-driven applications
+* UI updates in response to model changes
+* Decoupling business logic from controllers or services
+* In-process communication within complex systems
+
+<<<

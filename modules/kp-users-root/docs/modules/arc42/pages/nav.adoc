@@ -1,0 +1,47 @@
+* xref:index.adoc[]
+** Context
+*** xref:01_introduction_and_goals.adoc[]
+*** xref:02_architecture_constraints.adoc[]
+*** System scope and context
+**** xref:03_system_scope_and_context/business-context.adoc[]
+**** xref:03_system_scope_and_context/technical-context.adoc[]
+** Systems
+*** xref:04_solution_strategy.adoc[]
+*+* xref:05_building_block_view/index.adoc[]
+**** Level 1
+***** xref:05_building_block_view/level_1/kp-users-model.adoc[]
+***** xref:05_building_block_view/level_1/kp-users-store.adoc[]
+***** xref:05_building_block_view/level_1/kp-users-messaging.adoc[]
+***** xref:05_building_block_view/level_1/kp-users-client.adoc[]
+**** Level 2
+***** xref:05_building_block_view/level_2/kp-users-model.adoc[]
+***** xref:05_building_block_view/level_2/kp-users-store.adoc[]
+***** xref:05_building_block_view/level_2/kp-users-messaging.adoc[]
+***** xref:05_building_block_view/level_2/kp-users-client.adoc[]
+**** Level 3
+***** xref:05_building_block_view/level_3/kp-users-model/index.adoc[]
+***** xref:05_building_block_view/level_3/kp-users-store/index.adoc[]
+***** xref:05_building_block_view/level_3/kp-users-messaging/index.adoc[]
+***** xref:05_building_block_view/level_3/kp-users-client/index.adoc[]
+*** Runtime view
+**** xref:06_runtime_view/kp-users.adoc[]
+*** xref:07_deployment_view.adoc[]
+** Appendix
+*** Cross-Cutting Concepts
+**** xref:08_concepts/scs.adoc[]
+**** xref:08_concepts/asynchronus-data-handling.adoc[]
+**** xref:08_concepts/event-bus.adoc[]
+**** xref:08_concepts/rbac.adoc[]
+**** xref:08_concepts/abac.adoc[]
+**** xref:08_concepts/observability.adoc[]
+**** xref:08_concepts/data-protection.adoc[]
+*** Architecture decisions
+**** xref:09_architecture_decisions/001_using-adrs.adoc[]
+**** xref:09_architecture_decisions/002_spring-boot.adoc[]
+**** xref:09_architecture_decisions/003_messaging-rabbitmq.adoc[]
+**** xref:09_architecture_decisions/004_sql-data-store.adoc[]
+**** xref:09_architecture_decisions/005_shared_libraries.adoc[]
+*** xref:10_quality_requirements.adoc[]
+*** xref:11_technical_risks.adoc[]
+*** xref:12_glossary.adoc[]
+*** xref:13_bibliography.adoc[]

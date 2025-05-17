@@ -1,0 +1,6 @@
+---
+name: manual
+version: ~
+title: Handbuch
+nav:
+  - modules/manual/pages/nav.adoc

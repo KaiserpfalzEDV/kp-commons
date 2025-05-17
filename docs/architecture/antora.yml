@@ -1,0 +1,10 @@
+---
+name: architecture
+version: ~
+title: DCIS Systemarchitecture
+nav:
+  - modules/arc42/pages/nav.adoc
+
+asciidoc:
+  attributes:
+    asamBibliography: 'ROOT:torg-eternity.bib'

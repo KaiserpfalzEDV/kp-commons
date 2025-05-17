@@ -37,7 +37,6 @@
     <modules>
         <module>kp-users-model</module>
         <module>kp-users-store</module>
-        <module>kp-users-client</module>
         <module>kp-users-messaging</module>
     </modules>
 

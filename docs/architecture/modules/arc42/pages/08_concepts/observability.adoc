@@ -1,0 +1,115 @@
+= Observability Concept with Spring Boot, Prometheus, and JSON Logging
+
+include::partial$config.adoc[]
+
+Observability refers to a system’s ability to provide insights into its internal state by exposing external outputs. It is typically built on three pillars: *Logging*, *Monitoring*, and *Alerting*.
+
+== 🔍 Logging
+
+Logging captures structured or unstructured information about system events. In a production-ready setup, logs are written in JSON format to facilitate automated processing and analysis.
+
+=== Technology: Spring Boot + JSON Logging
+
+* Use a logging framework such as `Logback` or `Log4j2` with a JSON encoder.
+* Example configuration using `Logback` in `logback-spring.xml`:
+
+[source,xml]
+----
+<configuration>
+  <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="JSON_CONSOLE" />
+  </root>
+</configuration>
+----
+
+* Example log output:
+[source,json]
+----
+{
+  "timestamp": "2025-04-13T12:34:56.789Z",
+  "level": "INFO",
+  "logger": "com.example.MyService",
+  "message": "User successfully created",
+  "userId": "12345"
+}
+----
+
+== 📊 Monitoring
+
+Monitoring collects metrics (e.g. latency, memory usage, throughput) to continuously observe system performance and health.
+
+=== Technology: Spring Boot Actuator + Prometheus
+
+* `spring-boot-actuator` exposes metrics via the `/actuator/metrics` endpoint.
+* Integration with `micrometer` enables Prometheus as a metrics backend.
+
+=== Example configuration (application.yml)
+
+[source,yaml]
+----
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+----
+
+* Prometheus is configured with a `scrape` job to periodically collect metrics:
+
+[source,yaml]
+----
+scrape_configs:
+  - job_name: 'spring-boot-app'
+    static_configs:
+      - targets: ['localhost:8080']
+----
+
+== 🚨 Alerting
+
+Alerting generates notifications based on defined thresholds in metrics, enabling rapid responses to potential issues.
+
+=== Technology: Prometheus + Alertmanager
+
+* Prometheus evaluates metrics and triggers alerts according to alerting rules.
+* Example rule (Prometheus):
+
+[source,yaml]
+----
+groups:
+  - name: spring-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_server_requests_seconds_count{status=~"5.."}[1m]) > 5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate detected"
+          description: "More than 5 errors per second in the last 60 seconds"
+----
+
+* Alertmanager handles routing and escalation (e.g. email, Slack).
+
+== ✅ Summary
+
+The observability setup is composed of the following components:
+
+[cols="1,2",options="header"]
+|===
+| Component  | Technology
+| Logging    | Spring Boot + Logback + JSON
+| Monitoring | Spring Boot Actuator + Micrometer + Prometheus
+| Alerting   | Prometheus Alert Rules + Alertmanager
+|===
+
+This setup provides deep visibility into the system’s behavior and ensures quick incident response.
+
+<<<
