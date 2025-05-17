@@ -63,10 +63,61 @@ public class JpaUserRoleManagementServiceTest {
   @Mock
   private RoleToJpa toJpa;
   
+  private static final UUID DEFAULT_ID = UUID.randomUUID();
+  private static final OffsetDateTime CREATED_AT = OffsetDateTime.now();
+  private static final UUID DEFAULT_ROLE_ID = UUID.randomUUID();
+
+  private UserJPA jpaUser;
+  private Role role;
+  private RoleJPA jpaRole;
+  
   
   @BeforeEach
   public void setUp() {
     reset(bus, repository, toJpa);
+    
+    jpaUser = UserJPA.builder()
+        .id(DEFAULT_ID)
+        
+        .nameSpace("namespace")
+        .name("name")
+        
+        .issuer("issuer")
+        .subject(DEFAULT_ID.toString())
+        
+        .email("email@email.email")
+        
+        .version(0)
+        .revId(0)
+        .revisioned(CREATED_AT)
+        
+        .created(CREATED_AT)
+        .modified(CREATED_AT)
+        
+        .build();
+    
+    role = KpRole.builder()
+        .id(DEFAULT_ROLE_ID)
+        
+        .nameSpace("namespace")
+        .name("role")
+        
+        .created(CREATED_AT)
+        .modified(CREATED_AT)
+        
+        .build();
+    
+    jpaRole = RoleJPA.builder()
+        .nameSpace("namespace")
+        .name("role")
+        
+        .version(0)
+        
+        .created(CREATED_AT)
+        .modified(CREATED_AT)
+        
+        .build();
+    
   }
   
   @AfterEach
@@ -80,13 +131,13 @@ public class JpaUserRoleManagementServiceTest {
   void shouldAddRoleToUserWhenUserExists() throws UserNotFoundException, RoleNotFoundException {
     log.entry();
     
-    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
-    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(DEFAULT_JPA_ROLE));
-    when(repository.saveAndFlush(any(UserJPA.class))).thenReturn(DEFAULT_JPA_USER.toBuilder().authorities(Set.of(DEFAULT_JPA_ROLE)).build());
+    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(jpaUser));
+    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(jpaRole));
+    when(repository.saveAndFlush(any(UserJPA.class))).thenReturn(jpaUser.toBuilder().authorities(Set.of(jpaRole)).build());
     
-    sut.addRole(DEFAULT_ID, DEFAULT_ROLE);
+    sut.addRole(DEFAULT_ID, role);
     
-    verify(repository).saveAndFlush(DEFAULT_JPA_USER);
+    verify(repository).saveAndFlush(jpaUser);
     verify(bus).post(any(RoleAddedToUserEvent.class));
     
     log.exit();
@@ -96,15 +147,15 @@ public class JpaUserRoleManagementServiceTest {
   void shouldDoNothingWhenUserHasRoleAlready() throws UserNotFoundException, RoleNotFoundException {
     log.entry();
     
-    DEFAULT_JPA_USER.addRole(bus, DEFAULT_JPA_ROLE);
+    jpaUser.addRole(bus, jpaRole);
     reset(bus);
     
-    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
-    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(DEFAULT_JPA_ROLE));
+    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(jpaUser));
+    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(jpaRole));
     
-    sut.addRole(DEFAULT_ID, DEFAULT_ROLE);
+    sut.addRole(DEFAULT_ID, role);
     
-    verify(repository).saveAndFlush(DEFAULT_JPA_USER);
+    verify(repository).saveAndFlush(jpaUser);
     verify(bus, never()).post(any(RoleAddedToUserEvent.class));
     
     log.exit();
@@ -114,10 +165,10 @@ public class JpaUserRoleManagementServiceTest {
   void shouldThrowRoleNotFoundExceptionWhenRoleDoesNotExistForAddRole() {
     log.entry();
     
-    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
+    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(jpaUser));
     when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.empty());
     
-    assertThrows(RoleNotFoundException.class, () -> sut.addRole(DEFAULT_ID, DEFAULT_ROLE));
+    assertThrows(RoleNotFoundException.class, () -> sut.addRole(DEFAULT_ID, role));
     
     verify(repository).findById(DEFAULT_ID);
     verify(jpaRoleReadService).retrieve(DEFAULT_ROLE_ID);
@@ -131,7 +182,7 @@ public class JpaUserRoleManagementServiceTest {
     
     when(repository.findById(DEFAULT_ID)).thenReturn(Optional.empty());
     
-    assertThrows(UserNotFoundException.class, () -> sut.addRole(DEFAULT_ID, DEFAULT_ROLE));
+    assertThrows(UserNotFoundException.class, () -> sut.addRole(DEFAULT_ID, role));
     
     verify(repository).findById(DEFAULT_ID);
     
@@ -143,16 +194,16 @@ public class JpaUserRoleManagementServiceTest {
   void shouldRemoveRoleFromUserWhenUserWithRoleExists() throws UserNotFoundException, RoleNotFoundException {
     log.entry();
     
-    DEFAULT_JPA_USER.addRole(bus, DEFAULT_JPA_ROLE);
+    jpaUser.addRole(bus, jpaRole);
     reset(bus);
     
-    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
-    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(DEFAULT_JPA_ROLE));
-    when(repository.saveAndFlush(any(UserJPA.class))).thenReturn(DEFAULT_JPA_USER.toBuilder().authorities(Set.of()).build());
+    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(jpaUser));
+    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(jpaRole));
+    when(repository.saveAndFlush(any(UserJPA.class))).thenReturn(jpaUser.toBuilder().authorities(Set.of()).build());
     
-    sut.removeRole(DEFAULT_ID, DEFAULT_ROLE);
+    sut.removeRole(DEFAULT_ID, role);
     
-    verify(repository).saveAndFlush(DEFAULT_JPA_USER);
+    verify(repository).saveAndFlush(jpaUser);
     verify(bus).post(any(RoleRemovedFromUserEvent.class));
     
     log.exit();
@@ -162,12 +213,12 @@ public class JpaUserRoleManagementServiceTest {
   void shouldDoNothingWhenUserWithoutRoleExists() throws UserNotFoundException, RoleNotFoundException {
     log.entry();
     
-    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
-    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(DEFAULT_JPA_ROLE));
+    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(jpaUser));
+    when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.of(jpaRole));
     
-    sut.removeRole(DEFAULT_ID, DEFAULT_ROLE);
+    sut.removeRole(DEFAULT_ID, role);
     
-    verify(repository).saveAndFlush(DEFAULT_JPA_USER);
+    verify(repository).saveAndFlush(jpaUser);
     verify(bus, never()).post(any(RoleRemovedFromUserEvent.class));
     
     log.exit();
@@ -179,7 +230,7 @@ public class JpaUserRoleManagementServiceTest {
     
     when(repository.findById(DEFAULT_ID)).thenReturn(Optional.empty());
     
-    assertThrows(UserNotFoundException.class, () -> sut.removeRole(DEFAULT_ID, DEFAULT_ROLE));
+    assertThrows(UserNotFoundException.class, () -> sut.removeRole(DEFAULT_ID, role));
     
     verify(repository).findById(DEFAULT_ID);
     
@@ -190,10 +241,10 @@ public class JpaUserRoleManagementServiceTest {
   void shouldThrowRoleNotFoundExceptionWhenRoleDoesNotExistForRemoveRole() {
     log.entry();
     
-    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
+    when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(jpaUser));
     when(jpaRoleReadService.retrieve(DEFAULT_ROLE_ID)).thenReturn(Optional.empty());
     
-    assertThrows(RoleNotFoundException.class, () -> sut.removeRole(DEFAULT_ID, DEFAULT_ROLE));
+    assertThrows(RoleNotFoundException.class, () -> sut.removeRole(DEFAULT_ID, role));
     
     verify(repository).findById(DEFAULT_ID);
     verify(jpaRoleReadService).retrieve(DEFAULT_ROLE_ID);
@@ -205,7 +256,7 @@ public class JpaUserRoleManagementServiceTest {
   void shouldThrowUnsupportedWhenRemovingRoleFromAllUsers() {
     log.entry();
     
-    assertThrows(UnsupportedOperationException.class, () -> sut.revokeRoleFromAllUsers(DEFAULT_ROLE));
+    assertThrows(UnsupportedOperationException.class, () -> sut.revokeRoleFromAllUsers(role));
     
     log.exit();
   }
@@ -234,48 +285,4 @@ public class JpaUserRoleManagementServiceTest {
   }
   
   
-  private static final UUID DEFAULT_ID = UUID.randomUUID();
-  private static final OffsetDateTime CREATED_AT = OffsetDateTime.now();
-  private static final UserJPA DEFAULT_JPA_USER = UserJPA.builder()
-      .id(DEFAULT_ID)
-      
-      .nameSpace("namespace")
-      .name("name")
-      
-      .issuer("issuer")
-      .subject(DEFAULT_ID.toString())
-      
-      .email("email@email.email")
-      
-      .version(0)
-      .revId(0)
-      .revisioned(CREATED_AT)
-      
-      .created(CREATED_AT)
-      .modified(CREATED_AT)
-      
-      .build();
-  
-  private static final UUID DEFAULT_ROLE_ID = UUID.randomUUID();
-  private static final Role DEFAULT_ROLE = KpRole.builder()
-      .id(DEFAULT_ROLE_ID)
-      
-      .nameSpace("namespace")
-      .name("role")
-      
-      .created(CREATED_AT)
-      .modified(CREATED_AT)
-      
-      .build();
-  
-  private static final RoleJPA DEFAULT_JPA_ROLE = RoleJPA.builder()
-      .nameSpace("namespace")
-      .name("role")
-      
-      .version(0)
-      
-      .created(CREATED_AT)
-      .modified(CREATED_AT)
-      
-      .build();
 }
