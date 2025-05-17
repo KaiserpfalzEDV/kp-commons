@@ -44,7 +44,7 @@ import java.util.UUID;
 @XSlf4j
 public class JpaApiKeyWriteService implements ApiKeyWriteService {
   private final ApiKeyRepository repository;
-  private final ApiKeyToJPA toJpa;
+  private final ApiKeyToJPAImpl toJpa;
   
   @Override
   public void create(final ApiKey apiKey) throws InvalidApiKeyException {

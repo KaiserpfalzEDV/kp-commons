@@ -100,7 +100,7 @@ databaseChangeLog:
 
         - column:
             name: EMAIL
-            type: VARACHAR(100)
+            type: VARCHAR(100)
         - column:
             name: PHONE
             type: VARCHAR(100)

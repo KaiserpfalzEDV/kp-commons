@@ -5,6 +5,6 @@ databaseChangeLog:
       relativeToChangelogFile: true
       context: init
   - include:
-      file: classpath:/db/user/master.yaml
+      file: classpath:/db/users/master.yaml
       relativeToChangelogFile: false
       context: user

@@ -53,7 +53,7 @@ import java.util.UUID;
 public class JpaRoleWriteService implements RoleWriteService {
   private final RoleRepository repository;
   private final LoggingEventBus bus;
-  private final RoleToJpa toJpa;
+  private final RoleToJpaImpl toJpa;
   
   
   @Value("${spring.application.system:kp-commons}")

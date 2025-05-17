@@ -16,8 +16,13 @@
  */
 package de.kaiserpfalzedv.commons.users.store;
 
+import de.kaiserpfalzedv.commons.core.events.EnableEventBus;
+import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyToJPAImpl;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpaImpl;
+import de.kaiserpfalzedv.commons.users.store.model.user.UserToJpaImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.lang.annotation.*;
@@ -37,4 +42,10 @@ import java.lang.annotation.*;
 @EnableJpaRepositories(basePackageClasses = EnableUserStore.class)
 @EntityScan(basePackageClasses = EnableUserStore.class)
 @ComponentScan(basePackageClasses = EnableUserStore.class)
+@EnableEventBus
+@Import({
+    ApiKeyToJPAImpl.class,
+    RoleToJpaImpl.class,
+    UserToJpaImpl.class,
+})
 public @interface EnableUserStore {}

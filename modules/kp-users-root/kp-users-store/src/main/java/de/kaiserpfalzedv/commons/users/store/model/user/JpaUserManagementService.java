@@ -54,7 +54,7 @@ import java.util.UUID;
 public class JpaUserManagementService implements UserManagementService {
   private final UserRepository repository;
   private final LoggingEventBus bus;
-  private final UserToJpa toJpa;
+  private final UserToJpaImpl toJpa;
   
   @Value("${spring.application.system:kp-commons}")
   private String system = "kp-commons";
