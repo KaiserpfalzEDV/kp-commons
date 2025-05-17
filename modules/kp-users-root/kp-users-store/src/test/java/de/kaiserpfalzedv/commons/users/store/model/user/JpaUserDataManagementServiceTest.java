@@ -71,9 +71,9 @@ public class JpaUserDataManagementServiceTest {
     when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.of(DEFAULT_JPA_USER));
     when(repository.saveAndFlush(any(UserJPA.class))).thenReturn(DEFAULT_JPA_USER.toBuilder().issuer("new-issuer").subject("new-subject").build());
     
-    sut.updateIssuer(DEFAULT_ID, "new-issuer", "new-subject");
+    sut.updateSubject(DEFAULT_ID, "new-issuer", "new-subject");
     
-    verify(bus).post(any(UserIssuerAndSubModificationEvent.class));
+    verify(bus).post(any(UserSubjectModificationEvent.class));
     
     log.exit();
   }
@@ -84,9 +84,9 @@ public class JpaUserDataManagementServiceTest {
     
     when(repository.findById(DEFAULT_ID)).thenReturn(java.util.Optional.empty());
     
-    assertThrows(UserNotFoundException.class, () -> sut.updateIssuer(DEFAULT_ID, "new-issuer", "new-subject"));
+    assertThrows(UserNotFoundException.class, () -> sut.updateSubject(DEFAULT_ID, "new-issuer", "new-subject"));
     
-    verify(bus, never()).post(any(UserIssuerAndSubModificationEvent.class));
+    verify(bus, never()).post(any(UserSubjectModificationEvent.class));
     
     log.exit();
   }

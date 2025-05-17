@@ -47,7 +47,7 @@ public interface UserEventsHandler {
   void event(RoleAddedToUserEvent event);
   void event(RoleRemovedFromUserEvent event);
   
-  void event(UserIssuerAndSubModificationEvent event);
+  void event(UserSubjectModificationEvent event);
   void event(UserNamespaceAndNameModificationEvent event);
   void event(UserNamespaceModificationEvent event);
   void event(UserNameModificationEvent event);

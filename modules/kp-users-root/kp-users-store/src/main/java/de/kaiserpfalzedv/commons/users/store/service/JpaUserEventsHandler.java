@@ -51,7 +51,7 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
-public class JpaUserEventsHandler implements UserEventsHandler {
+public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   private final JpaUserManagementService service;
   private final JpaUserDataManagementService dataService;
   private final JpaUserRoleManagementService roleService;
@@ -72,8 +72,9 @@ public class JpaUserEventsHandler implements UserEventsHandler {
     log.exit();
   }
   
+  @Override
   @PreDestroy
-  public void destroy() {
+  public void close() {
     log.entry(bus, system);
     
     bus.unregister(this);
@@ -241,12 +242,12 @@ public class JpaUserEventsHandler implements UserEventsHandler {
 
   
   @Override
-  public void event(final UserIssuerAndSubModificationEvent event) {
+  public void event(final UserSubjectModificationEvent event) {
     log.entry(event);
 
     if (eventIsFromExternalSystem(event)) {
       try {
-        dataService.updateIssuer(event.getUser().getId(), event.getUser().getIssuer(), event.getUser().getSubject());
+        dataService.updateSubject(event.getUser().getId(), event.getUser().getIssuer(), event.getUser().getSubject());
       } catch (UserNotFoundException e) {
         log.warn(e.getMessage(), e);
       }

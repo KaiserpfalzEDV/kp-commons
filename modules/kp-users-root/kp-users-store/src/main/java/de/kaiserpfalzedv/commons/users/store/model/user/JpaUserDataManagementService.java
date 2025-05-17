@@ -73,7 +73,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
   
   
   @Override
-  public void updateIssuer(final UUID id, final String issuer, final String sub) throws UserNotFoundException {
+  public void updateSubject(final UUID id, final String issuer, final String sub) throws UserNotFoundException {
     log.entry(id, issuer, sub);
     
     UserJPA result = loadUserOrThrowException(id);
@@ -83,7 +83,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
         .subject(sub)
         .build();
 
-    bus.post(UserIssuerAndSubModificationEvent.builder().system(system).user(result).build());
+    bus.post(UserSubjectModificationEvent.builder().system(system).user(result).build());
     log.exit(repository.saveAndFlush(result));
   }
 

@@ -39,7 +39,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserIssuerAndSubModificationEvent extends UserBaseEvent {
+public class UserSubjectModificationEvent extends UserBaseEvent {
   @Builder.Default
   private final String i18nKey = "user.modification.issuer-and-sub";
   

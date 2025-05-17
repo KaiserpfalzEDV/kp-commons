@@ -29,7 +29,7 @@ import java.util.UUID;
  * @since 03.05.2025
  */
 public interface UserDataManagementService {
-  void updateIssuer(@NotNull UUID id, @NotBlank String issuer, @NotBlank String sub) throws UserNotFoundException;
+  void updateSubject(@NotNull UUID id, @NotBlank String issuer, @NotBlank String sub) throws UserNotFoundException;
   void updateNamespace(@NotNull UUID id, @NotBlank String namespace) throws UserNotFoundException;
   void updateName(@NotNull UUID id, @NotBlank String name) throws UserNotFoundException;
   void updateNamespaceAndName(@NotNull UUID id, @NotBlank String namespace, @NotBlank String name) throws UserNotFoundException;
