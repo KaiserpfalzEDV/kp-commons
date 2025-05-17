@@ -27,6 +27,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.role.events;
  */
 public interface RoleEventsHandler {
   void event(RoleCreatedEvent event);
-  void event(RoleUpdatedEvent event);
+  void event(RoleUpdateNameSpaceEvent event);
+  void event(RoleUpdateNameEvent event);
   void event(RoleRemovedEvent event);
 }

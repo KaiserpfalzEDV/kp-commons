@@ -18,15 +18,16 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleCreatedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleRemovedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleEventsHandler;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleUpdatedEvent;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleRepository;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
+import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
+import de.kaiserpfalzedv.commons.users.domain.model.role.events.*;
+import de.kaiserpfalzedv.commons.users.store.model.role.JpaRoleWriteService;
 import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserRoleManagementService;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.context.annotation.Scope;
@@ -41,37 +42,80 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
-public class JpaRoleEventsHandler implements RoleEventsHandler {
-  private final RoleRepository repository;
-  private final JpaUserRoleManagementService users;
+public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
+  private final JpaRoleWriteService writeService;
+  private final JpaUserRoleManagementService userRoleManagement;
+  private final LoggingEventBus bus;
   
-  private final RoleToJpa toJPA;
   
-  @Override
-  public void event(final RoleCreatedEvent event) {
-    log.entry(event);
+  @PostConstruct
+  public void init() {
+    log.entry();
     
-    RoleJPA saved = repository.saveAndFlush(toJPA.apply(event.getRole()));
-    log.info("Saved new created role. role={}, event.role={}", saved, event.getRole());
+    bus.register(this);
     
-    log.exit(event);
+    log.exit();
   }
   
   @Override
-  public void event(final RoleUpdatedEvent event) {
+  @PreDestroy
+  public void close() {
+    log.entry();
+    
+    bus.unregister(this);
+    
+    log.exit();
+  }
+
+  
+  @Override
+  public void event(@NotNull final RoleCreatedEvent event) {
     log.entry(event);
     
-    // FIXME 2025-05-17 klenkes74 Implement The stuff with service instead of repository.
+    try {
+      writeService.create(event.getRole());
+    } catch (RoleCantBeCreatedException e) {
+      log.warn(e.getMessage());
+    }
+    
+    log.exit();
   }
   
   @Override
-  public void event(final RoleRemovedEvent event) {
+  public void event(@NotNull final RoleUpdateNameSpaceEvent event) {
     log.entry(event);
     
-    users.revokeRoleFromAllUsers(event.getRole());
-    repository.deleteById(event.getRole().getId());
-    log.info("Deleted role. role={}", event.getRole());
+    try {
+      writeService.updateNameSpace(event.getRole().getId(), event.getRole().getNameSpace());
+    } catch (RoleNotFoundException e) {
+      log.warn(e.getMessage());
+    }
     
-    log.exit(event);
+    log.exit();
+  }
+  
+  
+  @Override
+  public void event(@NotNull final RoleUpdateNameEvent event) {
+    log.entry(event);
+    
+    try {
+      writeService.updateName(event.getRole().getId(), event.getRole().getName());
+    } catch (RoleNotFoundException e) {
+      log.warn(e.getMessage());
+    }
+    
+    log.exit();
+  }
+  
+  
+  @Override
+  public void event(@NotNull final RoleRemovedEvent event) {
+    log.entry(event);
+
+    userRoleManagement.revokeRoleFromAllUsers(event.getRole());
+    writeService.remove(event.getRole().getId());
+    
+    log.exit();
   }
 }

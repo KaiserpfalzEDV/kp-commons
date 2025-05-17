@@ -24,7 +24,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleRemovedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleUpdatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleUpdateNameSpaceEvent;
 import de.kaiserpfalzedv.commons.users.domain.services.RoleWriteService;
 import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
@@ -111,7 +111,7 @@ public class JpaRoleWriteService implements RoleWriteService {
       result = repository.saveAndFlush(result);
       
       log.info("Updated role. nameSpace='{}', id={}", result.getNameSpace(), result.getId());
-      bus.post(RoleUpdatedEvent.builder().system(system).role(result).build());
+      bus.post(RoleUpdateNameSpaceEvent.builder().system(system).role(result).build());
     } catch (OptimisticLockingFailureException e) {
       throw log.throwing(new IllegalStateException(e.getMessage()));
     }
@@ -130,7 +130,7 @@ public class JpaRoleWriteService implements RoleWriteService {
       result = repository.saveAndFlush(result);
       
       log.info("Updated role. name='{}', id={}", result.getName(), result.getId());
-      bus.post(RoleUpdatedEvent.builder().system(system).role(result).build());
+      bus.post(RoleUpdateNameSpaceEvent.builder().system(system).role(result).build());
     } catch (OptimisticLockingFailureException e) {
       throw log.throwing(new IllegalStateException(e.getMessage()));
     }

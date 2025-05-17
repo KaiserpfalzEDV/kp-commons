@@ -24,7 +24,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleCreatedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleRemovedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleUpdatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.role.events.RoleUpdateNameSpaceEvent;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -111,7 +111,7 @@ public class JpaRoleWriteServiceTest {
     
     sut.updateNameSpace(DEFAULT_ID, "new-namespace");
     
-    verify(bus).post(any(RoleUpdatedEvent.class));
+    verify(bus).post(any(RoleUpdateNameSpaceEvent.class));
     
     log.exit();
   }
@@ -124,7 +124,7 @@ public class JpaRoleWriteServiceTest {
     
     assertThrows(RoleNotFoundException.class, () -> sut.updateNameSpace(DEFAULT_ID, "new-namespace"));
     
-    verify(bus, never()).post(any(RoleUpdatedEvent.class));
+    verify(bus, never()).post(any(RoleUpdateNameSpaceEvent.class));
     
     log.exit();
   }
@@ -139,7 +139,7 @@ public class JpaRoleWriteServiceTest {
     
     sut.updateName(DEFAULT_ID, "new-name");
     
-    verify(bus).post(any(RoleUpdatedEvent.class));
+    verify(bus).post(any(RoleUpdateNameSpaceEvent.class));
     
     log.exit();
   }
@@ -152,7 +152,7 @@ public class JpaRoleWriteServiceTest {
     
     assertThrows(RoleNotFoundException.class, () -> sut.updateName(DEFAULT_ID, "new-name"));
     
-    verify(bus, never()).post(any(RoleUpdatedEvent.class));
+    verify(bus, never()).post(any(RoleUpdateNameSpaceEvent.class));
     
     log.exit();
   }

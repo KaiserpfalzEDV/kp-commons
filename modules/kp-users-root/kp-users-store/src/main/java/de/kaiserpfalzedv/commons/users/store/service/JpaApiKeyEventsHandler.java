@@ -18,16 +18,21 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
+import com.google.common.eventbus.Subscribe;
+import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyCreatedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyEventsHandler;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyNearExpiryEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyEventsHandler;
-import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyJPA;
-import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyRepository;
-import de.kaiserpfalzedv.commons.users.store.model.apikey.ApiKeyToJPA;
+import de.kaiserpfalzedv.commons.users.store.model.apikey.JpaApiKeyWriteService;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -40,36 +45,63 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
-public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler {
-  private final ApiKeyRepository repository;
-  private final ApiKeyToJPA toJPA;
+public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseable {
+  private final JpaApiKeyWriteService writeService;
+  private final LoggingEventBus bus;
+  
+  
+  @Value("${spring.application.system:kp-commons-users}")
+  private String system;
+
+  
+  @PostConstruct
+  public void init() {
+    log.entry(bus, system);
+    
+    bus.register(this);
+    
+    log.exit();
+  }
+
+  @Override
+  @PreDestroy
+  public void close() {
+    log.entry(bus, system);
+    
+    bus.unregister(this);
+    
+    log.exit();
+  }
+
   
   @Override
-  public void event(final ApiKeyCreatedEvent event) {
+  @Subscribe
+  public void event(@NotNull final ApiKeyCreatedEvent event) {
     log.entry(event);
     
-    ApiKeyJPA result = repository.save(toJPA.apply(event.getApiKey()));
-    log.info("created api key: key='***', user='{}'", result.getUser());
+    try {
+      writeService.create(event.getApiKey());
+    } catch (InvalidApiKeyException e) {
+      log.warn(e.getMessage(), e);
+    }
     
-    log.exit(result);
+    log.exit();
   }
   
   @Override
-  public void event(final ApiKeyRevokedEvent event) {
+  @Subscribe
+  public void event(@NotNull final ApiKeyRevokedEvent event) {
     log.entry(event);
     
-    repository.deleteById(event.getApiKey().getId());
-    log.info("Revoked api key: key='{}', user='{}'", event.getApiKey().getName(), event.getUser());
-    
-    log.exit(event.getApiKey());
+    writeService.delete(event.getApiKey().getId());
+
+    log.exit();
   }
   
   @Override
-  public void event(final ApiKeyNearExpiryEvent event) {
-    log.entry(event);
-    
-    log.debug("Nothing to do.");
-    
-    log.exit(event.getApiKey());
+  @Subscribe
+  public void event(@NotNull final ApiKeyNearExpiryEvent event) {
+    // Don't need to handle this event at all.
+    log.trace("Nothing to do.");
   }
 }

@@ -15,26 +15,28 @@
  * License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
  */
-package de.kaiserpfalzedv.commons.users.store.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+package de.kaiserpfalzedv.commons.users.domain.model.role.events;
 
-import java.lang.annotation.*;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * 
+ * The event sent when a role is updated in the system.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 1.0.0
- * @since 2024-09-27
+ * @since 2025-05-10
  */
-@SuppressWarnings("unused")
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Documented
-@EnableJpaRepositories
-@EntityScan(basePackages = "de.paladinsinn.tp.dcis.user.store")
-@ComponentScan(basePackages = "de.paladinsinn.tp.dcis.user.store")
-public @interface EnableUserStore {}
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class RoleUpdateNameSpaceEvent extends RoleBaseEvent {
+  private final String i18nKey = "role.created";
+}
