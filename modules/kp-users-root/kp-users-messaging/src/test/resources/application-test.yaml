@@ -1,0 +1,18 @@
+---
+spring:
+  application:
+    name: kp-users-store
+    system: kp-commons
+    admin:
+      enabled: false
+  main:
+    banner-mode: off
+    
+logging:
+  level:
+    root: WARN
+    web: WARN
+    security: WARN
+    "de.kaiserpfalzedv.commons": INFO
+    "de.kaiserpfalzedv.commons.users": DEBUG
+    "de.kaiserpfalzedv.commons.users.store": TRACE

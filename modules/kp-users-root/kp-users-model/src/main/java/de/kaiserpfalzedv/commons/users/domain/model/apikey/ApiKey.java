@@ -34,7 +34,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * The user of the DCIS system.
+ * The user of the DCIS application.
  */
 @JsonDeserialize(as = ApiKeyImpl.class)
 public interface ApiKey extends HasId<UUID>, HasNameSpace, HasName, HasTimestamps {
@@ -66,7 +66,7 @@ public interface ApiKey extends HasId<UUID>, HasNameSpace, HasName, HasTimestamp
   }
   
   /**
-   * @return true if the user is banned from the system.
+   * @return true if the user is banned from the application.
    */
   default boolean isBanned() {
     return getUser().isBanned();

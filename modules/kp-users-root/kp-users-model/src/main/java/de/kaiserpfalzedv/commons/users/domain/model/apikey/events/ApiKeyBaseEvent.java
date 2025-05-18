@@ -50,7 +50,7 @@ public abstract class ApiKeyBaseEvent extends UserBaseEvent {
   public Object[] getI18nData() {
     return new Object[]{
         getTimestamp(),
-        getSystem(),
+        getApplication(),
         getApiKey().getNameSpace(),
         getApiKey().getName(),
         getApiKey().getExpiration(),

@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.events.state;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -27,7 +26,7 @@ import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * The event sent when a user gets removed from the system.
+ * The event sent when a user gets removed from the application.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 09.11.24
@@ -37,6 +36,6 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserCreatedEvent extends UserBaseEvent {
+public class UserCreatedEvent extends UserStateBaseEvent {
   private final String i18nKey = "user.created";
 }

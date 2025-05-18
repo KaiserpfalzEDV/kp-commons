@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserEventsHandler;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import de.kaiserpfalzedv.commons.users.store.model.user.*;
@@ -59,7 +59,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   private final LoggingEventBus bus;
   
   
-  @Value("${spring.application.system:kp-commons")
+  @Value("${spring.application.application:kp-commons")
   private String system = "kp-commons";
   
   
@@ -333,15 +333,15 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
 
   
   /**
-   * Check if the event is from an external system.
+   * Check if the event is from an external application.
    * @param event The event to check.
-   * @return True if the event is from an external system, false otherwise.
+   * @return True if the event is from an external application, false otherwise.
    */
   private boolean eventIsFromExternalSystem(final UserBaseEvent event) {
     log.entry(event);
     
     boolean result;
-    if (system.equals(event.getSystem())) {
+    if (system.equals(event.getApplication())) {
       log.debug("System is the same. Ignoring event. event={}", event);
       result = false;
     } else {

@@ -27,7 +27,7 @@ import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * The event sent when a role is deleted from the system.
+ * The event sent when a role is deleted from the application.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-10

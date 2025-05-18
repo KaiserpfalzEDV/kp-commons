@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation;
+package de.kaiserpfalzedv.commons.users.domain.model.user.events.activity;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
@@ -23,25 +23,17 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-
-import java.util.UUID;
 
 
 /**
- * The event sent when a user gets temporary blocked.
+ * The event sent when any user logs in.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 09.11.24
  */
-@Jacksonized
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserPetitionedEvent extends UserBaseEvent {
-  @Getter
-  private final String i18nKey = "user.petitioned";
-
-  private final UUID petition;
+public abstract class UserActivityBaseEvent extends UserBaseEvent {
 }

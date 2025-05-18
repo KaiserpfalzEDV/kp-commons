@@ -94,6 +94,7 @@ public class LoggingEventBus extends EventBus {
   public void post(@NonNull final Object event) {
     log.entry(event);
 
+    log.debug("Event distribution. event={}", event);
     super.post(event);
 
     log.exit(event);

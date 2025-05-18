@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.events.modification;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -36,7 +35,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class RoleAddedToUserEvent extends UserBaseEvent {
+public class RoleAddedToUserEvent extends UserModificationBaseEvent {
   @Builder.Default
   private final String i18nKey = "user.log-in";
   

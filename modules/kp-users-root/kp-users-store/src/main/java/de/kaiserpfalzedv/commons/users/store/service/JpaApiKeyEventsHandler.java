@@ -107,15 +107,15 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   
   
   /**
-   * Check if the event is from an external system.
+   * Check if the event is from an external application.
    * @param event The event to check.
-   * @return True if the event is from an external system, false otherwise.
+   * @return True if the event is from an external application, false otherwise.
    */
   private boolean eventIsFromExternalSystem(final ApiKeyBaseEvent event) {
     log.entry(event);
     
     boolean result;
-    if (system.equals(event.getSystem())) {
+    if (system.equals(event.getApplication())) {
       log.debug("System is the same. Ignoring event. event={}", event);
       result = false;
     } else {

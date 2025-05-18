@@ -20,7 +20,7 @@ package de.kaiserpfalzedv.commons.users.domain.model.user.state;
 
 import com.google.common.eventbus.Subscribe;
 import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import lombok.extern.slf4j.XSlf4j;

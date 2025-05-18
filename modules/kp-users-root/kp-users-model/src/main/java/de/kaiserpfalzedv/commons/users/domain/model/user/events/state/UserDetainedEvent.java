@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.events.state;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -37,7 +36,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserDetainedEvent extends UserBaseEvent {
+public class UserDetainedEvent extends UserStateBaseEvent {
   @Getter
   private final String i18nKey = "user.log-detained";
 

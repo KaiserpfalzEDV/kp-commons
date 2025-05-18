@@ -102,7 +102,7 @@ public interface UserState {
   UserState detain(final long days);
   
   /**
-   * Bans the user from the system.
+   * Bans the user from the application.
    *
    * @return the new state of the user.
    */
@@ -116,8 +116,8 @@ public interface UserState {
   UserState release();
   
   /**
-   * Deletes the user from the system. Deletion means the user is inactive (can't use the system any more). The data will stay in the
-   * system for the data retention period.
+   * Deletes the user from the application. Deletion means the user is inactive (can't use the application any more). The data will stay in the
+   * application for the data retention period.
    *
    * @return the new state of the user.
    */
@@ -131,9 +131,9 @@ public interface UserState {
   UserState activate();
   
   /**
-   * Removes the user from the system. The user will not be able to be activated again.
+   * Removes the user from the application. The user will not be able to be activated again.
    *
-   * @param delete If the user data should be deleted. Otherwise, the data will be anonymized but stay in the system.
+   * @param delete If the user data should be deleted. Otherwise, the data will be anonymized but stay in the application.
    * @return the new state of the user.
    */
   UserState remove(final boolean delete);

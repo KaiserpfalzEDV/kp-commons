@@ -33,7 +33,7 @@ import java.util.UUID;
 
 
 /**
- * The implementation of the role for the user management system.
+ * The implementation of the role for the user management application.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-10

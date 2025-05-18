@@ -18,7 +18,6 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.events.state;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,7 +35,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserRemovedEvent extends UserBaseEvent {
+public class UserRemovedEvent extends UserStateBaseEvent {
   @Getter
   private final String i18nKey = "user.removed";
 

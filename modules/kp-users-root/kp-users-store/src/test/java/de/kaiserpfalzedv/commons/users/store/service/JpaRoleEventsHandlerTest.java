@@ -63,7 +63,7 @@ public class JpaRoleEventsHandlerTest {
   private LoggingEventBus bus;
   
   private static final String LOCAL_SYSTEM = "kp-commons";
-  private static final String EXTERNAL_SYSTEM = "other-system";
+  private static final String EXTERNAL_SYSTEM = "other-application";
   
   
   private static final UUID TEST_ROLE_ID = UUID.randomUUID();

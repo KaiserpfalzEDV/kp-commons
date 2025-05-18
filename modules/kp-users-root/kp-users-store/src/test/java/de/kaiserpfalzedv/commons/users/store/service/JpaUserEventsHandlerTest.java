@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitation.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import de.kaiserpfalzedv.commons.users.store.model.user.JpaUserDataManagementService;
@@ -63,7 +63,7 @@ public class JpaUserEventsHandlerTest {
   
   
   private static final String LOCAL_SYSTEM = "kp-commons";
-  private static final String EXTERNAL_SYSTEM = "other-system";
+  private static final String EXTERNAL_SYSTEM = "other-application";
   
   private static final UUID USER_ID = UUID.randomUUID();
   private static final String NAMESPACE = "namespace";
@@ -131,7 +131,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserActivatedEvent event = mock(UserActivatedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -153,7 +153,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserActivatedEvent event = mock(UserActivatedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userManagement).undelete(USER_ID);
     
@@ -176,7 +176,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserActivatedEvent event = mock(UserActivatedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -198,7 +198,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserCreatedEvent event = mock(UserCreatedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -220,7 +220,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserCreatedEvent event = mock(UserCreatedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserCantBeCreatedException(ISSUER, SUBJECT, NAME, EMAIL)).when(userManagement).create(user);
     
@@ -243,7 +243,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserCreatedEvent event = mock(UserCreatedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -265,7 +265,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDeletedEvent event = mock(UserDeletedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -287,7 +287,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDeletedEvent event = mock(UserDeletedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -309,7 +309,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserRemovedEvent event = mock(UserRemovedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -331,7 +331,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserRemovedEvent event = mock(UserRemovedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -353,7 +353,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserBannedEvent event = mock(UserBannedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -375,7 +375,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserBannedEvent event = mock(UserBannedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userStateManagement).ban(USER_ID);
     
@@ -398,7 +398,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserBannedEvent event = mock(UserBannedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -420,7 +420,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDetainedEvent event = mock(UserDetainedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getDays()).thenReturn(DETAINEMENT_DAYS);
     
@@ -443,7 +443,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDetainedEvent event = mock(UserDetainedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getDays()).thenReturn(DETAINEMENT_DAYS);
     doThrow(new UserNotFoundException(USER_ID)).when(userStateManagement).detain(USER_ID, DETAINEMENT_DAYS);
@@ -467,7 +467,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDetainedEvent event = mock(UserDetainedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -489,7 +489,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserPetitionedEvent event = mock(UserPetitionedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -510,7 +510,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserPetitionedEvent event = mock(UserPetitionedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -532,7 +532,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserReleasedEvent event = mock(UserReleasedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -554,7 +554,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserReleasedEvent event = mock(UserReleasedEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userStateManagement).release(USER_ID);
     
@@ -577,7 +577,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserReleasedEvent event = mock(UserReleasedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -599,7 +599,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleAddedToUserEvent event = mock(RoleAddedToUserEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getRole()).thenReturn(role);
     
@@ -622,7 +622,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleAddedToUserEvent event = mock(RoleAddedToUserEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getRole()).thenReturn(role);
     doThrow(new UserNotFoundException(USER_ID)).when(userRoleManagement).addRole(USER_ID, role);
@@ -646,7 +646,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleAddedToUserEvent event = mock(RoleAddedToUserEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getRole()).thenReturn(role);
     doThrow(new RoleNotFoundException(TEST_ROLE_ID)).when(userRoleManagement).addRole(USER_ID, role);
@@ -670,7 +670,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleAddedToUserEvent event = mock(RoleAddedToUserEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -692,7 +692,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleRemovedFromUserEvent event = mock(RoleRemovedFromUserEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getRole()).thenReturn(role);
     
@@ -715,7 +715,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleRemovedFromUserEvent event = mock(RoleRemovedFromUserEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getRole()).thenReturn(role);
     doThrow(new UserNotFoundException(USER_ID)).when(userRoleManagement).removeRole(USER_ID, role);
@@ -739,7 +739,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleRemovedFromUserEvent event = mock(RoleRemovedFromUserEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     when(event.getRole()).thenReturn(role);
     doThrow(new RoleNotFoundException(TEST_ROLE_ID)).when(userRoleManagement).removeRole(USER_ID, role);
@@ -763,7 +763,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     RoleRemovedFromUserEvent event = mock(RoleRemovedFromUserEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -785,7 +785,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserSubjectModificationEvent event = mock(UserSubjectModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -807,7 +807,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserSubjectModificationEvent event = mock(UserSubjectModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userDataManagement).updateSubject(USER_ID, ISSUER, SUBJECT);
     
@@ -830,7 +830,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserSubjectModificationEvent event = mock(UserSubjectModificationEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -852,7 +852,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNamespaceAndNameModificationEvent event = mock(UserNamespaceAndNameModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -874,7 +874,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNamespaceAndNameModificationEvent event = mock(UserNamespaceAndNameModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userDataManagement).updateNamespaceAndName(USER_ID, NAMESPACE, NAME);
     
@@ -897,7 +897,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNamespaceAndNameModificationEvent event = mock(UserNamespaceAndNameModificationEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -919,7 +919,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNamespaceModificationEvent event = mock(UserNamespaceModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -941,7 +941,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNamespaceModificationEvent event = mock(UserNamespaceModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userDataManagement).updateNamespace(USER_ID, NAMESPACE);
     
@@ -964,7 +964,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNamespaceModificationEvent event = mock(UserNamespaceModificationEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -986,7 +986,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNameModificationEvent event = mock(UserNameModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -1008,7 +1008,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNameModificationEvent event = mock(UserNameModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userDataManagement).updateName(USER_ID, NAME);
     
@@ -1031,7 +1031,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserNameModificationEvent event = mock(UserNameModificationEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -1053,7 +1053,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserEmailModificationEvent event = mock(UserEmailModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -1075,7 +1075,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserEmailModificationEvent event = mock(UserEmailModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userDataManagement).updateEmail(USER_ID, EMAIL);
     
@@ -1098,7 +1098,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserEmailModificationEvent event = mock(UserEmailModificationEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -1120,7 +1120,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDiscordModificationEvent event = mock(UserDiscordModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     
     // when
@@ -1142,7 +1142,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDiscordModificationEvent event = mock(UserDiscordModificationEvent.class);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     when(event.getUser()).thenReturn(user);
     doThrow(new UserNotFoundException(USER_ID)).when(userDataManagement).updateDiscord(USER_ID, DISCORD);
     
@@ -1165,7 +1165,7 @@ public class JpaUserEventsHandlerTest {
     
     // given
     UserDiscordModificationEvent event = mock(UserDiscordModificationEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);

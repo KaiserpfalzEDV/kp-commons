@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RoleEventsTest {
   private RoleBaseEvent sut;
   
-  private static final String DEFAULT_SYSTEM = "system";
+  private static final String DEFAULT_SYSTEM = "application";
   private static final Role DEFAULT_ROLE = TestRole.builder().build();
   private static final OffsetDateTime DEFAULT_TIMESTAMP = OffsetDateTime.now();
   

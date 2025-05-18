@@ -83,7 +83,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
         .subject(sub)
         .build();
 
-    bus.post(UserSubjectModificationEvent.builder().system(system).user(result).build());
+    bus.post(UserSubjectModificationEvent.builder().application(system).user(result).build());
     log.exit(repository.saveAndFlush(result));
   }
 
@@ -96,7 +96,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
     
     data = data.toBuilder().nameSpace(namespace).build();
     
-    bus.post(UserNamespaceModificationEvent.builder().system(system).user(data).build());
+    bus.post(UserNamespaceModificationEvent.builder().application(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
   
@@ -109,7 +109,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
     
     data = data.toBuilder().name(name).build();
     
-    bus.post(UserNameModificationEvent.builder().system(system).user(data).build());
+    bus.post(UserNameModificationEvent.builder().application(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
   
@@ -122,7 +122,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
     
     data = data.toBuilder().nameSpace(namespace).name(name).build();
     
-    bus.post(UserNamespaceAndNameModificationEvent.builder().system(system).user(data).build());
+    bus.post(UserNamespaceAndNameModificationEvent.builder().application(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
   
@@ -135,7 +135,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
     
     data = data.toBuilder().email(email).build();
     
-    bus.post(UserEmailModificationEvent.builder().system(system).user(data).build());
+    bus.post(UserEmailModificationEvent.builder().application(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
 
@@ -148,7 +148,7 @@ public class JpaUserDataManagementService implements UserDataManagementService {
     
     data = data.toBuilder().discord(discord).build();
     
-    bus.post(UserDiscordModificationEvent.builder().system(system).user(data).build());
+    bus.post(UserDiscordModificationEvent.builder().application(system).user(data).build());
     log.exit(repository.saveAndFlush(data));
   }
   

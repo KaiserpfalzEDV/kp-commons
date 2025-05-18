@@ -39,7 +39,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * The user of the DCIS system.
+ * The user of the DCIS application.
  */
 @JsonDeserialize(as = KpUserDetails.class)
 public interface User extends Principal, UserDetails, CredentialsContainer, HasId<UUID>, HasNameSpace, HasName, HasTimestamps, HasOwner<UUID>, Serializable {
@@ -94,7 +94,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * Detains the user for a number of days.
    *
    * @param bus The bus for sending the changing event.
-   * @param days The number of days the user is detained within the system.
+   * @param days The number of days the user is detained within the application.
    * @return the user
    */
   User detain(@NotNull EventBus bus, @Min(1) @Max(1095) long days);
@@ -108,7 +108,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   User release(@NotNull EventBus bus);
   
   /**
-   * Ban the user from the system.
+   * Ban the user from the application.
    *
    * @param bus The bus for sending the changing event.
    * @return the user
@@ -138,7 +138,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   default boolean isActive() { return !isInactive(); }
   
   /**
-   * @return true if the user is banned from the system.
+   * @return true if the user is banned from the application.
    */
   default boolean isBanned() {
     return getBannedOn() != null;

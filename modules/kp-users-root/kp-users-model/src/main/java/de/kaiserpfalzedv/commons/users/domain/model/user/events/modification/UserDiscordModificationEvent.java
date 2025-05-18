@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.commons.users.domain.model.user.events.modification;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.UserBaseEvent;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,7 +38,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserDiscordModificationEvent extends UserBaseEvent {
+public class UserDiscordModificationEvent extends UserModificationBaseEvent {
   @Builder.Default
   private final String i18nKey = "user.modification.issuer-and-sub";
   

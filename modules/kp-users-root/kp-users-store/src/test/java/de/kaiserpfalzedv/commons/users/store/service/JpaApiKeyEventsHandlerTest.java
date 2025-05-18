@@ -59,7 +59,7 @@ public class JpaApiKeyEventsHandlerTest {
   
   
   private static final String LOCAL_SYSTEM = "kp-commons";
-  private static final String EXTERNAL_SYSTEM = "other-system";
+  private static final String EXTERNAL_SYSTEM = "other-application";
   
   
   @BeforeEach
@@ -81,7 +81,7 @@ public class JpaApiKeyEventsHandlerTest {
     // given
     ApiKeyCreatedEvent event = mock(ApiKeyCreatedEvent.class);
     when(event.getApiKey()).thenReturn(API_KEY);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -99,7 +99,7 @@ public class JpaApiKeyEventsHandlerTest {
     // given
     ApiKeyCreatedEvent event = mock(ApiKeyCreatedEvent.class);
     when(event.getApiKey()).thenReturn(API_KEY);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
 
     doThrow(InvalidApiKeyException.class).when(writeService).create(API_KEY);
 
@@ -118,7 +118,7 @@ public class JpaApiKeyEventsHandlerTest {
     
     // given
     ApiKeyCreatedEvent event = mock(ApiKeyCreatedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -137,7 +137,7 @@ public class JpaApiKeyEventsHandlerTest {
     // given
     ApiKeyRevokedEvent event = mock(ApiKeyRevokedEvent.class);
     when(event.getApiKey()).thenReturn(API_KEY);
-    when(event.getSystem()).thenReturn(EXTERNAL_SYSTEM);
+    when(event.getApplication()).thenReturn(EXTERNAL_SYSTEM);
     
     // when
     sut.event(event);
@@ -154,7 +154,7 @@ public class JpaApiKeyEventsHandlerTest {
     
     // given
     ApiKeyRevokedEvent event = mock(ApiKeyRevokedEvent.class);
-    when(event.getSystem()).thenReturn(LOCAL_SYSTEM);
+    when(event.getApplication()).thenReturn(LOCAL_SYSTEM);
     
     // when
     sut.event(event);

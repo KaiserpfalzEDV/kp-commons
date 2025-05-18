@@ -86,7 +86,7 @@ public class JpaUserManagementService implements UserManagementService {
     try {
       UserJPA result = repository.save(toJpa.apply(user));
       
-      bus.post(UserCreatedEvent.builder().system(system).user(result).build());
+      bus.post(UserCreatedEvent.builder().application(system).user(result).build());
       log.exit(result);
     } catch (OptimisticLockingFailureException e) {
       throw log.throwing(new UserCantBeCreatedException(user, e));
@@ -125,7 +125,7 @@ public class JpaUserManagementService implements UserManagementService {
   private void revokeAllApiKeysForUser(final UserJPA user) {
     log.entry(user);
     
-    // no system() in this event, since it has to be worked on at least once :-).
+    // no application() in this event, since it has to be worked on at least once :-).
     user.getApiKeys().forEach(key -> bus.post(ApiKeyRevokedEvent.builder().user(user).apiKey(key).build()));
     
     log.exit(user);
@@ -143,8 +143,8 @@ public class JpaUserManagementService implements UserManagementService {
       
       repository.delete(data);
       
-      bus.post(UserRemovedEvent.builder().system(system).user(data).build());
-      log.info("User removed from system. user={}", data);
+      bus.post(UserRemovedEvent.builder().application(system).user(data).build());
+      log.info("User removed from application. user={}", data);
     } catch (UserNotFoundException e) {
       log.info("User didn't exist. Nothing to do. id='{}'", id);
     }

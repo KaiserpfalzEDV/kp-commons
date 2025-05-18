@@ -38,7 +38,7 @@ import lombok.experimental.SuperBuilder;
 public abstract class UserBaseEvent extends BaseEvent {
   
   @ToString.Include
-  final private String system;
+  final private String application;
   
   @ToString.Include
   final private User user;
@@ -47,7 +47,7 @@ public abstract class UserBaseEvent extends BaseEvent {
   public  Object[] getI18nData() {
     return new Object[] {
         getTimestamp(),
-        system,
+        application,
         user.getId(),
         user.getNameSpace(),
         user.getName(),

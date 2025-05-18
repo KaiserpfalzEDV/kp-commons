@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ApiKeyEventsTest {
   private ApiKeyBaseEvent sut;
   
-  private static final String DEFAULT_SYSTEM = "system";
+  private static final String DEFAULT_SYSTEM = "application";
   private static final User DEFAULT_USER = TestUser.builder().build();
   private static final OffsetDateTime DEFAULT_TIMESTAMP = OffsetDateTime.now();
   private static final ApiKey DEFAULT_APIKEY = TestApiKey.builder().user(DEFAULT_USER).build();
@@ -51,7 +51,7 @@ public class ApiKeyEventsTest {
   public void setUp() {
     sut = TestApiKeyEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();
@@ -87,7 +87,7 @@ public class ApiKeyEventsTest {
     
     sut = ApiKeyCreatedEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();
@@ -106,7 +106,7 @@ public class ApiKeyEventsTest {
     
     sut = ApiKeyRevokedEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();
@@ -125,7 +125,7 @@ public class ApiKeyEventsTest {
     
     sut = ApiKeyNearExpiryEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();
@@ -155,7 +155,7 @@ public class ApiKeyEventsTest {
     
     sut = ApiKeyCreatedEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();
@@ -174,7 +174,7 @@ public class ApiKeyEventsTest {
     
     sut = ApiKeyRevokedEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();
@@ -194,7 +194,7 @@ public class ApiKeyEventsTest {
     
     sut = ApiKeyNearExpiryEvent.builder()
         .timestamp(DEFAULT_TIMESTAMP)
-        .system(DEFAULT_SYSTEM)
+        .application(DEFAULT_SYSTEM)
         .user(DEFAULT_USER)
         .apiKey(DEFAULT_APIKEY)
         .build();

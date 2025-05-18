@@ -133,9 +133,9 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   
   
   /**
-   * Check if the event is from an external system.
+   * Check if the event is from an external application.
    * @param event The event to check.
-   * @return True if the event is from an external system, false otherwise.
+   * @return True if the event is from an external application, false otherwise.
    */
   private boolean eventIsFromExternalSystem(final RoleBaseEvent event) {
     log.entry(event);
