@@ -1,12 +1,79 @@
 ---
 spring:
   application:
-    name: kp-users-store
+    name: kp-users
     system: kp-commons
     admin:
       enabled: false
   main:
     banner-mode: off
+    
+  liquibase:
+    enabled: false
+  
+  cloud:
+    function:
+      definition: "sendUserLogin"
+    stream:
+      rabbit:
+        default:
+          auto-bind-dlq: true
+          dlq-ttl: 3600000
+          dlq-dead-letter-exchange: kp-users.dlq
+          producer:
+            producerType: AMQP
+            instanceCount: 1
+            instanceIndex: 0
+            auto-bind-dlq: true
+            auto-bind-headers: true
+            auto-bind-headers-dlq: true
+            auto-bind-exchange: true
+            auto-bind-queue: true
+          consumer:
+            consumerType: AMQP
+            maxAttempts: 3
+            instanceCount: 1
+            instanceIndex: 0
+            auto-bind-dlq: true
+            auto-bind-headers: true
+            auto-bind-headers-dlq: true
+            auto-bind-exchange: true
+            auto-bind-queue: true
+      bindings:
+        sendUserLogin-in-0:
+          binder: guava
+        sendUserLogin-out-0:
+          binder: rabbit
+          destination: kp-users.activity
+        sendUserLogout-in-0:
+          binder: guava
+        sendUserLogout-out-0:
+          binder: rabbit
+          destination: kp-users.activity
+        sendUserDeletion-in-0:
+          binder: guava
+        sendUserDeletion-out-0:
+          binder: rabbit
+          destination: kp-users.modification
+      binder:
+        guava:
+          defaultCandidate: false
+        rabbit:
+          defaultCandidate: false
+          default:
+            broker:
+              host: localhost
+              port: 5672
+              username: guest
+              password: guest
+            adminAddresses: localhost:15672
+            connectionFactory:
+              publisher-confirms: true
+              publisher-returns: true
+management:
+  health:
+    binders:
+      enabled: true
     
 logging:
   level:

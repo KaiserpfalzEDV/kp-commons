@@ -25,7 +25,15 @@
         <appender-ref ref="Console"/>
     </logger>
 
-    <logger name="org.casbin.jcasbin" level="INFO" additivity="false">
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="org.springframework.cloud.stream" level="TRACE" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="org.casbin.jcasbin" level="WARN" additivity="false">
         <appender-ref ref="Console"/>
     </logger>
 </configuration>

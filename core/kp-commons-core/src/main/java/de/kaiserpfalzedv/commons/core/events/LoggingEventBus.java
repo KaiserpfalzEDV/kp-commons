@@ -29,8 +29,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import static org.slf4j.ext.XLogger.Level.INFO;
-
 
 /**
  * EventBus for local observer pattern.
@@ -84,7 +82,7 @@ public class LoggingEventBus extends EventBus {
       super.unregister(object);
       log.debug("Unregistered subscriber. subscriber={}", object);
     } catch (IllegalArgumentException e) {
-      log.catching(INFO, e);
+      log.debug("Unregistering subscriber failed. subscriber={}, message={}", object, e.getMessage());
     }
 
     log.exit(object);
