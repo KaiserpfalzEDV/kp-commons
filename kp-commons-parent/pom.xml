@@ -247,7 +247,7 @@
                     <!-- copy agent jar either from local or remote repository -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.8.1</version>
                     <executions>
                         <execution>
                             <!-- the correct phase is important so it is available before the test starts -->
@@ -677,7 +677,7 @@
                         <!-- copy agent jar either from local or remote repository -->
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
-                        <version>3.6.0</version>
+                        <version>3.8.1</version>
                         <executions>
                             <execution>
                                 <!-- the correct phase is important so it is available before the test starts -->
