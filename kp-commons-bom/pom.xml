@@ -70,7 +70,7 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-bom</artifactId>
-                <version>13.5</version>
+                <version>13.6</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
