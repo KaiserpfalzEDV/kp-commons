@@ -20,8 +20,7 @@ package de.kaiserpfalzedv.commons.users.messaging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
@@ -47,12 +46,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-18
  */
-@SpringBootTest(classes = SendingUserActivityEventsConfigIT.TestConfiguration.class)
+@SpringBootTest(classes = SendingUserArbitrationEventsHandlerIT.TestConfiguration.class)
 @ActiveProfiles("test")
 @EnableTestBinder
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 @XSlf4j
-public class SendingUserActivityEventsConfigIT {
+public class SendingUserArbitrationEventsHandlerIT {
   private final ApplicationEventPublisher bus;
   
   @Autowired
@@ -65,41 +64,21 @@ public class SendingUserActivityEventsConfigIT {
   private ObjectMapper jsonMapper;
   
   @Test
-  void shouldReceiveUserLoginEventWhenItIsSent() throws IOException {
+  void shouldReceiveUserPetitionedEventWhenItIsSent() throws IOException {
     log.entry();
     
     // Given
-    final var event = UserLoginEvent.builder()
+    final var event = UserPetitionedEvent.builder()
             .application("kp-users")
             .user(DEFAULT_USER)
             .build();
     
     bus.publishEvent(event);
     
-    var result = output.receive(0L, "kp-users.activity");
+    var result = output.receive(0L, "kp-users.arbitration");
     
     assertNotNull(result);
-    assertEquals(event, jsonMapper.readValue(result.getPayload(), UserLoginEvent.class));
-    
-    log.exit();
-  }
-  
-  @Test
-  void shouldReceiveUserLogoutEventWhenItIsSent() throws IOException {
-    log.entry();
-    
-    // Given
-    final var event = UserLogoutEvent.builder()
-        .application("kp-users")
-        .user(DEFAULT_USER)
-        .build();
-    
-    bus.publishEvent(event);
-    
-    var result = output.receive(0L, "kp-users.activity");
-    
-    assertNotNull(result);
-    assertEquals(event, jsonMapper.readValue(result.getPayload(), UserLogoutEvent.class));
+    assertEquals(event, jsonMapper.readValue(result.getPayload(), UserPetitionedEvent.class));
     
     log.exit();
   }

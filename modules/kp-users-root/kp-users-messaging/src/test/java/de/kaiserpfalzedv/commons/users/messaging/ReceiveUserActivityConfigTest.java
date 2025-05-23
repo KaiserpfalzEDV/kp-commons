@@ -64,7 +64,7 @@ public class ReceiveUserActivityConfigTest {
     // given
     
     // when
-    sut.receiveUserLogin().accept(event);
+    sut.loginUser().accept(event);
     
     // then
     verify(bus, never()).publishEvent(event);
@@ -81,7 +81,7 @@ public class ReceiveUserActivityConfigTest {
     when(event.getApplication()).thenReturn("other-scs");
     
     // when
-    sut.receiveUserLogin().accept(event);
+    sut.loginUser().accept(event);
     
     // then
     verify(bus, times(1)).publishEvent(event);

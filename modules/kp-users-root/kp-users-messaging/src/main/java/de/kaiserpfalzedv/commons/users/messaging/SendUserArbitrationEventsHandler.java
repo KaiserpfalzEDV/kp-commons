@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.users.messaging;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -38,30 +37,18 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
-public class SendUserActivityEventsHandler extends AbstractSendUserEventsHandler {
+public class SendUserArbitrationEventsHandler extends AbstractSendUserEventsHandler {
   
-
   @Inject
-  public SendUserActivityEventsHandler(final StreamBridge sender, final UserEventMessagingConverter converter) {
+  public SendUserArbitrationEventsHandler(@NotNull StreamBridge sender, @NotNull final UserEventMessagingConverter converter) {
     super(sender, converter);
   }
   
-  
   @EventListener
-  public void onUserLogin(@NotNull @Valid final UserLoginEvent event) {
+  public void onUserPetitioned(@NotNull @Valid final UserPetitionedEvent event) {
     log.entry(event);
 
-    sendEvent("loginUser-in-0", event);
-
-    log.exit();
-  }
-  
-  
-  @EventListener
-  public void onUserLogout(@NotNull final UserLogoutEvent event) {
-    log.entry(event);
-    
-    sendEvent("logoutUser-in-0", event);
+    sendEvent("userPetitioned", event);
 
     log.exit();
   }

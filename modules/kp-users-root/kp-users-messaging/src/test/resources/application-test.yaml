@@ -15,6 +15,73 @@ spring:
     function:
       definition: receiveUserLogin|receiveUserLogout
     stream:
+      bindings:
+        userLogin-in-0:
+          destination: kp-users.activity
+          content-type: application/json
+        userLogout-in-0:
+          destination: kp-users.activity
+          content-type: application/json
+        userPetitioned:
+          destination: kp-users.arbitration
+          content-type: application/json
+        userAddedRole:
+          destination: kp-users.modification
+          content-type: application/json
+        userRemovedRole:
+          destination: kp-users.modification
+          content-type: application/json
+        userModifyDiscord:
+          destination: kp-users.modification
+          content-type: application/json
+        userModifyEmail:
+          destination: kp-users.modification
+          content-type: application/json
+        userModifyName:
+          destination: kp-users.modification
+          content-type: application/json
+        userModifyNamespace:
+          destination: kp-users.modification
+          content-type: application/json
+        userModifyNamespaceAndName:
+          destination: kp-users.modification
+          content-type: application/json
+        userModifySubject:
+          destination: kp-users.modification
+          content-type: application/json
+        activateUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        banUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        createUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        deleteUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        detainUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        releaseUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        removeUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+      binder:
+        rabbit:
+          default:
+            broker:
+              host: localhost
+              port: 5672
+              username: guest
+              password: guest
+            adminAddresses: localhost:15672
+            connectionFactory:
+              publisher-confirms: true
+              publisher-returns: true
       rabbit:
         default:
           auto-bind-dlq: true
@@ -39,25 +106,6 @@ spring:
             auto-bind-headers-dlq: true
             auto-bind-exchange: true
             auto-bind-queue: true
-      bindings:
-        userLogin:
-          destination: kp-users.activity
-          content-type: application/json
-        userLogout:
-          destination: kp-users.activity
-          content-type: application/json
-      binder:
-        rabbit:
-          default:
-            broker:
-              host: localhost
-              port: 5672
-              username: guest
-              password: guest
-            adminAddresses: localhost:15672
-            connectionFactory:
-              publisher-confirms: true
-              publisher-returns: true
 management:
   health:
     binders:

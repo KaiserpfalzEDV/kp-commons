@@ -29,9 +29,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.converter.AbstractMessageConverter;
-import org.springframework.messaging.converter.MessageConverter;
-import org.springframework.util.MimeTypeUtils;
 
 import java.util.function.Consumer;
 
@@ -53,7 +50,7 @@ public class ReceiveUserActivityConfig {
   
   
   @Bean
-  Consumer<UserLoginEvent> receiveUserLogin() {
+  Consumer<UserLoginEvent> loginUser() {
     return event -> {
       log.entry(event);
       
@@ -66,21 +63,9 @@ public class ReceiveUserActivityConfig {
     };
   }
   
-  @Bean
-  MessageConverter userLoginMessageConverter() {
-    return new AbstractMessageConverter(MimeTypeUtils.APPLICATION_JSON) {
-      @Override
-      protected boolean supports(final Class<?> clazz) {
-        return UserLoginEvent.class.isAssignableFrom(clazz);
-      }
-      
-    };
-    
-  }
-  
   
   @Bean
-  Consumer<UserLogoutEvent> receiveUserLogout() {
+  Consumer<UserLogoutEvent> logoutUser() {
     return event -> {
       log.entry(event);
       

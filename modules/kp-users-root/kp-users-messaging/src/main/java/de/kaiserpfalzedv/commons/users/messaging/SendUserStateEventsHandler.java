@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.users.messaging;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLoginEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.user.events.activity.UserLogoutEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -38,30 +37,72 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
-public class SendUserActivityEventsHandler extends AbstractSendUserEventsHandler {
+public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   
-
   @Inject
-  public SendUserActivityEventsHandler(final StreamBridge sender, final UserEventMessagingConverter converter) {
+  public SendUserStateEventsHandler(@NotNull StreamBridge sender, @NotNull final UserEventMessagingConverter converter) {
     super(sender, converter);
   }
   
-  
   @EventListener
-  public void onUserLogin(@NotNull @Valid final UserLoginEvent event) {
+  public void onUserActivated(@NotNull @Valid final UserActivatedEvent event) {
     log.entry(event);
 
-    sendEvent("loginUser-in-0", event);
+    sendEvent("userActivated", event);
 
     log.exit();
   }
   
+  @EventListener
+  public void onUserBanned(@NotNull @Valid final UserBannedEvent event) {
+    log.entry(event);
+
+    sendEvent("userBanned", event);
+
+    log.exit();
+  }
   
   @EventListener
-  public void onUserLogout(@NotNull final UserLogoutEvent event) {
+  public void onUserCreated(@NotNull @Valid final UserCreatedEvent event) {
     log.entry(event);
-    
-    sendEvent("logoutUser-in-0", event);
+
+    sendEvent("userCreated", event);
+
+    log.exit();
+  }
+  
+  @EventListener
+  public void onUserDeleted(@NotNull @Valid final UserDeletedEvent event) {
+    log.entry(event);
+
+    sendEvent("userDeleted", event);
+
+    log.exit();
+  }
+  
+  @EventListener
+  public void onUserDetained(@NotNull @Valid final UserDetainedEvent event) {
+    log.entry(event);
+
+    sendEvent("userDetained", event);
+
+    log.exit();
+  }
+  
+  @EventListener
+  public void onUserReleased(@NotNull @Valid final UserReleasedEvent event) {
+    log.entry(event);
+
+    sendEvent("userReleased", event);
+
+    log.exit();
+  }
+  
+  @EventListener
+  public void onUserRemoved(@NotNull @Valid final UserRemovedEvent event) {
+    log.entry(event);
+
+    sendEvent("userRemoved", event);
 
     log.exit();
   }
