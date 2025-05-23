@@ -19,7 +19,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;

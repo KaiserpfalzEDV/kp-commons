@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.model.role;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.KpRole;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
@@ -57,10 +57,10 @@ public class JpaRoleWriteServiceTest {
   private RoleRepository repository;
   
   @Mock
-  private LoggingEventBus bus;
+  private EventBus bus;
   
   @Mock
-  private RoleToJpa toJpa;
+  private RoleToJpaImpl toJpa;
   
   
   @BeforeEach

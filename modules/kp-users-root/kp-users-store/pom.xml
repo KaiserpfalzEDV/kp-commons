@@ -42,6 +42,10 @@
         </dependency>
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
+            <artifactId>kp-commons-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-jpa</artifactId>
         </dependency>
         <dependency>

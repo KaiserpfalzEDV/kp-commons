@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.ApiKeyRevokedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
@@ -53,7 +53,7 @@ import java.util.UUID;
 @XSlf4j
 public class JpaUserManagementService implements UserManagementService {
   private final UserRepository repository;
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   private final UserToJpaImpl toJpa;
   
   @Value("${spring.application.system:kp-commons}")

@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.events.*;
@@ -32,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 
@@ -46,7 +47,7 @@ import org.springframework.stereotype.Service;
 public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   private final JpaRoleWriteService writeService;
   private final JpaUserRoleManagementService userRoleManagement;
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   
   @Value("${spring.application.system:kp-commons}")
   private String system = "kp-commons";
@@ -73,6 +74,7 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
 
   
   @Override
+  @EventListener
   public void event(@NotNull final RoleCreatedEvent event) {
     log.entry(event);
     
@@ -88,6 +90,7 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(@NotNull final RoleUpdateNameSpaceEvent event) {
     log.entry(event);
     
@@ -104,6 +107,7 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   
   
   @Override
+  @EventListener
   public void event(@NotNull final RoleUpdateNameEvent event) {
     log.entry(event);
     
@@ -120,6 +124,7 @@ public class JpaRoleEventsHandler implements RoleEventsHandler, AutoCloseable {
   
   
   @Override
+  @EventListener
   public void event(@NotNull final RoleRemovedEvent event) {
     log.entry(event);
     

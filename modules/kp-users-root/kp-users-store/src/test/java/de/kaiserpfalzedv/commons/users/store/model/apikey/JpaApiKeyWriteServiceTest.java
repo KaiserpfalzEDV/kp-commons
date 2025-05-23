@@ -59,7 +59,7 @@ public class JpaApiKeyWriteServiceTest {
   private ApiKeyToImpl toImpl;
 
   @Mock
-  private ApiKeyToJPA toJPA;
+  private ApiKeyToJPAImpl toJPA;
   
   
   @BeforeEach
@@ -101,9 +101,9 @@ public class JpaApiKeyWriteServiceTest {
     log.entry();
     
     when(repository.save(any(ApiKeyJPA.class))).thenReturn(DEFAULT_APIKEY);
-    when(toImpl.apply(any(ApiKeyJPA.class))).thenReturn(DEFAULT_APIKEY_IMPL);
+    when(toJPA.apply(any(ApiKeyImpl.class))).thenReturn(DEFAULT_APIKEY);
     
-    sut.create(toImpl.apply(DEFAULT_APIKEY));
+    sut.create(DEFAULT_APIKEY_IMPL);
     
     log.exit();
   }

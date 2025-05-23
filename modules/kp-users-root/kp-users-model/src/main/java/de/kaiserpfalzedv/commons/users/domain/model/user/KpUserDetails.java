@@ -18,7 +18,7 @@
 
 package de.kaiserpfalzedv.commons.users.domain.model.user;
 
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;

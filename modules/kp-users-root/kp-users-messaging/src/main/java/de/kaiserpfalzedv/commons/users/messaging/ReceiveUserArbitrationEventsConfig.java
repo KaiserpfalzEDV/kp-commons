@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.users.messaging;
 
 
-import de.kaiserpfalzedv.commons.core.events.EnableEventBus;
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
@@ -38,13 +37,12 @@ import java.util.function.Consumer;
  * @since 2025-05-18
  */
 @Configuration
-@EnableEventBus
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
 public class ReceiveUserArbitrationEventsConfig {
   @Bean
-  public Consumer<UserPetitionedEvent> petitionUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserPetitionedEvent> petitionUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       

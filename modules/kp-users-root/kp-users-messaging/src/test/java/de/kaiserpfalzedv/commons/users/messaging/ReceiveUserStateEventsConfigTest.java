@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.messaging;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 public class ReceiveUserStateEventsConfigTest {
   private ReceiveUserStateEventsConfig sut;
   
-  @Mock private LoggingEventBus bus;
+  @Mock private EventBus bus;
   
   
   @BeforeEach

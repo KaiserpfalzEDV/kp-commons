@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.KpRole;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.Rol
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.RoleRemovedFromUserEvent;
 import de.kaiserpfalzedv.commons.users.store.model.role.JpaRoleReadService;
 import de.kaiserpfalzedv.commons.users.store.model.role.RoleJPA;
-import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpa;
+import de.kaiserpfalzedv.commons.users.store.model.role.RoleToJpaImpl;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,10 +58,10 @@ public class JpaUserRoleManagementServiceTest {
   private UserRepository repository;
   
   @Mock
-  private LoggingEventBus bus;
+  private EventBus bus;
   
   @Mock
-  private RoleToJpa toJpa;
+  private RoleToJpaImpl toJpa;
   
   private static final UUID DEFAULT_ID = UUID.randomUUID();
   private static final OffsetDateTime CREATED_AT = OffsetDateTime.now();

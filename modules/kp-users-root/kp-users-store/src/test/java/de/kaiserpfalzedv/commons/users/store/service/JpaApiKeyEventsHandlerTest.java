@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKeyImpl;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
@@ -55,7 +55,7 @@ public class JpaApiKeyEventsHandlerTest {
   private JpaApiKeyWriteService writeService;
   
   @Mock
-  private LoggingEventBus bus;
+  private EventBus bus;
   
   
   private static final String LOCAL_SYSTEM = "kp-commons";

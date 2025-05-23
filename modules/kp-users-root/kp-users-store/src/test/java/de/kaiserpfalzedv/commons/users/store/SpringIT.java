@@ -26,9 +26,9 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-17
  */
-@SpringBootTest(
-    classes = SpringIT.class
-)
+@SpringBootTest(classes = {
+  SpringIT.class
+})
 @EnableUserStore
 @EnableAutoConfiguration
 public class SpringIT {

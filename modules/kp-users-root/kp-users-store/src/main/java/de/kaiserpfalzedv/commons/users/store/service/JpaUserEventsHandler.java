@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
@@ -37,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 
@@ -56,7 +57,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   private final JpaUserDataManagementService dataService;
   private final JpaUserRoleManagementService roleService;
   private final JpaUserStateManagementService stateService;
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   
   
   @Value("${spring.application.application:kp-commons")
@@ -84,6 +85,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
 
   
   @Override
+  @EventListener
   public void event(final UserActivatedEvent event) {
     log.entry(event);
     
@@ -99,6 +101,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserCreatedEvent event) {
     log.entry(event);
     
@@ -114,6 +117,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserDeletedEvent event) {
     log.entry(event);
     
@@ -125,6 +129,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserRemovedEvent event) {
     log.entry(event);
     
@@ -136,6 +141,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserBannedEvent event) {
     log.entry(event);
 
@@ -151,6 +157,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserDetainedEvent event) {
     log.entry(event);
     
@@ -165,6 +172,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserPetitionedEvent event) {
     log.entry(event);
 
@@ -176,6 +184,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserReleasedEvent event) {
     log.entry(event);
     
@@ -191,6 +200,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserLoginEvent event) {
     log.entry(event);
     
@@ -203,6 +213,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserLogoutEvent event) {
     log.entry(event);
 
@@ -215,6 +226,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final RoleAddedToUserEvent event) {
     log.entry(event);
     
@@ -228,6 +240,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final RoleRemovedFromUserEvent event) {
     log.entry(event);
     
@@ -242,6 +255,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
 
   
   @Override
+  @EventListener
   public void event(final UserSubjectModificationEvent event) {
     log.entry(event);
 
@@ -257,6 +271,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserNamespaceAndNameModificationEvent event) {
     log.entry(event);
 
@@ -272,6 +287,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserNamespaceModificationEvent event) {
     log.entry(event);
 
@@ -287,6 +303,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserNameModificationEvent event) {
     log.entry(event);
 
@@ -302,6 +319,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserEmailModificationEvent event) {
     log.entry(event);
 
@@ -317,6 +335,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   }
   
   @Override
+  @EventListener
   public void event(final UserDiscordModificationEvent event) {
     log.entry(event);
 

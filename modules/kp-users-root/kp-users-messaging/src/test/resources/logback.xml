@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <root level="info">
+    <root level="WARN">
         <appender-ref ref="Console" />
     </root>
 
@@ -22,14 +22,6 @@
     </logger>
 
     <logger name="de.kaiserpfalzedv.commons.users.messaging" level="TRACE" additivity="false">
-        <appender-ref ref="Console"/>
-    </logger>
-
-    <logger name="org.springframework" level="INFO" additivity="false">
-        <appender-ref ref="Console"/>
-    </logger>
-
-    <logger name="org.springframework.cloud.stream" level="TRACE" additivity="false">
         <appender-ref ref="Console"/>
     </logger>
 

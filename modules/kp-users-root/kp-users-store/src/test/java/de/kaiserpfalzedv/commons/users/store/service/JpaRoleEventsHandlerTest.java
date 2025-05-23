@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.KpRole;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
@@ -60,7 +60,7 @@ public class JpaRoleEventsHandlerTest {
   private JpaUserRoleManagementService userRoleManagement;
 
   @Mock
-  private LoggingEventBus bus;
+  private EventBus bus;
   
   private static final String LOCAL_SYSTEM = "kp-commons";
   private static final String EXTERNAL_SYSTEM = "other-application";

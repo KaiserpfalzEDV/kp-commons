@@ -17,7 +17,7 @@
 
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import lombok.extern.slf4j.XSlf4j;
@@ -46,10 +46,10 @@ public class JpaUserDataManagementServiceTest {
   private UserRepository repository;
   
   @Mock
-  private LoggingEventBus bus;
+  private EventBus bus;
   
   @Mock
-  private UserToJpa toJpa;
+  private UserToJpaImpl toJpa;
   
   
   @BeforeEach

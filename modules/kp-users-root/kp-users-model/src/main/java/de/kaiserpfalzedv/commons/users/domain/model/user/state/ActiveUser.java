@@ -19,7 +19,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.state;
 
 
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserRemovedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;

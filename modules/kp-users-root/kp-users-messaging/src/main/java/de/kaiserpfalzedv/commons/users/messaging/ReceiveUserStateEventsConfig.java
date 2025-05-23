@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.users.messaging;
 
 
-import de.kaiserpfalzedv.commons.core.events.EnableEventBus;
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.*;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
@@ -38,13 +37,12 @@ import java.util.function.Consumer;
  * @since 2025-05-18
  */
 @Configuration
-@EnableEventBus
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
 public class ReceiveUserStateEventsConfig {
   @Bean
-  public Consumer<UserActivatedEvent> activateUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserActivatedEvent> activateUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -56,7 +54,7 @@ public class ReceiveUserStateEventsConfig {
   }
   
   @Bean
-  public Consumer<UserBannedEvent> banUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserBannedEvent> banUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -68,7 +66,7 @@ public class ReceiveUserStateEventsConfig {
   }
   
   @Bean
-  public Consumer<UserCreatedEvent> createUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserCreatedEvent> createUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -80,7 +78,7 @@ public class ReceiveUserStateEventsConfig {
   }
   
   @Bean
-  public Consumer<UserDeletedEvent> deleteUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserDeletedEvent> deleteUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -92,7 +90,7 @@ public class ReceiveUserStateEventsConfig {
   }
   
   @Bean
-  public Consumer<UserDetainedEvent> detainUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserDetainedEvent> detainUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -104,7 +102,7 @@ public class ReceiveUserStateEventsConfig {
   }
   
   @Bean
-  public Consumer<UserReleasedEvent> releaseUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserReleasedEvent> releaseUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -116,7 +114,7 @@ public class ReceiveUserStateEventsConfig {
   }
   
   @Bean
-  public Consumer<UserRemovedEvent> removeUser(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserRemovedEvent> removeUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       

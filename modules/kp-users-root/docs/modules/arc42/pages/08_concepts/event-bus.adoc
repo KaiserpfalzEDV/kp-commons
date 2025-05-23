@@ -12,7 +12,7 @@ The Guava EventBus allows objects to communicate with each other *without being 
 
 * *Decoupling*: Publishers don’t need to know who the subscribers are.
 * *Type-based routing*: Events are dispatched to subscribers based on the event's type.
-* *Annotation-driven*: Methods that should handle events are annotated with `@Subscribe`.
+* *Annotation-driven*: Methods that should handle events are annotated with `@EventListener`.
 * *Thread-safe*: Internally synchronized so that multiple threads can safely post events or register subscribers.
 * *Synchronous by default*: Event handlers are called in the same thread as the caller that posts the event (can be made async with `AsyncEventBus`).
 
@@ -22,7 +22,7 @@ The Guava EventBus allows objects to communicate with each other *without being 
 
 [source,java,opts=novalidate]
 ----
-EventBus eventBus = new EventBus();
+EventBus eventBus = new SpringEventBus();
 ----
 
 === 2. Event Class
@@ -42,7 +42,7 @@ public class UserCreatedEvent {
 [source,java,opts=novalidate]
 ----
 public class UserEventListener {
-    @Subscribe
+    @EventListener
     public void handleUserCreated(UserCreatedEvent event) {
         System.out.println("User created: " + event.getUsername());
     }

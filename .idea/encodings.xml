@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-bom/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-bom/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-core/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-parent/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-parent/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-parent/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/kp-commons-api/src/main/helm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/kp-commons-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/kp-commons-api/src/main/resources" charset="UTF-8" />
@@ -55,6 +33,9 @@
     <file url="file://$PROJECT_DIR$/kp-spring-boot-parent/src/main/helm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/kp-spring-boot-parent/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/kp-spring-boot-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/kp-commons-guava/src/main/helm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/kp-commons-guava/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/kp-commons-guava/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-jpa/src/main/helm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-jpa/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-jpa/src/main/resources" charset="UTF-8" />
@@ -106,16 +87,27 @@
     <file url="file://$PROJECT_DIR$/testsupport/kp-core-testsupport/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/testsupport/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/testsupport/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-bom/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-bom/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-core/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-parent/src/main/helm" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-parent/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-parent/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../paladins-inn/kp-rpg/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-bom/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-bom/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-core/src/main/helm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/src/main/helm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/src/main/helm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-game-modules/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-parent/src/main/helm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/kp-rpg-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/src/main/resources" charset="UTF-8" />
   </component>
 </project>

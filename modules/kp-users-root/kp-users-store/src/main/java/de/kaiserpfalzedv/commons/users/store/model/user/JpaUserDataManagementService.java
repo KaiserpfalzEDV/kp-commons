@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.model.user;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import de.kaiserpfalzedv.commons.users.domain.services.UserDataManagementService;
@@ -47,7 +47,7 @@ import java.util.UUID;
 @XSlf4j
 public class JpaUserDataManagementService implements UserDataManagementService {
   private final UserRepository repository;
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   
   @Value("${spring.application.system:kp-commons}")
   private String system = "kp-commons";

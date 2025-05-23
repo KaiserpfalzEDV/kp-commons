@@ -17,7 +17,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.events;
 
 
-import de.kaiserpfalzedv.commons.core.events.BaseEvent;
+import de.kaiserpfalzedv.commons.api.events.BaseEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

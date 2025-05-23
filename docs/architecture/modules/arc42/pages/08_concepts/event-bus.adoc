@@ -1,39 +1,55 @@
-= Guava EventBus: Concept Overview
+= Spring Application Events: Konzept-Übersicht
 
 include::partial$config.adoc[]
 
-The *Guava EventBus*, part of the Google Guava library for Java, implements a *publish-subscribe (pub-sub)* messaging pattern. This design pattern decouples the components that send events (publishers) from those that handle them (subscribers).
+Die *Spring Application Events* implementieren ein *Publish-Subscribe (Pub-Sub)*-Muster, bei dem Ereignisse (Events) getrennt von den Komponenten sind, die diese konsumieren.
 
-== 🔁 Core Concept
+== 🔁 Kernidee
 
-The Guava EventBus allows objects to communicate with each other *without being tightly coupled*. Instead of directly calling methods on other objects, an object can *post an event* to the EventBus, and any object that is registered as a *subscriber* to that type of event will automatically receive it.
+Statt direkte Methodenaufrufe zu verwenden, veröffentlichen Klassen Ereignisse mit dem `ApplicationEventPublisher`. Empfänger, die mit `@EventListener` annotiert sind, erhalten diese Ereignisse automatisch.
 
-== 🧠 Key Features
+== 🧠 Hauptmerkmale
 
-* *Decoupling*: Publishers don’t need to know who the subscribers are.
-* *Type-based routing*: Events are dispatched to subscribers based on the event's type.
-* *Annotation-driven*: Methods that should handle events are annotated with `@Subscribe`.
-* *Thread-safe*: Internally synchronized so that multiple threads can safely post events or register subscribers.
-* *Synchronous by default*: Event handlers are called in the same thread as the caller that posts the event (can be made async with `AsyncEventBus`).
+* *Entkopplung*: Der Sender kennt die Empfänger nicht.
+* *Typbasierte Zustellung*: Events werden nach ihrem Typ weitergeleitet.
+* *Annotationen*: `@EventListener`-Methoden reagieren auf bestimmte Ereignisse.
+* *Thread-sicher*: Spring steuert die Thread-Synchronisierung intern.
+* *Spezielle Varianten*: Unterstützung für asynchrone Verarbeitung per `@Async`.
 
-== 🧱 Basic Components
+== 🧱 Grundlegende Bausteine
 
-=== 1. EventBus Instance
-
-[source,java,opts=novalidate]
-----
-EventBus eventBus = new EventBus();
-----
-
-=== 2. Event Class
+=== 1. Ereignisklasse
 
 [source,java,opts=novalidate]
 ----
-@Builder
-@AllArgsConstructor
-@Getter
 public class UserCreatedEvent {
-    private final String username;
+  private final String username;
+  public UserCreatedEvent(String username) {
+    this.username = username;
+  }
+  public String getUsername() {
+    return username;
+  }
+}
+----
+
+=== 2. Event-Publisher
+
+[source,java,opts=novalidate]
+----
+@Component
+public class UserService {
+
+  private final ApplicationEventPublisher publisher;
+
+  public UserService(ApplicationEventPublisher publisher) {
+    this.publisher = publisher;
+  }
+
+  public void createUser(String username) {
+    // ... benutzer anlegen
+    publisher.publishEvent(new UserCreatedEvent(username));
+  }
 }
 ----
 
@@ -41,27 +57,19 @@ public class UserCreatedEvent {
 
 [source,java,opts=novalidate]
 ----
+@Component
 public class UserEventListener {
-    @Subscribe
-    public void handleUserCreated(UserCreatedEvent event) {
-        System.out.println("User created: " + event.getUsername());
-    }
+
+  @EventListener
+  public void onUserCreated(UserCreatedEvent event) {
+    System.out.println("Benutzer angelegt: " + event.getUsername());
+  }
 }
 ----
 
-=== 4. Posting an Event
+== ⚡ Anwendungsfälle
 
-[source,java,opts=novalidate]
-----
-eventBus.register(new UserEventListener());
-eventBus.post(new UserCreatedEvent("Alice"));
-----
-
-== ⚡ Use Cases
-
-* Event-driven applications
-* UI updates in response to model changes
-* Decoupling business logic from controllers or services
-* In-process communication within complex systems
-
-<<<
+* Event-getriebene Anwendungen
+* Datenmodelle, deren Änderungen UI aktualisieren sollen
+* Trennung von Business-Logik und Steuerung
+* Innerbetriebliche Kommunikation in komplexen Systemen

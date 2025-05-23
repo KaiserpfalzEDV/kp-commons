@@ -1,7 +1,7 @@
 package de.kaiserpfalzedv.commons.users.client.service;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class ApiKeyAuthenticationManager implements AuthenticationManager {
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   private final AuthenticationService authenticationService;
   
   

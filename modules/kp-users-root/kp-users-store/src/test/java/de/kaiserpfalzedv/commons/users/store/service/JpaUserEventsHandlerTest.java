@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.KpRole;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
@@ -59,7 +59,7 @@ public class JpaUserEventsHandlerTest {
   @Mock private JpaUserDataManagementService userDataManagement;
   @Mock private JpaUserStateManagementService userStateManagement;
   @Mock private JpaUserRoleManagementService userRoleManagement;
-  @Mock private LoggingEventBus bus;
+  @Mock private EventBus bus;
   
   
   private static final String LOCAL_SYSTEM = "kp-commons";

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+        name="kp-commons-guava">
+    <body>
+
+        <menu name="Base" inherit="true">
+            <item name="BOM" href="../../../kp-commons-bom/index.html" />
+            <item name="Parent" href="../../../kp-commons-parent/index.html" />
+            <item name="Spring Boot-Parent" href="../../../kp-commons-parent/kp-spring-boot-parent/index.html" />
+            <item name="Checkstyle" href="../../../kp-checkstyle/index.html" />
+        </menu>
+
+        <menu name="Modules" inherit="true">
+            <item name="Core" href="../../kp-commons-core-root/index.html" />
+            <item name="Modules" href="../../kp-commons-modules-root/index.html" />
+            <item name="Services" href="../../kp-commons-services-root/index.html" />
+        </menu>
+
+        <menu name="Architecture">
+            <item name="Introduction and Goals" href="01-introduction.html" />
+            <item name="Constraints" href="02-constraints.html" />
+            <item name="Context and Scope" href="03-context.html" />
+            <item name="Solution Strategy" href="04-solution-strategy.html" />
+            <item name="Building Block View" href="05-building-block-view.html" />
+            <item name="Runtime View" href="06-runtime-view.html" />
+            <item name="Deployment View" href="07-deployment-view.html" />
+            <item name="Crosscutting Concepts" href="08-crosscutting-concepts.html" />
+            <item name="Architecture Decisions" href="09-architecture-decisions.html" />
+            <item name="Quality" href="10-quality.html" />
+            <item name="Risks and Technical Debt" href="11-risks-and-technical-debt.html" />
+            <item name="Glossary" href="12-glossary.html" />
+        </menu>
+
+        <menu ref="modules"  inherit="true" />
+
+        <menu ref="reports" inherit="true" />
+
+        <menu name="Links" inherit="true" >
+            <item name="Kaiserpfalz EDV-Servie" href="https://www.kaiserpfalz-edv.de/" />
+            <item name="Paladins Inn" href="https://paladins-inn.de/" />
+            <item name="Roland T. Lichti" href="https://lichti.de/" />
+        </menu>
+
+        <footer>
+            <![CDATA[<script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+                mermaid.initialize({ startOnLoad: false, suppressError: false });
+                await mermaid.run({ querySelector: '.language-mermaid' })
+            </script>]]>
+        </footer>
+    </body>
+</project>

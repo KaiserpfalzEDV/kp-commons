@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.service;
 
 
-import com.google.common.eventbus.Subscribe;
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.apikey.events.*;
 import de.kaiserpfalzedv.commons.users.store.model.apikey.JpaApiKeyWriteService;
@@ -31,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 
@@ -44,7 +44,7 @@ import org.springframework.stereotype.Service;
 @XSlf4j
 public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseable {
   private final JpaApiKeyWriteService writeService;
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   
   @Value("${spring.application.system:kp-commons}")
   private String system = "kp-commons";
@@ -71,7 +71,7 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
 
   
   @Override
-  @Subscribe
+  @EventListener
   public void event(@NotNull final ApiKeyCreatedEvent event) {
     log.entry(event);
     
@@ -87,7 +87,7 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   }
   
   @Override
-  @Subscribe
+  @EventListener
   public void event(@NotNull final ApiKeyRevokedEvent event) {
     log.entry(event);
     
@@ -99,7 +99,7 @@ public class JpaApiKeyEventsHandler implements ApiKeyEventsHandler, AutoCloseabl
   }
   
   @Override
-  @Subscribe
+  @EventListener
   public void event(@NotNull final ApiKeyNearExpiryEvent event) {
     // Don't need to handle this event at all.
     log.trace("Nothing to do.");

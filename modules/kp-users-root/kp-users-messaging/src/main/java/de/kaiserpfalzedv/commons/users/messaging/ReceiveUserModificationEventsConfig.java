@@ -18,8 +18,7 @@
 package de.kaiserpfalzedv.commons.users.messaging;
 
 
-import de.kaiserpfalzedv.commons.core.events.EnableEventBus;
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.events.modification.*;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
@@ -38,14 +37,13 @@ import java.util.function.Consumer;
  * @since 2025-05-18
  */
 @Configuration
-@EnableEventBus
 @RequiredArgsConstructor(onConstructor_ = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
 public class ReceiveUserModificationEventsConfig {
 
   @Bean
-  public Consumer<RoleAddedToUserEvent> addingRole(@NotNull final LoggingEventBus bus) {
+  public Consumer<RoleAddedToUserEvent> addingRole(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -57,7 +55,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<RoleRemovedFromUserEvent> removeRole(@NotNull final LoggingEventBus bus) {
+  public Consumer<RoleRemovedFromUserEvent> removeRole(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -69,7 +67,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<UserDiscordModificationEvent> modifyDiscord(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserDiscordModificationEvent> modifyDiscord(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -81,7 +79,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<UserEmailModificationEvent> modifyEmail(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserEmailModificationEvent> modifyEmail(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -93,7 +91,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<UserNameModificationEvent> modifyName(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserNameModificationEvent> modifyName(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -105,7 +103,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<UserNamespaceModificationEvent> modifyNamespace(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserNamespaceModificationEvent> modifyNamespace(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -117,7 +115,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<UserNamespaceAndNameModificationEvent> modifyNamespaceAndName(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserNamespaceAndNameModificationEvent> modifyNamespaceAndName(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       
@@ -129,7 +127,7 @@ public class ReceiveUserModificationEventsConfig {
   }
   
   @Bean
-  public Consumer<UserSubjectModificationEvent> modifySubject(@NotNull final LoggingEventBus bus) {
+  public Consumer<UserSubjectModificationEvent> modifySubject(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       

@@ -17,7 +17,7 @@
  */
 package de.kaiserpfalzedv.commons.users.messaging;
 
-import de.kaiserpfalzedv.commons.core.events.EnableEventBus;
+import de.kaiserpfalzedv.commons.spring.events.SpringEventBus;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -32,13 +32,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@EnableEventBus
 @Import({
-    SendUserActivityEventsConfig.class,
-    StreamingErrorHandlerConfig.class,
-    ReceiveUserActivityEventsConfig.class,
+    ReceiveUserActivityConfig.class,
     ReceiveUserArbitrationEventsConfig.class,
     ReceiveUserModificationEventsConfig.class,
     ReceiveUserStateEventsConfig.class,
+    SpringEventBus.class
 })
 public @interface EnableUsersMessaging {}

@@ -19,7 +19,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.state;
 
 
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotNull;
 
@@ -71,7 +71,6 @@ public interface UserState {
    * @return the current user state.
    */
   UserState petition(final UUID petition);
-  
   
   default boolean isActive() {
     return getUser().isActive();

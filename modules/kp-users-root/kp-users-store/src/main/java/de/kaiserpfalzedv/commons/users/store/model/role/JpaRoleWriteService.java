@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.store.model.role;
 
 
-import de.kaiserpfalzedv.commons.core.events.LoggingEventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.role.Role;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleNotFoundException;
 import de.kaiserpfalzedv.commons.users.domain.model.role.RoleCantBeCreatedException;
@@ -52,7 +52,7 @@ import java.util.UUID;
 @XSlf4j
 public class JpaRoleWriteService implements RoleWriteService {
   private final RoleRepository repository;
-  private final LoggingEventBus bus;
+  private final EventBus bus;
   private final RoleToJpaImpl toJpa;
   
   

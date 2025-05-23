@@ -18,14 +18,16 @@
 
 package de.kaiserpfalzedv.commons.users.domain.model.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import de.kaiserpfalzedv.commons.users.domain.model.abac.HasOwner;
-import de.kaiserpfalzedv.commons.users.domain.model.user.state.*;
+import de.kaiserpfalzedv.commons.users.domain.model.user.state.UserState;
 import jakarta.validation.constraints.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -167,10 +169,13 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   }
   
   
+  @Override
   default UUID getOwnerId() {
     return getId();
   }
-  
+
+  @Override
+  @JsonBackReference
   default HasId<UUID> getOwner() {
     return this;
   }
@@ -241,11 +246,13 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   
   
   @Override
+  @JsonIgnore
   default String getPassword() {
     throw new UnsupportedOperationException();
   }
   
   @Override
+  @JsonIgnore
   default String getUsername() {
     return getName();
   }

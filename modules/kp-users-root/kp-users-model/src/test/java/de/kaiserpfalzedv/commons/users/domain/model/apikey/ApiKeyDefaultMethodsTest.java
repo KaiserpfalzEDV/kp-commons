@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.apikey;
 
 
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDeletedException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDetainedException;

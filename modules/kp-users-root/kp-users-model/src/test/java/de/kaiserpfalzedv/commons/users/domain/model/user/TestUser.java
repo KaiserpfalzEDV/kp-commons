@@ -18,7 +18,7 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user;
 
 
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

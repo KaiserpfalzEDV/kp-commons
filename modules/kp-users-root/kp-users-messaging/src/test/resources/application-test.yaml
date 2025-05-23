@@ -13,7 +13,7 @@ spring:
   
   cloud:
     function:
-      definition: "sendUserLogin"
+      definition: receiveUserLogin|receiveUserLogout
     stream:
       rabbit:
         default:
@@ -40,26 +40,14 @@ spring:
             auto-bind-exchange: true
             auto-bind-queue: true
       bindings:
-        sendUserLogin-in-0:
-          binder: guava
-        sendUserLogin-out-0:
-          binder: rabbit
+        userLogin:
           destination: kp-users.activity
-        sendUserLogout-in-0:
-          binder: guava
-        sendUserLogout-out-0:
-          binder: rabbit
+          content-type: application/json
+        userLogout:
           destination: kp-users.activity
-        sendUserDeletion-in-0:
-          binder: guava
-        sendUserDeletion-out-0:
-          binder: rabbit
-          destination: kp-users.modification
+          content-type: application/json
       binder:
-        guava:
-          defaultCandidate: false
         rabbit:
-          defaultCandidate: false
           default:
             broker:
               host: localhost
@@ -78,8 +66,7 @@ management:
 logging:
   level:
     root: WARN
-    web: WARN
-    security: WARN
-    "de.kaiserpfalzedv.commons": INFO
-    "de.kaiserpfalzedv.commons.users": DEBUG
-    "de.kaiserpfalzedv.commons.users.store": TRACE
+    org.springframework: WARN
+    de.kaiserpfalzedv.commons: INFO
+    de.kaiserpfalzedv.commons.users: DEBUG
+    de.kaiserpfalzedv.commons.users.messaging: TRACE
