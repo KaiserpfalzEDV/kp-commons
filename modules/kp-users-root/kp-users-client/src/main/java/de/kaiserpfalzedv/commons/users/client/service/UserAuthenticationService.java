@@ -18,14 +18,9 @@
 package de.kaiserpfalzedv.commons.users.client.service;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDetainedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.user.*;
 import de.kaiserpfalzedv.commons.users.domain.services.AuthenticationService;
+import de.kaiserpfalzedv.commons.users.domain.services.UserManagementService;
 import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +42,8 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class UserAuthenticationService implements AuthenticationService {
-  private final UserReadService readService;
-  private final UserWriteService writeService;
+  private final UserReadService<User> readService;
+  private final UserManagementService writeService;
   
   @Value("${spring.application.system:no-system")
   private String namespace = "no-system";
@@ -69,7 +64,7 @@ public class UserAuthenticationService implements AuthenticationService {
   public User authenticate(final OidcUser oidcUser) throws UserIsInactiveException, UserCantBeCreatedException {
     log.entry(namespace, oidcUser);
     
-    Optional<? extends User> data = readService.findByOauth(oidcUser.getIssuer().toString(), oidcUser.getSubject());
+    Optional<User> data = readService.findByOauth(oidcUser.getIssuer().toString(), oidcUser.getSubject());
     
     log.debug("Data found. found={}, data={}", data.isPresent(), data.orElse(null));
     

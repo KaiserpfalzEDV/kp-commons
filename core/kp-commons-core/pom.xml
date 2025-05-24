@@ -52,12 +52,6 @@
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>33.4.6-jre</version>
-        </dependency>
-
         <!-- Json/XML handling -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

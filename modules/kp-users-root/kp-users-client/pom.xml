@@ -37,16 +37,7 @@
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
-            <artifactId>kp-commons-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.commons</groupId>
-            <artifactId>kp-commons-spring</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.commons</groupId>
-            <artifactId>kp-users-model</artifactId>
+            <artifactId>kp-users-messaging</artifactId>
         </dependency>
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>

@@ -18,15 +18,8 @@
 package de.kaiserpfalzedv.commons.users.client.service;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.user.BaseUserException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsDetainedException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
-import de.kaiserpfalzedv.commons.users.domain.model.user.KpUserDetails;
-import de.kaiserpfalzedv.commons.users.domain.model.user.User;
+import de.kaiserpfalzedv.commons.users.domain.model.user.*;
+import de.kaiserpfalzedv.commons.users.domain.services.UserManagementService;
 import de.kaiserpfalzedv.commons.users.domain.services.UserReadService;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,16 +55,21 @@ public class UserAuthenticationServiceTest {
   private UserAuthenticationService sut;
   
   @Mock
-  private UserReadService userReadService;
+  private UserReadService<User> userReadService;
   
   @Mock
-  private UserWriteService userWriteService;
+  private UserManagementService userWriteService;
   
   @Mock
   private Authentication authentication;
   
   @Mock
   private OidcUser oidcUser;
+  
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+  @Mock
+  private Optional<User> PLAYER_OPTIONAL;
+  
   
   @BeforeEach
   public void setUpTest() {
@@ -85,7 +83,7 @@ public class UserAuthenticationServiceTest {
 
     when(oidcUser.getIssuer()).thenReturn(DEFAULT_ISSUER);
     when(oidcUser.getSubject()).thenReturn(PLAYER.getSubject());
-    when(userReadService.findByOauth(PLAYER.getIssuer(), PLAYER.getSubject())).thenReturn(Optional.of(PLAYER));
+    when(userReadService.findByOauth(PLAYER.getIssuer(), PLAYER.getSubject())).thenReturn(PLAYER_OPTIONAL);
 
     User result = sut.authenticate(oidcUser);
     
@@ -95,13 +93,13 @@ public class UserAuthenticationServiceTest {
   }
   
   @Test
-  public void shouldReturnAnExistingUserWhenCallingWithOidcUserBasedAuthentication() throws UserIsInactiveException, UserCantBeCreatedException, InvalidApiKeyException {
+  public void shouldReturnAnExistingUserWhenCallingWithOidcUserBasedAuthentication() throws UserIsInactiveException, UserCantBeCreatedException {
     log.entry();
     
     when(authentication.getPrincipal()).thenReturn(oidcUser);
     when(oidcUser.getIssuer()).thenReturn(DEFAULT_ISSUER);
     when(oidcUser.getSubject()).thenReturn(PLAYER.getSubject());
-    when(userReadService.findByOauth(PLAYER.getIssuer(), PLAYER.getSubject())).thenReturn(PLAYER_OPTIONAL);
+    when(userReadService.findByOauth(PLAYER.getIssuer(), PLAYER.getSubject())).thenReturn(Optional.of(PLAYER));
     
     User result = sut.authenticate(authentication);
     
@@ -117,7 +115,7 @@ public class UserAuthenticationServiceTest {
     
     when(oidcUser.getIssuer()).thenReturn(DEFAULT_ISSUER);
     when(oidcUser.getSubject()).thenReturn(BANNED.getSubject());
-    when(userReadService.findByOauth(BANNED.getIssuer(), BANNED.getSubject())).thenReturn(Optional.of(BANNED));
+    when(userReadService.findByOauth(BANNED.getIssuer(), BANNED.getSubject())).thenReturn(PLAYER_OPTIONAL);
     
     try {
       sut.authenticate(oidcUser);
@@ -223,7 +221,7 @@ public class UserAuthenticationServiceTest {
   
   
   
-  private static final User PLAYER = KpUserDetails.builder()
+  private static final KpUserDetails PLAYER = KpUserDetails.builder()
       .issuer(DEFAULT_ISSUER.toString())
       .id(SUBJECT)
       .subject(SUBJECT.toString())
@@ -236,23 +234,22 @@ public class UserAuthenticationServiceTest {
       .modified(MODIFIED_AT)
       .authorities(PLAYER_AUTHORITIES)
       .build();
-  private static final Optional<? extends User> PLAYER_OPTIONAL = Optional.of(PLAYER);
   
-  private static final User BANNED = ((KpUserDetails)PLAYER).toBuilder()
+  private static final User BANNED = PLAYER.toBuilder()
       .name(NAME_BANNED)
       .bannedOn(PLAYER.getModified())
       .build();
-  private static final User DETAINED = ((KpUserDetails)PLAYER).toBuilder()
+  private static final User DETAINED = PLAYER.toBuilder()
       .name(NAME_DETAINED)
       .detainedTill(OffsetDateTime.now().plusDays(6L))
       .detainmentDuration(Duration.ofDays(90L))
       .build();
-  private static final User DELETED = ((KpUserDetails)PLAYER).toBuilder()
+  private static final User DELETED = PLAYER.toBuilder()
       .name(NAME_DELETED)
       .deleted(PLAYER.getModified())
       .build();
   
-  private static final User CREATED = ((KpUserDetails)PLAYER).toBuilder()
+  private static final User CREATED = PLAYER.toBuilder()
       .name(NAME_CREATED)
       .build();
 }

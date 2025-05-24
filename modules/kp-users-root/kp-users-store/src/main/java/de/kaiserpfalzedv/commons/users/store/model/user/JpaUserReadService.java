@@ -33,7 +33,7 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
-public class JpaUserReadService implements UserReadService {
+public class JpaUserReadService implements UserReadService<UserJPA> {
     private final UserRepository users;
     
     @Override

@@ -182,6 +182,11 @@
             </dependency>
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-users-messaging</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-users-client</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>

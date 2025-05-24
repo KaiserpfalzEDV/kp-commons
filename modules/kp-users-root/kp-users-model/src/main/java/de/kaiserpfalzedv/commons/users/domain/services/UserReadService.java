@@ -28,9 +28,9 @@ import java.util.UUID;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2025-05-03
  */
-public interface UserReadService {
-  Optional<? extends User> findById(@NotBlank UUID id);
+public interface UserReadService<T extends User> {
+  Optional<T> findById(@NotBlank UUID id);
 
-  Optional<? extends User> findByUsername(@NotBlank final String nameSpace, @NotBlank final String name);
-  Optional<? extends User> findByOauth(@NotBlank final String issuer, @NotBlank final String sub);
+  Optional<T> findByUsername(@NotBlank final String nameSpace, @NotBlank final String name);
+  Optional<T> findByOauth(@NotBlank final String issuer, @NotBlank final String sub);
 }
