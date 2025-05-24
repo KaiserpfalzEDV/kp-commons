@@ -42,12 +42,17 @@ public class AbstractSendUserEventsHandler {
   private String application = "kp-users";
   
   protected void sendEvent(@NotNull final String binding, @NotNull final BaseEvent event) {
-    log.entry(event);
+    log.entry(binding, event);
     
     if (isLocalEvent(event)) {
+      //noinspection unchecked
       Message<String> message = (Message<String>) converter.toMessage(event, converter.headers(event));
       
-      log.info("Sending event. event={}, message={}", event, message);
+      if (message == null) {
+        throw log.throwing(new IllegalArgumentException("Cannot convert event to message. event=%s".formatted(event)));
+      }
+      
+      log.info("Sending event. binding={}, message={}", binding, message);
       sender.send(binding, message);
     }
     

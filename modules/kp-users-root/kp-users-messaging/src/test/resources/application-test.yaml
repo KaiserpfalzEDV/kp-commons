@@ -13,40 +13,40 @@ spring:
   
   cloud:
     function:
-      definition: receiveUserLogin|receiveUserLogout
+      definition: loginUser,logoutUser,petitionedUser,addingRole,removeRole,modifyDiscord,modifyEmail,modifyName,modifyNamespace,modifyNamespaceAndName,modifySubject,activateUser,banUser,createUser,deleteUser,detainUser,releaseUser,removeUser
     stream:
       bindings:
-        userLogin-in-0:
+        loginUser-in-0:
           destination: kp-users.activity
           content-type: application/json
-        userLogout-in-0:
+        logoutUser-in-0:
           destination: kp-users.activity
           content-type: application/json
-        userPetitioned:
+        petitionedUser-in-0:
           destination: kp-users.arbitration
           content-type: application/json
-        userAddedRole:
+        addingRole-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userRemovedRole:
+        removeRole-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userModifyDiscord:
+        modifyDiscord-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userModifyEmail:
+        modifyEmail-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userModifyName:
+        modifyName-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userModifyNamespace:
+        modifyNamespace-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userModifyNamespaceAndName:
+        modifyNamespaceAndName-in-0:
           destination: kp-users.modification
           content-type: application/json
-        userModifySubject:
+        modifySubject-in-0:
           destination: kp-users.modification
           content-type: application/json
         activateUser-in-0:

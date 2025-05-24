@@ -39,7 +39,6 @@ import org.springframework.stereotype.Service;
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
 public class SendUserActivityEventsHandler extends AbstractSendUserEventsHandler {
-  
 
   @Inject
   public SendUserActivityEventsHandler(final StreamBridge sender, final UserEventMessagingConverter converter) {

@@ -42,7 +42,7 @@ import java.util.function.Consumer;
 @XSlf4j
 public class ReceiveUserArbitrationEventsConfig {
   @Bean
-  public Consumer<UserPetitionedEvent> petitionUser(@NotNull final EventBus bus) {
+  public Consumer<UserPetitionedEvent> petitionedUser(@NotNull final EventBus bus) {
     return event -> {
       log.entry(event);
       

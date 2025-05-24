@@ -48,7 +48,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onRoleAddedToUser(@NotNull @Valid final RoleAddedToUserEvent event) {
     log.entry(event);
 
-    sendEvent("userAddedRole", event);
+    sendEvent("addingRole-in-0", event);
 
     log.exit();
   }
@@ -58,7 +58,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onRoleRemovedFromUser(@NotNull @Valid final RoleRemovedFromUserEvent event) {
     log.entry(event);
 
-    sendEvent("userRemovedRole", event);
+    sendEvent("removeRole-in-0", event);
 
     log.exit();
   }
@@ -68,7 +68,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onModifyDiscord(@Valid final UserDiscordModificationEvent event) {
     log.entry(event);
 
-    sendEvent("userModifyDiscord", event);
+    sendEvent("modifyDiscord-in-0", event);
 
     log.exit();
   }
@@ -77,7 +77,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onUserEmailModification(@Valid final UserEmailModificationEvent event) {
     log.entry(event);
 
-    sendEvent("userModifyEmail", event);
+    sendEvent("modifyEmail-in-0", event);
 
     log.exit();
   }
@@ -87,7 +87,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onUserNameModification(@Valid final UserNameModificationEvent event) {
     log.entry(event);
 
-    sendEvent("userModifyName", event);
+    sendEvent("modifyName-in-0", event);
 
     log.exit();
   }
@@ -97,7 +97,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onUserNamespaceModification(@Valid final UserNamespaceModificationEvent event) {
     log.entry(event);
 
-    sendEvent("userModifyNamespace", event);
+    sendEvent("modifyNamespace-in-0", event);
 
     log.exit();
   }
@@ -107,7 +107,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onUserNamespaceAndNameModification(@Valid final UserNamespaceAndNameModificationEvent event) {
     log.entry(event);
 
-    sendEvent("userModifyNamespaceAndName", event);
+    sendEvent("modifyNamespaceAndName-in-0", event);
 
     log.exit();
   }
@@ -117,7 +117,7 @@ public class SendUserModificationEventsHandler extends AbstractSendUserEventsHan
   public void onUserSubjectModification(@Valid final UserSubjectModificationEvent event) {
     log.entry(event);
 
-    sendEvent("userModifySubject", event);
+    sendEvent("modifySubject-in-0", event);
 
     log.exit();
   }

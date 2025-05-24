@@ -65,7 +65,7 @@ public class ReceiveUserArbitrationEventsConfigTest {
     final var event = mock(UserPetitionedEvent.class);
     
     // When
-    sut.petitionUser(bus).accept(event);
+    sut.petitionedUser(bus).accept(event);
     
     // Then
     verify(bus).post(event);

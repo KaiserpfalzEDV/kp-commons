@@ -81,5 +81,4 @@ public class ReceiveUserActivityConfig {
   private boolean isExternalEvent(final UserBaseEvent event) {
     return !application.equals(event.getApplication());
   }
-  
 }

@@ -48,7 +48,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserActivated(@NotNull @Valid final UserActivatedEvent event) {
     log.entry(event);
 
-    sendEvent("userActivated", event);
+    sendEvent("activateUser-in-0", event);
 
     log.exit();
   }
@@ -57,7 +57,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserBanned(@NotNull @Valid final UserBannedEvent event) {
     log.entry(event);
 
-    sendEvent("userBanned", event);
+    sendEvent("banUser-in-0", event);
 
     log.exit();
   }
@@ -66,7 +66,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserCreated(@NotNull @Valid final UserCreatedEvent event) {
     log.entry(event);
 
-    sendEvent("userCreated", event);
+    sendEvent("createUser-in-0", event);
 
     log.exit();
   }
@@ -75,7 +75,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserDeleted(@NotNull @Valid final UserDeletedEvent event) {
     log.entry(event);
 
-    sendEvent("userDeleted", event);
+    sendEvent("deleteUser-in-0", event);
 
     log.exit();
   }
@@ -84,7 +84,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserDetained(@NotNull @Valid final UserDetainedEvent event) {
     log.entry(event);
 
-    sendEvent("userDetained", event);
+    sendEvent("detainUser-in-0", event);
 
     log.exit();
   }
@@ -93,7 +93,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserReleased(@NotNull @Valid final UserReleasedEvent event) {
     log.entry(event);
 
-    sendEvent("userReleased", event);
+    sendEvent("releaseUser-in-0", event);
 
     log.exit();
   }
@@ -102,7 +102,7 @@ public class SendUserStateEventsHandler extends AbstractSendUserEventsHandler {
   public void onUserRemoved(@NotNull @Valid final UserRemovedEvent event) {
     log.entry(event);
 
-    sendEvent("userRemoved", event);
+    sendEvent("removeUser-in-0", event);
 
     log.exit();
   }

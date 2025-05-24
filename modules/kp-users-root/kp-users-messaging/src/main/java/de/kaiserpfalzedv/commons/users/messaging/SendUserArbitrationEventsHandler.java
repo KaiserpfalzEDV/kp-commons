@@ -38,6 +38,7 @@ import org.springframework.stereotype.Service;
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
 public class SendUserArbitrationEventsHandler extends AbstractSendUserEventsHandler {
+  private static final String DESTINATION = "petitionedUser-in-0";
   
   @Inject
   public SendUserArbitrationEventsHandler(@NotNull StreamBridge sender, @NotNull final UserEventMessagingConverter converter) {
@@ -48,7 +49,7 @@ public class SendUserArbitrationEventsHandler extends AbstractSendUserEventsHand
   public void onUserPetitioned(@NotNull @Valid final UserPetitionedEvent event) {
     log.entry(event);
 
-    sendEvent("userPetitioned", event);
+    sendEvent(DESTINATION, event);
 
     log.exit();
   }
