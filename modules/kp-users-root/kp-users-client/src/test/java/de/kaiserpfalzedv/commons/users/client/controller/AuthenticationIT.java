@@ -15,25 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.kaiserpfalzedv.commons.users.store;
+package de.kaiserpfalzedv.commons.users.client.controller;
 
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2025-05-17
+ * @since 2025-05-25
  */
-@SpringBootTest(classes = {
-  SpringIT.class
-})
-@EnableUsersStore
-@EnableAutoConfiguration
-public class SpringIT {
-  @Test
-  void contextLoads() {
-    // Just load the context
-  }
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {AuthenticationITConfig.class})
+public class AuthenticationIT {
 }

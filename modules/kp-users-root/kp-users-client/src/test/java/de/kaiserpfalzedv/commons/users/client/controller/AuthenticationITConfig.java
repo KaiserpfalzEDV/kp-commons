@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,34 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.kaiserpfalzedv.commons.users.client;
 
-import de.kaiserpfalzedv.commons.users.client.service.*;
+package de.kaiserpfalzedv.commons.users.client.controller;
+
+
 import de.kaiserpfalzedv.commons.users.messaging.EnableUsersMessaging;
 import de.kaiserpfalzedv.commons.users.store.EnableUsersStore;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 /**
- * Enables the full user client functionality in a Spring application.
- * This includes user messaging and user store capabilities.
- *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 4.1.0
- * @since 2025-05-24
+ * @since 2025-05-25
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Documented
+@SpringBootApplication
 @EnableUsersMessaging
 @EnableUsersStore
-@Import({
-    ApiKeyAuthenticationManager.class,
-    UserAuthenticationManager.class,
-    KpUserDetailsService.class,
-    UserAuthenticationService.class,
-    UserLoggedInStateRepository.class
-})
-public @interface EnableUserClient {}
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+public class AuthenticationITConfig {
+}

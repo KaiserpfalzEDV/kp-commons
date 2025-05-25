@@ -39,13 +39,13 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@EnableJpaRepositories(basePackageClasses = EnableUserStore.class)
-@EntityScan(basePackageClasses = EnableUserStore.class)
-@ComponentScan(basePackageClasses = EnableUserStore.class)
+@EnableJpaRepositories(basePackageClasses = EnableUsersStore.class)
+@EntityScan(basePackageClasses = EnableUsersStore.class)
+@ComponentScan(basePackageClasses = EnableUsersStore.class)
 @Import({
     ApiKeyToJPAImpl.class,
     RoleToJpaImpl.class,
     UserToJpaImpl.class,
     SpringEventBus.class
 })
-public @interface EnableUserStore {}
+public @interface EnableUsersStore {}
