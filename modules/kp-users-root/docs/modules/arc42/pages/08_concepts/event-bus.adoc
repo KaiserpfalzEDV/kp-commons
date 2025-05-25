@@ -1,12 +1,16 @@
-= Guava EventBus: Concept Overview
+= EventBus: Concept Overview
 
 include::partial$config.adoc[]
 
-The *Guava EventBus*, part of the Google Guava library for Java, implements a *publish-subscribe (pub-sub)* messaging pattern. This design pattern decouples the components that send events (publishers) from those that handle them (subscribers).
+NOTE::
+  We used Guava's EventBus in the past, but now we use Spring Event for better integration with the Spring ecosystem.
+  In addition, Guava's EventBus is deprecated and the maintainers themselves recommend using other implementations.
+
+The *Spring Events*, part of the Spring, implements a *publish-subscribe (pub-sub)* messaging pattern. This design pattern decouples the components that send events (publishers) from those that handle them (subscribers).
 
 == 🔁 Core Concept
 
-The Guava EventBus allows objects to communicate with each other *without being tightly coupled*. Instead of directly calling methods on other objects, an object can *post an event* to the EventBus, and any object that is registered as a *subscriber* to that type of event will automatically receive it.
+Spring Events allows objects to communicate with each other *without being tightly coupled*. Instead of directly calling methods on other objects, an object can *post an event* to the EventBus, and any object that is annotated as a *listener* to that type of event will automatically receive it.
 
 == 🧠 Key Features
 
@@ -54,7 +58,7 @@ public class UserEventListener {
 [source,java,opts=novalidate]
 ----
 eventBus.register(new UserEventListener());
-eventBus.post(new UserCreatedEvent("Alice"));
+eventBus.publishEvent(new UserCreatedEvent("Alice"));
 ----
 
 == ⚡ Use Cases

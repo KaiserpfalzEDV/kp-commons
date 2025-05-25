@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
 public class SpringEventBus implements EventBus {
   private final ApplicationEventPublisher publisher;
@@ -51,6 +51,7 @@ public class SpringEventBus implements EventBus {
   public void post(final Object event) {
     log.entry(event);
     
+    log.debug("Posting event. event={}", event);
     publisher.publishEvent(event);
     
     log.exit();
