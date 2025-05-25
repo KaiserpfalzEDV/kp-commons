@@ -60,7 +60,7 @@ public class JpaUserEventsHandler implements UserEventsHandler, AutoCloseable {
   private final EventBus bus;
   
   
-  @Value("${spring.application.application:kp-commons")
+  @Value("${spring.application.application:kp-commons}")
   private String system = "kp-commons";
   
   

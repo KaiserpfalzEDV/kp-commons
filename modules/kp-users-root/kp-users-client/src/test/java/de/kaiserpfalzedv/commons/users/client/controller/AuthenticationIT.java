@@ -18,17 +18,15 @@
 package de.kaiserpfalzedv.commons.users.client.controller;
 
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.extern.jackson.Jacksonized;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.test.StepVerifier;
+
+import java.nio.file.AccessDeniedException;
 
 
 /**
@@ -38,4 +36,32 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AuthenticationITConfig.class})
 public class AuthenticationIT {
+  @Autowired
+  private AuthenticationTestStubService service;
+  
+  @Test
+  void shouldFailUserAllowedWhenNoUserIsSet() {
+    StepVerifier
+        .create(this.service.userAllowed())
+        .expectError(AccessDeniedException.class)
+        .verify();
+  }
+  
+  @Test
+  @WithMockUser
+  void shouldFailUserAllowedWhenUserHasNoRole() {
+    StepVerifier
+        .create(this.service.userAllowed())
+        .expectError(AccessDeniedException.class)
+        .verify();
+  }
+  
+  @Test
+  @WithMockUser(roles = "USER")
+  void shouldAcceptUserAllowedWhenUserHasUserRole() {
+    StepVerifier
+        .create(this.service.userAllowed())
+        .expectNext("StepVerifier Subscriber")
+        .verifyComplete();
+  }
 }

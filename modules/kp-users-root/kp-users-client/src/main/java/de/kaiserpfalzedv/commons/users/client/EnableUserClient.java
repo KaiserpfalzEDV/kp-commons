@@ -16,6 +16,10 @@
  */
 package de.kaiserpfalzedv.commons.users.client;
 
+import de.kaiserpfalzedv.commons.users.client.reactive.ReactUserSecurityConfig;
+import de.kaiserpfalzedv.commons.users.client.reactive.ReactUserDetailsService;
+import de.kaiserpfalzedv.commons.users.client.reactive.ReactUserPostAuthorizationManager;
+import de.kaiserpfalzedv.commons.users.client.reactive.ReactUserPreAuthorizationManager;
 import de.kaiserpfalzedv.commons.users.client.service.*;
 import de.kaiserpfalzedv.commons.users.messaging.EnableUsersMessaging;
 import de.kaiserpfalzedv.commons.users.store.EnableUsersStore;
@@ -42,6 +46,10 @@ import java.lang.annotation.*;
     UserAuthenticationManager.class,
     KpUserDetailsService.class,
     UserAuthenticationService.class,
-    UserLoggedInStateRepository.class
+    UserLoggedInStateRepository.class,
+    ReactUserSecurityConfig.class,
+    ReactUserDetailsService.class,
+    ReactUserPreAuthorizationManager.class,
+    ReactUserPostAuthorizationManager.class,
 })
 public @interface EnableUserClient {}

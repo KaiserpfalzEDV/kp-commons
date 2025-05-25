@@ -1,0 +1,10 @@
+---
+databaseChangeLog:
+  - include:
+      file: initialize-db.yaml
+      relativeToChangelogFile: true
+      context: init
+  - include:
+      file: classpath:/db/users/master.yaml
+      relativeToChangelogFile: false
+      context: user

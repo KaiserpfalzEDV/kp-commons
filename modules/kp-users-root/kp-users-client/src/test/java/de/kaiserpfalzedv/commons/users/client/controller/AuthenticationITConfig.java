@@ -18,11 +18,13 @@
 package de.kaiserpfalzedv.commons.users.client.controller;
 
 
-import de.kaiserpfalzedv.commons.users.messaging.EnableUsersMessaging;
-import de.kaiserpfalzedv.commons.users.store.EnableUsersStore;
-import lombok.*;
+import de.kaiserpfalzedv.commons.users.client.EnableUserClient;
+import de.kaiserpfalzedv.commons.users.client.reactive.ReactUserSecurityConfig;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 
 
 /**
@@ -30,8 +32,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2025-05-25
  */
 @SpringBootApplication
-@EnableUsersMessaging
-@EnableUsersStore
+@EnableReactiveMethodSecurity
+@EnableUserClient
+@Import({
+    ReactUserSecurityConfig.class
+})
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class AuthenticationITConfig {
 }

@@ -24,12 +24,14 @@ import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.XSlf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Order(1010)
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @ToString(onlyExplicitlyIncluded = true)
 @XSlf4j
