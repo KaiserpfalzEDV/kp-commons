@@ -33,7 +33,6 @@ import reactor.core.publisher.Mono;
 @Service
 @XSlf4j
 public class AuthenticationTestStubService {
-  
   @PreAuthorize("hasRole('ROLE_USER')")
   public Publisher<String> userAllowed() {
     log.entry();

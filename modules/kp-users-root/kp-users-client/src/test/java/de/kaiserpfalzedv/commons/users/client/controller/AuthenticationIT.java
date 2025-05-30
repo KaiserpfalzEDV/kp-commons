@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.users.client.controller;
 
 
+import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import reactor.test.StepVerifier;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AuthenticationITConfig.class})
+@XSlf4j
 public class AuthenticationIT {
   @Autowired
   private AuthenticationTestStubService service;
@@ -42,54 +44,78 @@ public class AuthenticationIT {
   @Test
   @WithAnonymousUser
   void shouldFailUserAllowedWhenNoUserIsSet() {
+    log.entry();
+    
     StepVerifier
         .create(this.service.userAllowed())
         .expectError(AuthorizationDeniedException.class)
         .verify();
+    
+    log.exit();
   }
   
   @Test
   @WithMockUser(roles = {})
   void shouldFailUserAllowedWhenUserHasNoRole() {
+    log.entry();
+    
     StepVerifier
         .create(this.service.userAllowed())
         .expectError(AuthorizationDeniedException.class)
         .verify();
+    
+    log.exit();
   }
   
   @Test
   @WithMockUser(roles = "USER")
   void shouldAcceptUserAllowedWhenUserHasUserRole() {
+    log.entry();
+    
     StepVerifier
         .create(this.service.userAllowed())
         .expectNext("userAllowed")
         .verifyComplete();
+    
+    log.exit();
   }
   
   @Test
   @WithMockUser(roles = "ADMIN")
   void shouldAcceptAdminAllowedWhenUserHasAdminRole() {
+    log.entry();
+    
     StepVerifier
         .create(this.service.adminAllowed())
         .expectNext("adminAllowed")
         .verifyComplete();
+    
+    log.exit();
   }
   
   @Test
   @WithMockUser(roles = "USER")
   void shouldFailAdminAllowedWhenUserHasOnlyUserRole() {
+    log.entry();
+    
     StepVerifier
         .create(this.service.adminAllowed())
         .expectError(AuthorizationDeniedException.class)
         .verify();
+    
+    log.exit();
   }
   
   @Test
   @WithAnonymousUser
   void shouldAcceptAllAllowedWhenNoUserIsSet() {
+    log.entry();
+  
     StepVerifier
         .create(this.service.allAllowed())
         .expectNext("allAllowed")
         .verifyComplete();
+    
+    log.exit();
   }
 }
