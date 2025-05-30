@@ -1,4 +1,5 @@
-* xref:index.adoc[]
+* xref:kp-commons:arc42:index.adoc[kp-commons arc42 architecture documentation]
+* xref:index.adoc[kp-commons-users arc42 architecture documentation]
 ** Context
 *** xref:01_introduction_and_goals.adoc[]
 *** xref:02_architecture_constraints.adoc[]
@@ -38,5 +39,5 @@ include::kp-commons:arc42:partial$nav.adr.adoc[]
 **** xref:09_architecture_decisions/001_shared_libraries.adoc[]
 *** xref:10_quality_requirements.adoc[]
 *** xref:11_technical_risks.adoc[]
-*** xref:kp-commons:manual:glossary.adoc[] (kp-commons Manual)
-*** xref:kp-commons:manual:bibliography.adoc[] (kp-commons Manual)
+
+include::kp-commons:manual:_appendix.adoc[]

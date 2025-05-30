@@ -2,9 +2,11 @@
 
 include::partial$config.adoc[]
 
-NOTE::
-  We used Guava's EventBus in the past, but now we use Spring Event for better integration with the Spring ecosystem.
-  In addition, Guava's EventBus is deprecated and the maintainers themselves recommend using other implementations.
+[NOTE]
+====
+We used Guava's EventBus in the past, but now we use Spring Event for better integration with the Spring ecosystem.
+In addition, Guava's EventBus is deprecated and the maintainers themselves recommend using other implementations.
+====
 
 The *Spring Events*, part of the Spring, implements a *publish-subscribe (pub-sub)* messaging pattern. This design pattern decouples the components that send events (publishers) from those that handle them (subscribers).
 

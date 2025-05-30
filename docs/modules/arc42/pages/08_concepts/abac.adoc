@@ -50,9 +50,9 @@ Flexibility to adapt policies as roles and projects evolve.
 
 == Further readings an web links
 
-* https://www.baeldung.com/java-access-control-models[Access Control Models], Baldung, {baeldung01}.
-* https://sapl.io/[The Streaming Attribute Policy Language and Engine], FTK e.V., {sapl}.
-* https://en.wikipedia.org/wiki/Attribute-based_access_control[Attribute-based access control], Wikipedia, {wiki01}.
+* https://www.baeldung.com/java-access-control-models[Access Control Models], Baeldung.
+* https://sapl.io/[The Streaming Attribute Policy Language and Engine], FTK e.V..
+* https://en.wikipedia.org/wiki/Attribute-based_access_control[Attribute-based access control], Wikipedia.
 
 == Summary
 

@@ -2,4 +2,4 @@
 
 include::partial$config.adoc[]
 
-Please refer to the macro architecture documentation for the general xref:kp-commons:arc42:08_concepts/[Cross Cutting Concepts] sections.
+Please refer to the macro architecture documentation for the general xref:kp-commons:arc42:08_concepts/index.adoc[] sections.

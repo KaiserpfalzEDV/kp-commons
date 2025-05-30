@@ -1,7 +1,7 @@
 ---
 name: kp-commons
 version: current
-title: Java Libarary Bundle kp-commons
+title: kp-commons Java Library
 nav:
   - modules/manual/pages/nav.adoc
   - modules/arc42/pages/nav.adoc

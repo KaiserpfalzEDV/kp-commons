@@ -5,7 +5,7 @@ include::partial$config.adoc[]
 
 == Introduction
 
-Self-Contained Systems (SCS) is an architectural style promoted by INNOQ xref:arc42:13_bibliography.adoc#scs[^SCS^].
+Self-Contained Systems (SCS) is an architectural style promoted by INNOQ {scs}.
 It emphasizes decomposing complex systems into **independently deployable units**, each responsible for its **own UI, business logic, and persistence**.
 This allows teams to work autonomously, and systems to scale and evolve independently.
 

@@ -1,6 +1,6 @@
 = kp-users-client
 Roland T. Lichti <rlichti@kaiserpfalz-edv.de>
 
-:include::partial$config.adoc[]
+include::partial$config.adoc[]
 
 _**TBD**_

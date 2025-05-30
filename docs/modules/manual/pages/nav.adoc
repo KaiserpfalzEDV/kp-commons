@@ -1,3 +1,6 @@
 include::partial$config.adoc[]
 
-* xref:manual:index.adoc[]
+* xref:index.adoc[kp-commons manual]
+* xref:kp-commons-users:manual:index.adoc[kp-commons-users manual]
+
+include::_appendix.adoc[]

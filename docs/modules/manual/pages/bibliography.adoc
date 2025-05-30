@@ -3,6 +3,8 @@
 
 include::partial$config.adoc[]
 
+The bibliography is shared between all components of the whole kp-commons project.
+
 [cols="<.<5a,<.<15a",frame="topbot",grid="rows"]
 |===
 | [[factor12,12FACTOR]][12FACTOR]

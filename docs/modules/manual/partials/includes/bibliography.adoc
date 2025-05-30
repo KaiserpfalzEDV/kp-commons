@@ -1,0 +1,8 @@
+:12factor: ↑xref:kp-commons:manual:bibliography.adoc#factor12[12FACTOR]
+:agilemanifesto: ↑xref:kp-commons:manual:bibliography.adoc#agilemanifesto[AGILE]
+:wordpress: ↑xref:kp-commons:manual:bibliography.adoc#wordpress[WORDPRESS]
+:cleancode: ↑xref:kp-commons:manual:bibliography.adoc#cleancode[CLEANCODE]
+:sapl: ↑xref:kp-commons:manual:bibliography.adocs#sapl[SAPL]
+:scs: ↑xref:kp-commons:manual:bibliography.adoc#scs[SCS]
+:baeldung01: ↑xref:kp-commons:manual:bibliography.adocs#baeldung01[BAELDUNG01]
+:wiki01: ↑xref:kp-commons:manual:bibliography.adoc#wiki01[WIKI01]

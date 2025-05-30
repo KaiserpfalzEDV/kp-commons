@@ -1,7 +1,0 @@
-:12factor: [xref:13_bibliography.adoc#factor12[12FACTOR]]
-:agilemanifesto: [xref:13_bibliography.adoc#agilemanifesto[AGILE]]
-:wordpress: [xref:13_bibliography.adoc#wordpress[WORDPRESS]]
-:cleancode: [xref:13_bibliography.adoc#cleancode[CLEANCODE]]
-:scs: [xref:13_bibliography.adoc#scs[SCS]]
-:baeldung01: [xref:13_bibliography.adocs#baeldung01[BAELDUNG01]]
-:wiki01: [xref:13_bibliography.adoc#wiki01[WIKI01]]

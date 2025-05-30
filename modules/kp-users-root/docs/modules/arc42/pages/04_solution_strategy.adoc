@@ -25,11 +25,10 @@ Internally they get an UUID which maps to the (Issuer, User) tuple of the extern
 The systems use frontend integration methods for the UI.
 
 Needed communication between the backends (data synchronization, event distribution) are handled via a messaging infrastructure.
-The broker {adr-003} used will be a rabbitMQ handling AMQP queues and topics.
+The broker {madr-003} used will be a rabbitMQ handling AMQP queues and topics.
 
-We heavily rely on xref:08_concepts/scs.adoc[self-contained systems] {scs} as promoted by INNOQ.
+We heavily rely on xref:kp-commons:arc42:08_concepts/scs.adoc[self-contained systems] {scs} as promoted by INNOQ.
 
-The asynchronous data replication is addressed in section xref:08_concepts/asynchronus-data-handling.adoc[].
-This decision is documented in {adr-005}.
+The asynchronous data replication is addressed in section xref:kp-commons:arc42:08_concepts/asynchronus-data-handling.adoc[].
 
 <<<

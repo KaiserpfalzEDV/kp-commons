@@ -2,12 +2,8 @@
 
 include::partial$config.adoc[]
 
-[TIP]
-====
-You can download this documentation in PDF format:
 
-https://docs.kaiserpfalz-edv.de/kp-commons-users/kp-commons-users-system-architecture.pdf
-====
+NOTE: This documentation is also available in link:../kp-commons-java-library.pdf[PDF format].
 
 
 include::kes:ROOT:partial$kes.adoc[]

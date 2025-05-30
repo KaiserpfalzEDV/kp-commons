@@ -4,8 +4,7 @@
 include::partial$config.adoc[]
 
 This glossary tries to explain the terms used throughout this document.
-There are terms of the general _TTRPG_ lingo specialized terms to _Torg Eternity_.
-And of course there are terms special to the _DCIS_. 
+The glossary is shared between all documents of the kp-commons project.
 
 [cols="<.<1,<.<3a",options="header",frame="topbot",grid="rows"]
 |===

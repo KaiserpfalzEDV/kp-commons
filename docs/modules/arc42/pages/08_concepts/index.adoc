@@ -1,0 +1,5 @@
+= Cross Cutting Concepts
+
+include::partial$config.adoc[]
+
+These are the cross cutting concepts that apply to the whole architecture.

@@ -1,0 +1,3 @@
+* Appendix
+** xref:kp-commons:manual:glossary.adoc[]
+** xref:kp-commons:manual:bibliography.adoc[]
