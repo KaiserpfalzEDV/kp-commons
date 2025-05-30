@@ -1,6 +1,6 @@
 ---
 name: kp-commons
-version: 4.1.0-SNAPSHOT
+version: 4.1.0
 title: Java Libarary Bundle kp-commons
 nav:
   - modules/manual/pages/nav.adoc

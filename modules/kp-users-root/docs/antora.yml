@@ -1,6 +1,6 @@
 ---
 name: kp-commons-users
-version: 4.1.0-SNAPSHOT
+version: 4.1.0
 title: Distributed User Management
 nav:
   - modules/manual/pages/nav.adoc
