@@ -1,0 +1,5 @@
+= Macro Architecture Decisions
+
+include::partial$config.adoc[]
+
+This chapter lists the current architecture decisions (ADRs) of the kp-commons project.

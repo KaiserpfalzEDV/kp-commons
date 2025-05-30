@@ -31,19 +31,12 @@
 **** xref:06_runtime_view/kp-users-scs.adoc[]
 *** xref:07_deployment_view.adoc[]
 ** Appendix
-*** Cross-Cutting Concepts
-**** xref:08_concepts/scs.adoc[]
-**** xref:08_concepts/asynchronus-data-handling.adoc[]
-**** xref:08_concepts/event-bus.adoc[]
-**** xref:08_concepts/rbac.adoc[]
-**** xref:08_concepts/abac.adoc[]
-**** xref:08_concepts/observability.adoc[]
-**** xref:08_concepts/data-protection.adoc[]
-*** Architecture decisions (kp-commons)
+*** xref:08_concepts/index.adoc[]
+*** Architecture decisions (From macro architecture)
 include::kp-commons:arc42:partial$nav.adr.adoc[]
 *** Architecture decisions
 **** xref:09_architecture_decisions/001_shared_libraries.adoc[]
 *** xref:10_quality_requirements.adoc[]
 *** xref:11_technical_risks.adoc[]
-*** xref:kp-commons:manual:glossary.adoc[] (kp-commons)
-*** xref:kp-commons:manual:bibliography.adoc[] (kp-commons)
+*** xref:kp-commons:manual:glossary.adoc[] (kp-commons Manual)
+*** xref:kp-commons:manual:bibliography.adoc[] (kp-commons Manual)

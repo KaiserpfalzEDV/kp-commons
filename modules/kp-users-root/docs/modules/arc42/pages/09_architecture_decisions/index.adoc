@@ -1,0 +1,5 @@
+= Architecture Decisions
+
+include::partial$config.adoc[]
+
+In addition to the listed ADRs of this project, all ADRs of the xref:kp-commons:arc42:09_architecture_decisions/index.adoc[] also apply here.

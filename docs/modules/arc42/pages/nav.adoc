@@ -23,9 +23,9 @@ include::partial$config.adoc[]
 **** xref:08_concepts/event-bus.adoc[]
 **** xref:08_concepts/observability.adoc[]
 **** xref:08_concepts/data-protection.adoc[]
-*** Architecture decisions
+*** xref:09_architecture_decisions/index.adoc[]
 include::partial$nav.adr.adoc[]
 *** xref:10_quality_requirements.adoc[]
 *** xref:11_technical_risks.adoc[]
-*** xref:12_glossary.adoc[]
-*** xref:13_bibliography.adoc[]
+*** xref:kp-commons:manual:glossary.adoc[] (kp-commons Manual)
+*** xref:kp-commons:manual:bibliography.adoc[] (kp-commons Manual)
