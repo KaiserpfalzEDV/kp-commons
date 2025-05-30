@@ -1,0 +1,37 @@
+---
+databaseChangeLog:
+- changeSet:
+    id: USERS_ROLES-init
+    author: rlichti
+    context: init
+    labels: 'v1.0.0,user,role'
+    created: '1.0.0'
+    changes:
+    - createTable:
+        tableName: USERS_ROLES
+        remarks: The USERS_ROLES table as join table
+        columns:
+          - column:
+              name: USER_ID
+              type: UUID
+              remarks: The user ID for this join
+              constraints:
+                nullable: false
+                notNullConstraintName: USERS_ROLES_USER_ID_NN
+                foreignKeyName: USERS_ROLES_USERS_FK
+                referencedTableName: USERS
+                referencedColumnNames: ID
+          - column:
+              name: ROLE_ID
+              type: UUID
+              remarks: The user ID for this join
+              constraints:
+                nullable: false
+                notNullConstraintName: USERS_ROLES_ROLE_ID_NN
+                foreignKeyName: USERS_ROLES_ROLES_FK
+                referencedTableName: ROLES
+                referencedColumnNames: ID
+    - addUniqueConstraint:
+        constraintName: USERS_ROLES_UK
+        tableName: USERS_ROLES
+        columnNames: USER_ID, ROLE_ID

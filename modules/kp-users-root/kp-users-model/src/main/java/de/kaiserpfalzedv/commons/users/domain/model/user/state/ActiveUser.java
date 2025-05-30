@@ -19,9 +19,9 @@
 package de.kaiserpfalzedv.commons.users.domain.model.user.state;
 
 
-import com.google.common.eventbus.EventBus;
-import de.kaiserpfalzedv.commons.users.domain.model.events.arbitation.UserPetitionedEvent;
-import de.kaiserpfalzedv.commons.users.domain.model.events.state.UserRemovedEvent;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.arbitration.UserPetitionedEvent;
+import de.kaiserpfalzedv.commons.users.domain.model.user.events.state.UserRemovedEvent;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,6 +79,8 @@ public class ActiveUser implements UserState {
   
   @Override
   public UserState remove(final boolean delete) {
+    user.delete(bus);
+
     bus.post(UserRemovedEvent.builder().user(user).delete(delete).build());
     
     return RemovedUser.builder().user(user).bus(bus).build();

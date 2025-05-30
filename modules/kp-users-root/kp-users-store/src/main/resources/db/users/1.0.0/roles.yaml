@@ -1,0 +1,61 @@
+---
+databaseChangeLog:
+- changeSet:
+    id: ROLES-init
+    author: rlichti
+    context: init
+    labels: 'v1.0.0,user,role'
+    created: '1.0.0'
+    changes:
+    - createTable:
+        tableName: ROLES
+        remarks: The ROLES that can be assigned to user.
+        columns:
+        - column:
+            name: ID
+            type: UUID
+            valueComputed: gen_random_uuid()
+            remarks: The Database internal ID
+            constraints:
+              primaryKey: true
+              primaryKeyName: ROLES_PK
+              nullable: false
+              notNullConstraintName: ROLES_ID_NN
+              unique: true
+              uniqueConstraintName: ROLES_ID_UK
+        - column:
+            name: VERSION
+            type: INT
+            defaultValueNumeric: "0"
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_VERSION_NN
+        - column:
+            name: CREATED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: ROLES_CREATED_NN
+        - column:
+            name: MODIFIED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: ROLES_MODIFIED_NN
+        - column:
+            name: DELETED
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: NAMESPACE
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: ROLES_NAMESPACE_NN
+        - column:
+            name: NAME
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: ROLES_NAME_NN

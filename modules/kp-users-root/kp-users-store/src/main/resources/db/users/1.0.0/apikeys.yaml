@@ -1,0 +1,73 @@
+---
+databaseChangeLog:
+- changeSet:
+    id: APIKEYS-init
+    author: rlichti
+    context: init
+    labels: 'v1.0.0,user,apikey'
+    created: '1.0.0'
+    changes:
+    - createTable:
+        tableName: APIKEYS
+        remarks: The API Key for players to use to connect to the REST API.
+        columns:
+        - column:
+            name: ID
+            type: UUID
+            valueComputed: gen_random_uuid()
+            remarks: The Database internal ID
+            constraints:
+              primaryKey: true
+              primaryKeyName: APIKEYS_PK
+              nullable: false
+              notNullConstraintName: APIKEYS_ID_NN
+              unique: true
+              uniqueConstraintName: APIKEYS_ID_UK
+        - column:
+            name: VERSION
+            type: INT
+            defaultValueNumeric: "0"
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_VERSION_NN
+        - column:
+            name: CREATED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: APIKEYS_CREATED_NN
+        - column:
+            name: MODIFIED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: APIKEYS_MODIFIED_NN
+        - column:
+            name: DELETED
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: NAMESPACE
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: APIKEYS_NAMESPACE_NN
+        - column:
+          - name: USER
+            type: UUID
+            constraints:
+              nullable: false
+              notNullConstraintName: APIKEYS_USER_NN
+        - column:
+            name: EXPIRATION
+            type: TIMESTAMP WITH TIME ZONE
+    -  addForeignKeyConstraint:
+         constraintName: APIKEYS_USER_FK
+         baseTableName: APIKEYS
+         baseColumnNames: USER
+         referencedTableName: USERS
+         referencedColumnNames: ID
+         onDelete: CASCADE
+         onUpdate: RESTRICT
+         validate: true

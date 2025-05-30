@@ -1,0 +1,7 @@
+---
+name: kp-commons-users
+version: 4.1.0
+title: Distributed User Management
+nav:
+  - modules/manual/pages/nav.adoc
+  - modules/arc42/pages/nav.adoc

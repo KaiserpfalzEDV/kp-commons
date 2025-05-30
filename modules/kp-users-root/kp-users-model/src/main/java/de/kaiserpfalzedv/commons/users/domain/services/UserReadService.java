@@ -1,29 +1,36 @@
+/*
+ * Copyright (c) 2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package de.kaiserpfalzedv.commons.users.domain.services;
 
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 03.05.2025
+ * @since 2025-05-03
  */
-public interface UserReadService {
-  Optional<User> findById(@NotBlank UUID id);
+public interface UserReadService<T extends User> {
+  Optional<T> findById(@NotBlank UUID id);
 
-  Optional<User> findByUsername(@NotBlank final String nameSpace, @NotBlank final String name);
-  Optional<User> findByEmail(@NotBlank final String email);
-  Optional<User> findByOauth(@NotBlank final String issuer, @NotBlank final String sub);
-  
-  List<User> findAllByNamespace(@NotBlank final String namespace);
-  Page<User> findAllByNamespace(@NotBlank final String namespace, Pageable pageable);
-  
-  List<User> findAllByIssuer(@NotBlank final String issuer);
-  Page<User> findAllByIssuer(@NotBlank final String issuer, Pageable pageable);
+  Optional<T> findByUsername(@NotBlank final String nameSpace, @NotBlank final String name);
+  Optional<T> findByOauth(@NotBlank final String issuer, @NotBlank final String sub);
 }

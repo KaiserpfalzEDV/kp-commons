@@ -1,0 +1,144 @@
+---
+spring:
+  application:
+    name: kp-users
+    system: kp-commons
+    admin:
+      enabled: false
+  main:
+    banner-mode: off
+  
+  
+  datasource:
+    name: in-memory
+    url: &dbUrl jdbc:h2:file:./target/db;MODE=PostgreSQL
+    username: &dbUsername sa
+    password: &dbPassword password
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  
+  jpa:
+    showSql: false
+    hibernate:
+      ddlAuto: validate
+  
+  cloud:
+    function:
+      definition: loginUser,logoutUser,petitionedUser,addingRole,removeRole,modifyDiscord,modifyEmail,modifyName,modifyNamespace,modifyNamespaceAndName,modifySubject,activateUser,banUser,createUser,deleteUser,detainUser,releaseUser,removeUser
+    stream:
+      bindings:
+        loginUser-in-0:
+          destination: kp-users.activity
+          content-type: application/json
+        logoutUser-in-0:
+          destination: kp-users.activity
+          content-type: application/json
+        petitionedUser-in-0:
+          destination: kp-users.arbitration
+          content-type: application/json
+        addingRole-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        removeRole-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        modifyDiscord-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        modifyEmail-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        modifyName-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        modifyNamespace-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        modifyNamespaceAndName-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        modifySubject-in-0:
+          destination: kp-users.modification
+          content-type: application/json
+        activateUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        banUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        createUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        deleteUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        detainUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        releaseUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+        removeUser-in-0:
+          destination: kp-users.state
+          content-type: application/json
+      binder:
+        rabbit:
+          default:
+            broker:
+              host: localhost
+              port: 5672
+              username: guest
+              password: guest
+            adminAddresses: localhost:15672
+            connectionFactory:
+              publisher-confirms: true
+              publisher-returns: true
+      rabbit:
+        default:
+          auto-bind-dlq: true
+          dlq-ttl: 3600000
+          dlq-dead-letter-exchange: kp-users.dlq
+          producer:
+            producerType: AMQP
+            instanceCount: 1
+            instanceIndex: 0
+            auto-bind-dlq: true
+            auto-bind-headers: true
+            auto-bind-headers-dlq: true
+            auto-bind-exchange: true
+            auto-bind-queue: true
+          consumer:
+            consumerType: AMQP
+            maxAttempts: 3
+            instanceCount: 1
+            instanceIndex: 0
+            auto-bind-dlq: true
+            auto-bind-headers: true
+            auto-bind-headers-dlq: true
+            auto-bind-exchange: true
+            auto-bind-queue: true
+
+  liquibase:
+    enabled: true
+    show-summary-output: log
+    show-summary: summary
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    url: *dbUrl
+    user: *dbUsername
+    password: *dbPassword
+    
+    
+  health:
+    binders:
+      enabled: true
+
+
+logging:
+  level:
+    root: WARN
+    org.springframework: WARN
+    liquibase: INFO
+    de.kaiserpfalzedv.commons: INFO
+    de.kaiserpfalzedv.commons.users: DEBUG
+    de.kaiserpfalzedv.commons.users.messaging: TRACE

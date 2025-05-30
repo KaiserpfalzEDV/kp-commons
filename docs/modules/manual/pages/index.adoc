@@ -1,0 +1,8 @@
+= Manual kp-commons java library bundle
+Roland T. Lichti <klenkes74@paladins-inn.de>
+:page-aliases: ROOT:index.adoc
+
+include::partial$config.adoc[]
+
+
+

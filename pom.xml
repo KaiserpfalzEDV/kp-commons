@@ -13,7 +13,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses />.
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>4.0.13</version>
+    <version>4.1.0</version>
     <packaging>pom</packaging>
 
     <description>
@@ -84,7 +84,7 @@
         <url>https://github.com/KaiserpfalzEDV/kp-commons</url>
         <connection>scm:git:git://github.com/KaiserpfalzEDV/kp-commons</connection>
         <developerConnection>scm:git:git@github.com:KaiserpfalzEDV/kp-commons</developerConnection>
-        <tag>HEAD</tag>
+        <tag>r4.1.0</tag>
     </scm>
 
     <issueManagement>
@@ -127,7 +127,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>4.0.13</kp-commons.version>
+        <kp-commons.version>4.1.0</kp-commons.version>
         <delombok.output>${project.build.directory}/delombok</delombok.output>
     </properties>
 

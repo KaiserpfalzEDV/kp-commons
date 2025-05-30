@@ -1,0 +1,75 @@
+= Spring Application Events: Konzept-Übersicht
+
+include::partial$config.adoc[]
+
+Die *Spring Application Events* implementieren ein *Publish-Subscribe (Pub-Sub)*-Muster, bei dem Ereignisse (Events) getrennt von den Komponenten sind, die diese konsumieren.
+
+== 🔁 Kernidee
+
+Statt direkte Methodenaufrufe zu verwenden, veröffentlichen Klassen Ereignisse mit dem `ApplicationEventPublisher`. Empfänger, die mit `@EventListener` annotiert sind, erhalten diese Ereignisse automatisch.
+
+== 🧠 Hauptmerkmale
+
+* *Entkopplung*: Der Sender kennt die Empfänger nicht.
+* *Typbasierte Zustellung*: Events werden nach ihrem Typ weitergeleitet.
+* *Annotationen*: `@EventListener`-Methoden reagieren auf bestimmte Ereignisse.
+* *Thread-sicher*: Spring steuert die Thread-Synchronisierung intern.
+* *Spezielle Varianten*: Unterstützung für asynchrone Verarbeitung per `@Async`.
+
+== 🧱 Grundlegende Bausteine
+
+=== 1. Ereignisklasse
+
+[source,java,opts=novalidate]
+----
+public class UserCreatedEvent {
+  private final String username;
+  public UserCreatedEvent(String username) {
+    this.username = username;
+  }
+  public String getUsername() {
+    return username;
+  }
+}
+----
+
+=== 2. Event-Publisher
+
+[source,java,opts=novalidate]
+----
+@Component
+public class UserService {
+
+  private final ApplicationEventPublisher publisher;
+
+  public UserService(ApplicationEventPublisher publisher) {
+    this.publisher = publisher;
+  }
+
+  public void createUser(String username) {
+    // ... benutzer anlegen
+    publisher.publishEvent(new UserCreatedEvent(username));
+  }
+}
+----
+
+=== 3. Subscriber
+
+[source,java,opts=novalidate]
+----
+@Component
+public class UserEventListener {
+
+  @EventListener
+  public void onUserCreated(UserCreatedEvent event) {
+    System.out.println("Benutzer angelegt: " + event.getUsername());
+  }
+}
+----
+
+== ⚡ Anwendungsfälle
+
+* Event-getriebene Anwendungen
+* Datenmodelle, deren Änderungen UI aktualisieren sollen
+* Trennung von Business-Logik und Steuerung
+* Innerbetriebliche Kommunikation in komplexen Systemen

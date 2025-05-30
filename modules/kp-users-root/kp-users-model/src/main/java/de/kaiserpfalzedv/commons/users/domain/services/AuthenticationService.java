@@ -18,14 +18,16 @@
 package de.kaiserpfalzedv.commons.users.domain.services;
 
 
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsInactiveException;
-import de.kaiserpfalzedv.commons.users.domain.model.apikeys.InvalidApiKeyException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserCantBeCreatedException;
+import de.kaiserpfalzedv.commons.users.domain.model.user.UserIsInactiveException;
+import de.kaiserpfalzedv.commons.users.domain.model.apikey.InvalidApiKeyException;
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 /**
- * The service to authenticate users either via OpenIDConnect or via api key.
+ * The service to authenticate user either via OpenIDConnect or via api key.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 04.05.2025
@@ -39,7 +41,7 @@ public interface AuthenticationService {
    * other systems.</p>
    *
    * <p>When the authentication is done via APIKEY, it will load the user referenced by the
-   * {@link de.kaiserpfalzedv.commons.users.domain.model.apikeys.ApiKey}. Any problem (e.g. the user is inactive) will
+   * {@link de.kaiserpfalzedv.commons.users.domain.model.apikey.ApiKey}. Any problem (e.g. the user is inactive) will
    * be hidden behind the {@link InvalidApiKeyException}.</p>
    *
    * @param authentication The authentication created by spring-security.
@@ -49,4 +51,6 @@ public interface AuthenticationService {
    * @throws InvalidApiKeyException if the APIKEY is not valid for any reason.
    */
   User authenticate(@NotNull Authentication authentication) throws UserIsInactiveException, UserCantBeCreatedException, InvalidApiKeyException;
+  
+  User authenticate(@NotNull OidcUser oidcUser) throws UserIsInactiveException, UserCantBeCreatedException;
 }

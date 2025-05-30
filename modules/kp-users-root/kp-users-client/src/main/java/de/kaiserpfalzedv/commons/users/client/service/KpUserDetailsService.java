@@ -56,7 +56,7 @@ public class KpUserDetailsService implements UserDetailsService {
   private User loadUserOrThrowException(final String username, final String[] credentials) {
     log.entry(username, credentials);
     
-    Optional<User> user = read.findByOauth(credentials[0], credentials[1]);
+    Optional<? extends User> user = read.findByOauth(credentials[0], credentials[1]);
     
     if (user.isEmpty()) {
       throw log.throwing(new UsernameNotFoundException(username));

@@ -1,0 +1,118 @@
+---
+databaseChangeLog:
+- changeSet:
+    id: USERS-init
+    author: rlichti
+    context: init
+    labels: 'v1.0.0,user'
+    created: '1.0.0'
+    changes:
+    - createTable:
+        tableName: USERS
+        remarks: The player connected to the torganized play
+        columns:
+        - column:
+            name: ID
+            type: UUID
+            valueComputed: gen_random_uuid()
+            remarks: The Database internal ID
+            constraints:
+              primaryKey: true
+              primaryKeyName: USERS_PK
+              nullable: false
+              notNullConstraintName: USERS_ID_NN
+              unique: true
+              uniqueConstraintName: USERS_ID_UK
+        - column:
+            name: VERSION
+            type: INT
+            defaultValueNumeric: "0"
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_VERSION_NN
+        - column:
+            name: REV_ID
+            type: INT
+            defaultValueNumeric: "0"
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_REV_ID_NN
+        - column:
+            name: REVISIONED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_REVISIONED_NN
+        - column:
+            name: CREATED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_CREATED_NN
+        - column:
+            name: MODIFIED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_MODIFIED_NN
+        - column:
+            name: DELETED
+            type: TIMESTAMP WITH TIME ZONE
+
+        - column:
+            name: DETAINED_TILL
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: DETAINED_DURATION
+            type: NUMERIC(21,0)
+        - column:
+            name: BANNED
+            type: TIMESTAMP WITH TIME ZONE
+
+        - column:
+            name: ISSUER
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_ISSUER_NN
+        - column:
+            name: SUBJECT
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_SUBJECT_NN
+        
+        - column:
+            name: NAMESPACE
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_NAMESPACE_NN
+        - column:
+            name: NAME
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+              notNullConstraintName: USERS_NAME_NN
+
+        - column:
+            name: EMAIL
+            type: VARCHAR(100)
+        - column:
+            name: PHONE
+            type: VARCHAR(100)
+        - column:
+            name: DISCORD
+            type: VARCHAR(100)
+            
+    - addUniqueConstraint:
+        constraintName: USERS_NAME_UK
+        tableName: USERS
+        columnNames: 'NAMESPACE,NAME'
+    - addUniqueConstraint:
+        constraintName: USERS_LOGIN_UK
+        tableName: USERS
+        columnNames: 'ISSUER,SUBJECT'

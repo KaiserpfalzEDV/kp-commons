@@ -1,0 +1,43 @@
+= Building Block View
+
+include::partial$config.adoc[]
+
+
+== Whitebox Overall System
+
+.Overview of the SCS and their transcludes, pages and APIs.
+
+.Architectural Overview
+include::partial$technical-context.adoc[]
+
+[[Motivation]]Motivation::
+The system tries to separate the concerns of 
+
+
+
+[[building-block-view-overview]]
+=== Contained Building Blocks
+
+[[kp-users-model]]kp-users-model [ xref:./level_1/kp-users-model.adoc[Level 1] | xref:./level_2/kp-users-model.adoc[Level 2] | xref:./level_3/kp-users-model/index.adoc[Level 3] ]::
+* the data model
+
+[[kp-users-store]]kp-users-store [ xref:./level_1/kp-users-store.adoc[Level 1] | xref:./level_2/kp-users-store.adoc[Level 2] | xref:./level_3/kp-users-store/index.adoc[Level 3] ]::
+* the data store
+
+[[kp-users-messaging]]kp-users-messaging [ xref:./level_1/kp-users-messaging.adoc[Level 1] | xref:./level_2/kp-users-messaging.adoc[Level 2] | xref:./level_3/kp-users-messaging/index.adoc[Level 3] ]::
+* the messaging system between the SCS
+
+[[kp-users-client]]kp-users-client [ xref:./level_1/kp-users-client.adoc[Level 1] | xref:./level_2/kp-users-client.adoc[Level 2] | xref:./level_3/kp-users-client/index.adoc[Level 3] ]::
+* the client to be used in all SCS
+* integration into Spring Boot Security as AuthenticationProvider
+
+[[kp-users-scs]]kp-users-scs [ xref:./level_1/kp-users-scs.adoc[Level 1] | xref:./level_2/kp-users-scs.adoc[Level 2] | xref:./level_3/kp-users-scs/index.adoc[Level 3] ]::
+* management UI
+* authoritative data source for the system.
+
+
+=== Important Interfaces
+
+[[IDs]]IDs::
+IDs throughout the system are ((UUID)), not the simple numbers used by other systems.
+Reason is, that the ID should be generated on first creation of an object and UUID is a nice way to handle that distribution.

@@ -1,0 +1,160 @@
+= kp-users-scs
+
+include::partial$config.adoc[]
+
+Handles the user management stuff for the whole system.
+In addition the SCS handles arbitation and notification of users to external systems like e-mail or discord.
+
+[[runtime-kp-users-pages]]
+== Pages
+
+.Web based UI of the dcis-users system
+[cols="<.<4,<.<4m,<.<8m,<.<4a",options="header",frame="topbot",grid="rows"]
+|===
+| Name | Method | URL | Permission
+
+4+h| Use case: List users
+
+.2+h| List Users | GET| /users/index
+| anon
+3+a| List all users matching the query parameters.
+
+4+h| Use case: Create user
+
+.2+h| Create User | POST | /users/
+| * ADMIN
+* ORGA
+* self
+3+a| Creates a user with the given data.
+|===
+
+[[runtime-kp-users-rest]]
+== REST API
+
+.REST API of the dcis-users system
+[cols="<.<4,<.<4m,<.<8m,<.<4a",options="header",frame="topbot",grid="rows"]
+|===
+| Name | Method | URL | Permission
+
+.2+h| List Users | GET| /users/api/v1index
+| anon
+3+a| List all users matching the query parameters.
+
+.2+h| Create User | POST | /users/api/v1/users/
+| * ADMIN
+* ORGA
+* self
+3+a| Creates a user with the given data.
+
+|===
+
+
+[[runtime-kp-users-transcludes]]
+== Transcludes
+.Transcludes of dcis-users to be included on other pages.
+[cols="<.<4,<.<12m,>.<1,>.<1,>.<1,>.<1",options="header",frame="topbot",grid="rows"]
+|===
+| Name | URL <| MinX <| MinY <| MaxX <| MaxY
+
+.2+h| User List | /users/tc/?id[]=<ID1>&id[]=<ID2> | 100 | 300 | 500 | 400
+5+a| Lists users with a link to the users details page.
+
+.2+h| User Title | /users/<ID>/title | 20 | 20 | 200 | 20
+5+a| Gives the username to be displayed on pages
+
+.2+h| ID-Card | /users/<ID>/card | 200 | 300 | 200 | 300
+5+a| A standardized card for displaying users.
+
+.2+h| List Arbitration | /users/arbitration/<system>/<entity>/<id>/list | 400 | 100 | 400 | 300
+5+a| Lists running arbitration for the given entity.
+
+.2+h| Contest Entity | /users/arbitration/<system>/<entity>/<id>/start | 400 | 300 | 400 | 300
+5+a| Start an arbitration for this entity.
+
+.2+h| Arbitration Card | /users/arbitration/<id>/card | 200 | 300 | 200 | 300
+5+a| A standardized card for displaying a single arbitration.
+|===
+
+
+[[runtime-kp-users-messaging]]
+== Messaging Channels
+
+This is an overview over existing general queues that exist in the whole system.
+
+.Messaging channels of the dcis-users.
+[cols="<.<4m,<.<4,<.<4,<.<8", options="header",frame="topbot",grid="rows"]
+|===
+| Name | Type | Direction | SCS
+
+.2+h| dcis.user.log
+| Queue
+| Inbound
+| dcis-users
+3+a| New log entries for the users action log
+
+.2+h| dcis.user.notification
+| Topic
+| Outbound
+| dcis-users
+3+a| Changes to user states are published for recognition by other systems.
+
+.2+h| dcis.user.registration
+| Queue
+| Inbound
+| dcis-users
+3+a| If users register themselves on other systems they can send the new user into this system.
+
+.2+h| dcis.arbitration.start
+| Queue
+| Inbound
+| dcis-users
+3+a| Starting an arbitration.
+
+.2+h| dcis.arbitration.file
+| Queue
+| Inbound
+| dcis-users
+3+a| File Information to an arbitration
+
+.2+h| dcis.arbitration.close
+| Queue
+| Inbound
+| dcis-users
+3+a| Close arbitration by system.
+
+.2+h| dcis.arbitration.notification
+| Topic
+| Outbound
+| dcis-users
+3+a| Changes to arbitrations are published for recognition by other systems.
+
+.2+h| dcis.user.contact
+| Queue
+| Inbound
+| dcis-users
+3+a| Notify a user via e-mail, discord, ...
+|===
+
+
+[[runtime-kp-users-scheduled]]
+== Scheduled Jobs
+
+.Scheduled jobs to do data house keeping
+[cols="<.<4,<.<16a", options="header",frame="topbot",grid="rows"]
+|===
+| Name | Period
+
+.2+h| Unban Users | daily
+| Unban users at end of their banning period.
+
+.2+h| Block Users | daily
+a| Block users inactive for more than 2 years.
+
+.2+h| Delete Users | daily
+| Delete user data blocked/marked for deletion more than 3 years.
+
+.2+h| Purge Logs | yearly
+| Purge logfiles after 10 years.
+|===
+
+<<<

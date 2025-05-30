@@ -1,0 +1,61 @@
+:adr-title: Asynchronous messaging
+:adr-state: Accepded
+:adr-date: 2024-10-06
+:adr-expires: ./.
+:adr-author: klenkes74
+:adr-body: klenkes74
+:adr-seq: 003
+:adr-short: ADR-{adr-seq}
+= {adr-short} -- {adr-title}
+
+(((Architectural Decisions, {adr-short})))
+(((Architectural Decisions, {adr-title})))
+((({adr-short})))
+((({adr-title})))
+
+[cols="<.<8h,<.<12a", frame="topbot", grid="rows"]
+|===
+| ADR | {adr-short}
+| Title | {adr-title}
+| State | {adr-state}
+| Author | {adr-author}
+| Decision Body | {adr-body}
+| Valid from | {adr-date}
+| Expires | {adr-expires}
+|===
+
+include::partial$config.adoc[]
+
+
+== Context
+The systems need a way of communicating asynchronously.
+This is used for transferring data to the non data-managing systems.
+Non data-managing systems are all systems that depend on another system to provide management functionality for data needed by the system.
+Basically every ((SCS)) is a non data-managing system for some date and a data-managing system for other data.
+
+But also the players (((Player))) and operatives ((Operative)) logging methods of all systems rely on this functionality.
+
+
+== Decision
+We use an AMQP (((AMQP))) broker to transfer messages.
+AMQP is a standardized protocol for transferring asynchronous data even between organizations.
+It can be easily provided and managed on k8s (((Kubernetes))) (((k8s))) via the operators provided by the RabbitMQ project.
+
+The handling of **receiving** messages **has to** be separated from managing HTTP based synchronous communications.
+
+
+== Consequences
+. Every SCS (((SCS))) (((Self Contained System))) **should** be split in at least three maven modules:
++
+--
+.. http handling, 
+.. messaging handling, and
+.. model.
+--
++
+That way the model is shared between the http and messaging handling parts.
+Since this is within the SCS, it does not break the SCS architectural model but still fulfills the DRY principle.
+. The data transfer into the http handling part is done via the database used by the SCS.
+  This adds to the latency to reach eventual consistency.
+
+<<<

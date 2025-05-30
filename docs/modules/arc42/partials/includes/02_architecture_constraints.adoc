@@ -1,0 +1,9 @@
+:ct001: [xref:02_architecture_constraints.adoc#CT001[CT-001 Kubernetes] (((Technical Constraints, Kubernetes (CT-001))))]
+:ct002: [xref:02_architecture_constraints.adoc#CT002[CT-002 Publishing Chain] (((Technical Constraints, Publishing Chain (CT-002))))]
+:ct003: [xref:02_architecture_constraints.adoc#CT003[CT-003 Programming Languages] (((Technical Constraints, Programming Languages (CT-003))))]
+
+:cp001: [xref:02_architecture_constraints.adoc#CP001[CO-001 Paladins Inn] (((Organizational Constraints, Paladins Inn (CO-001))))]
+
+:cp001: [xref:02_architecture_constraints.adoc#CP001[CP-001 Non Profit] (((Political Constraints, Non profit (CP-001))))]
+:cp002: [xref:02_architecture_constraints.adoc#CP001[CP-002 Intellectual Property] (((Political Constraints, Intellectual Property (CP-002))))]
+:cp003: [xref:02_architecture_constraints.adoc#CP001[CP-003 Torg Agnocity] (((Political Constraints, Torg Agnosticity (CP-003))))]

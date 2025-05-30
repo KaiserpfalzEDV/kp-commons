@@ -1,0 +1,153 @@
+// suppress inspection "HtmlUnknownAttribute" for whole file
+= Self-Contained Systems (SCS)
+
+include::partial$config.adoc[]
+
+== Introduction
+
+Self-Contained Systems (SCS) is an architectural style promoted by INNOQ xref:arc42:13_bibliography.adoc#scs[^SCS^].
+It emphasizes decomposing complex systems into **independently deployable units**, each responsible for its **own UI, business logic, and persistence**.
+This allows teams to work autonomously, and systems to scale and evolve independently.
+
+== Key Characteristics
+
+- Each SCS is a vertical slice: it includes frontend, backend, and database.
+- There is no shared database or backend API between systems.
+- Communication between systems is **asynchronous and event-driven**.
+- Frontend integration is done via **page or fragment composition**, often using **Web Components** or **Thymeleaf includes**.
+
+== Frontend Integration
+
+In SCS, each system serves its own UI.
+These UIs are composed together in the browser or at the server level using techniques like includes, iframes, or web components.
+
+=== Frontend Integration Diagram
+
+[plantuml, frontend-integration, svg]
+----
+@startuml
+skinparam style strict
+
+actor User
+
+component "Reverse Proxy\n/Page Composer" as Composer
+component "SCS A UI\n(Thymeleaf or WebComponent)" as SCSA
+component "SCS B UI\n(Thymeleaf or WebComponent)" as SCSB
+component "SCS C UI\n(Thymeleaf or WebComponent)" as SCSC
+
+User --> Composer : Request dashboard
+Composer --> SCSA : Include UI fragment A
+Composer --> SCSB : Include UI fragment B
+Composer --> SCSC : Include UI fragment C
+Composer --> User : Return composed HTML page
+
+@enduml
+----
+
+=== Example: Thymeleaf Template + Web Component
+
+Each SCS may serve a Thymeleaf template and use custom Web Components to embed their functionality.
+
+==== SCS-A Thymeleaf Template
+
+[source,html]
+----
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>SCS-A Page</title>
+</head>
+<body>
+  <h2>Welcome to SCS-A</h2>
+  <scs-a-widget></scs-a-widget>
+
+  <script type="module" src="/static/scs-a-widget.js"></script>
+</body>
+</html>
+----
+
+==== SCS-A Web Component (`scs-a-widget.js`)
+
+[source,javascript]
+----
+class ScsAWidget extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <div style="background: #eef; padding: 1em;">
+        This is a self-contained component from SCS-A.
+      </div>
+    `;
+  }
+}
+customElements.define('scs-a-widget', ScsAWidget);
+----
+
+==== Page Composition via Thymeleaf Include (in the Shell)
+
+[source,html]
+----
+<html lang="en">
+  <body>
+    <div th:replace="~{scs-a :: content}"></div>
+    <div th:replace="~{scs-b :: content}"></div>
+    <div th:replace="~{scs-c :: content}"></div>
+  </body>
+</html>
+----
+
+This approach allows SCS-A, SCS-B, and SCS-C to render and manage their parts of the UI independently.
+
+== Asynchronous Data Transfer
+
+SCS components should not make synchronous calls to one another. Instead, they exchange data through **event messages**, typically over a message broker.
+
+This promotes loose coupling, autonomy, and resilience.
+
+=== Asynchronous Event Handling Diagram
+
+[plantuml, event-flow, svg]
+----
+@startuml
+skinparam style strict
+
+actor User
+
+component "SCS A\n(User Service)" as SCSA
+component "Message Bus\n(e.g., Kafka/RabbitMQ)" as Bus
+component "SCS B\n(Notification Service)" as SCSB
+component "SCS C\n(Billing Service)" as SCSC
+
+User --> SCSA : Create User
+SCSA --> Bus : Emit `UserCreated` event
+Bus --> SCSB : Handle `UserCreated`
+Bus --> SCSC : Handle `UserCreated`
+
+@enduml
+----
+
+== Benefits of This Architecture
+
+- Independent development and deployment
+- Teams work in parallel on full-stack features
+- System is resilient to failure of individual components
+- Scales better than tightly coupled monoliths
+
+== Downsides of Self-Contained Systems
+
+While SCS offers many advantages in terms of modularity and autonomy, it also comes with certain trade-offs:
+
+- **Increased Infrastructure Complexity**: Every SCS must be independently deployable, which can increase operational overhead (CI/CD pipelines, monitoring, scaling, etc.).
+- **UX Consistency Challenges**: Since each SCS controls its own UI, maintaining a consistent look and feel across systems requires strong design governance.
+- **Data Duplication and Synchronization**: Systems often need to replicate data locally for performance and decoupling, leading to challenges in maintaining data consistency.
+- **Cross-Cutting Concerns**: Implementing features like authentication, logging, or analytics consistently across systems may require duplicated effort or shared libraries, which can reintroduce coupling.
+
+These drawbacks mean that SCS is best suited for medium to large teams and projects where the benefits of team autonomy outweigh the coordination and infrastructure costs.
+
+== Summary
+
+The Self-Contained Systems architecture enables high autonomy and scalability.
+They ensuring each system is independent in both **UI and backend**, and communicates only via **asynchronous events**.
+Frontend integration is handled through server-side includes or Web Components, maintaining both modularity and user experience.
+
+<<<

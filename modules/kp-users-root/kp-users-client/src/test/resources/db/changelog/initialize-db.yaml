@@ -1,0 +1,16 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 20240708-rlichti-001
+      author: rlichti
+      context: init
+      labels: "v1.0.0,user"
+      created: 1.0.0
+      runAlways: true
+      runOrder: first
+      changes:
+        - sql:
+            dbms: 'postgres'
+            sql: |
+              CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+              set timezone = 'UTC';

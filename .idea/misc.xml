@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
-    <list size="2">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="com.fasterxml.jackson.annotation.JsonIgnore" />
-      <item index="1" class="java.lang.String" itemvalue="javax.inject.Inject" />
+      <item index="1" class="java.lang.String" itemvalue="com.google.common.eventbus.Subscribe" />
+      <item index="2" class="java.lang.String" itemvalue="javax.inject.Inject" />
+      <item index="3" class="java.lang.String" itemvalue="org.mockito.Mock" />
     </list>
+    <writeAnnotations>
+      <writeAnnotation name="lombok.Getter" />
+    </writeAnnotations>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
@@ -18,11 +23,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-core/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-dsa5/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-fate/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-hexxen/pom.xml" />
@@ -30,9 +37,17 @@
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-torg/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-traveller/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-game-modules/rpg-wod/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-server/tomb/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/mongodb-testsupport/pom.xml" />
         <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/oauth2-testsupport/pom.xml" />
+        <option value="$PROJECT_DIR$/../../Paladins-Inn/kp-rpg/rpg-testsupport/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-bom/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-core/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/kp-rpg-torg/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-game-modules/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/kp-rpg-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/../../paladins-inn/kp-rpg/pom.xml" />
       </set>
     </option>
   </component>

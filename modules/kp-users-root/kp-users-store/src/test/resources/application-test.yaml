@@ -1,0 +1,42 @@
+---
+spring:
+  application:
+    name: kp-users-store
+    system: kp-commons
+    admin:
+      enabled: false
+  main:
+    banner-mode: off
+    
+  datasource:
+    name: in-memory
+    url: &dbUrl jdbc:h2:file:./target/db;MODE=PostgreSQL
+    username: &dbUsername sa
+    password: &dbPassword password
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  
+  jpa:
+    showSql: false
+    hibernate:
+      ddlAuto: validate
+  
+  liquibase:
+    enabled: true
+    show-summary-output: log
+    show-summary: summary
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    url: *dbUrl
+    user: *dbUsername
+    password: *dbPassword
+
+logging:
+  level:
+    root: WARN
+    web: WARN
+    security: WARN
+    liquibase: INFO
+    "de.kaiserpfalzedv.commons": INFO
+    "de.kaiserpfalzedv.commons.users": DEBUG
+    "de.kaiserpfalzedv.commons.users.store": TRACE

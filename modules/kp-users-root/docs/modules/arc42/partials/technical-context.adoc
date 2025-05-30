@@ -1,0 +1,57 @@
+[plantuml,building-block-overview,svg]
+----
+@startuml building-block-overview
+
+
+together {
+  rectangle "client" <<SCS>> as clients {
+    component "client-scs" <<external>> as otherscs
+    database "scs-db" <<external>> as db
+
+    component "kp-users-client" <<Library>> as client
+    component "kp-users-model" <<Library>> as model
+    component "kp-users-store" <<Library>> as store
+    component "kp-users-messaging" <<Library>> as messaging
+  }
+  component "amqp-broker" <<external>> as broker
+  component "identity-provider" <<external>> as idp
+}
+
+rectangle "user-scs" <<SCS>> as userscs {
+  component "kp-users-scs" <<SCS>> as scs
+
+  component "kp-users-model" <<Library>> as authmodel
+  component "kp-users-store" <<Library>> as authstore
+  component "kp-users-messaging" <<Library>> as authmessaging
+
+  database "auth-db" <<external>> as authdb
+}
+
+
+scs --> authstore : uses
+scs --> authmessaging : uses
+authstore --> authmodel : uses
+authmessaging --> authmodel : uses
+
+
+client --> store : uses
+client --> messaging : uses
+client ..> idp : uses
+store --> model : uses
+messaging --> model : uses
+
+otherscs --> client : uses
+otherscs --> db : owns
+
+authmessaging <..> broker : communicates
+messaging <..> broker : communicates
+
+authstore --> authdb : owns
+scs ..> idp : uses
+store <..> db : uses
+
+otherscs ..> scs : transcludes
+otherscs ..> client : transcludes (fallback)
+
+@enduml
+----

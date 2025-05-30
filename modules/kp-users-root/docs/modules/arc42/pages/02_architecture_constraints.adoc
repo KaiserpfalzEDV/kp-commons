@@ -1,0 +1,46 @@
+= Architecture Constraints
+
+include::partial$config.adoc[]
+
+.Technical Constraints
+[cols="<.<5a,<.<15a",option="headers",frame="topbot",grid="rows"]
+|===
+| ID | Description
+
+.2+| [[CT001,CT-001 Kubernetes]] CT-001
+| Runtime Environment Kubernetes
+| The Target runtime environment is Kubernetes.
+
+.2+| [[CT002,CT-002 Publishing Chain]] CT-002
+| Publishing Chain
+| The pubishing chain is GitHub (with actions) and the containers and helm charts get published via quay.io.
+
+.2+| [[CT003,CT-003 Programming Languages]] CT-003
+| Programming Languages
+| The main programming language is Java.
+https://spring.io/projects/spring-boot[spring-boot] will be used as main framework.
+|===
+
+
+.Organisational Constraints
+[cols="<.<5a,<.<15a",option="headers",frame="topbot",grid="rows"]
+|===
+| ID | Description
+
+.2+| [[CO001,CO-001 Kaiserpfalz EDV-Service]] CO-001
+| Kaiserpfalz EDV-Service
+| The software will be distributed by Kaiserpfalz EDV-Service.
+|===
+
+
+.Political Constraints
+[cols="<.<5a,<.<15a",option="headers",frame="topbot",grid="rows"]
+|===
+| ID | Description
+
+.2+| [[CP001, CP-001 Non-Profit]] CP-001
+| Non Profit
+| The software is developed without profit. It is provided via LGPL v3.0 or newer.
+|===
+
+<<<

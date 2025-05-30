@@ -18,21 +18,17 @@
 
 package de.kaiserpfalzedv.commons.users.domain.model.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.eventbus.EventBus;
+import de.kaiserpfalzedv.commons.api.events.EventBus;
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsBannedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDeletedException;
-import de.kaiserpfalzedv.commons.users.domain.model.UserIsDetainedException;
 import de.kaiserpfalzedv.commons.users.domain.model.abac.HasOwner;
-import de.kaiserpfalzedv.commons.users.domain.model.user.state.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import de.kaiserpfalzedv.commons.users.domain.model.user.state.UserState;
+import jakarta.validation.constraints.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,7 +41,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * The user of the DCIS system.
+ * The user of the DCIS application.
  */
 @JsonDeserialize(as = KpUserDetails.class)
 public interface User extends Principal, UserDetails, CredentialsContainer, HasId<UUID>, HasNameSpace, HasName, HasTimestamps, HasOwner<UUID>, Serializable {
@@ -63,6 +59,22 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * @return The IDP subject of this user.
    */
   String getSubject();
+  
+  /**
+   * @return the email address of the user.
+   */
+  @Email
+  String getEmail();
+  
+  /**
+   * @return the phone number.
+   */
+  String getPhone();
+  
+  /**
+   * @return the discord username.
+   */
+  String getDiscord();
   
   
   /**
@@ -84,7 +96,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * Detains the user for a number of days.
    *
    * @param bus The bus for sending the changing event.
-   * @param days The number of days the user is detained within the system.
+   * @param days The number of days the user is detained within the application.
    * @return the user
    */
   User detain(@NotNull EventBus bus, @Min(1) @Max(1095) long days);
@@ -98,20 +110,12 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   User release(@NotNull EventBus bus);
   
   /**
-   * Ban the user from the system.
+   * Ban the user from the application.
    *
    * @param bus The bus for sending the changing event.
    * @return the user
    */
   User ban(@NotNull EventBus bus);
-  
-  /**
-   * Unban the user from the system.
-   *
-   * @param bus The bus for sending the changing event.
-   * @return the user
-   */
-  User unban(@NotNull EventBus bus);
   
   /**
    * delete the user.
@@ -129,10 +133,19 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    */
   User undelete(@NotNull EventBus bus);
   
+  
   /**
-   * @return true if the user is banned from the system.
+   * @return true if the user is neither banned, detained, nor deleted.
    */
-  boolean isBanned();
+  default boolean isActive() { return !isInactive(); }
+  
+  /**
+   * @return true if the user is banned from the application.
+   */
+  default boolean isBanned() {
+    return getBannedOn() != null;
+  }
+  
   
   /**
    * @return true if the user is detained.
@@ -145,7 +158,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * @return true if the user is deleted.
    */
   default boolean isDeleted() {
-    return getDeleted() != null && !isBanned();
+    return getDeleted() != null;
   }
   
   /**
@@ -155,10 +168,14 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
     return (isDeleted() || isBanned() || isDetained());
   }
   
+  
+  @Override
   default UUID getOwnerId() {
     return getId();
   }
-  
+
+  @Override
+  @JsonBackReference
   default HasId<UUID> getOwner() {
     return this;
   }
@@ -178,19 +195,7 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
    * @return the current user state.
    */
   default UserState getState(EventBus bus) {
-    if (isDeleted()) {
-      return DeletedUser.builder().user(this).bus(bus).build();
-    }
-    
-    if (isBanned()) {
-      return BannedUser.builder().user(this).bus(bus).build();
-    }
-    
-    if (isDetained()) {
-      return DetainedUser.builder().user(this).bus(bus).build();
-    }
-    
-    return ActiveUser.builder().user(this).bus(bus).build();
+    return UserState.Factory.fromUser(this, bus);
   }
   
   /**
@@ -241,11 +246,13 @@ public interface User extends Principal, UserDetails, CredentialsContainer, HasI
   
   
   @Override
+  @JsonIgnore
   default String getPassword() {
     throw new UnsupportedOperationException();
   }
   
   @Override
+  @JsonIgnore
   default String getUsername() {
     return getName();
   }

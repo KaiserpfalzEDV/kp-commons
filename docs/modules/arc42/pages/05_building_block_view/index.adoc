@@ -1,0 +1,8 @@
+= Building Block View
+
+include::partial$config.adoc[]
+
+
+== Whitebox Overall System
+
+_**TBD**_

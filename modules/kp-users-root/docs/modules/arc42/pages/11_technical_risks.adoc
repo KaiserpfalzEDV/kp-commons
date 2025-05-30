@@ -1,0 +1,21 @@
+= Risks and Technical Debts
+
+include::partial$config.adoc[]
+
+.Risks and technical debts
+[cols="<.<5a,<.<15a",option="headers",frame="topbot",grid="rows"]
+|===
+| ID | Risk
+
+.2+m| [[TR001, TR-001 The team is too small]] TR-001
+h| The Team is too small
+| The long development shows that the team is too small for this project.
+
+.2+m| [[TR002, TR-002 Google Guava EventBus]] TR-002
+h| Guava EventBus is deprecated
+| The central synchronous event bus used within the SCS is Guava EventBus.
+The maintainers declared that they consider it deprecated.
+
+|===
+
+<<<

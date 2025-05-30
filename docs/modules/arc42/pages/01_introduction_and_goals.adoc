@@ -1,0 +1,68 @@
+= Introduction and Goals
+
+include::partial$config.adoc[]
+
+
+The ((DCIS)) (Delphi Council Information System) is a software to support the ((Torganized Play)).
+The Torganized Play is a shared campaign (((Shared Campaign))) for ((Torg Eternity)).
+
+The software should running tables (((Table))) within Torganized Play as smooth as possible.
+The creation of the shared campaign should also be as effortless as possible otherwise.
+The orga is small and would be overwhelmed.
+
+Some supporting functions like creating a library of threats is also a feature helping ((GM))s to run their tables and support others by providing additional threats to the shared library.
+
+Since ((VTT))s are the place where lots of tables are played within the Torganized Play, there should be good support for VTTs in the campaign supporting software.
+Since it is hard to get content into ((Roll20)), we decided to opt-in for ((FoundryVTT)) as VTT of choice.
+
+
+== Requirements Overview
+Priority are the requirements directly paying into the objective of the DCIS of organizing games and scoring for the shared campaign (((Shared Campaign))) of ((Torganized Play)).
+
+* {fs02}
+* {fs03}
+
+In addition, the interoperability with other Torg Eternity supporting systems is needed to make the system more usable.
+
+* {co01}
+* {co02}
+* {co03}
+* {co04}
+* {us02}
+
+
+== Quality Goals
+
+* {re01}
+* {us03}
+* {us04}
+* {mt01}
+
+<<<
+== Stakeholders
+
+[cols="<.<2,<.<2,<.<6a",options="header",frame="topbot",grid="rows"]
+|===
+|Role/Name|Contact|Expectations
+
+|Torg Player 
+|Roland T. Lichti 
+|Find nice tables to play Torg on conventions, online and open tables locally.
+
+|Torg Game Masters 
+|Roland T. Lichti 
+|Play Torg with players on conventions, online and locally.
+
+|Torganized Play Orga 
+|Roland T. Lichti 
+|* Help others play nice games.
+* Provide a shared timeline.
+
+|Owner of the Franchise
+|Ulisses Spiele
+|With Approval of Ulisses Spiele.
+Torg and Torg Eternity are trademarks of Ulisses Medien and Spiele Distributions GmbH.
+Torganized Play got the permission to use the IP non-commercial within the context of Torganized Play.
+|===
+
+<<<

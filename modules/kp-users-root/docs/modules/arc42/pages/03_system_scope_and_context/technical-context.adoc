@@ -1,0 +1,6 @@
+= Technical Context
+
+include::partial$config.adoc[]
+
+.The technical context of the DCIS.
+include::partial$technical-context.adoc[]

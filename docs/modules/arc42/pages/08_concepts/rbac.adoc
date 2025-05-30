@@ -1,0 +1,94 @@
+= Role based access control
+
+include::partial$config.adoc[]
+
+Role-Based Access Control (RBAC) is a widely used security model in IT systems that restricts system access based on the roles assigned to users within an organization.
+Instead of assigning permissions directly to individual users, RBAC assigns permissions to roles, and users are then assigned to these roles.
+
+
+== Key Concepts
+
+Roles:: Defined sets of permissions that correspond to job functions or responsibilities (e.g., "Administrator", "Editor", "Viewer").
+
+Permissions:: Specific rights or privileges to perform actions on resources (e.g., read, write, delete).
+
+Users:: Individuals or entities that are assigned to one or more roles.
+
+
+== How RBAC Works
+
+Define roles based on organizational needs.
+Assign permissions to each role according to the required access level.
+Assign users to roles based on their job responsibilities.
+Users inherit permissions from their assigned roles.
+
+
+== Example
+
+=== Roles:
+
+Administrator:: read, write, delete
+Editor:: read, write
+Viewer:: read
+
+=== User Assignments:
+
+Alice:: Administrator
+Bob:: Editor
+Carol:: Viewer
+
+
+== Benefits
+
+Simplifies management of user permissions.
+Reduces the risk of excessive or inappropriate access.
+Eases compliance with security policies and regulations.
+Scales efficiently as organizations grow.
+
+
+== Summary
+
+RBAC provides a structured and efficient way to manage access control in IT systems by grouping permissions into roles and assigning those roles to users.
+This approach enhances security, simplifies administration, and supports organizational policy enforcement.
+
+
+== Roles within DCIS
+
+The following roles are defined:
+
+.Roles of the system
+[cols="<.<4,<.<4,<.<12a",option="header",frame="topbot",grid="rows"]
+|===
+| Role | Cardinality | Description
+
+| Player
+| Everyone on the system
+| This is the basic role when logged in.
+Access is granted to all public data.
+
+| GM
+| Players who are also GMs
+| GMs can manage game sessions and see data of operatives (including their history) when being registered for or applying to a game session.
+
+| Third Party Systems
+| API using systems
+| Third Party Systems (like ((FoundryVTT))) normally use the privileges of the person using them.
+
+| Orga
+| Torganized Play Organization
+| The Orga organizes the whole system.
+It manages the storyline and handles the mission data.
+A person with orga access has the ability to see almost any data and block/unblock most data.
+
+| Judge
+| Torganized Play Organization
+| A Judge is an arbiter.
+If there are conflicts that can't be resolved between the parties themself, a judge may be called to decide.
+A judge has access to all data and can block, unblock and delete almost any data to execute on their decision.
+
+| Admin
+| Torganized Play Organization
+| Full access. Nothing is hidden or impossible for admin level.
+|===
+
+<<<

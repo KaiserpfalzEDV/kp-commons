@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
         <artifactId>kp-commons-modules-root</artifactId>
-        <version>4.1.0-SNAPSHOT</version>
+        <version>4.1.0</version>
 	      <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -37,8 +37,8 @@
     <modules>
         <module>kp-users-model</module>
         <module>kp-users-store</module>
+        <module>kp-users-messaging</module>
         <module>kp-users-client</module>
-        <module>kp-users-server</module>
     </modules>
 
     <properties>

@@ -1,0 +1,46 @@
+= Business Context
+
+include::partial$config.adoc[]
+
+.The business context of the DCIS.
+[plantuml,business-context,svg]
+----
+@startuml
+skinparam actorStyle awesome
+
+together {
+  :User: as user << Human >>
+  :Admin: as admin << Human >>
+}
+admin .right.|> user : is a
+
+component "kp-users-scs" <<SCS>> as usersscs
+
+together {
+  component "Client 1" <<SCS>> as client1scs
+  component "Client 2" <<SCS>> as client2scs
+  component "Client N" <<SCS>> as clientNscs
+}
+
+client1scs <..> client2scs : async
+client1scs <..> clientNscs : async
+client1scs <..> usersscs : async
+client2scs <..> clientNscs : async
+client2scs <..> usersscs : async
+clientNscs <..> usersscs : async
+
+client1scs <--> client2scs : transcludes (opt)
+client1scs <--> clientNscs : transcludes (opt)
+client2scs <--> clientNscs : transcludes (opt)
+
+client1scs --> usersscs : transcludes
+client2scs --> usersscs : transcludes
+clientNscs --> usersscs : transcludes
+
+user --> client1scs : uses
+user --> client2scs : uses
+user --> clientNscs : uses
+user --> usersscs : uses
+
+@enduml
+----
