@@ -11,4 +11,4 @@ https://docs.kaiserpfalz-edv.de/kp-commons-users/distributed-user-management.pdf
 ====
 
 
-include::kes:commons:partial$kes.adoc[]
+include::kes:ROOT:partial$kes.adoc[]

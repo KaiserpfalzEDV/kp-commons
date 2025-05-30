@@ -1,5 +1,6 @@
 include::partial$config.adoc[]
-* arc42 architecture documentation
+
+* xref:index.adoc[]
 ** Context
 *** xref:01_introduction_and_goals.adoc[]
 *** xref:02_architecture_constraints.adoc[]
