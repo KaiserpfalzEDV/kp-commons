@@ -1,10 +1,7 @@
 ---
-name: architecture
+name: kp-commons
 version: ~
-title: DCIS Systemarchitecture
+title: Java Libarary Bundle kp-commons
 nav:
+  - modules/manual/pages/nav.adoc
   - modules/arc42/pages/nav.adoc
-
-asciidoc:
-  attributes:
-    asamBibliography: 'ROOT:torg-eternity.bib'

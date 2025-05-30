@@ -1,0 +1,3 @@
+include::partial$config.adoc[]
+
+* xref:manual:index.adoc[]

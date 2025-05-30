@@ -1,0 +1,5 @@
+// asciidoc settings for EN (English)
+// ==================================
+include::kes:ROOT:partial$config.adoc[]
+
+include::kp-commons:arc42:partial$config.adoc[]

@@ -1,5 +1,4 @@
 = kp-commons-users System Architecture
-:page-aliases: ROOT:index.adoc
 
 include::partial$config.adoc[]
 
@@ -11,4 +10,4 @@ https://docs.kaiserpfalz-edv.de/kp-commons-users/kp-commons-users-system-archite
 ====
 
 
-include::kes:commons:partial$kes.adoc[]
+include::kes:ROOT:partial$kes.adoc[]
