@@ -23,15 +23,6 @@ spring:
     hibernate:
       ddlAuto: validate
   
-  liquibase:
-    enabled: true
-    show-summary-output: log
-    show-summary: summary
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
-    url: *dbUrl
-    user: *dbUsername
-    password: *dbPassword
-  
   cloud:
     function:
       definition: loginUser,logoutUser,petitionedUser,addingRole,removeRole,modifyDiscord,modifyEmail,modifyName,modifyNamespace,modifyNamespaceAndName,modifySubject,activateUser,banUser,createUser,deleteUser,detainUser,releaseUser,removeUser
@@ -127,15 +118,27 @@ spring:
             auto-bind-headers-dlq: true
             auto-bind-exchange: true
             auto-bind-queue: true
-management:
+
+  liquibase:
+    enabled: true
+    show-summary-output: log
+    show-summary: summary
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    url: *dbUrl
+    user: *dbUsername
+    password: *dbPassword
+    
+    
   health:
     binders:
       enabled: true
-    
+
+
 logging:
   level:
     root: WARN
     org.springframework: WARN
+    liquibase: INFO
     de.kaiserpfalzedv.commons: INFO
     de.kaiserpfalzedv.commons.users: DEBUG
     de.kaiserpfalzedv.commons.users.messaging: TRACE

@@ -21,12 +21,12 @@ package de.kaiserpfalzedv.commons.users.client.controller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
-
-import java.nio.file.AccessDeniedException;
 
 
 /**
@@ -40,19 +40,20 @@ public class AuthenticationIT {
   private AuthenticationTestStubService service;
   
   @Test
+  @WithAnonymousUser
   void shouldFailUserAllowedWhenNoUserIsSet() {
     StepVerifier
         .create(this.service.userAllowed())
-        .expectError(AccessDeniedException.class)
+        .expectError(AuthorizationDeniedException.class)
         .verify();
   }
   
   @Test
-  @WithMockUser
+  @WithMockUser(roles = {})
   void shouldFailUserAllowedWhenUserHasNoRole() {
     StepVerifier
         .create(this.service.userAllowed())
-        .expectError(AccessDeniedException.class)
+        .expectError(AuthorizationDeniedException.class)
         .verify();
   }
   
@@ -61,7 +62,34 @@ public class AuthenticationIT {
   void shouldAcceptUserAllowedWhenUserHasUserRole() {
     StepVerifier
         .create(this.service.userAllowed())
-        .expectNext("StepVerifier Subscriber")
+        .expectNext("userAllowed")
+        .verifyComplete();
+  }
+  
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void shouldAcceptAdminAllowedWhenUserHasAdminRole() {
+    StepVerifier
+        .create(this.service.adminAllowed())
+        .expectNext("adminAllowed")
+        .verifyComplete();
+  }
+  
+  @Test
+  @WithMockUser(roles = "USER")
+  void shouldFailAdminAllowedWhenUserHasOnlyUserRole() {
+    StepVerifier
+        .create(this.service.adminAllowed())
+        .expectError(AuthorizationDeniedException.class)
+        .verify();
+  }
+  
+  @Test
+  @WithAnonymousUser
+  void shouldAcceptAllAllowedWhenNoUserIsSet() {
+    StepVerifier
+        .create(this.service.allAllowed())
+        .expectNext("allAllowed")
         .verifyComplete();
   }
 }

@@ -41,6 +41,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -69,6 +70,10 @@ public class UserAuthenticationServiceTest {
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   @Mock
   private Optional<User> PLAYER_OPTIONAL;
+  
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+  @Mock
+  private Optional<User> BANNED_OPTIONAL;
   
   
   @BeforeEach
@@ -115,7 +120,8 @@ public class UserAuthenticationServiceTest {
     
     when(oidcUser.getIssuer()).thenReturn(DEFAULT_ISSUER);
     when(oidcUser.getSubject()).thenReturn(BANNED.getSubject());
-    when(userReadService.findByOauth(BANNED.getIssuer(), BANNED.getSubject())).thenReturn(PLAYER_OPTIONAL);
+    when(userReadService.findByOauth(BANNED.getIssuer(), BANNED.getSubject())).thenReturn(BANNED_OPTIONAL);
+    when(BANNED_OPTIONAL.orElse(any())).thenReturn(BANNED);
     
     try {
       sut.authenticate(oidcUser);
@@ -177,14 +183,17 @@ public class UserAuthenticationServiceTest {
     log.entry();
     
     when(oidcUser.getIssuer()).thenReturn(DEFAULT_ISSUER);
-    when(oidcUser.getSubject()).thenReturn(CREATED.getId().toString());
+    when(oidcUser.getSubject()).thenReturn(CREATED.getSubject());
+    
     when(oidcUser.getPreferredUsername()).thenReturn(CREATED.getUsername());
+    when(oidcUser.getEmail()).thenReturn(CREATED.getEmail());
+    when(oidcUser.getPhoneNumber()).thenReturn(CREATED.getPhone());
     
     when(userReadService.findByOauth(CREATED.getIssuer(), CREATED.getSubject())).thenReturn(Optional.empty());
     
-    verify(userWriteService).create(CREATED);
-    
     User result = sut.authenticate(oidcUser);
+    
+    verify(userWriteService).create(CREATED);
     
     assertEquals(CREATED, result);
     

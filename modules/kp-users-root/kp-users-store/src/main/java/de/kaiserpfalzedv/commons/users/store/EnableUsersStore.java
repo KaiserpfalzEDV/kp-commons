@@ -46,6 +46,6 @@ import java.lang.annotation.*;
     ApiKeyToJPAImpl.class,
     RoleToJpaImpl.class,
     UserToJpaImpl.class,
-    SpringEventBus.class
+    SpringEventBus.class,
 })
 public @interface EnableUsersStore {}

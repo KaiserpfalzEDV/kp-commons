@@ -19,10 +19,11 @@ package de.kaiserpfalzedv.commons.users.client.controller;
 
 
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.slf4j.XSlf4j;
 import org.reactivestreams.Publisher;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 
 /**
@@ -33,32 +34,20 @@ import org.springframework.stereotype.Service;
 @XSlf4j
 public class AuthenticationTestStubService {
   
-  @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
-  public Publisher<String> userAndAdminAllowed() {
-    log.entry();
-    
-    @SuppressWarnings("ReactiveStreamsPublisherImplementation")
-    Publisher<String> result = s -> log.info("userAndAdminAllowed. string={}", s);
-    
-    return log.exit(result);
-  }
-  
-  @RolesAllowed("ROLE_USER")
+  @PreAuthorize("hasRole('ROLE_USER')")
   public Publisher<String> userAllowed() {
     log.entry();
     
-    @SuppressWarnings("ReactiveStreamsPublisherImplementation")
-    Publisher<String> result = s -> log.info("userAllowed. string={}", s);
+    Mono<String> result = Mono.just("userAllowed");
     
     return log.exit(result);
   }
   
-  @RolesAllowed("ROLE_ADMIN")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public Publisher<String> adminAllowed() {
     log.entry();
     
-    @SuppressWarnings("ReactiveStreamsPublisherImplementation")
-    Publisher<String> result = s -> log.info("adminAllowed. string={}", s);
+    Mono<String> result = Mono.just("adminAllowed");
     
     return log.exit(result);
   }
@@ -67,8 +56,7 @@ public class AuthenticationTestStubService {
   public Publisher<String> allAllowed() {
     log.entry();
     
-    @SuppressWarnings("ReactiveStreamsPublisherImplementation")
-    Publisher<String> result = s -> log.info("allAllowed. string={}", s);
+    Mono<String> result = Mono.just("allAllowed");
     
     return log.exit(result);
   }
