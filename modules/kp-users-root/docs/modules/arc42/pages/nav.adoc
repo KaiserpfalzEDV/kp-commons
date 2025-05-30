@@ -39,13 +39,11 @@
 **** xref:08_concepts/abac.adoc[]
 **** xref:08_concepts/observability.adoc[]
 **** xref:08_concepts/data-protection.adoc[]
+*** Architecture decisions (kp-commons)
+include::kp-commons:arc42:partial$nav.adr.adoc[]
 *** Architecture decisions
-**** xref:09_architecture_decisions/001_using-adrs.adoc[]
-**** xref:09_architecture_decisions/002_spring-boot.adoc[]
-**** xref:09_architecture_decisions/003_messaging-rabbitmq.adoc[]
-**** xref:09_architecture_decisions/004_sql-data-store.adoc[]
-**** xref:09_architecture_decisions/005_shared_libraries.adoc[]
+**** xref:09_architecture_decisions/001_shared_libraries.adoc[]
 *** xref:10_quality_requirements.adoc[]
 *** xref:11_technical_risks.adoc[]
-*** xref:12_glossary.adoc[]
-*** xref:13_bibliography.adoc[]
+*** xref:kp-commons:manual:glossary.adoc[] (kp-commons)
+*** xref:kp-commons:manual:bibliography.adoc[] (kp-commons)

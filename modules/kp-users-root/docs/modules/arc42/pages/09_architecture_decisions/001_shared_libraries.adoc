@@ -4,9 +4,11 @@
 :adr-expires: ./.
 :adr-author: klenkes74
 :adr-body: klenkes74
-:adr-seq: 005
+:adr-seq: 001
 :adr-short: ADR-{adr-seq}
 = {adr-short} -- {adr-title}
+
+include::partial$config.adoc[]
 
 (((Architectural Decisions, {adr-short})))
 (((Architectural Decisions, {adr-title})))
@@ -24,7 +26,6 @@
 | Expires | {adr-expires}
 |===
 
-include::partial$config.adoc[]
 
 
 == Context
