@@ -1,11 +1,6 @@
 = Distributed User Management
 Roland T. Lichti <rlichti@kaiserpfalz-edv.de>
 
-[TIP]
-====
-You can download this documentation in PDF format:
-
-https://docs.kaiserpfalz-edv.de/kp-commons-users/distributed-user-management.pdf
-====
+NOTE: This documentation is also available in xref:kp-commons:ROOT:./_exports/index.pdf[PDF format].
 
 include::kes:ROOT:partial$kes.adoc[]

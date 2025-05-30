@@ -4,5 +4,5 @@ Roland T. Lichti <klenkes74@paladins-inn.de>
 
 include::partial$config.adoc[]
 
-
+NOTE: This documentation is also available in xref:kp-commons:ROOT:./_exports/index.pdf[PDF format].
 
