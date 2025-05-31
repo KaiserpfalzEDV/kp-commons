@@ -36,4 +36,7 @@ import java.util.UUID;
 public interface RoleRepository extends JpaRepository<RoleJPA, UUID> {
   List<RoleJPA> findByNameSpace(@NotBlank final String nameSpace);
   Page<RoleJPA> findByNameSpace(@NotBlank final String nameSpace, @NotNull Pageable pageable);
+  
+  List<RoleJPA> findByName(@NotBlank final String name);
+  Page<RoleJPA> findByName(@NotBlank final String name, @NotNull Pageable pageable);
 }

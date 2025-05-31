@@ -25,8 +25,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -102,6 +107,132 @@ public class JpaUserReadServiceTest {
     
     assertTrue(result.isPresent());
     
+    log.exit();
+  }
+  
+  // findAll()
+  @Test
+  void shouldReturnAllUsersWhenUsersExist() {
+    log.entry();
+  
+    when(repository.findAll()).thenReturn(List.of(DEFAULT_USER));
+  
+    var result = sut.findAll();
+    log.debug("Result: users={}", result);
+  
+    assertTrue(result.contains(DEFAULT_USER));
+  
+    log.exit();
+  }
+  
+  @Test
+  void shouldReturnEmptyListWhenNoUsersExist() {
+    log.entry();
+  
+    when(repository.findAll()).thenReturn(List.of());
+  
+    var result = sut.findAll();
+    log.debug("Result: users={}", result);
+  
+    assertTrue(result.isEmpty());
+  
+    log.exit();
+  }
+  
+  // findAll(Pageable)
+  @Test
+  void shouldReturnPageOfUsersWhenUsersExist() {
+    log.entry();
+  
+    var pageable = mock(Pageable.class);
+    var page = new PageImpl<>(List.of(DEFAULT_USER));
+    when(repository.findAll(pageable)).thenReturn(page);
+  
+    var result = sut.findAll(pageable);
+    log.debug("Result: users={}", result.getContent());
+  
+    assertTrue(result.getContent().contains(DEFAULT_USER));
+  
+    log.exit();
+  }
+  
+  @Test
+  void shouldReturnEmptyPageWhenNoUsersExist() {
+    log.entry();
+    
+    Pageable pageable = mock(Pageable.class);
+    Page<UserJPA> page = new PageImpl<>(Collections.emptyList());
+    when(repository.findAll(pageable)).thenReturn(page);
+    
+    
+    var result = sut.findAll(pageable);
+    log.debug("Result: users={}", result.getContent());
+  
+    assertTrue(result.isEmpty());
+  
+    log.exit();
+  }
+  
+  // findByNamespace(String)
+  @Test
+  void shouldReturnUsersByNamespace() {
+    log.entry();
+  
+    when(repository.findByNameSpace("namespace")).thenReturn(List.of(DEFAULT_USER));
+  
+    var result = sut.findByNamespace("namespace");
+    log.debug("Result: users={}", result);
+  
+    assertTrue(result.contains(DEFAULT_USER));
+  
+    log.exit();
+  }
+  
+  @Test
+  void shouldReturnEmptyListWhenNoUsersInNamespace() {
+    log.entry();
+  
+    when(repository.findByNameSpace("namespace")).thenReturn(List.of());
+  
+    var result = sut.findByNamespace("namespace");
+    log.debug("Result: users={}", result);
+  
+    assertTrue(result.isEmpty());
+  
+    log.exit();
+  }
+  
+  // findByNamespace(String, Pageable)
+  @Test
+  void shouldReturnPageOfUsersByNamespace() {
+    log.entry();
+  
+    var pageable = mock(Pageable.class);
+    var page = new PageImpl<>(List.of(DEFAULT_USER));
+    when(repository.findByNameSpace("namespace", pageable)).thenReturn(page);
+  
+    var result = sut.findByNamespace("namespace", pageable);
+    log.debug("Result: users={}", result.getContent());
+  
+    assertTrue(result.getContent().contains(DEFAULT_USER));
+  
+    log.exit();
+  }
+  
+  @Test
+  void shouldReturnEmptyPageWhenNoUsersInNamespace() {
+    log.entry();
+  
+    Pageable pageable = mock(Pageable.class);
+    Page<UserJPA> page = new PageImpl<>(Collections.emptyList());
+    
+    when(repository.findByNameSpace("namespace", pageable)).thenReturn(page);
+  
+    var result = sut.findByNamespace("namespace", pageable);
+    log.debug("Result: users={}", result.getContent());
+  
+    assertTrue(result.isEmpty());
+  
     log.exit();
   }
   

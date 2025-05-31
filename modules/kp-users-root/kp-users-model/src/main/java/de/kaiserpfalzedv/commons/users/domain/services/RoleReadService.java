@@ -35,6 +35,9 @@ import java.util.UUID;
 public interface RoleReadService {
   Optional<? extends Role> retrieve(@NotNull UUID id);
   
+  List<? extends Role> retrieveByName(@NotNull String name);
+  Page<? extends Role> retrieveByName(@NotNull String name, @NotNull Pageable pageable);
+  
   List<? extends Role> retrieveAll();
   Page<? extends Role> retrieveAll(@NotNull Pageable pageable);
   

@@ -25,8 +25,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +48,42 @@ public class JpaUserReadService implements UserReadService<UserJPA> {
         log.entry(id);
         
         return log.exit(users.findById(id));
+    }
+    
+    @Override
+    @Counted
+    @Timed
+    public List<UserJPA> findByNamespace(final String nameSpace) {
+        log.entry(nameSpace);
+        
+        return log.exit(users.findByNameSpace(nameSpace));
+    }
+    
+    @Override
+    @Counted
+    @Timed
+    public Page<UserJPA> findByNamespace(final String nameSpace, final Pageable pageable) {
+        log.entry(nameSpace, pageable);
+        
+        return log.exit(users.findByNameSpace(nameSpace, pageable));
+    }
+    
+    @Override
+    @Counted
+    @Timed
+    public List<UserJPA> findAll() {
+        log.entry();
+        
+        return log.exit(users.findAll());
+    }
+    
+    @Override
+    @Counted
+    @Timed
+    public Page<UserJPA> findAll(final Pageable pageable) {
+        log.entry(pageable);
+        
+        return log.exit(users.findAll(pageable));
     }
     
     @Override

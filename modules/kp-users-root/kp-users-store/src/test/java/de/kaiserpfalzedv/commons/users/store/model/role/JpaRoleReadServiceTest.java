@@ -151,6 +151,34 @@ public class JpaRoleReadServiceTest {
     log.exit();
   }
   
+  @Test
+  void shouldReturnListOfRolesByNameWhenRolesWithNameExist() {
+    log.entry();
+    
+    when(roleRepository.findByName(DEFAULT_ROLE.getName())).thenReturn(List.of(DEFAULT_ROLE));
+    
+    List<RoleJPA> result = sut.retrieveByName(DEFAULT_ROLE.getName());
+    log.debug("result. roles={}", result);
+    
+    assertEquals(1, result.size());
+    
+    log.exit();
+  }
+  
+  @Test
+  void shouldReturnPageOfRolesByNameWhenRolesWithNameExist() {
+    log.entry();
+    
+    when(roleRepository.findByName(DEFAULT_ROLE.getName(), DEFAULT_PAGEABLE)).thenReturn(DEFAULT_PAGE);
+    
+    Page<RoleJPA> result = sut.retrieveByName(DEFAULT_ROLE.getName(), DEFAULT_PAGEABLE);
+    log.debug("result. roles={}", result);
+    
+    assertEquals(1, result.getTotalElements());
+    
+    log.exit();
+  }
+  
   
   private static final UUID DEFAULT_ID = UUID.randomUUID();
   private static final OffsetDateTime CREATED_AT = OffsetDateTime.now();

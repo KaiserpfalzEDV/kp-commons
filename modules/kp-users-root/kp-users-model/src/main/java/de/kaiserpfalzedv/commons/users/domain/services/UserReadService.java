@@ -20,7 +20,10 @@ package de.kaiserpfalzedv.commons.users.domain.services;
 
 import de.kaiserpfalzedv.commons.users.domain.model.user.User;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,6 +33,12 @@ import java.util.UUID;
  */
 public interface UserReadService<T extends User> {
   Optional<T> findById(@NotBlank UUID id);
+  
+  List<T> findByNamespace(@NotBlank final String nameSpace);
+  Page<T> findByNamespace(@NotBlank final String nameSpace, @NotBlank final Pageable pageable);
+  
+  List<T> findAll();
+  Page<T> findAll(@NotBlank Pageable pageable);
 
   Optional<T> findByUsername(@NotBlank final String nameSpace, @NotBlank final String name);
   Optional<T> findByOauth(@NotBlank final String issuer, @NotBlank final String sub);

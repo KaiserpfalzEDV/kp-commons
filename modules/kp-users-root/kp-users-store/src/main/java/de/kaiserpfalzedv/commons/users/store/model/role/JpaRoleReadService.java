@@ -57,6 +57,20 @@ public class JpaRoleReadService implements RoleReadService {
   }
   
   @Override
+  public List<RoleJPA> retrieveByName(@NotNull String name) {
+    log.entry(name);
+    
+    return repository.findByName(name);
+  }
+  
+  @Override
+  public Page<RoleJPA> retrieveByName(@NotNull String name, @NotNull Pageable pageable) {
+    log.entry(name, pageable);
+    
+    return repository.findByName(name, pageable);
+  }
+  
+  @Override
   @Counted
   @Timed
   public List<RoleJPA> retrieveAll() {
