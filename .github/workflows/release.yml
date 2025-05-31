@@ -48,6 +48,6 @@ jobs:
             --batch-mode \
             --no-transfer-progress \
             \
-            -Prelease
+            -Prelease \
             \
             deploy
