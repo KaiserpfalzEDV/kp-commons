@@ -1,0 +1,97 @@
+.Overview of the usage of the kp-users by other SCS and their users.
+[plantuml, kp-users-runtime-view-overview, svg]
+----
+@startuml kp-users-scs-deployment
+    !include <k8s/Common>
+    !include <k8s/Simplified>
+    !include <k8s/OSS/all>
+    !include <C4/C4_Container>
+
+    footer "kp-users SCS in action"
+    scale max 1024 width
+    skinparam {
+        nodesep 100
+        ranksep 100
+    }
+
+
+
+    actor "User" as userAlias
+    left to right direction
+    Cluster_Boundary(cluster, "Kubernetes Cluster") {
+        Namespace_Boundary(kpUsers, "kp-users") {
+            KubernetesIng(ing, "kp-users", "")
+            KubernetesSvc(svc, "kp-users", "")
+            KubernetesPod(pod1, "kp-users-pod1", "")
+            KubernetesPod(pod2, "kp-users-pod2", "")
+
+            ContainerDb(db, "kp-users-db", "PostgreSQL")
+            KubernetesPvc(pvc, "kp-users-db storage", "")
+
+            Rel(pod1, db, "uses", "")
+            Rel(pod2, db, "uses", "")
+            Rel(db, pvc, "mounts", "")
+        }
+
+        Namespace_Boundary(brokerNs, "Message Broker") {
+            KubernetesSvc(brokerSvc, "broker", "")
+            KubernetesPod(brokerPod, "broker", "")
+            KubernetesPvc(brokerPvc, "broker storage", "")
+
+            Rel(brokerPod,brokerPvc, "mounts", "")
+        }
+
+        Namespace_Boundary(ns, "other-scs") {
+            KubernetesIng(otherIng, "ingress", "")
+            KubernetesSvc(otherSvc, "svc", "")
+            KubernetesPod(otherPod, "pod", "")
+
+            ContainerDb(otherDb, "scs db", "PostgreSQL")
+            KubernetesPvc(otherPvc, "scs db storage", "")
+
+            Rel(otherPod, otherDb, "uses", "")
+            Rel(otherPod, otherDb, "uses", "")
+            Rel(otherDb, otherPvc, "mounts", "")
+       }
+    }
+
+    Rel(pod1,brokerSvc, "subscribes to messages", "1")
+    Rel(pod2,brokerSvc, "subscribes to messages", "1")
+    Rel(otherPod,brokerSvc, "subscribes to messages", "1")
+
+    Rel(userAlias,otherIng,"get HTTP/1.1 index.html", "2")
+    Rel(otherIng,otherSvc,"requests content from", "3")
+    Rel(otherSvc, otherPod,"load Balances to Pod", "4")
+    Rel(otherPod,otherIng,"serves content with transclude", "6")
+    Rel(otherIng, userAlias, "return content to", "7")
+
+    Rel(otherPod,brokerSvc, "sends login message", "5a")
+    Rel(brokerSvc,brokerPod, "load balances to pod", "5b")
+    Rel(brokerPod,pod1,"sends message to subscriber", "5c")
+    Rel(brokerPod,pod2,"sends message to subscriber", "5c")
+    Rel(brokerPod,otherPod,"sends message to subscriber", "5c")
+
+    Rel(userAlias, ing, "get HTTP/1.1 /transcludes/index.html", "8")
+    Rel(ing,svc,"requests content from","9")
+    Rel(svc,pod1,"load Balances to Pods", "10")
+    Rel(svc,pod2,"load Balances to Pods", "10")
+    Rel(pod1, ing, "serves transcluded content", "11")
+    Rel(ing, userAlias, "return transcluded content to", "12")
+
+@enduml
+----
+<1> At system startup the SCS subscribe to the user management topics on the message broker.
+<2> The user accesses the other-scs with a HTTP request.
+<3> The process gets handled by the ingress controller which forwards the request to the service.
+<4> The service load "balances" the request to one of the pods (there is only one).
+<5> The handling is done in parallel of serving the request. +
+_5a:_ The pod sends the login event to the broker. +
+_5b:_ The broker load balances the request to one of the broker pods. +
+_5c:_ the event is sent to all subscribers of the topic.
+<6> The pod send the content with a transclude to kp-users to the user (via ingress).
+<7> The user gets the content with the transclude.
+<8> The user requests the transclude from the kp-users SCS.
+<9> The request is handled by the ingress controller which forwards the request to the service.
+<10> The service load balances the request to one of the pods.
+<11> The pod serves the transcluded content.
+<12> The ingress controller returns the transcluded content to the user.

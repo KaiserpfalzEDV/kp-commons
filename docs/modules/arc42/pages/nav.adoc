@@ -29,7 +29,3 @@ include::partial$nav.adr.adoc[]
 *** xref:11_technical_risks.adoc[]
 *** xref:kp-commons:manual:glossary.adoc[] (kp-commons Manual)
 *** xref:kp-commons:manual:bibliography.adoc[] (kp-commons Manual)
-
-* xref:kp-commons-users:arc42:index.adoc[kp-commons-users arc42 architecture documentation]
-
-include::manual:_appendix.adoc[]

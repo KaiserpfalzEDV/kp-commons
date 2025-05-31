@@ -1,0 +1,7 @@
+= Runtime View
+
+include::partial$config.adoc[]
+
+== Overview
+
+include::partial$06_runtime_view/overview-picture.adoc[]

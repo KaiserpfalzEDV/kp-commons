@@ -1,5 +1,1 @@
-* xref:kp-commons-users:manual:index.adoc[kp-commons manual]
-
 * xref:index.adoc[kp-commons-users manual]
-
-include::kp-commons:manual:_appendix.adoc[]

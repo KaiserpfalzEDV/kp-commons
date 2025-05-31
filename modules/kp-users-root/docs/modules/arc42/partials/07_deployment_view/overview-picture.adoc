@@ -1,0 +1,81 @@
+.Overview of the deployment of the kp-users SCS within a Kubernetes cluster.
+[plantuml, kp-users-runtime-view-overview, svg]
+----
+@startuml kp-users-scs-deployment
+!include <k8s/Common>
+!include <k8s/Simplified>
+!include <k8s/OSS/all>
+!include <C4/C4_Container>
+!include <C4/C4_Context>
+
+footer "kp-users SCS deployed k8s resources"
+scale max 1024 width
+skinparam {
+    nodesep 100
+    ranksep 100
+}
+
+
+
+left to right direction
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+    Namespace_Boundary(kpUsers, "kp-users") {
+
+        KubernetesSa(sa, "kp-users", "")
+        KubernetesSecret(saToken, "kp-users-token-AAAAA", "")
+        KubernetesSecret(saDockerConfig, "kp-users-dockercfg-AAAAA", "")
+        Rel(sa, saToken, "creates", "via k8s")
+        Rel(saToken, saDockerConfig, "creates", "via k8s")
+
+        System(helm, "Helm Chart microservice", "microservice")
+
+        KubernetesIng(ing, "kp-users", "")
+        KubernetesSecret(certificate, "kp-users-tls", "cert-manager.io/tls", "kubernetes.io/tls")
+        KubernetesSecret(tls, "kp-users-tls-1", "kubernetes.io/tls")
+        Rel(ing, certificate, "creates", "via Cert-Manager")
+        Rel(certificate, tls, "creates", "via Cert-Manager")
+
+        KubernetesSvc(svc, "kp-users", "")
+        KubernetesEp(ep, "kp-users", "")
+        Rel(svc, ep, "creates", "via k8s")
+
+        KubernetesDeploy(deployment, "kp-users", "")
+        KubernetesHpa(hpa, "kp-users", "", "Horizontal Pod Autoscaler")
+        KubernetesRs(rs, "kp-users-AAAAAAAAAA", "")
+        KubernetesPod(pod1, "kp-users-pod1-AAAAAAAAAA-AAAAA", "")
+        KubernetesPod(pod2, "kp-users-pod2-AAAAAAAAAA-AAAAA", "")
+        Rel(hpa, rs, "scales", "via k8s")
+        Rel(deployment, rs, "creates", "via k8s")
+        Rel(rs, pod1, "creates", "via k8s")
+        Rel(rs, pod2, "creates", "via k8s")
+
+
+        ContainerDb(db, "kp-users-db", "cnpg.io/cluster", "PostgreSQL")
+        KubernetesSvc(dbSvcRw, "kp-users-db-rw", "via cnpg operator")
+        KubernetesSvc(dbSvcRo, "kp-users-db-ro", "via cnpg operator")
+        KubernetesDeploy(dbDeployment, "kp-users-db", "via cnpg operator")
+        KubernetesPod(dbPod, "kp-users-db-1", "via cnpg operator")
+        KubernetesPvc(dbPvc, "kp-users-db-1", "via cnpg operator")
+        KubernetesPv(dbPv, "kp-users-db-1", "via k8s")
+        KubernetesSecret(dbCredentials, "kp-users-db-credentials", "", "kubernetes.io/basic-auth")
+
+        Rel(helm, ing, "creates", "via argo-cd")
+        Rel(helm, svc, "creates", "via argo-cd")
+        Rel(helm, deployment, "creates", "via argo-cd")
+        Rel(helm, hpa, "creates", "via argo-cd")
+        Rel(helm, db, "creates", "via argo-cd")
+        Rel(helm, sa, "creates", "via argo-cd")
+}
+}
+
+
+Rel(db, dbCredentials, "creates", "via cnpg operator")
+Rel(db, dbSvcRo, "creates", "via cnpg operator")
+Rel(db, dbSvcRw, "creates", "via cnpg operator")
+Rel(db, dbDeployment, "creates", "via cnpg operator")
+Rel(dbDeployment, dbPod, "creates", "via cnpg operator")
+Rel(dbDeployment, dbPvc, "creates", "via cnpg operator")
+Rel(dbPvc, dbPv, "creates", "via cnpg operator")
+
+@enduml
+----
