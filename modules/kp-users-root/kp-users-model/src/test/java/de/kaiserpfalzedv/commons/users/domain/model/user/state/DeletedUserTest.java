@@ -57,6 +57,8 @@ public class DeletedUserTest {
         .build()
         .getState(bus);
     
+    listener.clear();
+    
     bus.register(this);
   }
   
