@@ -450,7 +450,6 @@
                         <failBuildOnCVSS>8</failBuildOnCVSS>
                         <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                         <failOnError>true</failOnError>
-                        <serverId>nvdApi</serverId>
                         <nvdApiServerId>nvdApi</nvdApiServerId>
                         <msbuildAnalyzerEnabled>false</msbuildAnalyzerEnabled>
                         <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
