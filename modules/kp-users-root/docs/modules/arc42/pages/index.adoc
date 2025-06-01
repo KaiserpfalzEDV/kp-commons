@@ -1,8 +1,0 @@
-= arc42 Documentation
-:page-aliases: ROOT:index.adoc
-
-include::partial$config.adoc[]
-
-NOTE: This documentation is also available in link:../distributed-user-management.pdf[PDF format].
-
-include::kes:ROOT:partial$kes.adoc[]

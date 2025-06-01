@@ -39,7 +39,6 @@
         <module>kp-commons-rest</module>
         <module>kp-commons-spring</module>
         <module>kp-commons-guava</module>
-        <module>kp-users-root</module>
     </modules>
 
     <properties>

@@ -1,1 +1,0 @@
-include::kp-commons:manual:partial$nav.appendix.adoc[]

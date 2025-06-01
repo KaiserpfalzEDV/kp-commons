@@ -1,9 +1,0 @@
-// asciidoc settings for EN (English)
-// ==================================
-include::kes:ROOT:partial$config.adoc[]
-
-include::arc42:partial$includes/02_architecture_constraints.adoc[]
-include::arc42:partial$includes/09_architecture_decisions.adoc[]
-include::arc42:partial$includes/10_quality_requirements.adoc[]
-include::arc42:partial$includes/11_technical_risks.adoc[]
-include::kp-commons:manual:partial$includes/bibliography.adoc[]
