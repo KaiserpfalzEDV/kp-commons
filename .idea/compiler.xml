@@ -19,7 +19,6 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
         </processorPath>
-        <module name="kp-commons-dnb-lookup" />
         <module name="kp-commons-ean-search" />
         <module name="kp-commons-sms77" />
       </profile>
@@ -258,18 +257,42 @@
         </processorPath>
         <module name="kp-commons-spring.test" />
       </profile>
+      <profile name="Annotation profile for kp-commons-dnb-lookup.main" enabled="true">
+        <sourceOutputDir name="../generated-sources/annotations" />
+        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
+        <option name="mapstruct.verbose" value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="kp-commons-dnb-lookup.main" />
+      </profile>
+      <profile name="Annotation profile for kp-commons-dnb-lookup.test" enabled="true">
+        <sourceOutputDir name="../generated-sources/annotations" />
+        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
+        <option name="mapstruct.verbose" value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="kp-commons-dnb-lookup.test" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="kp-commons-dnb-lookup" target="17" />
-      <module name="kp-commons-dnb-lookup.main" target="17" />
-      <module name="kp-commons-dnb-lookup.test" target="17" />
       <module name="kp-commons-ean-search" target="17" />
       <module name="kp-commons-ean-search.main" target="17" />
       <module name="kp-commons-ean-search.test" target="17" />
       <module name="kp-commons-events" target="17" />
       <module name="kp-commons-fileserver" target="17" />
       <module name="kp-commons-services" target="17" />
-      <module name="kp-commons-services-root" target="17" />
       <module name="kp-commons-servlet" target="17" />
       <module name="kp-commons-sms77" target="17" />
       <module name="kp-commons-sms77.main" target="17" />
@@ -346,7 +369,9 @@
       <module name="kp-commons-core-root" options="-parameters" />
       <module name="kp-commons-core.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-core.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-dnb-lookup" options="-parameters" />
+      <module name="kp-commons-dnb-lookup" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-dnb-lookup.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-dnb-lookup.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-ean-search" options="-parameters" />
       <module name="kp-commons-events" options="-parameters" />
       <module name="kp-commons-fileserver" options="-parameters" />

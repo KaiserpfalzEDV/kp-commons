@@ -26,30 +26,22 @@
  */
 package de.kaiserpfalzedv.services.dnb.marcxml;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
 import de.kaiserpfalzedv.services.dnb.marcxml.model.DataField;
 import de.kaiserpfalzedv.services.dnb.marcxml.model.Record;
 import de.kaiserpfalzedv.services.dnb.marcxml.model.SearchRetrieveResponse;
 import de.kaiserpfalzedv.services.dnb.marcxml.model.SubField;
 import de.kaiserpfalzedv.services.dnb.model.Book;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotBlank;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>MarcXmlConverter -- .</p>
@@ -60,12 +52,22 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "it*s a lombok generated constructor")
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
-@Slf4j
+@XSlf4j
 public class MarcConverter {
     private final XmlMapper mapper = new XmlMapper();
-    private final ObjectMapper jsonMapper;
-
+    
+    public List<Book> convert(final String xml) {
+        log.entry();
+        try {
+            List<Book> result = this.convert(this.mapper.readValue(xml, SearchRetrieveResponse.class));
+            log.exit(result.size());
+            return result;
+        } catch (final IOException e) {
+            throw log.throwing(new LibraryLookupMarc21MappingException(e));
+        }
+    }
+    
+    
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Nothing get's stored here.")
     public List<Book> convert(final SearchRetrieveResponse response) {
         log.info("Converting response. query='{}', count={}",
@@ -126,7 +128,6 @@ public class MarcConverter {
                     break;
 
                 default:
-                    continue;
             }
         }
 
@@ -161,22 +162,6 @@ public class MarcConverter {
     public List<Book> convert(final InputStream is) {
         try {
             return this.convert(this.mapper.readValue(is, SearchRetrieveResponse.class));
-        } catch (final IOException e) {
-            throw new LibraryLookupMarc21MappingException(e);
-        }
-    }
-
-    public InputStream convertXml(final List<Book> books) {
-        try {
-            return IOUtils.toInputStream(this.mapper.writeValueAsString(books), Charset.defaultCharset());
-        } catch (final IOException e) {
-            throw new LibraryLookupMarc21MappingException(e);
-        }
-    }
-
-    public InputStream convert(final List<Book> books) {
-        try {
-            return IOUtils.toInputStream(new String(this.jsonMapper.writeValueAsBytes(books), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (final IOException e) {
             throw new LibraryLookupMarc21MappingException(e);
         }

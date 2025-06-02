@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,10 @@
 
 package de.kaiserpfalzedv.services.dnb.client;
 
-import java.util.List;
-
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
+import de.kaiserpfalzedv.services.dnb.model.Book;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.kaiserpfalzedv.services.dnb.model.Book;
+import java.util.List;
 
 /**
  * <p>DnbLookupClient -- The client for accessing the webservice.</p>
@@ -31,17 +28,15 @@ import de.kaiserpfalzedv.services.dnb.model.Book;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
  */
-@FeignClient(name = "dnb-lookup", configuration = DnbLookupClientConfig.class)
 public interface DnbLookupClient {
     /**
      * This is the generic query to the DNB index.
      *
      * <p>Will result in something like:</p>
-     * {@literal <pre>https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml</pre>}
+     * <a href="https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml">https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=WOE%3D9783958672567&recordSchema=MARC21-xml</a>
      *
      * @param query The query to be sent. It has to contain the index followed by a '='. The nicest index is 'WOE'.
      * @return A set of Books.
      */
-    @GetMapping(value = "/sru/dnb", produces = "text/xml", consumes = "text/xml")
     List<Book> lookup(@RequestParam("query") String query);
 }

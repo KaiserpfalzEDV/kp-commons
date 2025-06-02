@@ -18,15 +18,9 @@
 #  url: ${EAN_SEARCH_API_URL}
 #  scope: javax.inject.Singleton
 
+dnb-lookup:
+  url: http://localhost:8089
+
 spring:
-  cloud:
-    openfeign:
-      client:
-        config:
-          dnb-lookup:
-            connect-timeout: 5000
-            read-timeout: 10000
-            follow-redirects: true
-            micrometer:
-              enabled: true
-            url: http://localhost:8089
+  main:
+    web-application-type: none
