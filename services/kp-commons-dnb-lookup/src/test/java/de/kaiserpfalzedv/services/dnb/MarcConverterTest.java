@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,22 @@
 
 package de.kaiserpfalzedv.services.dnb;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import de.kaiserpfalzedv.services.dnb.marcxml.MarcConverter;
+import de.kaiserpfalzedv.services.dnb.model.Book;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import de.kaiserpfalzedv.services.dnb.marcxml.MarcConverter;
-import de.kaiserpfalzedv.services.dnb.model.Book;
-import lombok.extern.slf4j.Slf4j;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
- * Unit tests for {@link DnbLookupCounterFilter}
+ * Unit tests for {@link MarcConverter}
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
@@ -66,10 +63,10 @@ public class MarcConverterTest extends AbstractTestBase {
    protected void setUpLexArcanaInputStream() {
       this.loadNewInputStream("__files/lex-arcana.marc21.xml");
 
-      this.sut = new MarcConverter(new ObjectMapper());
+      this.sut = new MarcConverter();
    }
 
-   private void loadNewInputStream(final String fileName) {
+   private void loadNewInputStream(@SuppressWarnings("SameParameterValue") final String fileName) {
       this.closeInputStream(this.is);
 
       this.is = this.getClass().getClassLoader().getResourceAsStream(fileName);
