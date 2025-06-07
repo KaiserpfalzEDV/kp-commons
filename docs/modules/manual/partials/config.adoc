@@ -3,3 +3,6 @@
 include::kes:ROOT:partial$config.adoc[]
 
 include::kp-commons:arc42:partial$config.adoc[]
+
+include::kp-commons:manual:partial$includes/glossary.adoc[]
+include::kp-commons:manual:partial$includes/bibliography.adoc[]

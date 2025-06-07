@@ -6,50 +6,58 @@ include::partial$config.adoc[]
 This glossary tries to explain the terms used throughout this document.
 The glossary is shared between all documents of the kp-commons project.
 
+<<numbers>>, <<A>>, <<B>>, <<C>>, <<D>>, <<E>>, <<F>>, <<G>>, <<H>>, <<I>>, <<J>>, <<K>>, <<L>>, <<M>>, <<N>>, <<O>>, <<P>>, <<Q>>, <<R>>, <<S>>, <<T>>, <<U>>, <<V>>, <<W>>, <<X>>, <<Y>>, <<Z>>
+
 [cols="<.<1,<.<3a",options="header",frame="topbot",grid="rows"]
 |===
 |Term |Definition
 
-|12 Factor App
+
+2+h| [[numbers,0-9]]0-9
+
+|[[factor12-app]]12 Factor App
 |Some principles how to design a microservice application. Please check {12factor} for further information.
 
-|Agile Manifesto
+
+2+h| [[A,AÄ]]AÄ
+
+|[[agile-manifesto]]Agile Manifesto
 |The Manifesto for Agile Software Development as published on {agilemanifesto}.
 
-|((AMQP))
+|[[AMQP]]((AMQP))
 |A messaging protocol standard that defines also the wire protocol.
 That way the wire protocol is not proprietary which enables cross-organization communication via messaging.
 
-|((Attribute-based access control)) +
-((ABAC))
-| Attribute-based access control (ABAC), also known as policy-based access control for IAM, defines an access control paradigm whereby a subject's authorization to perform a set of operations is determined by evaluating attributes associated with the subject, object, requested operations, and, in some cases, environment attributes.
 
-|((Clean Code))
+2+h| [[B,B]]B [[C,C]]C
+|[[clean-code]]((Clean Code))
 |Clean Code has been promoted by several books by Robert C. Martin.
 A nice website to describe it is {cleancode}.
 
-|((Discord))
+
+2+h| [[D,D]]D
+
+|[[discord]]((Discord))
 |Discord is a (voice) chat.
 It started as chat system for video games to support creating and running guilds but evolved in a general chat system with different so called servers for any topic possible.
 During the covid pandemic the _TTRPG_ community discovered discord to play games on it.
 
-|((DRY))-Principle (((DRY)))
+|[[principle-dry]]((DRY))-Principle (((DRY)))
 |An architectural principle in software development:
 
 "**D**on't **R**epeat **Y**ourself".
 
-|((Role-based access control)) +
-((RBAC))
-| In computer systems security, role-based access control (RBAC)[1][2] or role-based security[3] is an approach to restricting system access to authorized users, and to implementing mandatory access control (MAC) or discretionary access control (DAC).
 
-|((Self Contained System)) +
+2+h| [[E,E]]E [[F,F]]F [[G,G]]G [[H,H]]H [[I,I]]I [[J,J]]J [[K,K]]K [[L,L]]L [[M,M]]M [[N,N]]N [[O,OÖ]]OÖ [[P,P]]P [[Q,Q]]Q [[R,R]]R [[S,S]]Sß
+
+|[[scs]]((Self Contained System)) +
 ((SCS))
 |A self contained system is a microservice with UI responsibly and independent database.
 Needed data is transferred asynchronously and fulfills eventual consistency.
 It offers fragments of HTML via HTTP to be included in UIs from other systems.
 Please check {scs} for more information.
 
-|((SOLID-Principle)) (((SOLID)))
+|[[principle-solid]]((SOLID-Principle)) (((SOLID)))
 | In software programming, SOLID is a mnemonic acronym for five design principles intended to make object-oriented designs more understandable, flexible, and maintainable. Although the SOLID principles apply to any object-oriented design, they can also form a core philosophy for methodologies such as agile development or adaptive software development.
 
 * **S**ingle responsible principle
@@ -58,10 +66,20 @@ Please check {scs} for more information.
 * **I**nterface segregation principle
 * **D**ependency inversion principle
 
-|((YAGNI))-Principle (((YAGNI)))
+
+2+h| [[T,T]]T
+
+| [[Transclude]]Transclude
+| A transclude is a part of a page that is included in another page. It allows for modular content management, where common elements can be reused across multiple pages without duplication.
+
+2+h| [[U,UÜ]]UÜ [[V,V]]V [[W,W]]W [[X,X]]X [[Y,Y]]Y
+
+|[[principle-yagni]]((YAGNI))-Principle (((YAGNI)))
 |An architectural principle in software development:
 
 "**Y**ou **A**in't **G**ona **N**eed **I**t".
+
+2+h| [[Z,Z]]Z
 
 |===
 
