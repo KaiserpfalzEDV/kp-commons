@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,16 @@
 
 package de.kaiserpfalzedv.services.sms77.client;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import java.util.Set;
-
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import de.kaiserpfalzedv.services.sms77.model.Balance;
 import de.kaiserpfalzedv.services.sms77.model.NumberFormatCheckResult;
 import de.kaiserpfalzedv.services.sms77.model.Sms;
 import de.kaiserpfalzedv.services.sms77.model.SmsResult;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
-import io.micrometer.core.annotation.Counted;
-import io.micrometer.core.annotation.Timed;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Set;
 
 /**
  * <p>
@@ -63,9 +52,7 @@ import jakarta.validation.constraints.Size;
  * @version 4.0.0  2024-09-22
  * @since 3.0.0  2023-01-17
  */
-@FeignClient(name = "sms77", configuration = Sms77ClientConfig.class, path = "/api")
 @SuppressWarnings("JavadocLinkAsPlainText")
-@RateLimiter(name = "sms77client")
 public interface Sms77Client {
     /**
      * Sends the SMS.
@@ -73,11 +60,6 @@ public interface Sms77Client {
      * @param sms The SMS to be sent. The same SMS can address multiple users.
      * @return The result of the SMS sending.
      */
-    @Timed("sms77.send-sms-json.time")
-    @Counted("sms77.send-sms-json.count")
-    @Retry(name = "sendSMS")
-    @CircuitBreaker(name = "sendSMS")
-    @PostMapping(value = "/sms", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     SmsResult sendSMS(@NotNull final Sms sms);
 
     /**
@@ -85,13 +67,8 @@ public interface Sms77Client {
      *
      * @param number A set of destinations for the SMS.
      * @param text   The text of the SMS.
-     * @return
+     * @return The result of the SMS sending.
      */
-    @Timed("sms77.send-sms-query.time")
-    @Counted("sms77.send-sms-query.count")
-    @Retry(name = "sendSMS")
-    @CircuitBreaker(name = "sendSMS")
-    @PostMapping(value = "/sms", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     SmsResult sendSMS(
             @Size(min = 1, max = 10) @RequestParam("to") @NotNull final Set<String> number,
 
@@ -103,11 +80,6 @@ public interface Sms77Client {
      *
      * @return The current account balance of your sms77.io account.
      */
-    @Timed("sms77.balance.time")
-    @Counted("sms77.balance.count")
-    @Retry(name = "balanceSMS")
-    @CircuitBreaker(name = "balanceSMS")
-    @GetMapping(value = "/balance", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     Balance balance();
 
     /**
@@ -132,11 +104,6 @@ public interface Sms77Client {
      * @param numbersWithComma The numbers to check, delimited by a comma.
      * @return The format check result.
      */
-    @Timed("sms77.number-format-check.multi.time")
-    @Counted("sms77.number-format-check.multi.count")
-    @Retry(name = "lookupSMS")
-    @CircuitBreaker(name = "lookupSMS")
-    @GetMapping(value = "/lookup", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     Set<NumberFormatCheckResult> checkMultipleNumberFormats(
             @RequestParam("number") @NotBlank final String numbersWithComma);
 
@@ -154,10 +121,5 @@ public interface Sms77Client {
      * @param number the number which format should be checked.
      * @return The format check result.
      */
-    @Timed("sms77.number-format-check.multi.time")
-    @Counted("sms77.number-format-check.multi.count")
-    @Retry(name = "checkNumberFormatSMS")
-    @CircuitBreaker(name = "checkNumberFormatSMS")
-    @GetMapping(value = "/lookup", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     NumberFormatCheckResult checkNumberFormat(@RequestParam("number") @NotBlank final String number);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,17 @@
 
 package de.kaiserpfalzedv.search.eansearch;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.Set;
-
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import de.kaiserpfalzedv.services.eansearch.client.EanSearchWebClient;
+import de.kaiserpfalzedv.services.eansearch.filter.QueryParamFilter;
+import de.kaiserpfalzedv.services.eansearch.filter.RequestLimitFilter;
+import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchErrorFilter;
+import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchException;
+import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchRequestLimitReachedException;
+import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchTooManyRequestsException;
+import de.kaiserpfalzedv.services.eansearch.model.EanData;
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,18 +39,11 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.test.context.ActiveProfiles;
 
-import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import de.kaiserpfalzedv.services.eansearch.client.EanSearchClient;
-import de.kaiserpfalzedv.services.eansearch.client.EanSearchClientConfig;
-import de.kaiserpfalzedv.services.eansearch.filter.RequestLimitFilter;
-import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchException;
-import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchTooManyRequestsException;
-import de.kaiserpfalzedv.services.eansearch.mapper.ResponseErrorMapper;
-import de.kaiserpfalzedv.services.eansearch.model.EanData;
-import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for {@link RequestLimitFilter}
@@ -52,22 +52,22 @@ import lombok.extern.slf4j.Slf4j;
  * @since 3.0.0 2023-01-17
  */
 @SpringBootTest(
-    webEnvironment = WebEnvironment.DEFINED_PORT,
+    webEnvironment = WebEnvironment.RANDOM_PORT,
     classes = {
-        EanSearchClient.class,
-        EanSearchClientConfig.class,
+        EanSearchWebClient.class,
+        QueryParamFilter.class,
         RequestLimitFilter.class,
-        ResponseErrorMapper.class
+        EanSearchErrorFilter.class
     }
 )
+@ActiveProfiles({"test"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@EnableFeignClients(clients = {EanSearchClient.class})
-@AutoConfigureWireMock(port = 8089)
+@AutoConfigureWireMock(port = 0)
 @Slf4j
 public class EanSearchClientTest  extends AbstractTestBase {
 
     @Autowired
-    private EanSearchClient sut;
+    private EanSearchWebClient sut;
 
     @Autowired
     private RequestLimitFilter filter;
@@ -93,11 +93,12 @@ public class EanSearchClientTest  extends AbstractTestBase {
 
     @Test
     void shouldThrowExceptionWhenNoCreditIsLeft() {
-        final EanSearchTooManyRequestsException thrown = Assertions.assertThrows(EanSearchTooManyRequestsException.class, () -> {
-            this.sut.barcodeLookupEAN("978-5-01234-678-1");
-        });
+        final EanSearchRequestLimitReachedException thrown = Assertions.assertThrows(
+            EanSearchRequestLimitReachedException.class,
+            () -> this.sut.barcodeLookupEAN("978-5-01234-678-1")
+        );
 
-        assertEquals("Too many requests (eg. rate limit exceeded).", thrown.getMessage());
+        assertEquals("Request limit reached.", thrown.getMessage());
     }
 
     @Test

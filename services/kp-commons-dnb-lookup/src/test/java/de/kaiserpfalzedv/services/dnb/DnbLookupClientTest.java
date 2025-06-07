@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,14 @@
 
 package de.kaiserpfalzedv.services.dnb;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
+import de.kaiserpfalzedv.commons.test.AbstractTestBase;
+import de.kaiserpfalzedv.services.dnb.client.DnbLookupClient;
+import de.kaiserpfalzedv.services.dnb.client.DnbLookupWebClient;
+import de.kaiserpfalzedv.services.dnb.marcxml.MarcConverter;
+import de.kaiserpfalzedv.services.dnb.model.Book;
+import de.kaiserpfalzedv.services.dnb.model.LibraryLookupException;
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,36 +35,29 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.test.context.ActiveProfiles;
 
-import de.kaiserpfalzedv.commons.test.AbstractTestBase;
-import de.kaiserpfalzedv.services.dnb.client.DnbLookupClient;
-import de.kaiserpfalzedv.services.dnb.client.DnbLookupClientConfig;
-import de.kaiserpfalzedv.services.dnb.client.Marc21Decoder;
-import de.kaiserpfalzedv.services.dnb.marcxml.MarcConverter;
-import de.kaiserpfalzedv.services.dnb.model.Book;
-import de.kaiserpfalzedv.services.dnb.model.LibraryLookupException;
-import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit tests for {@link DnbLookupCounterFilter}
+ * Unit tests for {@link de.kaiserpfalzedv.services.dnb.client.DnbLookupWebClient}
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0 2023-01-17
  */
 @SpringBootTest(
-    webEnvironment = WebEnvironment.DEFINED_PORT,
+    webEnvironment = WebEnvironment.RANDOM_PORT,
     classes = {
         DnbLookupClient.class,
-        DnbLookupClientConfig.class,
-        Marc21Decoder.class,
+        DnbLookupWebClient.class,
         MarcConverter.class
     }
 )
+@ActiveProfiles({"test"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@EnableFeignClients
-@AutoConfigureWireMock(port = 8089)
+@AutoConfigureWireMock(port = 0)
 @Slf4j
 public class DnbLookupClientTest extends AbstractTestBase {
 

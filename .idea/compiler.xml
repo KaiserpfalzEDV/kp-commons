@@ -12,17 +12,6 @@
         <module name="kp-core-testsupport" />
         <module name="kp-checkstyle" />
       </profile>
-      <profile name="Annotation profile for kp-commons-root" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
-        </processorPath>
-        <module name="kp-commons-dnb-lookup" />
-        <module name="kp-commons-ean-search" />
-        <module name="kp-commons-sms77" />
-      </profile>
       <profile name="Annotation profile for de.kaiserpfalz-edv.rpg:kp-rpg" enabled="true">
         <sourceOutputDir name="../generated-sources/annotations" />
         <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
@@ -34,49 +23,7 @@
         <module name="kp-rpg-torg.test" />
         <module name="kp-rpg-core.test" />
       </profile>
-      <profile name="Annotation profile for kp-users-messaging.main.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-users-messaging.main.main" />
-      </profile>
-      <profile name="Annotation profile for kp-users-messaging.main.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-users-messaging.main.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-api.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-api.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-api.test" enabled="true">
+      <profile name="Annotation profile for kp-commons-root" enabled="true">
         <sourceOutputDir name="../generated-sources/annotations" />
         <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
         <option name="mapstruct.defaultComponentModel" value="spring" />
@@ -89,191 +36,34 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
         <module name="kp-commons-api.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-core.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-core.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-core.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-core.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-test.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-test.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-test.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-test.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-guava.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-guava.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-guava.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-guava.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-jpa.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-jpa.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-jpa.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
         <module name="kp-commons-jpa.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-rest.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
-        <module name="kp-commons-rest.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-rest.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
+        <module name="kp-commons-guava.test" />
+        <module name="kp-commons-core.main" />
         <module name="kp-commons-rest.test" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-spring.main" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
+        <module name="kp-commons-jpa.main" />
+        <module name="kp-commons-dnb-lookup.main" />
+        <module name="kp-commons-sms77.test" />
+        <module name="kp-commons-ean-search.main" />
+        <module name="kp-commons-ean-search.test" />
+        <module name="kp-commons-sms77.main" />
+        <module name="kp-commons-dnb-lookup.test" />
+        <module name="kp-commons-guava.main" />
+        <module name="kp-commons-test.main" />
+        <module name="kp-users-messaging.main.main" />
+        <module name="kp-users-messaging.main.test" />
+        <module name="kp-commons-api.main" />
+        <module name="kp-commons-core.test" />
+        <module name="kp-commons-rest.main" />
         <module name="kp-commons-spring.main" />
-      </profile>
-      <profile name="Annotation profile for kp-commons-spring.test" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
-        <option name="mapstruct.defaultComponentModel" value="spring" />
-        <option name="mapstruct.suppressGeneratorTimestamp" value="true" />
-        <option name="mapstruct.verbose" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
-        </processorPath>
         <module name="kp-commons-spring.test" />
+        <module name="kp-commons-test.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="kp-commons-dnb-lookup" target="17" />
-      <module name="kp-commons-dnb-lookup.main" target="17" />
-      <module name="kp-commons-dnb-lookup.test" target="17" />
-      <module name="kp-commons-ean-search" target="17" />
-      <module name="kp-commons-ean-search.main" target="17" />
-      <module name="kp-commons-ean-search.test" target="17" />
       <module name="kp-commons-events" target="17" />
       <module name="kp-commons-fileserver" target="17" />
       <module name="kp-commons-services" target="17" />
-      <module name="kp-commons-services-root" target="17" />
       <module name="kp-commons-servlet" target="17" />
-      <module name="kp-commons-sms77" target="17" />
-      <module name="kp-commons-sms77.main" target="17" />
-      <module name="kp-commons-sms77.test" target="17" />
       <module name="kp-commons-userserver" target="17" />
       <module name="kp-rpg" target="11" />
       <module name="kp-users-client" target="17" />
@@ -346,8 +136,12 @@
       <module name="kp-commons-core-root" options="-parameters" />
       <module name="kp-commons-core.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-core.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
-      <module name="kp-commons-dnb-lookup" options="-parameters" />
-      <module name="kp-commons-ean-search" options="-parameters" />
+      <module name="kp-commons-dnb-lookup" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-dnb-lookup.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-dnb-lookup.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-ean-search" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-ean-search.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-ean-search.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-events" options="-parameters" />
       <module name="kp-commons-fileserver" options="-parameters" />
       <module name="kp-commons-guava" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
@@ -366,7 +160,9 @@
       <module name="kp-commons-services" options="-parameters" />
       <module name="kp-commons-services-root" options="-parameters" />
       <module name="kp-commons-servlet" options="-parameters" />
-      <module name="kp-commons-sms77" options="-parameters" />
+      <module name="kp-commons-sms77" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-sms77.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-sms77.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-spring" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-spring.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-spring.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />

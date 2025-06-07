@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,11 @@
 package de.kaiserpfalzedv.services.sms77.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+
+import java.util.Set;
 
 /**
  * <p>SmsResult -- .</p>
@@ -82,11 +79,18 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class SmsResult {
+    @ToString.Include
     private String success;
+    @ToString.Include
     private Double total_price;
+    @ToString.Include
     private Double balance;
     private String debug;
+    @ToString.Include
     private String sms_type;
+    
+    @ToString.Include
+    private Set<MessageResult> messages;
 
     /**
      * <p>MessageResult -- The resulf of a single SMS.</p>
@@ -103,17 +107,22 @@ public class SmsResult {
     @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
     public static class MessageResult {
+        @ToString.Include
         private String id;
         private String sender;
         private String recipient;
         private String text;
         private String encoding;
+        @ToString.Include
         private String label;
         private Integer parts;
         private String udh;
         private boolean is_binary;
+        @ToString.Include
         private Double price;
+        @ToString.Include
         private boolean success;
+        @ToString.Include
         private Integer error;
         private String error_text;
     }

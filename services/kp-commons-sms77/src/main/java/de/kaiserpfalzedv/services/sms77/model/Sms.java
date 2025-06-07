@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,20 @@
 
 package de.kaiserpfalzedv.services.sms77.model;
 
-import java.io.Serializable;
-import java.util.Set;
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * <p>Sms -- .</p>
@@ -53,11 +48,14 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class Sms implements Serializable {
+    @Serial
     private static final long serialVersionUID = 0L;
-
+    
+    @ToString.Include
     @Size(max = 11)
     private String from;
-
+    
+    @ToString.Include
     private Set<String> to;
 
     @Size(max = 1520)
@@ -73,11 +71,12 @@ public class Sms implements Serializable {
 
     @Builder.Default
     private String ttl = "60";
-
+    
     @Builder.Default
     @Min(0) @Max(1)
     private int return_msg_id = 1;
-
+    
+    @ToString.Include
     @Builder.Default
     @Size(max = 64)
     private String foreign_id = UUID.randomUUID().toString();

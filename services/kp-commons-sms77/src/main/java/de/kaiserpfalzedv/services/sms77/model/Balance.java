@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,15 @@
 
 package de.kaiserpfalzedv.services.sms77.model;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * <p>Sms -- .</p>
@@ -42,10 +38,11 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(onlyExplicitlyIncluded = true)
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class Balance implements Serializable {
+    @Serial
     private static final long serialVersionUID = 0L;
 
     @Size(max = 5)

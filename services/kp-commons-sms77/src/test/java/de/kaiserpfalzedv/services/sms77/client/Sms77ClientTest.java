@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,12 @@
 
 package de.kaiserpfalzedv.services.sms77.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.Set;
-
+import de.kaiserpfalzedv.services.sms77.mapper.Sms77Exception;
+import de.kaiserpfalzedv.services.sms77.mapper.Sms77ResponeMapper;
+import de.kaiserpfalzedv.services.sms77.model.NumberFormatCheckResult;
+import de.kaiserpfalzedv.services.sms77.model.Sms;
+import de.kaiserpfalzedv.services.sms77.model.SmsResult;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,40 +33,40 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-import de.kaiserpfalzedv.services.sms77.filter.Sms77RequestReportFilter;
-import de.kaiserpfalzedv.services.sms77.mapper.ResponseErrorMapper;
-import de.kaiserpfalzedv.services.sms77.mapper.Sms77Exception;
-import de.kaiserpfalzedv.services.sms77.model.Sms;
-import de.kaiserpfalzedv.services.sms77.model.SmsResult;
-import jakarta.inject.Inject;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
- * Unit tests for {@link Sms77RequestReportFilter}
+ * Unit tests for {@link Sms77WebClient}
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
  */
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = {
-      Sms77Client.class,
-      Sms77ClientConfig.class,
-      Sms77RequestReportFilter.class,
-      ResponseErrorMapper.class
+@SpringBootTest(
+    webEnvironment = WebEnvironment.RANDOM_PORT,
+    classes = {
+        Sms77WebClient.class,
+        Sms77ResponeMapper.class,
+    }
+)
+@ActiveProfiles({"test"})
+@Import({
+    Sms77WebClient.class,
+    Sms77ResponeMapper.class,
 })
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@EnableFeignClients
-@AutoConfigureWireMock(port = 8089)
+@AutoConfigureWireMock(port = 0)
 @Slf4j
 public class Sms77ClientTest {
 
    @Autowired
-   Sms77Client sut;
-
-   @Inject
-   Sms77RequestReportFilter filter;
+   Sms77WebClient sut;
 
    @Test
    void shouldsendTheSMSWhenT01IsSenta() {
@@ -79,6 +81,18 @@ public class Sms77ClientTest {
          log.info("Result. result={}", result);
 
          assertEquals("100", result.getSuccess());
+      } catch (final Sms77Exception e) {
+         Assertions.fail(e);
+      }
+   }
+   
+   @Test
+   void shouldCheckTheNumber() {
+      try {
+         final NumberFormatCheckResult result = this.sut.checkNumberFormat("491234567890");
+         log.info("Result. result={}", result);
+
+         assertTrue(result.isSuccess());
       } catch (final Sms77Exception e) {
          Assertions.fail(e);
       }

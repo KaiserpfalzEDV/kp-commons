@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Roland T. Lichti, Kaiserpfalz EDV-Service.
+ * Copyright (c) 2023-2025. Roland T. Lichti, Kaiserpfalz EDV-Service.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,13 @@
 
 package de.kaiserpfalzedv.services.sms77.model;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * <p>Sms -- .</p>
@@ -44,23 +40,29 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class NumberFormatCheckResult implements Serializable {
+    @Serial
     private static final long serialVersionUID = 0L;
-
+    
+    @ToString.Include
     private boolean success;
-
+    
     private String national;
-
+    
     private String international;
-
+    
+    @ToString.Include
     private String international_formatted;
 
     private String country_name;
-
+    
     private String country_code;
-
+    
+    @ToString.Include
     private String country_iso;
-
+    
+    @ToString.Include
     private String carrier;
-
+    
+    @ToString.Include
     private String network_type;
 }
