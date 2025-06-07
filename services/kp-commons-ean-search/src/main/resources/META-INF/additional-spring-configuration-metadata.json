@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "eansearch.baseUrl",
+      "type": "java.lang.String",
+      "description": "The base URL of the ean-search service API."
+    },
+    {
+      "name": "eansearch.language",
+      "type": "java.lang.Integer",
+      "description": "Response language to be used (defaults to 1)."
+    },
+    {
+      "name": "eansearch.token",
+      "type": "java.lang.String",
+      "description": "The APIKEY token for the ean-search service."
+    }
+  ] }

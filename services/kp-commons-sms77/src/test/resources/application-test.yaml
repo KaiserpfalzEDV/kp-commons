@@ -24,5 +24,8 @@ sms77:
   token: abcd1234
   
 spring:
+  application:
+    name: kp-commons-sms77
   main:
     web-application-type: none
+    banner-mode: off

@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @since 3.0.0 2023-01-17
  */
 @SpringBootTest(
-    webEnvironment = WebEnvironment.DEFINED_PORT,
+    webEnvironment = WebEnvironment.RANDOM_PORT,
     classes = {
         DnbLookupClient.class,
         DnbLookupWebClient.class,
@@ -57,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 )
 @ActiveProfiles({"test"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@AutoConfigureWireMock(port = 8089)
+@AutoConfigureWireMock(port = 0)
 @Slf4j
 public class DnbLookupClientTest extends AbstractTestBase {
 

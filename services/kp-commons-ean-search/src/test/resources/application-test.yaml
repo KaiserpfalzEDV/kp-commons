@@ -14,23 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-ean-search: &ean-search-api
-  url: ${EAN_SEARCH_API_URL}
-  scope: javax.inject.Singleton
+#dnb-lookup-api: &dnb-lookup
+#  url: ${EAN_SEARCH_API_URL}
+#  scope: javax.inject.Singleton
 
-ean-search-mock: &ean-search-api-mock
-  url: http://localhost:9082/
-  scope: javax.inject.Singleton
+eansearch:
+  token: abcd1234
+  language: 1
+  baseUrl: http://localhost:${wiremock.server.port}
 
-ean_search:
-  token: ${EAN_SEARCH_API_KEY:this is an invalid token}
-  language: ${EAN_SEARCH_RESULT_LANGUAGE:1}
-
-quarkus:
-  rest-client:
-    "de.kaiserpfalzedv.services.eansearch.client.EanSearchClient": *ean-search-api
-
-"%test": &test
-  quarkus:
-    rest-client:
-      "de.kaiserpfalzedv.services.eansearch.client.EanSearchClient": *ean-search-api-mock
+spring:
+  application:
+    name: kp-commons-ean-search
+  main:
+    web-application-type: none
+    banner-mode: off

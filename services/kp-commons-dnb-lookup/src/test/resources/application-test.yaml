@@ -19,8 +19,11 @@
 #  scope: javax.inject.Singleton
 
 dnb-lookup:
-  url: http://localhost:8089
+  url: http://localhost:${wiremock.server.port}
 
 spring:
+  application:
+    name: kp-commons-dnb-lookup
   main:
     web-application-type: none
+    banner-mode: off

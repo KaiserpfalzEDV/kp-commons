@@ -36,6 +36,7 @@
 
     <modules>
         <module>kp-commons-dnb-lookup</module>
+        <module>kp-commons-ean-search</module>
         <module>kp-commons-sms77</module>
     </modules>
 
