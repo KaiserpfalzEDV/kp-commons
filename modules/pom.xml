@@ -36,6 +36,7 @@
 
     <modules>
         <module>kp-commons-jpa</module>
+        <module>kp-commons-r2dbc</module>
         <module>kp-commons-rest</module>
         <module>kp-commons-spring</module>
         <module>kp-commons-guava</module>

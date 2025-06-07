@@ -68,14 +68,6 @@
             </dependency>
 
             <dependency>
-                <groupId>io.github.openfeign</groupId>
-                <artifactId>feign-bom</artifactId>
-                <version>13.5</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
                 <version>${jackson.version}</version>
@@ -132,6 +124,11 @@
             <dependency>
                 <groupId>${kp-commons.groupId}</groupId>
                 <artifactId>kp-commons-jpa</artifactId>
+                <version>${kp-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-commons.groupId}</groupId>
+                <artifactId>kp-commons-r2dbc</artifactId>
                 <version>${kp-commons.version}</version>
             </dependency>
             <dependency>

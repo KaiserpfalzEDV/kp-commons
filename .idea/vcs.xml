@@ -8,5 +8,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../cluster-gitops" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../docs" vcs="Git" />
   </component>
 </project>

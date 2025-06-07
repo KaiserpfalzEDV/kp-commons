@@ -41,6 +41,9 @@
     <file url="file://$PROJECT_DIR$/modules/kp-commons-jpa/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-quarkus/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-quarkus/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/kp-commons-r2dbc/src/main/helm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/kp-commons-r2dbc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/kp-commons-r2dbc/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-rest/src/main/helm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-rest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/modules/kp-commons-rest/src/main/resources" charset="UTF-8" />

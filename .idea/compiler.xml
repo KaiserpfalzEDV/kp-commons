@@ -48,6 +48,7 @@
         <module name="kp-commons-sms77.main" />
         <module name="kp-commons-dnb-lookup.test" />
         <module name="kp-commons-guava.main" />
+        <module name="kp-commons-r2dbc.test" />
         <module name="kp-commons-test.main" />
         <module name="kp-users-messaging.main.main" />
         <module name="kp-users-messaging.main.test" />
@@ -56,6 +57,7 @@
         <module name="kp-commons-rest.main" />
         <module name="kp-commons-spring.main" />
         <module name="kp-commons-spring.test" />
+        <module name="kp-commons-r2dbc.main" />
         <module name="kp-commons-test.test" />
       </profile>
     </annotationProcessing>
@@ -153,6 +155,9 @@
       <module name="kp-commons-modules-root" options="-parameters" />
       <module name="kp-commons-parent" options="-parameters" />
       <module name="kp-commons-quarkus" options="-parameters" />
+      <module name="kp-commons-r2dbc" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-r2dbc.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
+      <module name="kp-commons-r2dbc.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-rest" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-rest.main" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
       <module name="kp-commons-rest.test" options="-parameters -parameters -Amapstruct.verbose=true -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring" />
