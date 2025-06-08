@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.commons.r2dbc;
 
 import de.kaiserpfalzedv.commons.api.resources.HasId;
+import de.kaiserpfalzedv.commons.api.resources.HasTimestamps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -29,22 +30,20 @@ import org.springframework.data.relational.core.mapping.Column;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Objects;
 
 @SuppressFBWarnings(value = "CT_CONSTRUCTOR_THROW", justification = "lombok provided superbuilder constructor.")
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString(onlyExplicitlyIncluded = true)
-public abstract class AbstractR2dbcEntity<T extends Serializable> implements HasId<T>, Cloneable {
+@ToString
+@EqualsAndHashCode(of = {"id"})
+public abstract class AbstractR2dbcEntity<T extends Serializable> implements HasId<T>, HasTimestamps, Cloneable {
     @Id
-    @ToString.Include
     @Column(value = "ID")
     protected T id;
     
     @NotNull
-    @ToString.Include
     @Builder.Default
     @Column(value = "CREATED")
     protected OffsetDateTime created = OffsetDateTime.now(ZoneOffset.UTC);
@@ -58,22 +57,6 @@ public abstract class AbstractR2dbcEntity<T extends Serializable> implements Has
     @Column(value = "DELETED")
     protected OffsetDateTime deleted;
 
-
-    @SuppressWarnings({"unchecked","java:S2097"})
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (!(AbstractR2dbcEntity.class.isAssignableFrom(o.getClass()))) return false;
-
-        return this.id.equals(((HasId<T>)o).getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
-    }
-
     @Override
     @SuppressWarnings("java:S2975")
     protected AbstractR2dbcEntity<T> clone() throws CloneNotSupportedException {
@@ -83,10 +66,7 @@ public abstract class AbstractR2dbcEntity<T extends Serializable> implements Has
         result.id = this.id;
         result.created = this.created;
         result.modified = this.modified;
-        
-        if (this.deleted != null) {
-            result.deleted = this.deleted.toInstant().atOffset(ZoneOffset.UTC);
-        }
+        result.deleted = this.deleted;
 
         return result;
     }
