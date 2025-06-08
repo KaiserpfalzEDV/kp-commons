@@ -23,7 +23,7 @@
     <parent>
         <artifactId>kp-commons-schlundtech-root</artifactId>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <version>4.1.0</version>
+        <version>4.2.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>schlundtech-domainrobot-models</artifactId>

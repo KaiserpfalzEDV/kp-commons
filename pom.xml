@@ -21,7 +21,7 @@
 
     <groupId>de.kaiserpfalz-edv.commons</groupId>
     <artifactId>kp-commons-root</artifactId>
-    <version>4.1.0</version>
+    <version>4.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>
@@ -85,7 +85,7 @@
         <url>https://github.com/KaiserpfalzEDV/kp-commons</url>
         <connection>scm:git:git://github.com/KaiserpfalzEDV/kp-commons</connection>
         <developerConnection>scm:git:git@github.com:KaiserpfalzEDV/kp-commons</developerConnection>
-        <tag>r4.1.0</tag>
+        <tag>4.2.0-SNAPSHOT</tag>
     </scm>
 
     <issueManagement>
@@ -128,7 +128,7 @@
         <project.reporting.inputEncoding>UTF-8</project.reporting.inputEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <kp-commons.version>4.1.0</kp-commons.version>
+        <kp-commons.version>4.2.0-SNAPSHOT</kp-commons.version>
         <delombok.output>${project.build.directory}/delombok</delombok.output>
     </properties>
 
