@@ -343,7 +343,7 @@
                     </configuration>
                     <executions>
                         <execution>
-                            <phase>generate-sources</phase>
+                            <phase>post-integration-test</phase>
                             <goals>
                                 <goal>delombok</goal>
                             </goals>
