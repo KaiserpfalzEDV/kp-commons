@@ -16,7 +16,7 @@
  */
 
 /**
- * de.kaiserpfalzedv.rpg.core.api -- Base API classes used within the whole system.
+ * de.kaiserpfalzedv.rpg.core.domain -- Base API classes used within the whole system.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2.0.0  2021-05-24

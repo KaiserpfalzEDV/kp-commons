@@ -23,17 +23,15 @@ import de.kaiserpfalzedv.services.eansearch.mapper.EanSearchErrorFilter;
 import de.kaiserpfalzedv.services.eansearch.model.EanData;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Set;
-
 /**
- * <p>EanSearchClient -- The client for accessing the web service.</p>
- *
+ * EanSearchClient -- The client for accessing the web service.
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.0.0  2023-01-17
@@ -52,66 +50,68 @@ public class EanSearchWebClient {
   
   private WebClient client;
   
+  /**
+   * Initializes the WebClient with the base URL and filters.
+   */
   @PostConstruct
   public void init() {
     log.entry(webClientBuilder, requestLimitFilter, baseUrl);
     
-    client = webClientBuilder
-        .baseUrl(baseUrl)
-        .filter(requestLimitFilter)
-        .filter(queryParamFilter)
-        .filter(errorFilter)
-        .defaultHeader("Accept", "application/json")
-        .build();
+    client = webClientBuilder.baseUrl(baseUrl).filter(requestLimitFilter).filter(queryParamFilter)
+                             .filter(errorFilter)
+                             .defaultHeader("Accept", "application/json")
+                             .build();
     
     log.exit(client);
   }
   
+  /**
+   * barcodeLookupEAN -- Looks up EAN data by EAN-13 code.
+   *
+   * @param ean13 The EAN-13 code to look up.
+   * @return the set of EanData objects matching the EAN-13 code.
+   */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public Set<EanData> barcodeLookupEAN(String ean13) {
     log.entry(ean13);
     
-    return log.exit(client.get()
-        .uri(uriBuilder -> uriBuilder
-            .path("/api")
-            .queryParam("ean", ean13)
-            .build())
-        .retrieve()
-        .bodyToFlux(EanData.class)
-        .collectList()
-        .map(Set::copyOf)
-        .block()
-    );
+    return log.exit(
+        client.get().uri(uriBuilder -> uriBuilder.path("/domain")
+                                                 .queryParam("ean", ean13)
+                                                 .build())
+              .retrieve().bodyToFlux(EanData.class).collectList().map(Set::copyOf).block());
   }
-  
+
+  /**
+   * barcodeLookupUPC -- Looks up EAN data by UPC code.
+   *
+   * @param upc12 The UPC code to look up.
+   * @return the set of EanData objects matching the UPC code.
+   */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public Set<EanData> barcodeLookupUPC(String upc12) {
     log.entry(upc12);
     
-    return log.exit(client.get()
-        .uri(uriBuilder -> uriBuilder
-            .path("/api")
-            .queryParam("upc", upc12)
-            .build())
-        .retrieve()
-        .bodyToFlux(EanData.class)
-        .collectList()
-        .map(Set::copyOf)
-        .block()
-    );
+    return log.exit(
+        client.get().uri(uriBuilder -> uriBuilder.path("/domain")
+                                                 .queryParam("upc", upc12).build())
+              .retrieve().bodyToFlux(EanData.class).collectList().map(Set::copyOf).block());
   }
   
+  /**
+   * barcodeLookupISBN -- Looks up EAN data by ISBN-10 code.
+   *
+   * @param isbn10 The ISBN-10 code to look up.
+   * @return the set of EanData objects matching the ISBN-10 code.
+   */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public Set<EanData> barcodeLookupISBN(String isbn10) {
     log.entry(isbn10);
     
-    return log.exit(client.get()
-        .uri(uriBuilder -> uriBuilder
-            .path("/api")
-            .queryParam("isbn", isbn10)
-            .build())
-        .retrieve()
-        .bodyToFlux(EanData.class)
-        .collectList()
-        .map(Set::copyOf)
-        .block()
-    );
+    return log.exit(
+        client.get().uri(uriBuilder -> uriBuilder.path("/domain")
+                                                 .queryParam("isbn", isbn10).build())
+                          .retrieve()
+                          .bodyToFlux(EanData.class).collectList().map(Set::copyOf).block());
   }
 }

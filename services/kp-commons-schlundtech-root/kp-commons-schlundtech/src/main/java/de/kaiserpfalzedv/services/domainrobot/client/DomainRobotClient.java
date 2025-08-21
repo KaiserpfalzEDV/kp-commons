@@ -43,13 +43,13 @@ import jakarta.validation.constraints.NotNull;
  *
  * <dl>
  * <dt>DOMAINROBOT_API_URL</dt>
- * <dd><em>(optional)</em>The URI for the SMS77.io api. Normally there is no
+ * <dd><em>(optional)</em>The URI for the SMS77.io domain. Normally there is no
  * reason to give another URI than
  * {@literal https://gateway.sms77.io}. And that URI is the default when nothing
  * else is specified./</dd>
  * <dt>DOMAINROBOT_API_KEY</dt>
  * <dd>The API key from sms77.io. For development you should generate a sandbox
- * api key to cut
+ * domain key to cut
  * costs - but your mileage may vary.</dd>
  * </dl>
  *
@@ -57,7 +57,7 @@ import jakarta.validation.constraints.NotNull;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 3.2.2 2024-01-20
  */
-@FeignClient(name = "domainrobot", configuration = DomainRobotClientConfig.class, path = "/api")
+@FeignClient(name = "domainrobot", configuration = DomainRobotClientConfig.class, path = "/domain")
 @SuppressWarnings("JavadocLinkAsPlainText")
 @RateLimiter(name = "domainrobotclient")
 public interface DomainRobotClient {

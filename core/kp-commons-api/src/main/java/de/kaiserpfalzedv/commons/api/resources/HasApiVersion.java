@@ -17,39 +17,48 @@
 
 package de.kaiserpfalzedv.commons.api.resources;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 /**
- * HasApiVersion -- The object has an api version.
+ * HasApiVersion -- The object has an domain version.
  *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 2.0.2  2022-01-16
  * @since 2.0.2  2022-01-16
  */
 public interface HasApiVersion {
-    String VALID_VERSION_PATTERN = "^[a-zA-Z]([a-zA-Z\\d]{1,9})?$";
-    String VALID_VERSION_PATTERN_MSG = "The version must match the pattern '" + VALID_VERSION_PATTERN + "'.";
-    String VALID_VERSION_EXAMPLE = "v1";
-
-    int VALID_VERSION_MIN_LENGTH = 1;
-    int VALID_VERSION_MAX_LENGTH = 10;
-    String VALID_VERSION_LENGTH_MSG = "The length of an api version must be between "
-            + VALID_VERSION_MIN_LENGTH + " and " + VALID_VERSION_MAX_LENGTH + " characters.";
-
-    @Schema(
-            name = "apiVersion",
-            description = "The version of a resource.",
-            defaultValue = "v1",
-            pattern = VALID_VERSION_PATTERN,
-            minLength = VALID_VERSION_MIN_LENGTH,
-            maxLength = VALID_VERSION_MAX_LENGTH
-    )
-    @NotBlank
-    @Size(min = VALID_VERSION_MIN_LENGTH, max = VALID_VERSION_MAX_LENGTH, message = "The API Version is either too long or too short.")
-    @Pattern(regexp = VALID_VERSION_PATTERN, message = "The api version does not match the validation pattern.")
-    String getApiVersion();
+  String VALID_VERSION_PATTERN = "^[a-zA-Z]([a-zA-Z\\d]{1,9})?$";
+  String VALID_VERSION_PATTERN_MSG = "The version must match the pattern '" + VALID_VERSION_PATTERN
+                                     + "'.";
+  String VALID_VERSION_EXAMPLE = "v1";
+  
+  int VALID_VERSION_MIN_LENGTH = 1;
+  int VALID_VERSION_MAX_LENGTH = 10;
+  String VALID_VERSION_LENGTH_MSG = "The length of an domain version must be between "
+                                    + VALID_VERSION_MIN_LENGTH + " and " + VALID_VERSION_MAX_LENGTH
+                                    + " characters.";
+  
+  /**
+   * Get the API version of the resource.
+   *
+   * @return The API version of the resource.
+   */
+  @Schema(
+      name = "apiVersion", description = "The version of a resource.", defaultValue = "v1",
+      pattern = VALID_VERSION_PATTERN, minLength = VALID_VERSION_MIN_LENGTH,
+      maxLength = VALID_VERSION_MAX_LENGTH
+  )
+  @NotBlank
+  @Size(
+      min = VALID_VERSION_MIN_LENGTH, max = VALID_VERSION_MAX_LENGTH,
+      message = "The API Version is either too long or too short."
+  )
+  @Pattern(
+      regexp = VALID_VERSION_PATTERN,
+      message = "The domain version does not match the validation pattern."
+  )
+  String getApiVersion();
 }

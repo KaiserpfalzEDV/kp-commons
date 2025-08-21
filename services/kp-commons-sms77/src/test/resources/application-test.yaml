@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-#dnb-lookup-api: &dnb-lookup
+#dnb-lookup-domain: &dnb-lookup
 #  url: ${EAN_SEARCH_API_URL}
 #  scope: javax.inject.Singleton
 
