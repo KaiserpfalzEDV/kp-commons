@@ -130,6 +130,8 @@
 
         <kp-commons.version>4.2.0-SNAPSHOT</kp-commons.version>
         <delombok.output>${project.build.directory}/delombok</delombok.output>
+
+        <commons-fileupload.version>1.6</commons-fileupload.version>
     </properties>
 
     <build>
