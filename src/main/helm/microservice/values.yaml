@@ -55,12 +55,91 @@ resources:
     cpu: 500m
     memory: 1280Mi
 
-externalDb: {}
+mounts: []
+#  - name: changeme
+#    mountPath: /changeme
+#    subPath: changeme
+#    readOnly: true
+#    spec:
+#      emptyDir: {}
+#      configMap: {}
+#      secret: {}
+#      projected: {}
+
+database:
+  enabled: false
+  labels: {}
+  annotations: {}
+  size: "1Gi"
+  walSize: "1Gi"
+  storageClass: "nfs"
+  version: 17
+  instances: 1
+  resources:
+    limits:
+      cpu: '1'
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
   
+vaultSecrets:
+  enabled: false
+  automount: false
+  annotations: {}
+  labels: {}
+  secrets:
+  - namePostFix: changeme
+    automount: false
+    keyPrefix: ""
+    secretStoreRef:
+      kind: ClusterSecretStore
+      name: changeme
+    items:
+      - secretKey: changeme
+        vaultKey: changeme
+        vaultProperty: changeme
+    annotations: {}
+    labels: {}
+    conversionStrategy: Default
+    decodingStrategy: None
+    metadataPolicy: None
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    refreshInterval: 30m
+
+externalSecrets:
+  enabled: false
+  automount: false
+  annotations: {}
+  labels: {}
+  secrets:
+  - namePostfix: changeme
+    automount: false
+    keyPrefix: ""
+    annotations: {}
+    labels: {}
+    spec:
+      data:
+      - remoteRef:
+          conversionStrategy: Default
+          decodingStrategy: None
+          key: changeme
+          metadataPolicy: None
+          property: changme
+        secretKey: changeme
+      refreshInterval: 30m
+      secretStoreRef:
+        kind: SecretStore
+        name: changeme
+      target:
+        creationPolicy: Owner
+        deletionPolicy: Retain
+        name: changeme
+        
+externalDb: {}
 
 tmpSize: 500Mi
-
-mounts: {}
 
 replicaCount: 1
 autoscaling:
@@ -98,23 +177,6 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-postgresql:
-  enabled: false
-
-sso:
-  enabled: false
-  issuerUri: https://changeme/
-  clientId: changeme
-  clientSecret: changeme
-  scopes: openid,profile,email,roles
-  userNameAttribute: preferred_username
-  roleAttribute: roles
-
-rabbitmq:
-  enabled: false
-  create: false
-  partOf: *partOf
-    
 
 applicationConfig:
   enabled: false

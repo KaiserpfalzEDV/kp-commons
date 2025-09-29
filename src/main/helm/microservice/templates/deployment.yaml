@@ -104,72 +104,53 @@ spec:
         {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if or (.Values.envFrom) (.Values.sso.enabled) }}
+          {{- if or (.Values.envFrom) (.Values.vaultSecrets.automount) (.Values.externalSecrets.automount) }}
           envFrom:
-          {{- if .Values.sso.enabled }}
-          - prefix: SSO_
-            secretRef:
-              name: {{ include "microservice.fullname" . }}-sso-config
-          {{- end }}
           {{- if .Values.envFrom }}
           {{- .Values.envFrom | toYaml | nindent 10 }}
           {{- end }}
           {{- end }}
-          {{- if or (.Values.env) (.Values.postgresql.enabled) (.Values.rabbitmq.enabled) }}
+          {{- if .Values.env }}
+          {{- if .Values.vaultSecrets.automount }}
+          {{- range .Values.vaultSecrets.secrets }}
+          {{- if .automount }}
+          - secretRef:
+              name: {{ include "microservice.fullname" $ }}-{{ .namePostFix }}
+            {{- if .keyPrefix }}
+            prefix: {{ .keyPrefix }}
+            {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.externalSecrets.automount }}
+          {{- range .Values.externalSecrets.secrets }}
+          {{- if .automount }}
+          - secretRef:
+              name: {{ include "microservice.fullname" $ }}-{{ .namePostFix }}
+            {{- if .keyPrefix }}
+            prefix: {{ .keyPrefix }}
+            {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
           env:
-          {{- if .Values.postgresql.enabled }}
+          {{- if .Values.database.enabled }}
           - name: SPRING_DATASOURCE_URL
-            value: jdbc:postgresql://{{ include "microservice.fullname" . }}-postgresql/postgres
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" $ }}-db-app
+                key: fqdn-jdbc-uri
           - name: SPRING_DATASOURCE_USERNAME
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "microservice.fullname" . }}-db-app
+                key: username
           - name: SPRING_DATASOURCE_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ include "microservice.fullname" . }}-postgresql
-                key: postgres-password
+                name: {{ include "microservice.fullname" . }}-db-app
+                key: password
           {{- end }}
-          {{- if .Values.rabbitmq.enabled}}
-          - name: SPRING_RABBITMQ_HOST
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: host
-          - name: SPRING_RABBITMQ_PORT
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: port
-          - name: SPRING_RABBITMQ_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: username
-          - name: SPRING_RABBITMQ_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: password
-          - name: SPRING_RABBITMQ_STREAM_HOST
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: host
-          - name: SPRING_RABBITMQ_STREAM_PORT
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: port
-          - name: SPRING_RABBITMQ_STREAM_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: username
-          - name: SPRING_RABBITMQ_STREAM_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "microservice.messageBroker" . }}-default-user
-                key: password
-          {{- end}}
           - name: LOGGING_LEVEL_ROOT
             value: WARN
           - name: POD_NAME

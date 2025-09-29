@@ -1,0 +1,40 @@
+{{- if .Values.database.enabled }}
+---
+# noinspection KubernetesUnknownResourcesInspection
+kind: Cluster
+# noinspection KubernetesUnknownResourcesInspection
+apiVersion: postgresql.cnpg.io/v1
+metadata:
+  name: {{ include "microservice.fullname" . }}-db
+  labels:
+    {{- include "microservice.labels" . | nindent 4 }}
+    {{- with .Values.database.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.database.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  instances: {{ .Values.database.instances }}
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    name: postgresql
+    major: {{ .Values.database.version }}
+  storage:
+    size: {{ .Values.database.size | quote }}
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+    resources:
+      requests:
+        storage: {{ .Values.database.size | quote }}
+    {{- if .Values.database.storageClass }}
+    storageClassName: {{ .Values.database.storageClass | quote }}
+    {{- end }}
+    volumeMode: "Filesystem"
+  walStorage:
+    size: {{ .Values.database.walSize }}
+
+{{- end }}
