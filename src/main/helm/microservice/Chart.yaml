@@ -2,7 +2,7 @@
 type: application
 apiVersion: v2
 name: microservice
-version: 3.0.0-alpha.2
+version: 3.0.0-alpha.3
 
 description: |
   A spring-boot microservice with a postgresql database backend managed by CloudNativePG Operator.

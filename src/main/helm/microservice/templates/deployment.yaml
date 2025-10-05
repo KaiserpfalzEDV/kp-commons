@@ -115,7 +115,7 @@ spec:
           {{- range .Values.vaultSecrets.secrets }}
           {{- if .automount }}
           - secretRef:
-              name: {{ include "microservice.fullname" $ }}-{{ .namePostFix }}
+              name: {{ include "microservice.fullname" $ }}-{{ .namePostfix }}
             {{- if .keyPrefix }}
             prefix: {{ .keyPrefix }}
             {{- end }}
