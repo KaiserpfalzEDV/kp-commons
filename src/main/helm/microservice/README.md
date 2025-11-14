@@ -11,6 +11,7 @@ A helm chart for microservices.
 - Removed sub charts for postgres and HRabbitMQ.
 - Added support for cnpg databases.
 - Added support for HashiCorp Vault secrets.
+- Added support for Bitwarden secrets.
 
 
 ### Version 2.1.6

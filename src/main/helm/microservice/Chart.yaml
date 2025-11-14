@@ -2,8 +2,23 @@
 type: application
 apiVersion: v2
 name: microservice
-version: 3.0.0-alpha.3
+version: 3.0.0-alpha.4
 
 description: |
   A spring-boot microservice with a postgresql database backend managed by CloudNativePG Operator.
-
+  
+  Changelog
+  =========
+  
+  3.0.0     2025-11-14 external secrets
+            * Added bitwarden as external secret source.
+            * Added hcp vault as external secret source.
+  
+  2.1.6     New default probe
+            * Reconfigured the default probes. Startup probes now runs every second for 300 Seconds.
+  
+  2.1.3     Postgres
+            * Corrected the postgresql connection name.
+  
+  2.1.0     Environment Variables
+            * Added env and envFrom to the microservice values file.
